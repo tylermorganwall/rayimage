@@ -7,7 +7,7 @@
 calc_bokeh_size(z, zfocus, f, N)
 }
 \arguments{
-\item{z}{Depth matrix..}
+\item{z}{Depth matrix.}
 
 \item{zfocus}{Depth in which to blur. Minimum 0, maximum 1.}
 
@@ -21,3 +21,4 @@ Matrix of bokeh sizes.
 \description{
 Calculates the amount of blurring at each point with camera characteristics.
 }
+\keyword{internal}

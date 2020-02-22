@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // subsample
 arma::mat subsample(arma::mat& circle, int size);
-RcppExport SEXP _rayfocus_subsample(SEXP circleSEXP, SEXP sizeSEXP) {
+RcppExport SEXP _rayimage_subsample(SEXP circleSEXP, SEXP sizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -18,9 +18,34 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// generate_disk
+arma::mat generate_disk(float radius, int dim);
+RcppExport SEXP _rayimage_generate_disk(SEXP radiusSEXP, SEXP dimSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< float >::type radius(radiusSEXP);
+    Rcpp::traits::input_parameter< int >::type dim(dimSEXP);
+    rcpp_result_gen = Rcpp::wrap(generate_disk(radius, dim));
+    return rcpp_result_gen;
+END_RCPP
+}
+// gen_ellipse
+arma::mat gen_ellipse(const double intensity, double width, double height);
+RcppExport SEXP _rayimage_gen_ellipse(SEXP intensitySEXP, SEXP widthSEXP, SEXP heightSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const double >::type intensity(intensitySEXP);
+    Rcpp::traits::input_parameter< double >::type width(widthSEXP);
+    Rcpp::traits::input_parameter< double >::type height(heightSEXP);
+    rcpp_result_gen = Rcpp::wrap(gen_ellipse(intensity, width, height));
+    return rcpp_result_gen;
+END_RCPP
+}
 // subsample_rect
 arma::mat subsample_rect(arma::mat& rect, int binsx, int binsy);
-RcppExport SEXP _rayfocus_subsample_rect(SEXP rectSEXP, SEXP binsxSEXP, SEXP binsySEXP) {
+RcppExport SEXP _rayimage_subsample_rect(SEXP rectSEXP, SEXP binsxSEXP, SEXP binsySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -33,7 +58,7 @@ END_RCPP
 }
 // gen_circle_psf
 arma::mat gen_circle_psf(const double radius);
-RcppExport SEXP _rayfocus_gen_circle_psf(SEXP radiusSEXP) {
+RcppExport SEXP _rayimage_gen_circle_psf(SEXP radiusSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -44,7 +69,7 @@ END_RCPP
 }
 // is_inside
 bool is_inside(double sizehex, double positionx, double positiony, double sinval, double cosval);
-RcppExport SEXP _rayfocus_is_inside(SEXP sizehexSEXP, SEXP positionxSEXP, SEXP positionySEXP, SEXP sinvalSEXP, SEXP cosvalSEXP) {
+RcppExport SEXP _rayimage_is_inside(SEXP sizehexSEXP, SEXP positionxSEXP, SEXP positionySEXP, SEXP sinvalSEXP, SEXP cosvalSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -59,7 +84,7 @@ END_RCPP
 }
 // gen_hex_psf
 arma::mat gen_hex_psf(const double radius, const double rotation);
-RcppExport SEXP _rayfocus_gen_hex_psf(SEXP radiusSEXP, SEXP rotationSEXP) {
+RcppExport SEXP _rayimage_gen_hex_psf(SEXP radiusSEXP, SEXP rotationSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -71,7 +96,7 @@ END_RCPP
 }
 // psf
 arma::mat psf(const arma::mat& image, const IntegerMatrix blurmatrix, const arma::mat& depthmap, double depth, const arma::mat custombokeh, int type, double bokehintensity, double bokehlimit, double rotation, bool progbar, int channel);
-RcppExport SEXP _rayfocus_psf(SEXP imageSEXP, SEXP blurmatrixSEXP, SEXP depthmapSEXP, SEXP depthSEXP, SEXP custombokehSEXP, SEXP typeSEXP, SEXP bokehintensitySEXP, SEXP bokehlimitSEXP, SEXP rotationSEXP, SEXP progbarSEXP, SEXP channelSEXP) {
+RcppExport SEXP _rayimage_psf(SEXP imageSEXP, SEXP blurmatrixSEXP, SEXP depthmapSEXP, SEXP depthSEXP, SEXP custombokehSEXP, SEXP typeSEXP, SEXP bokehintensitySEXP, SEXP bokehlimitSEXP, SEXP rotationSEXP, SEXP progbarSEXP, SEXP channelSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -90,18 +115,36 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// convolution_cpp
+arma::mat convolution_cpp(const arma::mat& image, const arma::mat kernel, bool progbar, int channel, arma::mat& bloom_matrix);
+RcppExport SEXP _rayimage_convolution_cpp(SEXP imageSEXP, SEXP kernelSEXP, SEXP progbarSEXP, SEXP channelSEXP, SEXP bloom_matrixSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type image(imageSEXP);
+    Rcpp::traits::input_parameter< const arma::mat >::type kernel(kernelSEXP);
+    Rcpp::traits::input_parameter< bool >::type progbar(progbarSEXP);
+    Rcpp::traits::input_parameter< int >::type channel(channelSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type bloom_matrix(bloom_matrixSEXP);
+    rcpp_result_gen = Rcpp::wrap(convolution_cpp(image, kernel, progbar, channel, bloom_matrix));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_rayfocus_subsample", (DL_FUNC) &_rayfocus_subsample, 2},
-    {"_rayfocus_subsample_rect", (DL_FUNC) &_rayfocus_subsample_rect, 3},
-    {"_rayfocus_gen_circle_psf", (DL_FUNC) &_rayfocus_gen_circle_psf, 1},
-    {"_rayfocus_is_inside", (DL_FUNC) &_rayfocus_is_inside, 5},
-    {"_rayfocus_gen_hex_psf", (DL_FUNC) &_rayfocus_gen_hex_psf, 2},
-    {"_rayfocus_psf", (DL_FUNC) &_rayfocus_psf, 11},
+    {"_rayimage_subsample", (DL_FUNC) &_rayimage_subsample, 2},
+    {"_rayimage_generate_disk", (DL_FUNC) &_rayimage_generate_disk, 2},
+    {"_rayimage_gen_ellipse", (DL_FUNC) &_rayimage_gen_ellipse, 3},
+    {"_rayimage_subsample_rect", (DL_FUNC) &_rayimage_subsample_rect, 3},
+    {"_rayimage_gen_circle_psf", (DL_FUNC) &_rayimage_gen_circle_psf, 1},
+    {"_rayimage_is_inside", (DL_FUNC) &_rayimage_is_inside, 5},
+    {"_rayimage_gen_hex_psf", (DL_FUNC) &_rayimage_gen_hex_psf, 2},
+    {"_rayimage_psf", (DL_FUNC) &_rayimage_psf, 11},
+    {"_rayimage_convolution_cpp", (DL_FUNC) &_rayimage_convolution_cpp, 5},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_rayfocus(DllInfo *dll) {
+RcppExport void R_init_rayimage(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

@@ -2,38 +2,98 @@
 % Please edit documentation in R/render_bokeh.R
 \name{render_bokeh}
 \alias{render_bokeh}
-\title{render_bokeh}
+\title{Render Bokeh}
 \usage{
-render_bokeh(image, depthmap, focus = 0.5, focallength = 1,
-  fstop = 1, filename = NULL, bokehshape = "circle",
-  bokehintensity = 5, rotation = 0, progress = TRUE)
+render_bokeh(
+  image,
+  depthmap,
+  focus = 0.5,
+  focallength = 100,
+  fstop = 4,
+  filename = NULL,
+  preview = TRUE,
+  preview_focus = FALSE,
+  bokehshape = "circle",
+  bokehintensity = 1,
+  bokehlimit = 0.8,
+  rotation = 0,
+  gamma_correction = TRUE,
+  progress = interactive()
+)
 }
 \arguments{
-\item{image}{Image filename.}
+\item{image}{Image filename or 3-layer RGB array.}
 
-\item{depthmap}{Depth map filename.}
+\item{depthmap}{Depth map filename or 1d array.}
 
-\item{focus}{Defaults `0.5`. Depth in which to blur. Minimum 0, maximum 1.}
+\item{focus}{Defaults \code{0.5}. Depth in which to blur. Minimum 0, maximum 1.}
 
-\item{focallength}{Default `1`. Focal length of the virtual camera.}
+\item{focallength}{Default \code{100}. Focal length of the virtual camera.}
 
-\item{fstop}{Default `1`. F-stop of the virtual camera.}
+\item{fstop}{Default \code{4}. F-stop of the virtual camera.}
 
 \item{filename}{The filename of the image to be saved. If this is not given, the image will be plotted instead.}
 
-\item{bokehshape}{Default `circle`. Also built-in: `hex`. The shape of the bokeh.}
+\item{preview}{Default \code{TRUE}. If \code{FALSE}, it will not display the image and just return the RGB array.}
 
-\item{bokehintensity}{Default `3`. Intensity of the bokeh when the pixel intensity is greater than `bokehlimit`.}
+\item{preview_focus}{Default \code{FALSE}. If \code{TRUE}, a red line will be drawn across the image
+showing where the camera will be focused.}
 
-\item{rotation}{Default `0`. Number of degrees to rotate the hexagon bokeh shape.}
+\item{bokehshape}{Default \code{circle}. Also built-in: \code{hex}. The shape of the bokeh. If the user
+passes in a 2D matrix, that matrix will control the shape of the bokeh.}
 
-\item{bokehlimit}{Default `0.8`. Limit after which the bokeh intensity is increased by `bokehintensity`.}
+\item{bokehintensity}{Default \code{1}. Intensity of the bokeh when the pixel intensity is greater than \code{bokehlimit}.}
 
-\item{gamma_correction}{Default `TRUE`. Controls gamma correction when adding colors. Default exponent of 2.2.}
+\item{bokehlimit}{Default \code{0.8}. Limit after which the bokeh intensity is increased by \code{bokehintensity}.}
+
+\item{rotation}{Default \code{0}. Number of degrees to rotate the hexagonal bokeh shape.}
+
+\item{gamma_correction}{Default \code{TRUE}. Controls gamma correction when adding colors. Default exponent of 2.2.}
+
+\item{progress}{Default \code{TRUE}. Whether to display a progress bar.}
+}
+\value{
+3-layer RGB array of the processed image.
 }
 \description{
 Takes an image and a depth map to render the image with depth of field.
+User can specify a custom bokeh shape, or use one of the built-in bokeh types.
 }
 \examples{
-filename_map = tempfile()
+#Plot the dragon
+plot_image(dragon)
+
+#Plot the depth map
+image(dragondepth, asp = 1)
+
+#Preview the focal plane:
+\donttest{
+render_bokeh(dragon, dragondepth, focus=950, preview_focus = TRUE)
+}
+#Change the focal length:
+\donttest{
+render_bokeh(dragon, dragondepth, focus=950, focallength=300)
+}
+#Change the focal distance:
+\donttest{
+render_bokeh(dragon, dragondepth, focus=600, focallength=300)
+render_bokeh(dragon, dragondepth, focus=1300, focallength=300)
+}
+#Change the bokeh shape to a hexagon:
+\donttest{
+render_bokeh(dragon, dragondepth, bokehshape = "hex",
+            focallength=300, focus=600)
+}
+#Change the bokeh intensity:
+\donttest{
+render_bokeh(dragon, dragondepth,
+            focallength=400, focus=900, bokehintensity = 1)
+render_bokeh(dragon, dragondepth,
+            focallength=400, focus=900, bokehintensity = 3)
+}
+#Rotate the hexagonal shape:
+\donttest{
+render_bokeh(dragon, dragondepth, bokehshape = "hex", rotation=15,
+            focallength=300, focus=600)
+}
 }

@@ -2,26 +2,38 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 subsample <- function(circle, size) {
-    .Call(`_rayfocus_subsample`, circle, size)
+    .Call(`_rayimage_subsample`, circle, size)
+}
+
+generate_disk <- function(radius, dim) {
+    .Call(`_rayimage_generate_disk`, radius, dim)
+}
+
+gen_ellipse <- function(intensity, width, height) {
+    .Call(`_rayimage_gen_ellipse`, intensity, width, height)
 }
 
 subsample_rect <- function(rect, binsx, binsy) {
-    .Call(`_rayfocus_subsample_rect`, rect, binsx, binsy)
+    .Call(`_rayimage_subsample_rect`, rect, binsx, binsy)
 }
 
 gen_circle_psf <- function(radius) {
-    .Call(`_rayfocus_gen_circle_psf`, radius)
+    .Call(`_rayimage_gen_circle_psf`, radius)
 }
 
 is_inside <- function(sizehex, positionx, positiony, sinval, cosval) {
-    .Call(`_rayfocus_is_inside`, sizehex, positionx, positiony, sinval, cosval)
+    .Call(`_rayimage_is_inside`, sizehex, positionx, positiony, sinval, cosval)
 }
 
 gen_hex_psf <- function(radius, rotation) {
-    .Call(`_rayfocus_gen_hex_psf`, radius, rotation)
+    .Call(`_rayimage_gen_hex_psf`, radius, rotation)
 }
 
 psf <- function(image, blurmatrix, depthmap, depth, custombokeh, type, bokehintensity, bokehlimit, rotation, progbar, channel) {
-    .Call(`_rayfocus_psf`, image, blurmatrix, depthmap, depth, custombokeh, type, bokehintensity, bokehlimit, rotation, progbar, channel)
+    .Call(`_rayimage_psf`, image, blurmatrix, depthmap, depth, custombokeh, type, bokehintensity, bokehlimit, rotation, progbar, channel)
+}
+
+convolution_cpp <- function(image, kernel, progbar, channel, bloom_matrix) {
+    .Call(`_rayimage_convolution_cpp`, image, kernel, progbar, channel, bloom_matrix)
 }
 
