@@ -47,7 +47,7 @@ kernel: `generate_2d_gaussian`, `generate_2d_exponential`, and
 specify opacity, color, and font properties. `add_vignette` adds a
 camera vignette effect. `add_overlay` adds overlays to images.
 
-`plot_image` plots an RGB array.
+`plot_image` plots an RGB array to the current device.
 
 ## Usage
 
@@ -59,32 +59,27 @@ depthmap is `dragondepth`.
 #load rayshader package for raster plotting
 library(rayimage)
 
+par(mfrow = c(1,2))
 plot_image(dragon)
+image(dragondepth, col = hcl.colors(256, "YlOrRd", rev = TRUE), asp=1)
 ```
 
 ![](man/figures/unnamed-chunk-1-1.png)<!-- -->
 
-``` r
-image(dragondepth, asp=1)
-```
-
-![](man/figures/unnamed-chunk-1-2.png)<!-- -->
-
 Preview the focal plane.
 
 ``` r
+par(mfrow = c(1,2))
 render_bokeh(dragon,dragondepth,focus=930,preview_focus = TRUE)
 ```
 
     ## [1] "Focal range: 847.644-1410.17"
 
-![](man/figures/unnamed-chunk-2-1.png)<!-- -->
-
 ``` r
 render_bokeh(dragon,dragondepth,focus=930,focallength=250)
 ```
 
-![](man/figures/unnamed-chunk-2-2.png)<!-- -->
+![](man/figures/unnamed-chunk-2-1.png)<!-- -->
 
 ``` r
 render_bokeh(dragon,dragondepth,focus=1300,preview_focus = TRUE)
@@ -92,106 +87,88 @@ render_bokeh(dragon,dragondepth,focus=1300,preview_focus = TRUE)
 
     ## [1] "Focal range: 847.644-1410.17"
 
-![](man/figures/unnamed-chunk-2-3.png)<!-- -->
-
 ``` r
 render_bokeh(dragon,dragondepth,focus=1300,focallength=250)
 ```
 
-![](man/figures/unnamed-chunk-2-4.png)<!-- -->
+![](man/figures/unnamed-chunk-2-2.png)<!-- -->
 
-We can also adjust the shape of the aperture, as well as the bokeh
-intensity.
+We can also adjust the focal point, shape of the aperture, f-stop, focal
+length, as well as the bokeh intensity.
 
 ``` r
-render_bokeh(dragon,dragondepth,focus=700,focallength = 300,
+par(mfrow = c(1,2))
+render_bokeh(dragon,dragondepth,focus=1100,focallength = 400,
+             bokehshape = "hex", bokehintensity = 1)
+render_bokeh(dragon,dragondepth,focus=900,focallength = 400,
              bokehshape = "hex", bokehintensity = 1)
 ```
 
 ![](man/figures/unnamed-chunk-3-1.png)<!-- -->
 
 ``` r
-render_bokeh(dragon,dragondepth,focus=700,focallength = 300,
+render_bokeh(dragon,dragondepth,focus=900,focallength = 400,
+             fstop = 16, bokehshape = "hex")
+render_bokeh(dragon,dragondepth,focus=900,focallength = 300,
              bokehshape = "hex", bokehintensity = 5)
 ```
 
 ![](man/figures/unnamed-chunk-3-2.png)<!-- -->
 
-``` r
-render_bokeh(dragon,dragondepth,focus=700,focallength = 300,
-             fstop = 2, bokehshape = "hex")
-```
-
-![](man/figures/unnamed-chunk-3-3.png)<!-- -->
-
 We can add a camera vignette effect, titles, and overlays (not shown
 here):
 
 ``` r
+par(mfrow = c(1,2))
+
 dragon %>%
   add_title("Dragon", title_size = 20, title_bar_color = "red", 
             title_bar_alpha=0.8, title_color="white", title_offset = c(12,12)) %>%
   plot_image()
-```
 
-![](man/figures/unnamed-chunk-4-1.png)<!-- -->
-
-``` r
 dragon %>%
   add_vignette(vignette=0.8) %>%
   plot_image()
 ```
 
-![](man/figures/unnamed-chunk-4-2.png)<!-- -->
+![](man/figures/unnamed-chunk-4-1.png)<!-- -->
 
 We can also use the `render_convolution()` directly to perform a
 convolution with a user-defined (or built-in) kernel.
 
 ``` r
+par(mfrow = c(1,2))
 #Default gaussian kernel
-render_convolution(dragon, kernel = "gaussian")
+render_convolution(dragon, kernel = "gaussian", preview = FALSE) %>%
+  add_title("Built-in", title_size=15, title_color="white", preview = TRUE)
+image(generate_2d_gaussian(1,1,11,3), asp=1)
 ```
 
 ![](man/figures/unnamed-chunk-5-1.png)<!-- -->
 
 ``` r
 #Custom gaussian kernel
+render_convolution(dragon, kernel = generate_2d_gaussian(10,1,31,21))
 image(generate_2d_gaussian(10,1,31,21), asp=1)
 ```
 
 ![](man/figures/unnamed-chunk-5-2.png)<!-- -->
 
 ``` r
-render_convolution(dragon, kernel = generate_2d_gaussian(10,1,31,21))
+#Custom exponential kernel
+render_convolution(dragon, kernel = generate_2d_exponential(3,31,21))
+image(generate_2d_exponential(3,31,21), asp=1)
 ```
 
 ![](man/figures/unnamed-chunk-5-3.png)<!-- -->
 
 ``` r
-#Custom exponential kernel
-image(generate_2d_exponential(3,31,21), asp=1)
-```
-
-![](man/figures/unnamed-chunk-5-4.png)<!-- -->
-
-``` r
-render_convolution(dragon, kernel = generate_2d_exponential(3,31,21))
-```
-
-![](man/figures/unnamed-chunk-5-5.png)<!-- -->
-
-``` r
 #Custom disk kernel
+render_convolution(dragon, kernel = generate_2d_disk(31))
 image(generate_2d_disk(31), asp=1)
 ```
 
-![](man/figures/unnamed-chunk-5-6.png)<!-- -->
-
-``` r
-render_convolution(dragon, kernel = generate_2d_disk(31))
-```
-
-![](man/figures/unnamed-chunk-5-7.png)<!-- -->
+![](man/figures/unnamed-chunk-5-4.png)<!-- -->
 
 And here we use a user-defined kernel, in the shape of a cross.
 

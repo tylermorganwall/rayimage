@@ -114,7 +114,7 @@ render_convolution = function(image, kernel = "gaussian",
       temp_image[temp_image < 0] = 0
       plot_image(aperm(temp_image,c(2,1,3)))
     } else {
-      temp_image
+      aperm(temp_image,c(2,1,3))
     }
   } else {
     temp_image[temp_image > 1] = 1

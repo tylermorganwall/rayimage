@@ -45,7 +45,7 @@ The output is either plotted to the current device, or save to a file (if a file
 `add_vignette` adds a camera vignette effect.
 `add_overlay` adds overlays to images.
 
-`plot_image` plots an RGB array.
+`plot_image` plots an RGB array to the current device.
 
 Usage
 -----
@@ -57,7 +57,7 @@ knit_hooks$set(rgl = hook_rgl)
 knitr::opts_chunk$set(
   fig.path = "man/figures/",
   cache = TRUE,
-  fig.width = 4,
+  fig.width = 8,
   fig.height = 4
 )
 set.seed(1001)
@@ -69,15 +69,16 @@ The package comes with a sample image and depth map derived from Stanford "drago
 #load rayshader package for raster plotting
 library(rayimage)
 
+par(mfrow = c(1,2))
 plot_image(dragon)
-
-image(dragondepth, asp=1)
+image(dragondepth, col = hcl.colors(256, "YlOrRd", rev = TRUE), asp=1)
 ```
 
 Preview the focal plane. 
 
-```{r}
+```{r fig.width=8, fig.height=4}
 
+par(mfrow = c(1,2))
 render_bokeh(dragon,dragondepth,focus=930,preview_focus = TRUE)
 render_bokeh(dragon,dragondepth,focus=930,focallength=250)
 render_bokeh(dragon,dragondepth,focus=1300,preview_focus = TRUE)
@@ -85,24 +86,25 @@ render_bokeh(dragon,dragondepth,focus=1300,focallength=250)
 
 ```
 
-We can also adjust the shape of the aperture, as well as the bokeh intensity.
+We can also adjust the focal point, shape of the aperture, f-stop, focal length, as well as the bokeh intensity.
 
-```{r}
-
-render_bokeh(dragon,dragondepth,focus=700,focallength = 300,
+```{r fig.width=8, fig.height=4}
+par(mfrow = c(1,2))
+render_bokeh(dragon,dragondepth,focus=1100,focallength = 400,
              bokehshape = "hex", bokehintensity = 1)
-
-render_bokeh(dragon,dragondepth,focus=700,focallength = 300,
+render_bokeh(dragon,dragondepth,focus=900,focallength = 400,
+             bokehshape = "hex", bokehintensity = 1)
+render_bokeh(dragon,dragondepth,focus=900,focallength = 400,
+             fstop = 16, bokehshape = "hex")
+render_bokeh(dragon,dragondepth,focus=900,focallength = 300,
              bokehshape = "hex", bokehintensity = 5)
-
-render_bokeh(dragon,dragondepth,focus=700,focallength = 300,
-             fstop = 2, bokehshape = "hex")
 
 ```
 
 We can add a camera vignette effect, titles, and overlays (not shown here):
 
 ```{r}
+par(mfrow = c(1,2))
 
 dragon %>%
   add_title("Dragon", title_size = 20, title_bar_color = "red", 
@@ -120,17 +122,23 @@ We can also use the `render_convolution()` directly to perform a convolution wit
 
 ```{r}
 
+par(mfrow = c(1,2))
 #Default gaussian kernel
-render_convolution(dragon, kernel = "gaussian")
+render_convolution(dragon, kernel = "gaussian", preview = FALSE) %>%
+  add_title("Built-in", title_size=15, title_color="white", preview = TRUE)
+image(generate_2d_gaussian(1,1,11,3), asp=1)
+
 #Custom gaussian kernel
-image(generate_2d_gaussian(10,1,31,21), asp=1)
 render_convolution(dragon, kernel = generate_2d_gaussian(10,1,31,21))
+image(generate_2d_gaussian(10,1,31,21), asp=1)
+
 #Custom exponential kernel
-image(generate_2d_exponential(3,31,21), asp=1)
 render_convolution(dragon, kernel = generate_2d_exponential(3,31,21))
+image(generate_2d_exponential(3,31,21), asp=1)
+
 #Custom disk kernel
-image(generate_2d_disk(31), asp=1)
 render_convolution(dragon, kernel = generate_2d_disk(31))
+image(generate_2d_disk(31), asp=1)
 
 ```
 
