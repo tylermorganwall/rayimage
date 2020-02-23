@@ -1,1 +1,51 @@
-destination: docs
+pandoc: 2.3.1
+pkgdown: 1.3.0.9000
+pkgdown_sha: 2f40b4769ea9ad2312aa4cc93f27ab116461543b
+articles: []
+
+reference:
+  - title: "Image/Camera Effects"
+    desc: "Functions for adding effects to images."
+    contents:
+      - starts_with("add")
+  - title: "Depth of Field/Convolution"
+    desc: "Functions for detecting and adding layers to maps."
+    contents:
+      - starts_with("render")
+  - title: "Plotting and Saving Images"
+    desc: "Functions for displaying/saving o,ages"
+    contents:
+      - starts_with("plot")
+  - title: "Kernels"
+    desc: "Functions to generate 2D distributions"
+    contents:
+      - starts_with("generate")
+  - title: "Included Data"
+    desc: "Example data/depth map."
+    contents:
+      - starts_with("dragon")
+
+navbar:
+  title: "rayimage"
+  type: inverse
+  left:
+    - icon: fa-home
+      href: index.html
+    - text: "Blog"
+      menu:
+      -  text: "Portrait Mode for Data: Rayshader + Rayfocus"
+         href: https://www.tylermw.com/portrait-mode-data/
+    - icon: fa-newspaper-o
+      text: "Changelog"
+      href: news/index.html
+  right:
+    - icon: fa-file-code-o
+      text: "functions"
+      href: reference/index.html
+    - icon: fa-github fa-lg
+      text: "GitHub"
+      href: https://github.com/tylermorganwall/rayimage
+
+authors:
+  Tyler Morgan-Wall:
+    href: https://www.tylermw.com
