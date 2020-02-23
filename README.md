@@ -47,7 +47,7 @@ matrices.
 
 `add_title` adds titles to images, with an optional title bar. User can
 specify opacity, color, and font properties. `add_vignette` adds a
-camera vignette effect. `add_overlay` adds overlays to images.
+camera vignette effect. `add_image_overlay` adds overlays to images.
 
 `plot_image` plots an RGB array to the current device.
 
@@ -61,8 +61,10 @@ Stanford “Chinese Dragon” 3D model. The image is included in rayimage as
 library(rayimage)
 
 par(mfrow = c(1,2))
+
 plot_image(dragon)
-image(dragondepth, col = hcl.colors(256, "YlOrRd", rev = TRUE), asp=1)
+image(dragondepth, col = hcl.colors(256, "YlOrRd", rev = TRUE), 
+      axes=FALSE, asp=1)
 ```
 
 ![](man/figures/unnamed-chunk-1-1.png)<!-- -->
@@ -116,7 +118,7 @@ render_bokeh(dragon,dragondepth,focus=900,focallength = 300,
 
 ![](man/figures/unnamed-chunk-3-2.png)<!-- -->
 
-We can add a camera vignette effect, titles, and overlays (not shown
+We can add a camera vignette effect, titles, and add overlays (not shown
 here):
 
 ``` r
@@ -134,42 +136,64 @@ dragon %>%
 
 ![](man/figures/unnamed-chunk-4-1.png)<!-- -->
 
+We can also resize images and matrices with `render_resize()`. We can do
+this before adding text to make the resulting text smoother.
+
+``` r
+par(mfrow = c(1,2))
+
+#Double the input size to make the resulting text smoother.
+dragon %>%
+  render_resized(mag = 2) %>%
+  add_title("Dragon", title_size = 20, title_bar_color = "red", 
+            title_bar_alpha=0.8, title_color="white", title_offset = c(12,12)) %>%
+  plot_image()
+
+#Specify resulting dimensions directly.
+dragon %>%
+  render_resized(dim = c(600,300)) %>%
+  add_title("Dragon", title_size = 20, title_bar_color = "red", 
+            title_bar_alpha=0.8, title_color="white", title_offset = c(12,12)) %>%
+  plot_image()
+```
+
+![](man/figures/unnamed-chunk-5-1.png)<!-- -->
+
 We can also use the `render_convolution()` directly to perform a
 convolution with a user-defined (or built-in) kernel.
 
 ``` r
 par(mfrow = c(1,2))
 #Default gaussian kernel
-render_convolution(dragon, kernel = "gaussian", preview = FALSE) %>%
-  add_title("Built-in", title_size=15, title_color="white", preview = TRUE)
-image(generate_2d_gaussian(1,1,11,3), asp=1)
+render_convolution(dragon, kernel = "gaussian", preview = TRUE)
+image(generate_2d_gaussian(1,1,11,3), asp=1, axes=FALSE)
 ```
 
-![](man/figures/unnamed-chunk-5-1.png)<!-- -->
+![](man/figures/unnamed-chunk-6-1.png)<!-- -->
 
 ``` r
 #Custom gaussian kernel
-render_convolution(dragon, kernel = generate_2d_gaussian(10,1,31,21))
-image(generate_2d_gaussian(10,1,31,21), asp=1)
+render_convolution(dragon, kernel = generate_2d_gaussian(10,1,31,21), preview = TRUE) 
+image(generate_2d_gaussian(10,1,31,21), asp=1, axes=FALSE)
 ```
 
-![](man/figures/unnamed-chunk-5-2.png)<!-- -->
+![](man/figures/unnamed-chunk-6-2.png)<!-- -->
 
 ``` r
 #Custom exponential kernel
-render_convolution(dragon, kernel = generate_2d_exponential(3,31,21))
-image(generate_2d_exponential(3,31,21), asp=1)
+render_convolution(dragon, kernel = generate_2d_exponential(3,31,21), preview = TRUE)
+image(generate_2d_exponential(3,31,21), asp=1, axes=FALSE)
 ```
 
-![](man/figures/unnamed-chunk-5-3.png)<!-- -->
+![](man/figures/unnamed-chunk-6-3.png)<!-- -->
 
 ``` r
 #Custom disk kernel
-render_convolution(dragon, kernel = generate_2d_disk(31))
-image(generate_2d_disk(31), asp=1)
+render_convolution(dragon, kernel = generate_2d_disk(31), preview = TRUE)
+image(generate_2d_disk(31), asp=1, axes=FALSE)
 ```
 
-![](man/figures/unnamed-chunk-5-4.png)<!-- -->
+![](man/figures/unnamed-chunk-6-4.png)<!-- -->
 
 We can also use this to perform generate discrete 2D convolutions with
 matrices:
@@ -183,7 +207,7 @@ volcano %>%
   image()
 ```
 
-![](man/figures/unnamed-chunk-6-1.png)<!-- -->
+![](man/figures/unnamed-chunk-7-1.png)<!-- -->
 
 And here we use a user-defined kernel, in the shape of a cross.
 
@@ -202,4 +226,4 @@ render_convolution(dragon, kernel = custom1, preview = TRUE)
 render_convolution(dragon, kernel = custom2, preview = TRUE)
 ```
 
-![](man/figures/unnamed-chunk-7-1.png)<!-- -->
+![](man/figures/unnamed-chunk-8-1.png)<!-- -->

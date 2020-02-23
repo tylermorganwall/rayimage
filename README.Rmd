@@ -43,7 +43,7 @@ The output is either plotted to the current device, or save to a file (if a file
 
 `add_title` adds titles to images, with an optional title bar. User can specify opacity, color, and font properties.
 `add_vignette` adds a camera vignette effect.
-`add_overlay` adds overlays to images.
+`add_image_overlay` adds overlays to images.
 
 `plot_image` plots an RGB array to the current device.
 
@@ -69,8 +69,11 @@ The package comes with a sample image and depth map derived from Stanford "Chine
 library(rayimage)
 
 par(mfrow = c(1,2))
+
 plot_image(dragon)
-image(dragondepth, col = hcl.colors(256, "YlOrRd", rev = TRUE), asp=1)
+image(dragondepth, col = hcl.colors(256, "YlOrRd", rev = TRUE), 
+      axes=FALSE, asp=1)
+
 ```
 
 Preview the focal plane. 
@@ -100,7 +103,7 @@ render_bokeh(dragon,dragondepth,focus=900,focallength = 300,
 
 ```
 
-We can add a camera vignette effect, titles, and overlays (not shown here):
+We can add a camera vignette effect, titles, and add overlays (not shown here):
 
 ```{r}
 par(mfrow = c(1,2))
@@ -117,27 +120,47 @@ dragon %>%
 
 ```
 
+We can also resize images and matrices with `render_resize()`. We can do this before adding text to make the resulting text smoother.
+
+```{r}
+par(mfrow = c(1,2))
+
+#Double the input size to make the resulting text smoother.
+dragon %>%
+  render_resized(mag = 2) %>%
+  add_title("Dragon", title_size = 20, title_bar_color = "red", 
+            title_bar_alpha=0.8, title_color="white", title_offset = c(12,12)) %>%
+  plot_image()
+
+#Specify resulting dimensions directly.
+dragon %>%
+  render_resized(dim = c(600,300)) %>%
+  add_title("Dragon", title_size = 20, title_bar_color = "red", 
+            title_bar_alpha=0.8, title_color="white", title_offset = c(12,12)) %>%
+  plot_image()
+
+```
+
 We can also use the `render_convolution()` directly to perform a convolution with a user-defined (or built-in) kernel.
 
 ```{r}
 
 par(mfrow = c(1,2))
 #Default gaussian kernel
-render_convolution(dragon, kernel = "gaussian", preview = FALSE) %>%
-  add_title("Built-in", title_size=15, title_color="white", preview = TRUE)
-image(generate_2d_gaussian(1,1,11,3), asp=1)
+render_convolution(dragon, kernel = "gaussian", preview = TRUE)
+image(generate_2d_gaussian(1,1,11,3), asp=1, axes=FALSE)
 
 #Custom gaussian kernel
-render_convolution(dragon, kernel = generate_2d_gaussian(10,1,31,21))
-image(generate_2d_gaussian(10,1,31,21), asp=1)
+render_convolution(dragon, kernel = generate_2d_gaussian(10,1,31,21), preview = TRUE) 
+image(generate_2d_gaussian(10,1,31,21), asp=1, axes=FALSE)
 
 #Custom exponential kernel
-render_convolution(dragon, kernel = generate_2d_exponential(3,31,21))
-image(generate_2d_exponential(3,31,21), asp=1)
+render_convolution(dragon, kernel = generate_2d_exponential(3,31,21), preview = TRUE)
+image(generate_2d_exponential(3,31,21), asp=1, axes=FALSE)
 
 #Custom disk kernel
-render_convolution(dragon, kernel = generate_2d_disk(31))
-image(generate_2d_disk(31), asp=1)
+render_convolution(dragon, kernel = generate_2d_disk(31), preview = TRUE)
+image(generate_2d_disk(31), asp=1, axes=FALSE)
 
 ```
 

@@ -46,6 +46,28 @@ arma::mat subsample_interpolate(arma::mat& circle, float mag) {
   return(ZI);
 }
 
+// [[Rcpp::export]]
+arma::mat resize_image(arma::mat& image, float mag) {
+  arma::vec X = arma::regspace(1, image.n_cols);
+  arma::vec Y = arma::regspace(1, image.n_rows);
+  arma::vec XI = arma::regspace(X.min(), 1.0/mag, X.max());
+  arma::vec YI = arma::regspace(Y.min(), 1.0/mag, Y.max());
+  arma::mat ZI;
+  interp2(X, Y, image, XI, YI, ZI);
+  return(ZI);
+}
+
+// [[Rcpp::export]]
+arma::mat resize_image_xy(arma::mat& image, float magx, float magy) {
+  arma::vec X = arma::regspace(1, image.n_cols);
+  arma::vec Y = arma::regspace(1, image.n_rows);
+  arma::vec XI = arma::regspace(X.min(), 1.0/magx, X.max());
+  arma::vec YI = arma::regspace(Y.min(), 1.0/magy, Y.max());
+  arma::mat ZI;
+  interp2(X, Y, image, XI, YI, ZI);
+  return(ZI);
+}
+
 float evaluate_disk(float x) {
   return((cos(x*1.685979) * -22.356787 + sin(x*1.685979) * 85.912460) * exp(-4.892608 *x) +
     (cos(x*4.998496) * 35.918936 + sin(x*4.998496) * -28.875618) * exp(-4.711870 *x) +

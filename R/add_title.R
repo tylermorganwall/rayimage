@@ -65,11 +65,17 @@ add_title = function(image,
   if(!("magick" %in% rownames(utils::installed.packages()))) {
     stop("`magick` package required for adding title")
   }
-
   if(!is.null(title_bar_color)) {
     title_bar_color = col2rgb(title_bar_color)/255
     title_bar = array(0,c(dimensions[1],dimensions[2],4))
     title_bar_width = 2 * title_offset[1] + title_size
+    if(title_bar_width > dimensions[1]) {
+      message(paste0(c("Input title_bar_width (", title_bar_width,
+              ") greater than image height (",
+              dimensions[1],
+              "), reducing size."),collapse=""))
+      title_bar_width = dimensions[1]
+    }
     title_bar[1:title_bar_width,,1] = title_bar_color[1]
     title_bar[1:title_bar_width,,2] = title_bar_color[2]
     title_bar[1:title_bar_width,,3] = title_bar_color[3]

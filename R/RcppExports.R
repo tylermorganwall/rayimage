@@ -5,6 +5,14 @@ subsample <- function(circle, size) {
     .Call(`_rayimage_subsample`, circle, size)
 }
 
+resize_image <- function(image, mag) {
+    .Call(`_rayimage_resize_image`, image, mag)
+}
+
+resize_image_xy <- function(image, magx, magy) {
+    .Call(`_rayimage_resize_image_xy`, image, magx, magy)
+}
+
 generate_disk <- function(radius, dim) {
     .Call(`_rayimage_generate_disk`, radius, dim)
 }

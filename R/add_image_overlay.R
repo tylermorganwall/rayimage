@@ -29,9 +29,9 @@
 #'dragon_clipped = dragon
 #'dragon_clipped[dragon_clipped > 1] = 1
 #'\donttest{
-#'add_overlay(dragon_clipped, image_overlay = rgba_array, preview = TRUE)
+#'add_image_overlay(dragon_clipped, image_overlay = rgba_array, preview = TRUE)
 #'}
-add_overlay = function(image, image_overlay = NULL, filename = NULL,  preview = FALSE) {
+add_image_overlay = function(image, image_overlay = NULL, filename = NULL,  preview = FALSE) {
   imagetype = get_file_type(image)
   if(imagetype == "array") {
     temp = tempfile(fileext = ".png")

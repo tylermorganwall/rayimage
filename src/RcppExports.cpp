@@ -18,6 +18,31 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// resize_image
+arma::mat resize_image(arma::mat& image, float mag);
+RcppExport SEXP _rayimage_resize_image(SEXP imageSEXP, SEXP magSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type image(imageSEXP);
+    Rcpp::traits::input_parameter< float >::type mag(magSEXP);
+    rcpp_result_gen = Rcpp::wrap(resize_image(image, mag));
+    return rcpp_result_gen;
+END_RCPP
+}
+// resize_image_xy
+arma::mat resize_image_xy(arma::mat& image, float magx, float magy);
+RcppExport SEXP _rayimage_resize_image_xy(SEXP imageSEXP, SEXP magxSEXP, SEXP magySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type image(imageSEXP);
+    Rcpp::traits::input_parameter< float >::type magx(magxSEXP);
+    Rcpp::traits::input_parameter< float >::type magy(magySEXP);
+    rcpp_result_gen = Rcpp::wrap(resize_image_xy(image, magx, magy));
+    return rcpp_result_gen;
+END_RCPP
+}
 // generate_disk
 arma::mat generate_disk(float radius, int dim);
 RcppExport SEXP _rayimage_generate_disk(SEXP radiusSEXP, SEXP dimSEXP) {
@@ -133,6 +158,8 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rayimage_subsample", (DL_FUNC) &_rayimage_subsample, 2},
+    {"_rayimage_resize_image", (DL_FUNC) &_rayimage_resize_image, 2},
+    {"_rayimage_resize_image_xy", (DL_FUNC) &_rayimage_resize_image_xy, 3},
     {"_rayimage_generate_disk", (DL_FUNC) &_rayimage_generate_disk, 2},
     {"_rayimage_gen_ellipse", (DL_FUNC) &_rayimage_gen_ellipse, 3},
     {"_rayimage_subsample_rect", (DL_FUNC) &_rayimage_subsample_rect, 3},
