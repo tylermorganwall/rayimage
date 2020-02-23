@@ -9,7 +9,7 @@ reference:
     contents:
       - starts_with("add")
   - title: "Depth of Field/Convolution"
-    desc: "Functions for detecting and adding layers to maps."
+    desc: "Functions for transforming images."
     contents:
       - starts_with("render")
   - title: "Plotting and Saving Images"
