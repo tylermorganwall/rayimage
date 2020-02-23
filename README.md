@@ -38,10 +38,12 @@ various camera settings, including:
 The output is either plotted to the current device, or save to a file
 (if a filename is passed to the function).
 
-`render_convolution` performs a convolution with a user-supplied kernel
-(either custom, or using one of the built-in functions to generate a
-kernel: `generate_2d_gaussian`, `generate_2d_exponential`, and
-`generate_2d_disk`).
+`render_convolution` performs a discrete convolution with a
+user-supplied kernel (either custom, or using one of the built-in
+functions to generate a kernel: `generate_2d_gaussian`,
+`generate_2d_exponential`, and `generate_2d_disk`). This function can be
+applied to either images represented by RGB arrays/filenames, or 2D
+matrices.
 
 `add_title` adds titles to images, with an optional title bar. User can
 specify opacity, color, and font properties. `add_vignette` adds a
@@ -169,6 +171,20 @@ image(generate_2d_disk(31), asp=1)
 
 ![](man/figures/unnamed-chunk-5-4.png)<!-- -->
 
+We can also use this to perform generate discrete 2D convolutions with
+matrices:
+
+``` r
+par(mfrow = c(1,2))
+
+volcano %>% image()
+volcano %>% 
+  render_convolution(kernel=generate_2d_gaussian(sd=1,dim=31)) %>% 
+  image()
+```
+
+![](man/figures/unnamed-chunk-6-1.png)<!-- -->
+
 And here we use a user-defined kernel, in the shape of a cross.
 
 ``` r
@@ -181,9 +197,9 @@ plot_image(custom1)
 plot_image(custom2)
 
 #Horizontal cross
-render_convolution(dragon, kernel = custom1)
+render_convolution(dragon, kernel = custom1, preview = TRUE) 
 #Diagonal cross
-render_convolution(dragon, kernel = custom2)
+render_convolution(dragon, kernel = custom2, preview = TRUE)
 ```
 
-![](man/figures/unnamed-chunk-6-1.png)<!-- -->
+![](man/figures/unnamed-chunk-7-1.png)<!-- -->
