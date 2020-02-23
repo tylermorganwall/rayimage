@@ -54,7 +54,7 @@
 render_convolution = function(image, kernel = "gaussian",
                               kernel_dim = 11, kernel_extent = 3,
                               min_value=NULL,
-                              filename=NULL, preview=TRUE,
+                              filename=NULL, preview=FALSE,
                               gamma_correction = TRUE, progress = FALSE) {
   if(!is.null(filename)) {
     if(tools::file_ext(filename) != "png") {
@@ -89,21 +89,41 @@ render_convolution = function(image, kernel = "gaussian",
     temp_image = suppressWarnings(aperm(jpeg::readJPEG(image),c(2,1,3)))
   } else if (imagetype == "png"){
     temp_image = suppressWarnings(aperm(png::readPNG(image),c(2,1,3)))
+  } else if (imagetype == "matrix") {
+    temp_image = t(image)
+  }
+
+  if(any(dim(kernel) > dim(temp_image)[1:2]*2 + 1)) {
+    stop("kernel dimensions: ", paste0(dim(kernel),collapse="x"),
+         " must not be greater than 2x image dimensions: ", paste0(dim(temp_image)[1:2],collapse="x"),
+         ", plus one (here, ", paste0(dim(temp_image)[1:2]*2 + 1, collapse="x"),").")
   }
 
   if(gamma_correction) {
     temp_image = temp_image^2.2
   }
   bloom_matrix = matrix(TRUE, nrow = nrow(temp_image), ncol = ncol(temp_image))
-
-  if(!is.null(min_value)) {
-    bloom_matrix[temp_image[,,1] <= min_value] = FALSE
-    bloom_matrix[temp_image[,,2] <= min_value] = FALSE
-    bloom_matrix[temp_image[,,3] <= min_value] = FALSE
+  if(imagetype != "matrix") {
+    if(!is.null(min_value)) {
+      bloom_matrix[temp_image[,,1] <= min_value] = FALSE
+      bloom_matrix[temp_image[,,2] <= min_value] = FALSE
+      bloom_matrix[temp_image[,,3] <= min_value] = FALSE
+    }
+  } else {
+    if(!is.null(min_value)) {
+      bloom_matrix[temp_image <= min_value] = FALSE
+    }
   }
-  for(i in 1:3) {
-    temp_image[,,i] = flipud(t(convolution_cpp(t(flipud(temp_image[,,i])), kernel = kernel,
-      progbar = progress, channel = i, bloom_matrix = t(flipud(bloom_matrix)))))
+  if(imagetype != "matrix") {
+    for(i in 1:3) {
+      temp_image[,,i] = flipud(t(convolution_cpp(t(flipud(temp_image[,,i])), kernel = kernel,
+        progbar = progress, channel = i, bloom_matrix = t(flipud(bloom_matrix)))))
+    }
+  } else {
+    for(i in 1:3) {
+      temp_image = flipud(t(convolution_cpp(t(flipud(temp_image)), kernel = kernel,
+        progbar = progress, channel = i, bloom_matrix = t(flipud(bloom_matrix)))))
+    }
   }
   if(gamma_correction) {
     temp_image = temp_image ^ (1/2.2)
@@ -112,13 +132,25 @@ render_convolution = function(image, kernel = "gaussian",
     if(preview) {
       temp_image[temp_image > 1] = 1
       temp_image[temp_image < 0] = 0
-      plot_image(aperm(temp_image,c(2,1,3)))
+      if(imagetype != "matrix") {
+        plot_image(aperm(temp_image,c(2,1,3)))
+      } else {
+        plot_image(t(temp_image))
+      }
     } else {
-      aperm(temp_image,c(2,1,3))
+      if(imagetype != "matrix") {
+        aperm(temp_image,c(2,1,3))
+      } else {
+        t(temp_image)
+      }
     }
   } else {
     temp_image[temp_image > 1] = 1
     temp_image[temp_image < 0] = 0
-    save_png(aperm(temp_image,c(2,1,3)),filename)
+    if(imagetype != "matrix") {
+      save_png(aperm(temp_image,c(2,1,3)),filename)
+    } else {
+      save_png(t(temp_image),filename)
+    }
   }
 }

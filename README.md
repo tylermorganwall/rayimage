@@ -52,11 +52,10 @@ camera vignette effect. `add_overlay` adds overlays to images.
 ## Usage
 
 The package comes with a sample image and depth map derived from
-Stanford “dragon” 3D model. The image is in memory as `dragon` and the
-depthmap is `dragondepth`.
+Stanford “Chinese Dragon” 3D model. The image is included in rayimage as
+`dragon` and the depthmap is `dragondepth`.
 
 ``` r
-#load rayshader package for raster plotting
 library(rayimage)
 
 par(mfrow = c(1,2))
