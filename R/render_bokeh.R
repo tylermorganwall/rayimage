@@ -1,7 +1,8 @@
 #'@title Render Bokeh
 #'
-#'@description Takes an image and a depth map to render the image with depth of field.
-#'User can specify a custom bokeh shape, or use one of the built-in bokeh types.
+#'@description Takes an image and a depth map to render the image with depth of field
+#'(i.e. similar to "Portrait Mode" in an iPhone). User can specify a custom bokeh shape,
+#'or use one of the built-in bokeh types.
 #'
 #'@param image Image filename or 3-layer RGB array.
 #'@param depthmap Depth map filename or 1d array.

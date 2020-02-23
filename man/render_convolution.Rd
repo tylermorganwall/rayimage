@@ -11,7 +11,7 @@ render_convolution(
   kernel_extent = 3,
   min_value = NULL,
   filename = NULL,
-  preview = TRUE,
+  preview = FALSE,
   gamma_correction = TRUE,
   progress = FALSE
 )
@@ -71,6 +71,14 @@ render_convolution(dragon, kernel = 5, kernel_dim=24, kernel_extent=24, min_valu
 #Use a built-in kernel:
 \donttest{
 render_convolution(dragon, kernel = generate_2d_exponential(falloff=2, dim=31, width=21))
+}
+
+#We can also apply this function to matrices:
+\donttest{
+volcano \%>\% image()
+volcano \%>\%
+ render_convolution(kernel=generate_2d_gaussian(sd=1,dim=31)) \%>\%
+ image()
 }
 
 #Use a custom kernel (in this case, an X shape):

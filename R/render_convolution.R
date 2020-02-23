@@ -45,6 +45,14 @@
 #'render_convolution(dragon, kernel = generate_2d_exponential(falloff=2, dim=31, width=21))
 #'}
 #'
+#'#We can also apply this function to matrices:
+#'\donttest{
+#'volcano %>% image()
+#'volcano %>%
+#'  render_convolution(kernel=generate_2d_gaussian(sd=1,dim=31)) %>%
+#'  image()
+#'}
+#'
 #'#Use a custom kernel (in this case, an X shape):
 #'custom = diag(10) + (diag(10)[,10:1])
 #'\donttest{

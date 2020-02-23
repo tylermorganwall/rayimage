@@ -56,8 +56,9 @@ passes in a 2D matrix, that matrix will control the shape of the bokeh.}
 3-layer RGB array of the processed image.
 }
 \description{
-Takes an image and a depth map to render the image with depth of field.
-User can specify a custom bokeh shape, or use one of the built-in bokeh types.
+Takes an image and a depth map to render the image with depth of field
+(i.e. similar to "Portrait Mode" in an iPhone). User can specify a custom bokeh shape,
+or use one of the built-in bokeh types.
 }
 \examples{
 #Plot the dragon
