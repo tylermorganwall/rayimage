@@ -136,7 +136,7 @@ render_convolution(dragon, kernel = generate_2d_disk(31))
 
 And here we use a user-defined kernel, in the shape of a cross.
 
-```{r fig.width=6, fig.height=6}
+```{r fig.width=8, fig.height=8}
 
 par(mfrow = c(2,2))
 custom1 = matrix(0, nrow=11,ncol=11)
