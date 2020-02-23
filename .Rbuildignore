@@ -4,3 +4,10 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^README_cache$
+^README_files$
+^\.travis\.yml$
+^build_gh_pages_rayimage\.R$
+^man/figures$
+^README\.md$
+^README\.Rmd$
