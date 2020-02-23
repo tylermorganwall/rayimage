@@ -13,7 +13,7 @@ reference:
     contents:
       - starts_with("render")
   - title: "Plotting and Saving Images"
-    desc: "Functions for displaying/saving o,ages"
+    desc: "Functions for displaying/saving images"
     contents:
       - starts_with("plot")
   - title: "Kernels"
