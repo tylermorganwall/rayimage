@@ -2,7 +2,7 @@
 #'
 #'@description Displays the image in the current device.
 #'
-#'@param input Image to be plotted.
+#'@param input Image or filename of an image to be plotted.
 #'@param rotate Default 0. Rotates the output. Possible values: 0, 90, 180, 270.
 #'@param keep_user_par Default `TRUE`. Whether to keep the user's `par()` settings. Set to `FALSE` if you
 #'want to set up a multi-pane plot (e.g. set `par(mfrow)`).
@@ -12,6 +12,12 @@
 #'#Plot the dragon array
 #'plot_image(dragon)
 plot_image = function(input, rotate=0, keep_user_par = FALSE, ...) {
+  imagetype = get_file_type(input)
+  if(imagetype == "jpg") {
+    input = suppressWarnings(jpeg::readJPEG(input))
+  } else if (imagetype == "png"){
+    input = suppressWarnings(png::readPNG(input))
+  }
   if(keep_user_par) {
     old.par = graphics::par(no.readonly = TRUE)
     on.exit(graphics::par(old.par))

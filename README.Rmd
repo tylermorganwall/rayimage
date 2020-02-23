@@ -39,11 +39,12 @@ Functions
 
 The output is either plotted to the current device, or save to a file (if a filename is passed to the function).
 
-`render_convolution()` performs a discrete convolution with a user-supplied kernel (either custom, or using one of the built-in functions to generate a kernel: `generate_2d_gaussian`, `generate_2d_exponential`, and `generate_2d_disk`). This function can be applied to either images represented by RGB arrays/filenames, or 2D matrices.
+`render_convolution()` performs a discrete convolution with a user-supplied kernel (either custom, or using one of the built-in functions to generate a kernel: `generate_2d_gaussian()`, `generate_2d_exponential()`, and `generate_2d_disk()`). This function can be applied to either images represented by RGB arrays/filenames, or 2D matrices.
 `render_resized()` resizes an image or a matrix using a magnification factor or the dimensions of the desired object. This function interpolates between points using bilinear interpolation.
+`render_reorient()` reorients an image, either flipping horizontally, vertically, or with a transpose operation.
 
 `add_title()` adds titles to images, with an optional title bar. User can specify opacity, color, and font properties.
-`add_vignette()` adds a camera vignette effect.
+`add_vignette()` adds a camera vignette effect, which is a slight darkening by the edges of an image.
 `add_image_overlay()` adds overlays to images.
 
 `plot_image()` plots an RGB array to the current device.
@@ -139,6 +140,18 @@ dragon %>%
   add_title("Dragon", title_size = 20, title_bar_color = "red", 
             title_bar_alpha=0.8, title_color="white", title_offset = c(12,12)) %>%
   plot_image()
+
+```
+
+Reorienting images and matrices can be done with `render_reorient()`:
+
+```{r fig.width=4, fig.height=4}
+
+par(mfrow = c(2,2))
+render_reorient(dragon, preview = TRUE)
+render_reorient(dragon, flipx = TRUE, preview = TRUE)
+render_reorient(dragon, flipy = TRUE, preview = TRUE)
+render_reorient(dragon, transpose = TRUE, preview = TRUE)
 
 ```
 

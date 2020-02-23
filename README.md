@@ -40,16 +40,19 @@ The output is either plotted to the current device, or save to a file
 
 `render_convolution()` performs a discrete convolution with a
 user-supplied kernel (either custom, or using one of the built-in
-functions to generate a kernel: `generate_2d_gaussian`,
-`generate_2d_exponential`, and `generate_2d_disk`). This function can be
-applied to either images represented by RGB arrays/filenames, or 2D
-matrices. `render_resized()` resizes an image or a matrix using a
+functions to generate a kernel: `generate_2d_gaussian()`,
+`generate_2d_exponential()`, and `generate_2d_disk()`). This function
+can be applied to either images represented by RGB arrays/filenames, or
+2D matrices. `render_resized()` resizes an image or a matrix using a
 magnification factor or the dimensions of the desired object. This
 function interpolates between points using bilinear interpolation.
+`render_reorient()` reorients an image, either flipping horizontally,
+vertically, or with a transpose operation.
 
 `add_title()` adds titles to images, with an optional title bar. User
 can specify opacity, color, and font properties. `add_vignette()` adds a
-camera vignette effect. `add_image_overlay()` adds overlays to images.
+camera vignette effect, which is a slight darkening by the edges of an
+image. `add_image_overlay()` adds overlays to images.
 
 `plot_image()` plots an RGB array to the current device.
 
@@ -161,6 +164,18 @@ dragon %>%
 
 ![](man/figures/unnamed-chunk-5-1.png)<!-- -->
 
+Reorienting images and matrices can be done with `render_reorient()`:
+
+``` r
+par(mfrow = c(2,2))
+render_reorient(dragon, preview = TRUE)
+render_reorient(dragon, flipx = TRUE, preview = TRUE)
+render_reorient(dragon, flipy = TRUE, preview = TRUE)
+render_reorient(dragon, transpose = TRUE, preview = TRUE)
+```
+
+![](man/figures/unnamed-chunk-6-1.png)<!-- -->
+
 We can also use the `render_convolution()` directly to perform a
 convolution with a user-defined (or built-in) kernel.
 
@@ -171,7 +186,7 @@ render_convolution(dragon, kernel = "gaussian", preview = TRUE)
 image(generate_2d_gaussian(1,1,11,3), asp=1, axes=FALSE)
 ```
 
-![](man/figures/unnamed-chunk-6-1.png)<!-- -->
+![](man/figures/unnamed-chunk-7-1.png)<!-- -->
 
 ``` r
 #Custom gaussian kernel
@@ -179,7 +194,7 @@ render_convolution(dragon, kernel = generate_2d_gaussian(10,1,31,21), preview = 
 image(generate_2d_gaussian(10,1,31,21), asp=1, axes=FALSE)
 ```
 
-![](man/figures/unnamed-chunk-6-2.png)<!-- -->
+![](man/figures/unnamed-chunk-7-2.png)<!-- -->
 
 ``` r
 #Custom exponential kernel
@@ -187,7 +202,7 @@ render_convolution(dragon, kernel = generate_2d_exponential(3,31,21), preview = 
 image(generate_2d_exponential(3,31,21), asp=1, axes=FALSE)
 ```
 
-![](man/figures/unnamed-chunk-6-3.png)<!-- -->
+![](man/figures/unnamed-chunk-7-3.png)<!-- -->
 
 ``` r
 #Custom disk kernel
@@ -195,7 +210,7 @@ render_convolution(dragon, kernel = generate_2d_disk(31), preview = TRUE)
 image(generate_2d_disk(31), asp=1, axes=FALSE)
 ```
 
-![](man/figures/unnamed-chunk-6-4.png)<!-- -->
+![](man/figures/unnamed-chunk-7-4.png)<!-- -->
 
 We can also use this to perform generate discrete 2D convolutions with
 matrices:
@@ -209,7 +224,7 @@ volcano %>%
   image()
 ```
 
-![](man/figures/unnamed-chunk-7-1.png)<!-- -->
+![](man/figures/unnamed-chunk-8-1.png)<!-- -->
 
 And here we use a user-defined kernel, in the shape of a cross.
 
@@ -228,4 +243,4 @@ render_convolution(dragon, kernel = custom1, preview = TRUE)
 render_convolution(dragon, kernel = custom2, preview = TRUE)
 ```
 
-![](man/figures/unnamed-chunk-8-1.png)<!-- -->
+![](man/figures/unnamed-chunk-9-1.png)<!-- -->

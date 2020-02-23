@@ -7,7 +7,7 @@
 plot_image(input, rotate = 0, keep_user_par = FALSE, ...)
 }
 \arguments{
-\item{input}{Image to be plotted.}
+\item{input}{Image or filename of an image to be plotted.}
 
 \item{rotate}{Default 0. Rotates the output. Possible values: 0, 90, 180, 270.}
 

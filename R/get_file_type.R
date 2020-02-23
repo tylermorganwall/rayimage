@@ -8,7 +8,7 @@
 #' #Fake example
 get_file_type = function(file) {
   if(is.character(file)) {
-    if(tools::file_ext(file) == ".png") {
+    if(tools::file_ext(file) == "png") {
       imagetype = "png"
     } else {
       imagetype = "jpg"

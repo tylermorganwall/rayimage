@@ -8,7 +8,7 @@ reference:
     desc: "Functions for adding effects to images."
     contents:
       - starts_with("add")
-  - title: "Depth of Field/Convolution"
+  - title: "Render Image Transformations"
     desc: "Functions for transforming images."
     contents:
       - starts_with("render")
