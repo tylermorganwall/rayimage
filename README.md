@@ -22,7 +22,7 @@ remotes::install_github("tylermorganwall/rayimage")
 
 ## Functions
 
-`render_bokeh` takes two images as an input: an in-focus image, and a
+`render_bokeh()` takes two images as an input: an in-focus image, and a
 depth map for that image. These can either be in-memory representations
 of the image, or file paths to the images. The user can also specify
 various camera settings, including:
@@ -38,18 +38,20 @@ various camera settings, including:
 The output is either plotted to the current device, or save to a file
 (if a filename is passed to the function).
 
-`render_convolution` performs a discrete convolution with a
+`render_convolution()` performs a discrete convolution with a
 user-supplied kernel (either custom, or using one of the built-in
 functions to generate a kernel: `generate_2d_gaussian`,
 `generate_2d_exponential`, and `generate_2d_disk`). This function can be
 applied to either images represented by RGB arrays/filenames, or 2D
-matrices.
+matrices. `render_resized()` resizes an image or a matrix using a
+magnification factor or the dimensions of the desired object. This
+function interpolates between points using bilinear interpolation.
 
-`add_title` adds titles to images, with an optional title bar. User can
-specify opacity, color, and font properties. `add_vignette` adds a
-camera vignette effect. `add_image_overlay` adds overlays to images.
+`add_title()` adds titles to images, with an optional title bar. User
+can specify opacity, color, and font properties. `add_vignette()` adds a
+camera vignette effect. `add_image_overlay()` adds overlays to images.
 
-`plot_image` plots an RGB array to the current device.
+`plot_image()` plots an RGB array to the current device.
 
 ## Usage
 
