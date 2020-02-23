@@ -44,11 +44,10 @@ kernel: `generate_2d_gaussian`, `generate_2d_exponential`, and
 `generate_2d_disk`).
 
 `add_title` adds titles to images, with an optional title bar. User can
-specify opacity, color, and font properties.
+specify opacity, color, and font properties. `add_vignette` adds a
+camera vignette effect. `add_overlay` adds overlays to images.
 
-`add_vignette` adds a camera vignette effect.
-
-`plot_image`
+`plot_image` plots an RGB array.
 
 ## Usage
 
