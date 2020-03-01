@@ -52,12 +52,27 @@ add_title = function(image,
                      title_bar_color = NULL, title_bar_alpha = 0.5,
                      filename = NULL, preview = FALSE) {
   imagetype = get_file_type(image)
+  temp = tempfile(fileext = ".png")
   if(imagetype == "array") {
-    temp = tempfile(fileext = ".png")
     #Clip HDR images
     image[image > 1] = 1
     png::writePNG(image,temp)
     image = temp
+  } else if (imagetype == "matrix") {
+    newarray = array(0,dim=c(nrow(image),ncol(image),3))
+    newarray[,,1] = image
+    newarray[,,2] = image
+    newarray[,,3] = image
+    #Clip HDR images
+    newarray[newarray > 1] = 1
+    png::writePNG(newarray,temp)
+    image = temp
+  } else if (imagetype == "png") {
+    image = png::readPNG(image)
+    png::writePNG(image,temp)
+  } else if (imagetype == "jpg") {
+    image = jpeg::readJPEG(image)
+    png::writePNG(image,temp)
   }
   tempmap = png::readPNG(temp)
   dimensions = dim(tempmap)
@@ -82,18 +97,18 @@ add_title = function(image,
     title_bar[1:title_bar_width,,4] = title_bar_alpha
     title_bar_temp = paste0(tempfile(),".png")
     png::writePNG(title_bar,title_bar_temp)
-    magick::image_read(image) %>%
+    magick::image_read(temp) %>%
       magick::image_composite(magick::image_read(title_bar_temp),
       ) %>%
-      magick::image_write(path = image, format = "png")
+      magick::image_write(path = temp, format = "png")
   }
-  magick::image_read(image) %>%
+  magick::image_read(temp) %>%
     magick::image_annotate(title_text,
                            location = paste0("+", title_offset[1],"+",title_offset[2]),
                            size = title_size, color = title_color,
                            font = title_font) %>%
-    magick::image_write(path = image, format = "png")
-  temp = png::readPNG(image)
+    magick::image_write(path = temp, format = "png")
+  temp = png::readPNG(temp)
   if(length(dim(temp)) == 3 && dim(temp)[3] == 2) {
     temparray = array(0,dim = c(nrow(temp),ncol(temp),3))
     temparray[,,1] = temp[,,1]

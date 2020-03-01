@@ -6,7 +6,7 @@
 #'@param mag Default `1`. Amount to magnify the image, preserving aspect ratio. Overridden if
 #'`dim` is not `NULL`.
 #'@param dims Default `NULL`. Exact resized dimensions.
-#'@param filename The filename of the image to be saved. If this is not given, the image will be plotted instead.
+#'@param filename Default `NULL`. The filename of the image to be saved. If this is not given, the image will be plotted instead.
 #'@param preview Default `FALSE`. Whether to plot the convolved image, or just to return the values.
 #'@return 3-layer RGB resized array or matrix.
 #'@export

@@ -6,7 +6,7 @@
 #'@param flipx Default `FALSE`. Flip horizontally
 #'@param flipy Default `FALSE`. Flip vertically.
 #'@param transpose Default `FALSE`. Transpose image.
-#'@param filename The filename of the image to be saved. If this is not given, the image will be plotted instead.
+#'@param filename Default `NULL`. The filename of the image to be saved. If this is not given, the image will be plotted instead.
 #'@param preview Default `FALSE`. Whether to plot the convolved image, or just to return the values.
 #'@return 3-layer RGB reoriented array or matrix.
 #'@export
@@ -61,7 +61,7 @@ render_reorient = function(image, flipx = FALSE, flipy = FALSE, transpose = FALS
   }
   if(transpose) {
     if (imagetype == "matrix") {
-      temp_image = t(image)
+      temp_image = t(temp_image)
     } else {
       temp_image = aperm(temp_image,c(2,1,3))
     }
@@ -77,6 +77,6 @@ render_reorient = function(image, flipx = FALSE, flipy = FALSE, transpose = FALS
   } else {
     temp_image[temp_image > 1] = 1
     temp_image[temp_image < 0] = 0
-    save_png(temp_image,filename)
+    save_png(temp_image, filename)
   }
 }

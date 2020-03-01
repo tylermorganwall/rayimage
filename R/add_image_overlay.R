@@ -33,12 +33,27 @@
 #'}
 add_image_overlay = function(image, image_overlay = NULL, filename = NULL,  preview = FALSE) {
   imagetype = get_file_type(image)
+  temp = tempfile(fileext = ".png")
   if(imagetype == "array") {
-    temp = tempfile(fileext = ".png")
     #Clip HDR images
     image[image > 1] = 1
     png::writePNG(image,temp)
     image = temp
+  } else if (imagetype == "matrix") {
+    newarray = array(0,dim=c(nrow(image),ncol(image),3))
+    newarray[,,1] = image
+    newarray[,,2] = image
+    newarray[,,3] = image
+    #Clip HDR images
+    newarray[newarray > 1] = 1
+    png::writePNG(newarray,temp)
+    image = temp
+  } else if (imagetype == "png") {
+    image = png::readPNG(image)
+    png::writePNG(image,temp)
+  } else if (imagetype == "jpg") {
+    image = jpeg::readJPEG(image)
+    png::writePNG(image,temp)
   }
   tempmap = aperm(png::readPNG(temp),c(2,1,3))
   dimensions = dim(tempmap)
@@ -62,7 +77,7 @@ add_image_overlay = function(image, image_overlay = NULL, filename = NULL,  prev
                           paste0(dimensions[1],"x",dimensions[2],"!"))
     ) %>%
     magick::image_write(path = temp, format = "png")
-  temp = png::readPNG(image)
+  temp = png::readPNG(temp)
   if(length(dim(temp)) == 3 && dim(temp)[3] == 2) {
     temparray = array(0,dim = c(nrow(temp),ncol(temp),3))
     temparray[,,1] = temp[,,1]

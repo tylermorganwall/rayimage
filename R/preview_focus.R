@@ -34,9 +34,9 @@ preview_focus = function(image, depthmap, focus, imagetype, depthtype) {
     image[,,1][depthmap < range_depth_high & depthmap > range_depth_low] = 1
     image[,,2][depthmap < range_depth_high & depthmap > range_depth_low] = 0
     image[,,2][depthmap < range_depth_high & depthmap > range_depth_low] = 0
-    print(sprintf("Focal range: %g-%g", depthrange[1], depthrange[2]))
+    message(sprintf("Focal range: %g-%g", depthrange[1], depthrange[2]))
     plot_image(image)
   } else {
-    print(sprintf("Focus point (%g) not in focal range: %g-%g", focus, depthrange[1],depthrange[2]))
+    message(sprintf("Focus point (%g) not in focal range: %g-%g", focus, depthrange[1],depthrange[2]))
   }
 }

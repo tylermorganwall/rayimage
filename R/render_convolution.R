@@ -6,7 +6,7 @@
 #'kernel for the edges).
 #'
 #'@param image Image filename or 3-layer RGB array.
-#'@param filename The filename of the image to be saved. If this is not given, the image will be plotted instead.
+#'@param filename Default `NULL`. The filename of the image to be saved. If this is not given, the image will be plotted instead.
 #'@param kernel Default `gaussian`. By default, an 11x11 Gaussian kernel with a mean
 #'of `0` and a standard deviation of `1`, running from `-kernel_extent` to `kernel_extent`.
 #'If numeric, this will be the standard deviation of the normal distribution. If a

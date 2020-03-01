@@ -3,7 +3,7 @@
 #'@description Takes an RGB array/filename and adds a camera vignette effect.
 #'
 #'@param image Image filename or 3-layer RGB array.
-#'@param filename Default `NULL`. File to save the image to. If `NULL` and `preview = FALSE`,
+#'@param filename Default `NULL`. Filename which to save the image. If `NULL` and `preview = FALSE`,
 #'returns an RGB array.
 #'@param vignette Default `0.5`. A camera vignetting effect will be added to the image.
 #'`1` is the darkest vignetting, while `0` is no vignetting. If vignette is a length-2 vector, the second entry will
@@ -34,12 +34,27 @@
 #'}
 add_vignette = function(image, vignette = 0.5, filename = NULL, preview = FALSE) {
   imagetype = get_file_type(image)
+  temp = tempfile(fileext = ".png")
   if(imagetype == "array") {
-    temp = tempfile(fileext = ".png")
     #Clip HDR images
     image[image > 1] = 1
     png::writePNG(image,temp)
     image = temp
+  } else if (imagetype == "matrix") {
+    newarray = array(0,dim=c(nrow(image),ncol(image),3))
+    newarray[,,1] = image
+    newarray[,,2] = image
+    newarray[,,3] = image
+    #Clip HDR images
+    newarray[newarray > 1] = 1
+    png::writePNG(newarray,temp)
+    image = temp
+  } else if (imagetype == "png") {
+    image = png::readPNG(image)
+    png::writePNG(image,temp)
+  } else if (imagetype == "jpg") {
+    image = jpeg::readJPEG(image)
+    png::writePNG(image,temp)
   }
   tempmap = png::readPNG(temp)
   dimensions = dim(tempmap)
@@ -67,7 +82,7 @@ add_vignette = function(image, vignette = 0.5, filename = NULL, preview = FALSE)
   magick::image_read(temp) %>%
     magick::image_composite(magick::image_read(imagefile)) %>%
     magick::image_write(path = temp, format = "png")
-  temp = png::readPNG(image)
+  temp = png::readPNG(temp)
   if(length(dim(temp)) == 3 && dim(temp)[3] == 2) {
     temparray = array(0,dim = c(nrow(temp),ncol(temp),3))
     temparray[,,1] = temp[,,1]

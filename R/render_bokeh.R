@@ -9,7 +9,7 @@
 #'@param focus Defaults `0.5`. Depth in which to blur. Minimum 0, maximum 1.
 #'@param focallength Default `100`. Focal length of the virtual camera.
 #'@param fstop Default `4`. F-stop of the virtual camera.
-#'@param filename The filename of the image to be saved. If this is not given, the image will be plotted instead.
+#'@param filename Default `NULL`. The filename of the image to be saved. If this is not given, the image will be plotted instead.
 #'@param preview Default `TRUE`. If `FALSE`, it will not display the image and just return the RGB array.
 #'@param preview_focus Default `FALSE`. If `TRUE`, a red line will be drawn across the image
 #'showing where the camera will be focused.
