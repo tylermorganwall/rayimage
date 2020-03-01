@@ -27,7 +27,7 @@
 #'plot_image(dragon)
 #'
 #'#Plot the depth map
-#'image(dragondepth, asp = 1)
+#'image(dragondepth, asp = 1, col = hcl.colors(256))
 #'
 #'#Preview the focal plane:
 #'\donttest{

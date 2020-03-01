@@ -28,21 +28,23 @@
 #'plot_image(dragon)
 #'
 #'#Perform a convolution with the default gaussian kernel
-#'render_convolution(dragon)
+#'render_convolution(dragon, preview = TRUE)
 #'
 #'#Increase the width of the kernel
 #'\donttest{
-#'render_convolution(dragon, kernel = 2, kernel_dim=21,kernel_extent=6)
+#'render_convolution(dragon, kernel = 2, kernel_dim=21,kernel_extent=6, preview = TRUE)
 #'}
 #'
 #'#Only perform the convolution on bright pixels (bloom)
 #'\donttest{
-#'render_convolution(dragon, kernel = 5, kernel_dim=24, kernel_extent=24, min_value=1)
+#'render_convolution(dragon, kernel = 5, kernel_dim=24, kernel_extent=24,
+#'                   min_value=1, preview = TRUE)
 #'}
 #'
 #'#Use a built-in kernel:
 #'\donttest{
-#'render_convolution(dragon, kernel = generate_2d_exponential(falloff=2, dim=31, width=21))
+#'render_convolution(dragon, kernel = generate_2d_exponential(falloff=2, dim=31, width=21),
+#'                   preview = TRUE)
 #'}
 #'
 #'#We can also apply this function to matrices:
@@ -57,7 +59,7 @@
 #'custom = diag(10) + (diag(10)[,10:1])
 #'\donttest{
 #'plot_image(custom)
-#'render_convolution(dragon, kernel = custom)
+#'render_convolution(dragon, kernel = custom, preview = TRUE)
 #'}
 render_convolution = function(image, kernel = "gaussian",
                               kernel_dim = 11, kernel_extent = 3,

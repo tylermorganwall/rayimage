@@ -25,6 +25,9 @@ reference:
     contents:
       - starts_with("dragon")
 
+figures:
+  fig.asp: 1
+
 navbar:
   title: "rayimage"
   type: inverse

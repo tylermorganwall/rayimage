@@ -14,7 +14,7 @@ add_vignette(image, vignette = 0.5, filename = NULL, preview = FALSE)
 control the blurriness of the vignette effect (\code{1} is the default, e.g. \code{2} would double the blurriness but would take
 much longer to compute).}
 
-\item{filename}{Default \code{NULL}. File to save the image to. If \code{NULL} and \code{preview = FALSE},
+\item{filename}{Default \code{NULL}. Filename which to save the image. If \code{NULL} and \code{preview = FALSE},
 returns an RGB array.}
 
 \item{preview}{Default \code{FALSE}. If \code{TRUE}, it will display the image in addition

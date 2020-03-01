@@ -32,7 +32,7 @@ render_bokeh(
 
 \item{fstop}{Default \code{4}. F-stop of the virtual camera.}
 
-\item{filename}{The filename of the image to be saved. If this is not given, the image will be plotted instead.}
+\item{filename}{Default \code{NULL}. The filename of the image to be saved. If this is not given, the image will be plotted instead.}
 
 \item{preview}{Default \code{TRUE}. If \code{FALSE}, it will not display the image and just return the RGB array.}
 
@@ -65,7 +65,7 @@ or use one of the built-in bokeh types.
 plot_image(dragon)
 
 #Plot the depth map
-image(dragondepth, asp = 1)
+image(dragondepth, asp = 1, col = hcl.colors(256))
 
 #Preview the focal plane:
 \donttest{

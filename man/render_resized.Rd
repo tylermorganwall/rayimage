@@ -14,7 +14,7 @@ render_resized(image, mag = 1, dims = NULL, filename = NULL, preview = FALSE)
 
 \item{dims}{Default \code{NULL}. Exact resized dimensions.}
 
-\item{filename}{The filename of the image to be saved. If this is not given, the image will be plotted instead.}
+\item{filename}{Default \code{NULL}. The filename of the image to be saved. If this is not given, the image will be plotted instead.}
 
 \item{preview}{Default \code{FALSE}. Whether to plot the convolved image, or just to return the values.}
 }
