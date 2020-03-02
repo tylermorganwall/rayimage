@@ -18,7 +18,8 @@ Imports:
     png,
     rayshader,
     magrittr,
-    jpeg
+    jpeg,
+    grDevices
 Suggests:
     magick
 LinkingTo: Rcpp, RcppArmadillo, progress

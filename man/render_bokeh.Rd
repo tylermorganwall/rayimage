@@ -65,7 +65,7 @@ or use one of the built-in bokeh types.
 plot_image(dragon)
 
 #Plot the depth map
-image(dragondepth, asp = 1, col = hcl.colors(256))
+image(dragondepth, asp = 1, col = grDevices::heat.colors(256))
 
 #Preview the focal plane:
 \donttest{
