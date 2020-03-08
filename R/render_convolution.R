@@ -72,9 +72,7 @@ render_convolution = function(image, kernel = "gaussian",
     }
   }
   imagetype = get_file_type(image)
-  if(imagetype == "array") {
-    temp_image = aperm(image,c(2,1,3))
-  }
+  temp_image = image
   if(is.character(kernel)) {
     if(kernel == "gaussian") {
       kernel = generate_2d_gaussian(1,1,kernel_dim,kernel_extent)
@@ -126,12 +124,12 @@ render_convolution = function(image, kernel = "gaussian",
   }
   if(imagetype != "matrix") {
     for(i in 1:3) {
-      temp_image[,,i] = convolution_cpp(t(flipud(temp_image[,,i])), kernel = kernel,
-        progbar = progress, channel = i, bloom_matrix = t(flipud(bloom_matrix)))
+      temp_image[,,i] = convolution_cpp(temp_image[,,i], kernel = kernel,
+        progbar = progress, channel = i, bloom_matrix = bloom_matrix)
     }
   } else {
-    temp_image = convolution_cpp(t(flipud(temp_image)), kernel = kernel,
-      progbar = progress, channel = 1, bloom_matrix = t(flipud(bloom_matrix)))
+    temp_image = convolution_cpp(temp_image, kernel = kernel,
+      progbar = progress, channel = 1, bloom_matrix = bloom_matrix)
   }
   if(gamma_correction) {
     temp_image = temp_image ^ (1/2.2)
@@ -140,13 +138,17 @@ render_convolution = function(image, kernel = "gaussian",
     if(preview) {
       temp_image[temp_image > 1] = 1
       temp_image[temp_image < 0] = 0
-      plot_image(fliplr(temp_image))
+      plot_image(temp_image)
     } else {
-      fliplr(temp_image)
+      if(imagetype == "matrix") {
+        t(temp_image)
+      } else {
+        temp_image
+      }
     }
   } else {
     temp_image[temp_image > 1] = 1
     temp_image[temp_image < 0] = 0
-    save_png(fliplr(temp_image),filename)
+    save_png(temp_image,filename)
   }
 }

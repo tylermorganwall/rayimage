@@ -1,0 +1,8 @@
+pkgdown::build_site(run_dont_run = TRUE)
+system('echo "www.rayimage.dev" >> docs/CNAME')
+system("git checkout -b gh-pages")
+system("git add -f docs")
+system('git commit -m "deploy to gh-pages"')
+system("git push origin `git subtree split --prefix docs`:gh-pages --force")
+system("git checkout master")
+system("git branch -D gh-pages")
