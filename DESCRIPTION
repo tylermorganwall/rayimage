@@ -16,7 +16,6 @@ Imports:
     raster,
     scales,
     png,
-    rayshader,
     magrittr,
     jpeg,
     grDevices
