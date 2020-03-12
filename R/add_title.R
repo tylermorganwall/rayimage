@@ -83,7 +83,7 @@ add_title = function(image,
   if(!is.null(title_bar_color)) {
     title_bar_color = col2rgb(title_bar_color)/255
     title_bar = array(0,c(dimensions[1],dimensions[2],4))
-    title_bar_width = 2 * title_offset[1] + title_size
+    title_bar_width = 2 * title_offset[2] + title_size
     if(title_bar_width > dimensions[1]) {
       message(paste0(c("Input title_bar_width (", title_bar_width,
               ") greater than image height (",

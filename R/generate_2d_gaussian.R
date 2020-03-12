@@ -15,6 +15,9 @@ generate_2d_gaussian = function(sd = 1, power = 1, dim = 11, width = 3) {
   x = seq(-width,width,length.out = dim)
   y = seq(-width,width,length.out = dim)
   testmat = matrix(0,dim,dim)
+  if(sd == 0) {
+    sd == 0.00001
+  }
   for(i in 1:length(x)) {
     for(j in 1:length(y)) {
       testmat[i,j] = (dnorm(power*x[i],mean=0,sd=sd) * dnorm(power*y[j],mean=0,sd=sd))
