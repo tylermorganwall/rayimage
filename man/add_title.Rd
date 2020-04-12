@@ -11,8 +11,10 @@ add_title(
   title_color = "black",
   title_size = 30,
   title_font = "sans",
+  title_style = "normal",
   title_bar_color = NULL,
   title_bar_alpha = 0.5,
+  title_position = "northwest",
   filename = NULL,
   preview = FALSE
 )
@@ -32,9 +34,13 @@ image_annotate) corner to offset the title.}
 \item{title_font}{Default \code{sans}. String with font family such as "sans", "mono", "serif", "Times", "Helvetica",
 "Trebuchet", "Georgia", "Palatino" or "Comic Sans".}
 
+\item{title_style}{Default \code{normal}. Font style (e.g. \code{italic}).}
+
 \item{title_bar_color}{Default \code{NULL}. If a color, this will create a colored bar under the title.}
 
 \item{title_bar_alpha}{Default \code{0.5}. Transparency of the title bar.}
+
+\item{title_position}{Default \code{northwest}. Position of the title.}
 
 \item{filename}{Default \code{NULL}. File to save the image to. If \code{NULL} and \code{preview = FALSE},
 returns an RGB array.}
