@@ -14,8 +14,10 @@
 #'@param title_color Default `black`. Font color.
 #'@param title_font Default `sans`. String with font family such as "sans", "mono", "serif", "Times", "Helvetica",
 #'"Trebuchet", "Georgia", "Palatino" or "Comic Sans".
+#'@param title_style Default `normal`. Font style (e.g. `italic`).
 #'@param title_bar_color Default `NULL`. If a color, this will create a colored bar under the title.
 #'@param title_bar_alpha Default `0.5`. Transparency of the title bar.
+#'@param title_position Default `northwest`. Position of the title.
 #'@return 3-layer RGB array of the processed image.
 #'@import grDevices
 #'@export
@@ -48,8 +50,9 @@
 #'
 add_title = function(image,
                      title_text = "", title_offset = c(20,20),
-                     title_color = "black", title_size = 30, title_font = "sans",
-                     title_bar_color = NULL, title_bar_alpha = 0.5,
+                     title_color = "black", title_size = 30,
+                     title_font = "sans", title_style = "normal",
+                     title_bar_color = NULL, title_bar_alpha = 0.5, title_position = "northwest",
                      filename = NULL, preview = FALSE) {
   imagetype = get_file_type(image)
   temp = tempfile(fileext = ".png")
@@ -105,8 +108,8 @@ add_title = function(image,
   magick::image_read(temp) %>%
     magick::image_annotate(title_text,
                            location = paste0("+", title_offset[1],"+",title_offset[2]),
-                           size = title_size, color = title_color,
-                           font = title_font) %>%
+                           size = title_size, color = title_color, style = title_style,
+                           font = title_font, gravity = title_position) %>%
     magick::image_write(path = temp, format = "png")
   temp = png::readPNG(temp)
   if(length(dim(temp)) == 3 && dim(temp)[3] == 2) {
