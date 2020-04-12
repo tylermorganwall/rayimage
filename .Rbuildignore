@@ -11,3 +11,4 @@
 ^man/figures$
 ^README\.md$
 ^README\.Rmd$
+^\.github$
