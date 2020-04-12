@@ -72,7 +72,7 @@ add_image_overlay = function(image, image_overlay = NULL,
   if(inherits(image_overlay,"character")) {
     tempover = png::readPNG(image_overlay)
     if(length(dim(tempover)) == 3 && dim(tempover)[3] == 4 && !is.null(alpha)) {
-      if(alpha > 0 && alpha < 1) {
+      if(alpha >= 0 && alpha <= 1) {
         tempover[,,4] = tempover[,,4] * alpha
       } else {
         stop("alpha needs to be between 0 and 1")
@@ -80,7 +80,7 @@ add_image_overlay = function(image, image_overlay = NULL,
     }
     if(length(dim(tempover)) == 3 && dim(tempover)[3] == 3 && !is.null(alpha)) {
       newarray = array(alpha,dim = dim(tempover) + c(0,0,1))
-      if(alpha > 0 && alpha < 1) {
+      if(alpha >= 0 && alpha <= 1) {
         newarray[,,1:3] = tempover
         tempover = newarray
       } else {
@@ -91,7 +91,7 @@ add_image_overlay = function(image, image_overlay = NULL,
     png::writePNG(tempover, image_overlay_file)
   } else if(inherits(image_overlay,"array")) {
     if(length(dim(image_overlay)) == 3 && dim(image_overlay)[3] == 4 && !is.null(alpha)) {
-      if(alpha > 0 && alpha < 1) {
+      if(alpha >= 0 && alpha <= 1) {
         image_overlay[,,4] = image_overlay[,,4] * alpha
       } else {
         stop("alpha needs to be between 0 and 1")
@@ -99,7 +99,7 @@ add_image_overlay = function(image, image_overlay = NULL,
     }
     if(length(dim(image_overlay)) == 3 && dim(image_overlay)[3] == 3 && !is.null(alpha)) {
       newarray = array(alpha,dim = dim(image_overlay) + c(0,0,1))
-      if(alpha > 0 && alpha < 1) {
+      if(alpha >= 0 && alpha <= 1) {
         newarray[,,1:3] = image_overlay
         image_overlay = newarray
       } else {
