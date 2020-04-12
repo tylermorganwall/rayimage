@@ -3,9 +3,10 @@ on:
     branches: master
 
 name: pkgdown
-url: https://www.rayimage.dev
+
 jobs:
   pkgdown:
+    url: https://www.rayimage.dev
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v2
