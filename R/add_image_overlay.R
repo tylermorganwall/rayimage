@@ -6,6 +6,8 @@
 #'@param image_overlay Default `NULL`. Either a string indicating the location of a png image to overlay
 #'over the image (transparency included), or a 4-layer RGBA array. This image will be resized to the
 #'dimension of the image if it does not match exactly.
+#'@param alpha Default `NULL`, using overlay's alpha channel. Otherwise, this sets the alpha transparency
+#'by multiplying the existing alpha channel by this value (between 0 and 1).
 #'@param filename Default `NULL`. File to save the image to. If `NULL` and `preview = FALSE`,
 #'returns an RGB array.
 #'@param preview Default `FALSE`. If `TRUE`, it will display the image in addition
@@ -23,15 +25,18 @@
 #'circlemat = circlemat/max(circlemat)
 #'
 #'#Create RGBA image, with a transparency of 0.5
-#'rgba_array = array(0, dim=c(nrow(circlemat),ncol(circlemat),4))
+#'rgba_array = array(1, dim=c(nrow(circlemat),ncol(circlemat),4))
 #'rgba_array[,,1] = circlemat
-#'rgba_array[,,4] = 0.5
+#'rgba_array[,,2] = 0
+#'rgba_array[,,3] = 0
 #'dragon_clipped = dragon
 #'dragon_clipped[dragon_clipped > 1] = 1
 #'\donttest{
-#'add_image_overlay(dragon_clipped, image_overlay = rgba_array, preview = TRUE)
+#'add_image_overlay(dragon_clipped, image_overlay = rgba_array,
+#'                  alpha=0.5, preview = TRUE)
 #'}
-add_image_overlay = function(image, image_overlay = NULL, filename = NULL,  preview = FALSE) {
+add_image_overlay = function(image, image_overlay = NULL,
+                             alpha = NULL, filename = NULL, preview = FALSE) {
   imagetype = get_file_type(image)
   temp = tempfile(fileext = ".png")
   if(imagetype == "array") {
@@ -65,8 +70,42 @@ add_image_overlay = function(image, image_overlay = NULL, filename = NULL,  prev
     stop("Need to pass in image to image_overlay argument.")
   }
   if(inherits(image_overlay,"character")) {
-    image_overlay_file = image_overlay
+    tempover = png::readPNG(image_overlay)
+    if(length(dim(tempover)) == 3 && dim(tempover)[3] == 4 && !is.null(alpha)) {
+      if(alpha > 0 && alpha < 1) {
+        tempover[,,4] = tempover[,,4] * alpha
+      } else {
+        stop("alpha needs to be between 0 and 1")
+      }
+    }
+    if(length(dim(tempover)) == 3 && dim(tempover)[3] == 3 && !is.null(alpha)) {
+      newarray = array(alpha,dim = dim(tempover) + c(0,0,1))
+      if(alpha > 0 && alpha < 1) {
+        newarray[,,1:3] = tempover
+        tempover = newarray
+      } else {
+        stop("alpha needs to be between 0 and 1")
+      }
+    }
+    image_overlay_file = tempfile(fileext = ".png")
+    png::writePNG(tempover, image_overlay_file)
   } else if(inherits(image_overlay,"array")) {
+    if(length(dim(image_overlay)) == 3 && dim(image_overlay)[3] == 4 && !is.null(alpha)) {
+      if(alpha > 0 && alpha < 1) {
+        image_overlay[,,4] = image_overlay[,,4] * alpha
+      } else {
+        stop("alpha needs to be between 0 and 1")
+      }
+    }
+    if(length(dim(image_overlay)) == 3 && dim(image_overlay)[3] == 3 && !is.null(alpha)) {
+      newarray = array(alpha,dim = dim(image_overlay) + c(0,0,1))
+      if(alpha > 0 && alpha < 1) {
+        newarray[,,1:3] = image_overlay
+        image_overlay = newarray
+      } else {
+        stop("alpha needs to be between 0 and 1")
+      }
+    }
     image_overlay_file = tempfile()
     png::writePNG(image_overlay, image_overlay_file)
   }

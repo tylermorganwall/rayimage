@@ -7,6 +7,7 @@
 add_image_overlay(
   image,
   image_overlay = NULL,
+  alpha = NULL,
   filename = NULL,
   preview = FALSE
 )
@@ -17,6 +18,9 @@ add_image_overlay(
 \item{image_overlay}{Default \code{NULL}. Either a string indicating the location of a png image to overlay
 over the image (transparency included), or a 4-layer RGBA array. This image will be resized to the
 dimension of the image if it does not match exactly.}
+
+\item{alpha}{Default \code{NULL}, using overlay's alpha channel. Otherwise, this sets the alpha transparency
+by multiplying the existing alpha channel by this value (between 0 and 1).}
 
 \item{filename}{Default \code{NULL}. File to save the image to. If \code{NULL} and \code{preview = FALSE},
 returns an RGB array.}
@@ -39,12 +43,14 @@ circlemat = generate_2d_disk(min(dim(dragon)[1:2]))
 circlemat = circlemat/max(circlemat)
 
 #Create RGBA image, with a transparency of 0.5
-rgba_array = array(0, dim=c(nrow(circlemat),ncol(circlemat),4))
+rgba_array = array(1, dim=c(nrow(circlemat),ncol(circlemat),4))
 rgba_array[,,1] = circlemat
-rgba_array[,,4] = 0.5
+rgba_array[,,2] = 0
+rgba_array[,,3] = 0
 dragon_clipped = dragon
 dragon_clipped[dragon_clipped > 1] = 1
 \donttest{
-add_image_overlay(dragon_clipped, image_overlay = rgba_array, preview = TRUE)
+add_image_overlay(dragon_clipped, image_overlay = rgba_array,
+                 alpha=0.5, preview = TRUE)
 }
 }
