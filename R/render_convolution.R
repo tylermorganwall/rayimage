@@ -113,9 +113,7 @@ render_convolution = function(image, kernel = "gaussian",
   bloom_matrix = matrix(TRUE, nrow = nrow(temp_image), ncol = ncol(temp_image))
   if(imagetype != "matrix") {
     if(!is.null(min_value)) {
-      bloom_matrix[temp_image[,,1] <= min_value] = FALSE
-      bloom_matrix[temp_image[,,2] <= min_value] = FALSE
-      bloom_matrix[temp_image[,,3] <= min_value] = FALSE
+      bloom_matrix[temp_image[,,1] <= min_value & temp_image[,,2] <= min_value & temp_image[,,3] <= min_value] = FALSE
     }
   } else {
     if(!is.null(min_value)) {
