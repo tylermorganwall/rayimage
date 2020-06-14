@@ -17,6 +17,7 @@ render_bokeh(
   bokehintensity = 1,
   bokehlimit = 0.8,
   rotation = 0,
+  aberration = 0,
   gamma_correction = TRUE,
   progress = interactive()
 )
@@ -48,6 +49,8 @@ passes in a 2D matrix, that matrix will control the shape of the bokeh.}
 
 \item{rotation}{Default \code{0}. Number of degrees to rotate the hexagonal bokeh shape.}
 
+\item{aberration}{Default \code{0}. Adds chromatic aberration to the image. Maximum of \code{1}.}
+
 \item{gamma_correction}{Default \code{TRUE}. Controls gamma correction when adding colors. Default exponent of 2.2.}
 
 \item{progress}{Default \code{TRUE}. Whether to display a progress bar.}
@@ -74,6 +77,10 @@ render_bokeh(dragon, dragondepth, focus=950, preview_focus = TRUE)
 #Change the focal length:
 \donttest{
 render_bokeh(dragon, dragondepth, focus=950, focallength=300)
+}
+#Add chromatic aberration:
+\donttest{
+render_bokeh(dragon, dragondepth, focus=950, focallength=300, aberration = 0.5)
 }
 #Change the focal distance:
 \donttest{

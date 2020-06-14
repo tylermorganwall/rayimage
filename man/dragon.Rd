@@ -4,8 +4,10 @@
 \name{dragon}
 \alias{dragon}
 \title{Dragon Image}
-\format{An RGB 3-layer HDR array with 200 rows and 200 columns,
-generated using the rayrender package.}
+\format{
+An RGB 3-layer HDR array with 200 rows and 200 columns,
+generated using the rayrender package.
+}
 \usage{
 dragon
 }

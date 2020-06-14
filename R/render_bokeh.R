@@ -18,6 +18,7 @@
 #'@param bokehintensity Default `1`. Intensity of the bokeh when the pixel intensity is greater than `bokehlimit`.
 #'@param bokehlimit Default `0.8`. Limit after which the bokeh intensity is increased by `bokehintensity`.
 #'@param rotation Default `0`. Number of degrees to rotate the hexagonal bokeh shape.
+#'@param aberration Default `0`. Adds chromatic aberration to the image. Maximum of `1`.
 #'@param gamma_correction Default `TRUE`. Controls gamma correction when adding colors. Default exponent of 2.2.
 #'@param progress Default `TRUE`. Whether to display a progress bar.
 #'@return 3-layer RGB array of the processed image.
@@ -36,6 +37,10 @@
 #'#Change the focal length:
 #'\donttest{
 #'render_bokeh(dragon, dragondepth, focus=950, focallength=300)
+#'}
+#'#Add chromatic aberration:
+#'\donttest{
+#'render_bokeh(dragon, dragondepth, focus=950, focallength=300, aberration = 0.5)
 #'}
 #'#Change the focal distance:
 #'\donttest{
@@ -63,7 +68,7 @@ render_bokeh = function(image, depthmap,
                         focus=0.5, focallength = 100, fstop = 4, filename=NULL,
                         preview = TRUE, preview_focus = FALSE,
                         bokehshape = "circle", bokehintensity = 1, bokehlimit = 0.8, rotation=0,
-                        gamma_correction = TRUE, progress = interactive()) {
+                        aberration = 0, gamma_correction = TRUE, progress = interactive()) {
   if(!is.null(filename)) {
     if(tools::file_ext(filename) != "png") {
       filename = paste0(filename,".png")
@@ -95,6 +100,9 @@ render_bokeh = function(image, depthmap,
     }
     custombokeh = matrix(1,1,1)
   }
+  if(aberration >= 1 || aberration <= -1) {
+    stop("aberration value must be less than 1 and greater than -1")
+  }
   #Load and rotate images if png
   if(imagetype == "jpg") {
     temp_image = suppressWarnings(aperm(jpeg::readJPEG(image),c(2,1,3)))
@@ -114,15 +122,17 @@ render_bokeh = function(image, depthmap,
   if(gamma_correction) {
     temp_image = temp_image^2.2
   }
-  depthmap2 = calc_bokeh_size(depthmap,focus,focallength, fstop)
-  depthmap2[depthmap2 < 1] = 0
-  depthmap2[is.na(depthmap2)] = 0
-  depthmap2[depthmap2 > min(dim(temp_image[,,1]))] = min(dim(temp_image[,,1]))
   for(i in 1:3) {
-    temp_image[,,i] = flipud(t(psf(t(flipud(temp_image[,,i])), fliplr(depthmap2), depthmap, focus,
-                                   type=bokehshape, custombokeh = custombokeh,
-                                   bokehintensity = bokehintensity, bokehlimit=bokehlimit,
-                                   rotation=rotation, progbar = progress, channel = i)))
+    if(i == 1) {
+      depthmap2 = calc_bokeh_size(depthmap,focus,focallength, fstop,1+aberration)
+    } else if(i ==2) {
+      depthmap2 = calc_bokeh_size(depthmap,focus,focallength, fstop,1)
+    } else {
+      depthmap2 = calc_bokeh_size(depthmap,focus,focallength, fstop,1-aberration)
+    }
+    temp_image[,,i] = flipud(t(psf(t(flipud(temp_image[,,i])),depthmap2,
+                                depthmap, focus, bokehshape, custombokeh = custombokeh,
+                                bokehintensity, bokehlimit, rotation, progbar = progress,channel = i)))
   }
   if(gamma_correction) {
     temp_image = temp_image ^ (1/2.2)

@@ -4,9 +4,11 @@
 \name{dragondepth}
 \alias{dragondepth}
 \title{Dragon Depthmap}
-\format{An matrix with 200 rows and 200 columns, representing
+\format{
+An matrix with 200 rows and 200 columns, representing
 the depth into the \code{dragon} image scene. Generated using the rayrender package.
-Distances range from 847 to 1411.}
+Distances range from 847 to 1411.
+}
 \usage{
 dragondepth
 }

@@ -8,6 +8,7 @@
 #'@param N F-stop. Focal length of the virtual camera.
 #'@keywords internal
 #'@return Matrix of bokeh sizes.
-calc_bokeh_size = function(z,zfocus,f,N) {
-  abs(f^2*(z - zfocus)/((zfocus - f)*z*N))
+calc_bokeh_size = function(z,zfocus,f,N,ramp) {
+  ifelse(z-zfocus < 0, abs(f^2*abs(z-zfocus)*ramp/((zfocus - f)*z*N)),
+         abs(f^2*abs(z-zfocus)/((zfocus - f)*z*N*ramp)))
 }

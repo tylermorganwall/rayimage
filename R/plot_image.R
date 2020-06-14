@@ -56,7 +56,7 @@ plot_image = function(input, rotate=0, keep_user_par = FALSE, ...) {
       input[input > 1] = 1
       input[input < 0] = 0
     }
-    suppressWarnings(raster::plotRGB(raster::brick(input, xmn = 0.5, xmx = dim(input)[2]+ 0.5,ymn = 0.5, ymx = dim(input)[1] + 0.5, ...),scale=1,  asp=1, maxpixels=nrow(input)*ncol(input),...))
+    suppressWarnings(raster::plotRGB(raster::brick(input, xmn = 0.5, xmx = dim(input)[2]+ 0.5,ymn = 0.5, ymx = dim(input)[1] + 0.5, ...),scale=1,  asp=1, maxpixels=3*nrow(input)*ncol(input),...))
   } else if(length(dim(input)) == 2) {
     if(number_of_rots != 0) {
       for(j in 1:number_of_rots) {
@@ -68,7 +68,7 @@ plot_image = function(input, rotate=0, keep_user_par = FALSE, ...) {
       input[input < 0] = 0
     }
     array_from_mat = array(flipud(t(input)),dim=c(ncol(input),nrow(input),3))
-    suppressWarnings(raster::plotRGB(raster::brick(array_from_mat, xmn = 0.5, xmx = dim(array_from_mat)[2] + 0.5,ymn =  0.5, ymx = dim(array_from_mat)[1] +  0.5, ...),scale=1,asp=1, maxpixels=nrow(input)*ncol(input), ...))
+    suppressWarnings(raster::plotRGB(raster::brick(array_from_mat, xmn = 0.5, xmx = dim(array_from_mat)[2] + 0.5,ymn =  0.5, ymx = dim(array_from_mat)[1] +  0.5, ...),scale=1,asp=1, maxpixels=3*nrow(input)*ncol(input), ...))
   } else {
     stop("`input` is neither array nor matrix--convert to either to plot.")
   }

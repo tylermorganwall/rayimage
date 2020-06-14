@@ -13,9 +13,9 @@ get_file_type = function(file) {
     } else {
       imagetype = "jpg"
     }
-  } else if (inherits(file,"array")) {
+  } else if (length(dim(file)) == 3) {
     imagetype = "array"
-  } else if (inherits(file,"matrix")) {
+  } else if (length(dim(file)) == 2) {
     imagetype = "matrix"
   } else {
     stop("`",file,"` not recognized class (png, jpeg, array, matrix).")

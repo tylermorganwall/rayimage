@@ -4,7 +4,7 @@
 \alias{calc_bokeh_size}
 \title{Calculate Bokeh Size}
 \usage{
-calc_bokeh_size(z, zfocus, f, N)
+calc_bokeh_size(z, zfocus, f, N, ramp)
 }
 \arguments{
 \item{z}{Depth matrix.}

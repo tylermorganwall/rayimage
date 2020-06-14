@@ -5,6 +5,10 @@ subsample <- function(circle, size) {
     .Call(`_rayimage_subsample`, circle, size)
 }
 
+rayinterp2 <- function(image, XI, YI) {
+    .Call(`_rayimage_rayinterp2`, image, XI, YI)
+}
+
 resize_image <- function(image, mag) {
     .Call(`_rayimage_resize_image`, image, mag)
 }

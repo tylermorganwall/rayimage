@@ -18,6 +18,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rayinterp2
+arma::mat rayinterp2(arma::mat& image, arma::vec& XI, arma::vec& YI);
+RcppExport SEXP _rayimage_rayinterp2(SEXP imageSEXP, SEXP XISEXP, SEXP YISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type image(imageSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type XI(XISEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type YI(YISEXP);
+    rcpp_result_gen = Rcpp::wrap(rayinterp2(image, XI, YI));
+    return rcpp_result_gen;
+END_RCPP
+}
 // resize_image
 arma::mat resize_image(arma::mat& image, float mag);
 RcppExport SEXP _rayimage_resize_image(SEXP imageSEXP, SEXP magSEXP) {
@@ -158,6 +171,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rayimage_subsample", (DL_FUNC) &_rayimage_subsample, 2},
+    {"_rayimage_rayinterp2", (DL_FUNC) &_rayimage_rayinterp2, 3},
     {"_rayimage_resize_image", (DL_FUNC) &_rayimage_resize_image, 2},
     {"_rayimage_resize_image_xy", (DL_FUNC) &_rayimage_resize_image_xy, 3},
     {"_rayimage_generate_disk", (DL_FUNC) &_rayimage_generate_disk, 2},

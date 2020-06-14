@@ -47,6 +47,16 @@ arma::mat subsample_interpolate(arma::mat& circle, float mag) {
 }
 
 // [[Rcpp::export]]
+arma::mat rayinterp2(arma::mat& image, arma::vec& XI, arma::vec& YI) {
+  arma::vec X = arma::regspace(1, image.n_cols);
+  arma::vec Y = arma::regspace(1, image.n_rows);
+  arma::mat ZI;
+  interp2(X, Y, image, XI, YI, ZI);
+  return(ZI);
+}
+
+
+// [[Rcpp::export]]
 arma::mat resize_image(arma::mat& image, float mag) {
   arma::vec X = arma::regspace(1, image.n_cols);
   arma::vec Y = arma::regspace(1, image.n_rows);
