@@ -72,7 +72,7 @@ kernel for the edges)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -151,7 +151,7 @@ kernel for the edges).</p>
   <span class='kw'>kernel_extent</span> <span class='kw'>=</span> <span class='fl'>3</span>,
   <span class='kw'>min_value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>preview</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>preview</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>gamma_correction</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
@@ -187,7 +187,7 @@ for a pixel to have the convolution performed.</p></td>
     </tr>
     <tr>
       <th>filename</th>
-      <td><p>The filename of the image to be saved. If this is not given, the image will be plotted instead.</p></td>
+      <td><p>Default <code>NULL</code>. The filename of the image to be saved. If this is not given, the image will be plotted instead.</p></td>
     </tr>
     <tr>
       <th>preview</th>
@@ -210,25 +210,33 @@ for a pixel to have the convolution performed.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>#Perform a convolution with the default gaussian kernel</span>
 
-<span class='fu'><a href='plot_image.html'>plot_image</a></span>(<span class='no'>dragon</span>)</div><div class='img'><img src='render_convolution-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='plot_image.html'>plot_image</a></span>(<span class='no'>dragon</span>)</div><div class='img'><img src='render_convolution-1.png' alt='' width='700' height='700' /></div><div class='input'>
 <span class='co'>#Perform a convolution with the default gaussian kernel</span>
-<span class='fu'>render_convolution</span>(<span class='no'>dragon</span>)</div><div class='img'><img src='render_convolution-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>render_convolution</span>(<span class='no'>dragon</span>, <span class='kw'>preview</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='render_convolution-2.png' alt='' width='700' height='700' /></div><div class='input'>
 <span class='co'>#Increase the width of the kernel</span>
 <span class='co'># \donttest{</span>
-<span class='fu'>render_convolution</span>(<span class='no'>dragon</span>, <span class='kw'>kernel</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>kernel_dim</span><span class='kw'>=</span><span class='fl'>21</span>,<span class='kw'>kernel_extent</span><span class='kw'>=</span><span class='fl'>6</span>)</div><div class='img'><img src='render_convolution-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+<span class='fu'>render_convolution</span>(<span class='no'>dragon</span>, <span class='kw'>kernel</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>kernel_dim</span><span class='kw'>=</span><span class='fl'>21</span>,<span class='kw'>kernel_extent</span><span class='kw'>=</span><span class='fl'>6</span>, <span class='kw'>preview</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='render_convolution-3.png' alt='' width='700' height='700' /></div><div class='input'><span class='co'># }</span>
 
 <span class='co'>#Only perform the convolution on bright pixels (bloom)</span>
 <span class='co'># \donttest{</span>
-<span class='fu'>render_convolution</span>(<span class='no'>dragon</span>, <span class='kw'>kernel</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>kernel_dim</span><span class='kw'>=</span><span class='fl'>24</span>, <span class='kw'>kernel_extent</span><span class='kw'>=</span><span class='fl'>24</span>, <span class='kw'>min_value</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='img'><img src='render_convolution-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+<span class='fu'>render_convolution</span>(<span class='no'>dragon</span>, <span class='kw'>kernel</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>kernel_dim</span><span class='kw'>=</span><span class='fl'>24</span>, <span class='kw'>kernel_extent</span><span class='kw'>=</span><span class='fl'>24</span>,
+                  <span class='kw'>min_value</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>preview</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='render_convolution-4.png' alt='' width='700' height='700' /></div><div class='input'><span class='co'># }</span>
 
 <span class='co'>#Use a built-in kernel:</span>
 <span class='co'># \donttest{</span>
-<span class='fu'>render_convolution</span>(<span class='no'>dragon</span>, <span class='kw'>kernel</span> <span class='kw'>=</span> <span class='fu'><a href='generate_2d_exponential.html'>generate_2d_exponential</a></span>(<span class='kw'>falloff</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>dim</span><span class='kw'>=</span><span class='fl'>31</span>, <span class='kw'>width</span><span class='kw'>=</span><span class='fl'>21</span>))</div><div class='img'><img src='render_convolution-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+<span class='fu'>render_convolution</span>(<span class='no'>dragon</span>, <span class='kw'>kernel</span> <span class='kw'>=</span> <span class='fu'><a href='generate_2d_exponential.html'>generate_2d_exponential</a></span>(<span class='kw'>falloff</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>dim</span><span class='kw'>=</span><span class='fl'>31</span>, <span class='kw'>width</span><span class='kw'>=</span><span class='fl'>21</span>),
+                  <span class='kw'>preview</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='render_convolution-5.png' alt='' width='700' height='700' /></div><div class='input'><span class='co'># }</span>
+
+<span class='co'>#We can also apply this function to matrices:</span>
+<span class='co'># \donttest{</span>
+<span class='no'>volcano</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/graphics/image.html'>image</a></span>()</div><div class='img'><img src='render_convolution-6.png' alt='' width='700' height='700' /></div><div class='input'><span class='no'>volcano</span> <span class='kw'>%&gt;%</span>
+ <span class='fu'>render_convolution</span>(<span class='kw'>kernel</span><span class='kw'>=</span><span class='fu'><a href='generate_2d_gaussian.html'>generate_2d_gaussian</a></span>(<span class='kw'>sd</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>dim</span><span class='kw'>=</span><span class='fl'>31</span>)) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='https://rdrr.io/r/graphics/image.html'>image</a></span>()</div><div class='img'><img src='render_convolution-7.png' alt='' width='700' height='700' /></div><div class='input'><span class='co'># }</span>
 
 <span class='co'>#Use a custom kernel (in this case, an X shape):</span>
 <span class='no'>custom</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span>(<span class='fl'>10</span>) + (<span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span>(<span class='fl'>10</span>)[,<span class='fl'>10</span>:<span class='fl'>1</span>])
 <span class='co'># \donttest{</span>
-<span class='fu'><a href='plot_image.html'>plot_image</a></span>(<span class='no'>custom</span>)</div><div class='img'><img src='render_convolution-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>render_convolution</span>(<span class='no'>dragon</span>, <span class='kw'>kernel</span> <span class='kw'>=</span> <span class='no'>custom</span>)</div><div class='img'><img src='render_convolution-7.png' alt='' width='700' height='433' /></div><div class='input'># }
+<span class='fu'><a href='plot_image.html'>plot_image</a></span>(<span class='no'>custom</span>)</div><div class='img'><img src='render_convolution-8.png' alt='' width='700' height='700' /></div><div class='input'><span class='fu'>render_convolution</span>(<span class='no'>dragon</span>, <span class='kw'>kernel</span> <span class='kw'>=</span> <span class='no'>custom</span>, <span class='kw'>preview</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='render_convolution-9.png' alt='' width='700' height='700' /></div><div class='input'># }
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

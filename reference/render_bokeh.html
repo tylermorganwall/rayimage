@@ -36,8 +36,9 @@
 
 
 <meta property="og:title" content="Render Bokeh — render_bokeh" />
-<meta property="og:description" content="Takes an image and a depth map to render the image with depth of field.
-User can specify a custom bokeh shape, or use one of the built-in bokeh types." />
+<meta property="og:description" content="Takes an image and a depth map to render the image with depth of field
+(i.e. similar to &quot;Portrait Mode&quot; in an iPhone). User can specify a custom bokeh shape,
+or use one of the built-in bokeh types." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -70,7 +71,7 @@ User can specify a custom bokeh shape, or use one of the built-in bokeh types." 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -136,8 +137,9 @@ User can specify a custom bokeh shape, or use one of the built-in bokeh types." 
     </div>
 
     <div class="ref-description">
-    <p>Takes an image and a depth map to render the image with depth of field.
-User can specify a custom bokeh shape, or use one of the built-in bokeh types.</p>
+    <p>Takes an image and a depth map to render the image with depth of field
+(i.e. similar to "Portrait Mode" in an iPhone). User can specify a custom bokeh shape,
+or use one of the built-in bokeh types.</p>
     </div>
 
     <pre class="usage"><span class='fu'>render_bokeh</span>(
@@ -153,6 +155,7 @@ User can specify a custom bokeh shape, or use one of the built-in bokeh types.</
   <span class='kw'>bokehintensity</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>bokehlimit</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
   <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>aberration</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>gamma_correction</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()
 )</pre>
@@ -182,7 +185,7 @@ User can specify a custom bokeh shape, or use one of the built-in bokeh types.</
     </tr>
     <tr>
       <th>filename</th>
-      <td><p>The filename of the image to be saved. If this is not given, the image will be plotted instead.</p></td>
+      <td><p>Default <code>NULL</code>. The filename of the image to be saved. If this is not given, the image will be plotted instead.</p></td>
     </tr>
     <tr>
       <th>preview</th>
@@ -211,6 +214,10 @@ passes in a 2D matrix, that matrix will control the shape of the bokeh.</p></td>
       <td><p>Default <code>0</code>. Number of degrees to rotate the hexagonal bokeh shape.</p></td>
     </tr>
     <tr>
+      <th>aberration</th>
+      <td><p>Default <code>0</code>. Adds chromatic aberration to the image. Maximum of <code>1</code>.</p></td>
+    </tr>
+    <tr>
       <th>gamma_correction</th>
       <td><p>Default <code>TRUE</code>. Controls gamma correction when adding colors. Default exponent of 2.2.</p></td>
     </tr>
@@ -226,31 +233,34 @@ passes in a 2D matrix, that matrix will control the shape of the bokeh.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>#Plot the dragon</span>
-<span class='fu'><a href='plot_image.html'>plot_image</a></span>(<span class='no'>dragon</span>)</div><div class='img'><img src='render_bokeh-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='plot_image.html'>plot_image</a></span>(<span class='no'>dragon</span>)</div><div class='img'><img src='render_bokeh-1.png' alt='' width='700' height='700' /></div><div class='input'>
 <span class='co'>#Plot the depth map</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/image.html'>image</a></span>(<span class='no'>dragondepth</span>, <span class='kw'>asp</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='render_bokeh-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/image.html'>image</a></span>(<span class='no'>dragondepth</span>, <span class='kw'>asp</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>heat.colors</a></span>(<span class='fl'>256</span>))</div><div class='img'><img src='render_bokeh-2.png' alt='' width='700' height='700' /></div><div class='input'>
 <span class='co'>#Preview the focal plane:</span>
 <span class='co'># \donttest{</span>
-<span class='fu'>render_bokeh</span>(<span class='no'>dragon</span>, <span class='no'>dragondepth</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>950</span>, <span class='kw'>preview_focus</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "Focal range: 847.644-1410.17"</div><div class='img'><img src='render_bokeh-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+<span class='fu'>render_bokeh</span>(<span class='no'>dragon</span>, <span class='no'>dragondepth</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>950</span>, <span class='kw'>preview_focus</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Focal range: 847.644-1410.17</span></div><div class='img'><img src='render_bokeh-3.png' alt='' width='700' height='700' /></div><div class='input'><span class='co'># }</span>
 <span class='co'>#Change the focal length:</span>
 <span class='co'># \donttest{</span>
-<span class='fu'>render_bokeh</span>(<span class='no'>dragon</span>, <span class='no'>dragondepth</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>950</span>, <span class='kw'>focallength</span><span class='kw'>=</span><span class='fl'>300</span>)</div><div class='img'><img src='render_bokeh-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+<span class='fu'>render_bokeh</span>(<span class='no'>dragon</span>, <span class='no'>dragondepth</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>950</span>, <span class='kw'>focallength</span><span class='kw'>=</span><span class='fl'>300</span>)</div><div class='img'><img src='render_bokeh-4.png' alt='' width='700' height='700' /></div><div class='input'><span class='co'># }</span>
+<span class='co'>#Add chromatic aberration:</span>
+<span class='co'># \donttest{</span>
+<span class='fu'>render_bokeh</span>(<span class='no'>dragon</span>, <span class='no'>dragondepth</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>950</span>, <span class='kw'>focallength</span><span class='kw'>=</span><span class='fl'>300</span>, <span class='kw'>aberration</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)</div><div class='img'><img src='render_bokeh-5.png' alt='' width='700' height='700' /></div><div class='input'><span class='co'># }</span>
 <span class='co'>#Change the focal distance:</span>
 <span class='co'># \donttest{</span>
-<span class='fu'>render_bokeh</span>(<span class='no'>dragon</span>, <span class='no'>dragondepth</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>600</span>, <span class='kw'>focallength</span><span class='kw'>=</span><span class='fl'>300</span>)</div><div class='img'><img src='render_bokeh-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>render_bokeh</span>(<span class='no'>dragon</span>, <span class='no'>dragondepth</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>1300</span>, <span class='kw'>focallength</span><span class='kw'>=</span><span class='fl'>300</span>)</div><div class='img'><img src='render_bokeh-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+<span class='fu'>render_bokeh</span>(<span class='no'>dragon</span>, <span class='no'>dragondepth</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>600</span>, <span class='kw'>focallength</span><span class='kw'>=</span><span class='fl'>300</span>)</div><div class='img'><img src='render_bokeh-6.png' alt='' width='700' height='700' /></div><div class='input'><span class='fu'>render_bokeh</span>(<span class='no'>dragon</span>, <span class='no'>dragondepth</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>1300</span>, <span class='kw'>focallength</span><span class='kw'>=</span><span class='fl'>300</span>)</div><div class='img'><img src='render_bokeh-7.png' alt='' width='700' height='700' /></div><div class='input'><span class='co'># }</span>
 <span class='co'>#Change the bokeh shape to a hexagon:</span>
 <span class='co'># \donttest{</span>
 <span class='fu'>render_bokeh</span>(<span class='no'>dragon</span>, <span class='no'>dragondepth</span>, <span class='kw'>bokehshape</span> <span class='kw'>=</span> <span class='st'>"hex"</span>,
-            <span class='kw'>focallength</span><span class='kw'>=</span><span class='fl'>300</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>600</span>)</div><div class='img'><img src='render_bokeh-7.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+            <span class='kw'>focallength</span><span class='kw'>=</span><span class='fl'>300</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>600</span>)</div><div class='img'><img src='render_bokeh-8.png' alt='' width='700' height='700' /></div><div class='input'><span class='co'># }</span>
 <span class='co'>#Change the bokeh intensity:</span>
 <span class='co'># \donttest{</span>
 <span class='fu'>render_bokeh</span>(<span class='no'>dragon</span>, <span class='no'>dragondepth</span>,
-            <span class='kw'>focallength</span><span class='kw'>=</span><span class='fl'>400</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>900</span>, <span class='kw'>bokehintensity</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='render_bokeh-8.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>render_bokeh</span>(<span class='no'>dragon</span>, <span class='no'>dragondepth</span>,
-            <span class='kw'>focallength</span><span class='kw'>=</span><span class='fl'>400</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>900</span>, <span class='kw'>bokehintensity</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='render_bokeh-9.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+            <span class='kw'>focallength</span><span class='kw'>=</span><span class='fl'>400</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>900</span>, <span class='kw'>bokehintensity</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='render_bokeh-9.png' alt='' width='700' height='700' /></div><div class='input'><span class='fu'>render_bokeh</span>(<span class='no'>dragon</span>, <span class='no'>dragondepth</span>,
+            <span class='kw'>focallength</span><span class='kw'>=</span><span class='fl'>400</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>900</span>, <span class='kw'>bokehintensity</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='render_bokeh-10.png' alt='' width='700' height='700' /></div><div class='input'><span class='co'># }</span>
 <span class='co'>#Rotate the hexagonal shape:</span>
 <span class='co'># \donttest{</span>
 <span class='fu'>render_bokeh</span>(<span class='no'>dragon</span>, <span class='no'>dragondepth</span>, <span class='kw'>bokehshape</span> <span class='kw'>=</span> <span class='st'>"hex"</span>, <span class='kw'>rotation</span><span class='kw'>=</span><span class='fl'>15</span>,
-            <span class='kw'>focallength</span><span class='kw'>=</span><span class='fl'>300</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>600</span>)</div><div class='img'><img src='render_bokeh-10.png' alt='' width='700' height='433' /></div><div class='input'># }
+            <span class='kw'>focallength</span><span class='kw'>=</span><span class='fl'>300</span>, <span class='kw'>focus</span><span class='kw'>=</span><span class='fl'>600</span>)</div><div class='img'><img src='render_bokeh-11.png' alt='' width='700' height='700' /></div><div class='input'># }
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
