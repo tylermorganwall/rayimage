@@ -57,7 +57,7 @@ render_resized = function(image, mag = 1, dims = NULL, filename=NULL, preview=FA
     temp_image = t(image)
   }
   if(!is.null(dims)) {
-    dims = dims/dim(temp_image)[1:2]
+    dims = dims[1:2]/dim(temp_image)[1:2]
   }
   temp_list = list()
   if(imagetype != "matrix") {
@@ -65,7 +65,9 @@ render_resized = function(image, mag = 1, dims = NULL, filename=NULL, preview=FA
       if(is.null(dims)) {
         temp_list[[i]] = resize_image(t(flipud(temp_image[,,i])), mag)
       } else {
-        temp_list[[i]] = resize_image_xy(t(flipud(temp_image[,,i])), dims[1], dims[2])
+        x1 = seq(1, nrow(temp_image), length.out = nrow(temp_image)*dims[1]);
+        y1 = seq(1, ncol(temp_image), length.out = ncol(temp_image)*dims[2]);
+        temp_list[[i]] = resize_image_xy(t(flipud(temp_image[,,i])), x1, y1)
       }
     }
     temp_image = array(0, dim = c(nrow(temp_list[[1]]), ncol(temp_list[[1]]), 3))
@@ -74,9 +76,11 @@ render_resized = function(image, mag = 1, dims = NULL, filename=NULL, preview=FA
     temp_image[,,3] = temp_list[[3]]
   } else {
     if(is.null(dims)) {
-      temp_image = resize_image(t(flipud(temp_image[,,i])), mag)
+      temp_image = resize_image(t(flipud(temp_image)), mag)
     } else {
-      temp_image = resize_image_xy(t(flipud(temp_image[,,i])), dims[1], dims[2])
+      x1 = seq(1, nrow(temp_image), length.out = nrow(temp_image)*dims[1]);
+      y1 = seq(1, ncol(temp_image), length.out = ncol(temp_image)*dims[2]);
+      temp_image = resize_image_xy(t(flipud(temp_image)), x1, y1)
     }
   }
   if(is.null(filename)) {

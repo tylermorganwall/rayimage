@@ -68,11 +68,9 @@ arma::mat resize_image(arma::mat& image, float mag) {
 }
 
 // [[Rcpp::export]]
-arma::mat resize_image_xy(arma::mat& image, float magx, float magy) {
+arma::mat resize_image_xy(arma::mat& image, arma::vec XI, arma::vec YI) {
   arma::vec X = arma::regspace(1, image.n_cols);
   arma::vec Y = arma::regspace(1, image.n_rows);
-  arma::vec XI = arma::regspace(X.min(), 1.0/magx, X.max());
-  arma::vec YI = arma::regspace(Y.min(), 1.0/magy, Y.max());
   arma::mat ZI;
   interp2(X, Y, image, XI, YI, ZI);
   return(ZI);

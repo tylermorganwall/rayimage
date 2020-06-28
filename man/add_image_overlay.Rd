@@ -7,6 +7,7 @@
 add_image_overlay(
   image,
   image_overlay = NULL,
+  rescale_original = FALSE,
   alpha = NULL,
   filename = NULL,
   preview = FALSE
@@ -18,6 +19,9 @@ add_image_overlay(
 \item{image_overlay}{Default \code{NULL}. Either a string indicating the location of a png image to overlay
 over the image (transparency included), or a 4-layer RGBA array. This image will be resized to the
 dimension of the image if it does not match exactly.}
+
+\item{rescale_original}{Default \code{FALSE}. If \code{TRUE}, function will resize the original image to match
+the overlay.}
 
 \item{alpha}{Default \code{NULL}, using overlay's alpha channel. Otherwise, this sets the alpha transparency
 by multiplying the existing alpha channel by this value (between 0 and 1).}

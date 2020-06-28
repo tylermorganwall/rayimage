@@ -13,8 +13,8 @@ resize_image <- function(image, mag) {
     .Call(`_rayimage_resize_image`, image, mag)
 }
 
-resize_image_xy <- function(image, magx, magy) {
-    .Call(`_rayimage_resize_image_xy`, image, magx, magy)
+resize_image_xy <- function(image, XI, YI) {
+    .Call(`_rayimage_resize_image_xy`, image, XI, YI)
 }
 
 generate_disk <- function(radius, dim) {

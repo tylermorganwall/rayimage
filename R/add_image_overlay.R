@@ -6,6 +6,8 @@
 #'@param image_overlay Default `NULL`. Either a string indicating the location of a png image to overlay
 #'over the image (transparency included), or a 4-layer RGBA array. This image will be resized to the
 #'dimension of the image if it does not match exactly.
+#'@param rescale_original Default `FALSE`. If `TRUE`, function will resize the original image to match
+#'the overlay.
 #'@param alpha Default `NULL`, using overlay's alpha channel. Otherwise, this sets the alpha transparency
 #'by multiplying the existing alpha channel by this value (between 0 and 1).
 #'@param filename Default `NULL`. File to save the image to. If `NULL` and `preview = FALSE`,
@@ -35,7 +37,7 @@
 #'add_image_overlay(dragon_clipped, image_overlay = rgba_array,
 #'                  alpha=0.5, preview = TRUE)
 #'}
-add_image_overlay = function(image, image_overlay = NULL,
+add_image_overlay = function(image, image_overlay = NULL, rescale_original = FALSE,
                              alpha = NULL, filename = NULL, preview = FALSE) {
   imagetype = get_file_type(image)
   temp = tempfile(fileext = ".png")
@@ -109,13 +111,21 @@ add_image_overlay = function(image, image_overlay = NULL,
     image_overlay_file = tempfile()
     png::writePNG(image_overlay, image_overlay_file)
   }
-
-  magick::image_read(temp) %>%
-    magick::image_composite(
-      magick::image_scale(magick::image_read(image_overlay_file),
-                          paste0(dimensions[1],"x",dimensions[2],"!"))
-    ) %>%
-    magick::image_write(path = temp, format = "png")
+  tempover = aperm(png::readPNG(image_overlay_file),c(2,1,3))
+  dimensions_overlay = dim(tempover)
+  if(!rescale_original) {
+    magick::image_read(temp) %>%
+      magick::image_composite(
+        magick::image_scale(magick::image_read(image_overlay_file),
+                            paste0(dimensions[1],"x",dimensions[2],"!"))
+      ) %>%
+      magick::image_write(path = temp, format = "png")
+  } else {
+    magick::image_read(temp) %>%
+      magick::image_scale(paste0(dimensions_overlay[1],"x",dimensions_overlay[2],"!")) %>%
+      magick::image_composite(magick::image_read(image_overlay_file)) %>%
+      magick::image_write(path = temp, format = "png")
+  }
   temp = png::readPNG(temp)
   if(length(dim(temp)) == 3 && dim(temp)[3] == 2) {
     temparray = array(0,dim = c(nrow(temp),ncol(temp),3))

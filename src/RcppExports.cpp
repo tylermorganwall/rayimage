@@ -44,15 +44,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // resize_image_xy
-arma::mat resize_image_xy(arma::mat& image, float magx, float magy);
-RcppExport SEXP _rayimage_resize_image_xy(SEXP imageSEXP, SEXP magxSEXP, SEXP magySEXP) {
+arma::mat resize_image_xy(arma::mat& image, arma::vec XI, arma::vec YI);
+RcppExport SEXP _rayimage_resize_image_xy(SEXP imageSEXP, SEXP XISEXP, SEXP YISEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat& >::type image(imageSEXP);
-    Rcpp::traits::input_parameter< float >::type magx(magxSEXP);
-    Rcpp::traits::input_parameter< float >::type magy(magySEXP);
-    rcpp_result_gen = Rcpp::wrap(resize_image_xy(image, magx, magy));
+    Rcpp::traits::input_parameter< arma::vec >::type XI(XISEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type YI(YISEXP);
+    rcpp_result_gen = Rcpp::wrap(resize_image_xy(image, XI, YI));
     return rcpp_result_gen;
 END_RCPP
 }
