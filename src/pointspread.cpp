@@ -42,7 +42,7 @@ arma::mat subsample_interpolate(arma::mat& circle, float mag) {
     YI.set_size(YI.n_elem-1);
   }
   arma::mat ZI;
-  interp2(X, Y, circle, XI, YI, ZI);
+  arma::interp2(X, Y, circle, XI, YI, ZI);
   return(ZI);
 }
 
@@ -51,7 +51,7 @@ arma::mat rayinterp2(arma::mat& image, arma::vec& XI, arma::vec& YI) {
   arma::vec X = arma::regspace(1, image.n_cols);
   arma::vec Y = arma::regspace(1, image.n_rows);
   arma::mat ZI;
-  interp2(X, Y, image, XI, YI, ZI);
+  arma::interp2(X, Y, image, XI, YI, ZI);
   return(ZI);
 }
 
@@ -63,7 +63,7 @@ arma::mat resize_image(arma::mat& image, float mag) {
   arma::vec XI = arma::regspace(X.min(), 1.0/mag, X.max());
   arma::vec YI = arma::regspace(Y.min(), 1.0/mag, Y.max());
   arma::mat ZI;
-  interp2(X, Y, image, XI, YI, ZI);
+  arma::interp2(X, Y, image, XI, YI, ZI);
   return(ZI);
 }
 
@@ -72,7 +72,7 @@ arma::mat resize_image_xy(arma::mat& image, arma::vec XI, arma::vec YI) {
   arma::vec X = arma::regspace(1, image.n_cols);
   arma::vec Y = arma::regspace(1, image.n_rows);
   arma::mat ZI;
-  interp2(X, Y, image, XI, YI, ZI);
+  arma::interp2(X, Y, image, XI, YI, ZI);
   return(ZI);
 }
 
