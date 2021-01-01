@@ -47,7 +47,7 @@ add_image_overlay = function(image, image_overlay = NULL, rescale_original = FAL
     png::writePNG(image,temp)
     image = temp
   } else if (imagetype == "matrix") {
-    newarray = array(0,dim=c(nrow(image),ncol(image),3))
+    newarray = array(1,dim=c(nrow(image),ncol(image),4))
     newarray[,,1] = image
     newarray[,,2] = image
     newarray[,,3] = image
@@ -117,25 +117,26 @@ add_image_overlay = function(image, image_overlay = NULL, rescale_original = FAL
     magick::image_read(temp) %>%
       magick::image_composite(
         magick::image_scale(magick::image_read(image_overlay_file),
-                            paste0(dimensions[1],"x",dimensions[2],"!"))
+                            paste0(dimensions[1],"x",dimensions[2],"!")), operator = "Over"
       ) %>%
       magick::image_write(path = temp, format = "png")
   } else {
     magick::image_read(temp) %>%
       magick::image_scale(paste0(dimensions_overlay[1],"x",dimensions_overlay[2],"!")) %>%
-      magick::image_composite(magick::image_read(image_overlay_file)) %>%
+      magick::image_composite(magick::image_read(image_overlay_file), operator = "Over") %>%
       magick::image_write(path = temp, format = "png")
   }
   temp = png::readPNG(temp)
   if(length(dim(temp)) == 3 && dim(temp)[3] == 2) {
-    temparray = array(0,dim = c(nrow(temp),ncol(temp),3))
+    temparray = array(1,dim = c(nrow(temp),ncol(temp),4))
     temparray[,,1] = temp[,,1]
     temparray[,,2] = temp[,,1]
     temparray[,,3] = temp[,,1]
+    temparray[,,4] = temp[,,2]
     temp = temparray
   }
   if(length(dim(temp)) == 2) {
-    temparray = array(0,dim = c(nrow(temp),ncol(temp),3))
+    temparray = array(1,dim = c(nrow(temp),ncol(temp),4))
     temparray[,,1] = temp
     temparray[,,2] = temp
     temparray[,,3] = temp

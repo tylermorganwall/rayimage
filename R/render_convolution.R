@@ -65,7 +65,7 @@ render_convolution = function(image, kernel = "gaussian",
                               kernel_dim = 11, kernel_extent = 3,
                               min_value=NULL,
                               filename=NULL, preview=FALSE,
-                              gamma_correction = TRUE, progress = FALSE) {
+                              gamma_correction = FALSE, progress = FALSE) {
   if(!is.null(filename)) {
     if(tools::file_ext(filename) != "png") {
       filename = paste0(filename,".png")
