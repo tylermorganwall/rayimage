@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
@@ -98,7 +98,7 @@
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="fa fa-newspaper-o"></span>
+    <span class="fas fa-newspaper-o"></span>
      
     Changelog
   </a>
@@ -107,14 +107,14 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../reference/index.html">
-    <span class="fa fa-file-code-o"></span>
+    <span class="fas fa-file-code-o"></span>
      
     functions
   </a>
 </li>
 <li>
   <a href="https://github.com/tylermorganwall/rayimage">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
     GitHub
   </a>
@@ -141,14 +141,14 @@
     <p>Takes an RGB array/filename and adds an image overlay.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://www.rayimage.dev/reference/add_image_overlay.html'>add_image_overlay</a></span>(
-  <span class='kw'>image</span>,
-  image_overlay = <span class='kw'>NULL</span>,
-  rescale_original = <span class='fl'>FALSE</span>,
-  alpha = <span class='kw'>NULL</span>,
-  filename = <span class='kw'>NULL</span>,
-  preview = <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>add_image_overlay</span><span class='op'>(</span>
+  <span class='va'>image</span>,
+  image_overlay <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rescale_original <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  alpha <span class='op'>=</span> <span class='cn'>NULL</span>,
+  filename <span class='op'>=</span> <span class='cn'>NULL</span>,
+  preview <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,21 +191,24 @@ to returning it.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>#Plot the dragon</span>
-<span class='fu'><a href='https://www.rayimage.dev/reference/plot_image.html'>plot_image</a></span>(<span class='kw'>dragon</span>)</div><div class='img'><img src='add_image_overlay-1.png' alt='' width='700' height='700' /></div><div class='input'>
+<span class='fu'><a href='plot_image.html'>plot_image</a></span><span class='op'>(</span><span class='va'>dragon</span><span class='op'>)</span>
+</div><div class='img'><img src='add_image_overlay-1.png' alt='' width='700' height='700' /></div><div class='input'>
 <span class='co'>#Add an overlay of a red semi-transparent circle:</span>
-<span class='kw'>circlemat</span> <span class='op'>=</span> <span class='fu'><a href='https://www.rayimage.dev/reference/generate_2d_disk.html'>generate_2d_disk</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='kw'>dragon</span>)[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>]))
-<span class='kw'>circlemat</span> <span class='op'>=</span> <span class='kw'>circlemat</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='kw'>circlemat</span>)
+<span class='va'>circlemat</span> <span class='op'>=</span> <span class='fu'><a href='generate_2d_disk.html'>generate_2d_disk</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>dragon</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>circlemat</span> <span class='op'>=</span> <span class='va'>circlemat</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>circlemat</span><span class='op'>)</span>
 
 <span class='co'>#Create RGBA image, with a transparency of 0.5</span>
-<span class='kw'>rgba_array</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span>(<span class='fl'>1</span>, dim=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>circlemat</span>),<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='kw'>circlemat</span>),<span class='fl'>4</span>))
-<span class='kw'>rgba_array</span>[,,<span class='fl'>1</span>] <span class='op'>=</span> <span class='kw'>circlemat</span>
-<span class='kw'>rgba_array</span>[,,<span class='fl'>2</span>] <span class='op'>=</span> <span class='fl'>0</span>
-<span class='kw'>rgba_array</span>[,,<span class='fl'>3</span>] <span class='op'>=</span> <span class='fl'>0</span>
-<span class='kw'>dragon_clipped</span> <span class='op'>=</span> <span class='kw'>dragon</span>
-<span class='kw'>dragon_clipped</span>[<span class='kw'>dragon_clipped</span> <span class='op'>&gt;</span> <span class='fl'>1</span>] <span class='op'>=</span> <span class='fl'>1</span>
+<span class='va'>rgba_array</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span><span class='op'>(</span><span class='fl'>1</span>, dim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>circlemat</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>circlemat</span><span class='op'>)</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>rgba_array</span><span class='op'>[</span>,,<span class='fl'>1</span><span class='op'>]</span> <span class='op'>=</span> <span class='va'>circlemat</span>
+<span class='va'>rgba_array</span><span class='op'>[</span>,,<span class='fl'>2</span><span class='op'>]</span> <span class='op'>=</span> <span class='fl'>0</span>
+<span class='va'>rgba_array</span><span class='op'>[</span>,,<span class='fl'>3</span><span class='op'>]</span> <span class='op'>=</span> <span class='fl'>0</span>
+<span class='va'>dragon_clipped</span> <span class='op'>=</span> <span class='va'>dragon</span>
+<span class='va'>dragon_clipped</span><span class='op'>[</span><span class='va'>dragon_clipped</span> <span class='op'>&gt;</span> <span class='fl'>1</span><span class='op'>]</span> <span class='op'>=</span> <span class='fl'>1</span>
 <span class='co'># \donttest{</span>
-<span class='fu'><a href='https://www.rayimage.dev/reference/add_image_overlay.html'>add_image_overlay</a></span>(<span class='kw'>dragon_clipped</span>, image_overlay = <span class='kw'>rgba_array</span>,
-                 alpha=<span class='fl'>0.5</span>, preview = <span class='fl'>TRUE</span>)</div><div class='img'><img src='add_image_overlay-2.png' alt='' width='700' height='700' /></div><div class='input'><span class='co'># }</span></div></pre>
+<span class='fu'>add_image_overlay</span><span class='op'>(</span><span class='va'>dragon_clipped</span>, image_overlay <span class='op'>=</span> <span class='va'>rgba_array</span>,
+                 alpha<span class='op'>=</span><span class='fl'>0.5</span>, preview <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='add_image_overlay-2.png' alt='' width='700' height='700' /></div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -221,7 +224,7 @@ to returning it.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
