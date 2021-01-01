@@ -12,7 +12,7 @@ render_convolution(
   min_value = NULL,
   filename = NULL,
   preview = FALSE,
-  gamma_correction = TRUE,
+  gamma_correction = FALSE,
   progress = FALSE
 )
 }
