@@ -4,14 +4,14 @@
 \alias{generate_2d_gaussian}
 \title{Generate 2D Gaussian Distribution}
 \usage{
-generate_2d_gaussian(sd = 1, power = 1, dim = 11, width = 3)
+generate_2d_gaussian(sd = 1, power = 1, dim = c(11, 11), width = 3)
 }
 \arguments{
 \item{sd}{Default \code{1}. Standard deviation of the normal distribution}
 
 \item{power}{Default \code{1}. Power to take the distribution. Higher values will result in a sharper peak.}
 
-\item{dim}{Default \code{11}. The dimensions of the resulting square matrix.}
+\item{dim}{Default \code{c(11, 11)}. The dimensions of the matrix.}
 
 \item{width}{Default \code{3} (\code{-10} to \code{10}). The range in which to compute the distribution.}
 }

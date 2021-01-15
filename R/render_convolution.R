@@ -15,6 +15,7 @@
 #'@param kernel_dim Default `11`. The dimension of the `gaussian` kernel. Ignored
 #'if user specifies their own kernel.
 #'@param kernel_extent Default `3`. Extent over which to calculate the kernel.
+#'@param absolute Default `TRUE`. Whether to take the absolute value of the convolution.
 #'@param min_value Default `NULL`. If numeric, specifies he minimum value (for any color channel)
 #'for a pixel to have the convolution performed.
 #'@param preview Default `TRUE`. Whether to plot the convolved image, or just to return the values.
@@ -35,6 +36,21 @@
 #'render_convolution(dragon, kernel = 2, kernel_dim=21,kernel_extent=6, preview = TRUE)
 #'}
 #'
+#'#Perform edge detection using a edge detection kernel
+#'\donttest{
+#'edge = matrix(c(-1,-1,-1,-1,8,-1,-1,-1,-1),3,3)
+#'render_convolution(dragon, kernel = edge, preview = TRUE, absolute=FALSE)
+#'}
+#'
+#'#Perform edge detection with Sobel matrices
+#'\donttest{
+#'sobel1 = matrix(c(1,2,1,0,0,0,-1,-2,-1),3,3)
+#'sobel2 = matrix(c(1,2,1,0,0,0,-1,-2,-1),3,3,byrow=TRUE)
+#'sob1 = render_convolution(dragon, kernel = sobel1)
+#'sob2 = render_convolution(dragon, kernel = sobel2)
+#'sob_all = sob1 + sob2
+#'plot_image(sob_all)
+#'}
 #'#Only perform the convolution on bright pixels (bloom)
 #'\donttest{
 #'render_convolution(dragon, kernel = 5, kernel_dim=24, kernel_extent=24,
@@ -62,7 +78,7 @@
 #'render_convolution(dragon, kernel = custom, preview = TRUE)
 #'}
 render_convolution = function(image, kernel = "gaussian",
-                              kernel_dim = 11, kernel_extent = 3,
+                              kernel_dim = 11, kernel_extent = 3, absolute = TRUE,
                               min_value=NULL,
                               filename=NULL, preview=FALSE,
                               gamma_correction = FALSE, progress = FALSE) {
@@ -94,9 +110,9 @@ render_convolution = function(image, kernel = "gaussian",
     }
   }
   if(imagetype == "jpg") {
-    temp_image = suppressWarnings(aperm(jpeg::readJPEG(image),c(2,1,3)))
+    temp_image = suppressWarnings((jpeg::readJPEG(image)))
   } else if (imagetype == "png"){
-    temp_image = suppressWarnings(aperm(png::readPNG(image),c(2,1,3)))
+    temp_image = suppressWarnings((png::readPNG(image)))
   } else if (imagetype == "matrix") {
     temp_image = t(image)
   }
@@ -120,33 +136,37 @@ render_convolution = function(image, kernel = "gaussian",
       bloom_matrix[temp_image <= min_value] = FALSE
     }
   }
+  temp_image_final = temp_image
   if(imagetype != "matrix") {
-    for(i in 1:3) {
-      temp_image[,,i] = convolution_cpp(temp_image[,,i], kernel = kernel,
+    for(i in 1:(dim(temp_image)[3])) {
+      temp_image_final[,,i] = convolution_cpp(temp_image[,,i], kernel = kernel,
         progbar = progress, channel = i, bloom_matrix = bloom_matrix)
     }
   } else {
-    temp_image = convolution_cpp(temp_image, kernel = kernel,
+    temp_image_final = convolution_cpp(temp_image, kernel = kernel,
       progbar = progress, channel = 1, bloom_matrix = bloom_matrix)
   }
+  if(absolute) {
+    temp_image_final = abs(temp_image_final)
+  }
   if(gamma_correction) {
-    temp_image = temp_image ^ (1/2.2)
+    temp_image_final ^ (1/2.2)
   }
   if(is.null(filename)) {
     if(preview) {
-      temp_image[temp_image > 1] = 1
-      temp_image[temp_image < 0] = 0
-      plot_image(temp_image)
+      temp_image_final[temp_image_final > 1] = 1
+      temp_image_final[temp_image_final < 0] = 0
+      plot_image(temp_image_final)
     } else {
       if(imagetype == "matrix") {
-        t(temp_image)
+        t(temp_image_final)
       } else {
-        temp_image
+        temp_image_final
       }
     }
   } else {
-    temp_image[temp_image > 1] = 1
-    temp_image[temp_image < 0] = 0
-    save_png(temp_image,filename)
+    temp_image_final[temp_image_final > 1] = 1
+    temp_image_final[temp_image_final < 0] = 0
+    save_png(temp_image_final,filename)
   }
 }

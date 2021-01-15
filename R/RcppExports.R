@@ -17,8 +17,8 @@ resize_image_xy <- function(image, XI, YI) {
     .Call(`_rayimage_resize_image_xy`, image, XI, YI)
 }
 
-generate_disk <- function(radius, dim) {
-    .Call(`_rayimage_generate_disk`, radius, dim)
+generate_disk <- function(radius, dim, offsetx, offsety) {
+    .Call(`_rayimage_generate_disk`, radius, dim, offsetx, offsety)
 }
 
 gen_ellipse <- function(intensity, width, height) {

@@ -4,10 +4,12 @@
 \alias{generate_2d_disk}
 \title{Generate 2D Disk}
 \usage{
-generate_2d_disk(dim = 11)
+generate_2d_disk(dim = c(11, 11), radius = 1)
 }
 \arguments{
-\item{dim}{Default \code{11}. The dimensions of the resulting square matrix.}
+\item{dim}{Default \code{c(11, 11)}. The dimensions of the matrix.}
+
+\item{radius}{Default \code{1}. Radius of the disk, compared to the dimensions. Should be less than one.}
 }
 \description{
 Generates a 2D disk with a gradual falloff.

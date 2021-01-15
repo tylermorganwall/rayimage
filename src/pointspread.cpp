@@ -85,10 +85,16 @@ float evaluate_disk(float x) {
 }
 
 // [[Rcpp::export]]
-arma::mat generate_disk(float radius, int dim) {
+arma::mat generate_disk(float radius, int dim, bool offsetx, bool offsety) {
   arma::mat testmat(dim,dim);
   arma::vec x = arma::linspace(-1,1,dim) * radius;
   arma::vec y = arma::linspace(-1,1,dim) * radius;
+  if(offsetx) {
+    x -= radius/dim + radius/dim/8;
+  }
+  if(offsety) {
+    y -= radius/dim + radius/dim/8;
+  }
   for(int i = 0; i < testmat.n_rows; i++) {
     for(int j = 0; j < testmat.n_cols; j++) {
       testmat(i,j) = fabs(evaluate_disk(pow(x[i],2.0) + pow(y[j],2.0)));
@@ -203,7 +209,7 @@ arma::mat psf(const arma::mat& image, const IntegerMatrix blurmatrix,
   std::vector<arma::mat> kernels;
   arma::mat mask;
   if(type == 0) {
-    mask = generate_disk(1.18, 501);
+    mask = generate_disk(1.18, 501, false, false);
   } else if (type == 1) {
     mask = gen_hex_psf(500, rotation);
   } else if (type == 2) {
@@ -476,6 +482,10 @@ arma::mat convolution_cpp(const arma::mat& image, const arma::mat kernel,
   if(progbar) {
     pb.set_total(rows*cols);
   }
+  bool norm = false;
+  if(arma::accu(kernel) != 0) {
+    norm = true;
+  }
 
   int begini, beginj, endi, endj, temphalfi, temphalfj;
   int beginslicei, endslicei, beginslicej, endslicej;
@@ -687,5 +697,9 @@ arma::mat convolution_cpp(const arma::mat& image, const arma::mat kernel,
       }
     }
   }
-  return(result/normalize);
+  if(norm) {
+    return(result/normalize);
+  } else {
+    return(result);
+  }
 }

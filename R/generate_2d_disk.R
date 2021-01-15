@@ -16,10 +16,32 @@
 #'
 #'The origin of the coordinate system is the center of the matrix.
 #'
-#'@param dim Default `11`. The dimensions of the resulting square matrix.
+#'@param dim Default `c(11, 11)`. The dimensions of the matrix.
+#'@param radius Default `1`. Radius of the disk, compared to the dimensions. Should be less than one.
 #'@export
 #'@examples
 #'image(generate_2d_disk(101), asp=1)
-generate_2d_disk = function(dim = 11) {
-  return(generate_disk(1.18, dim))
+generate_2d_disk = function(dim = c(11,11), radius = 1) {
+  dim = rev(dim)
+  mindim = min(dim)
+  add_offset_x = FALSE
+  add_offset_y = FALSE
+  if(length(dim) == 2) {
+    if(dim[2] - dim[1] > 0) {
+      if(abs(dim[2] - dim[1]) %% 2 != 0) {
+        add_offset_x = TRUE
+      }
+    } else if(dim[2] - dim[1] < 0) {
+      if(abs(dim[2] - dim[1]) %% 2 != 0) {
+        add_offset_y = TRUE
+      }
+    }
+  }
+  disk = generate_disk((1/radius)*1.18, mindim, add_offset_x,add_offset_y)
+  if(length(dim) == 2) {
+    disk = pad_to_fit(dim,disk)
+  }
+  disk = (disk - min(disk))/(max(disk)-min(disk))
+  disk = disk/sum(disk)
+  return(disk)
 }

@@ -9,6 +9,7 @@ render_convolution(
   kernel = "gaussian",
   kernel_dim = 11,
   kernel_extent = 3,
+  absolute = TRUE,
   min_value = NULL,
   filename = NULL,
   preview = FALSE,
@@ -29,6 +30,8 @@ of columns and rows).}
 if user specifies their own kernel.}
 
 \item{kernel_extent}{Default \code{3}. Extent over which to calculate the kernel.}
+
+\item{absolute}{Default \code{TRUE}. Whether to take the absolute value of the convolution.}
 
 \item{min_value}{Default \code{NULL}. If numeric, specifies he minimum value (for any color channel)
 for a pixel to have the convolution performed.}
@@ -63,6 +66,21 @@ render_convolution(dragon, preview = TRUE)
 render_convolution(dragon, kernel = 2, kernel_dim=21,kernel_extent=6, preview = TRUE)
 }
 
+#Perform edge detection using a edge detection kernel
+\donttest{
+edge = matrix(c(-1,-1,-1,-1,8,-1,-1,-1,-1),3,3)
+render_convolution(dragon, kernel = edge, preview = TRUE, absolute=FALSE)
+}
+
+#Perform edge detection with Sobel matrices
+\donttest{
+sobel1 = matrix(c(1,2,1,0,0,0,-1,-2,-1),3,3)
+sobel2 = matrix(c(1,2,1,0,0,0,-1,-2,-1),3,3,byrow=TRUE)
+sob1 = render_convolution(dragon, kernel = sobel1)
+sob2 = render_convolution(dragon, kernel = sobel2)
+sob_all = sob1 + sob2
+plot_image(sob_all)
+}
 #Only perform the convolution on bright pixels (bloom)
 \donttest{
 render_convolution(dragon, kernel = 5, kernel_dim=24, kernel_extent=24,
