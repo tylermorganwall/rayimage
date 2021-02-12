@@ -37,6 +37,11 @@ plot_image = function(input, rotate=0, keep_user_par = FALSE, ...) {
     number_of_rots = rotate/90
   }
   if(length(dim(input)) == 3) {
+    if(dim(input)[3] == 2) {
+      temparray = array(1,dim = c(dim(input)[1:2],3))
+      temparray[,,1:3] = input[,,1]
+      input = temparray
+    }
     if(number_of_rots != 0) {
       newarray = input
       newarrayt = array(0,dim=c(ncol(input),nrow(input),3))

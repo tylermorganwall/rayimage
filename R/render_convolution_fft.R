@@ -80,24 +80,26 @@ render_convolution_fft = function(image, kernel = "gaussian",
                                   filename=NULL, preview=FALSE,
                                   gamma_correction = FALSE) {
   shift_fft = function(fft_mat) {
-    if(nrow(fft_mat) %% 2 == 0) {
-      nr_mid1 = nrow(fft_mat)/2
-      nr_mid2 = nrow(fft_mat)/2+1
+    nr = dim(fft_mat)[1]
+    nc = dim(fft_mat)[2]
+    if(nr %% 2 == 0) {
+      nr_mid1 = nr/2
+      nr_mid2 = nr/2+1
     } else {
-      nr_mid1 = floor(nrow(fft_mat)/2)
-      nr_mid2 = floor(nrow(fft_mat)/2)+1
+      nr_mid1 = floor(nr/2)
+      nr_mid2 = floor(nr/2)+1
     }
-    if(ncol(fft_mat) %% 2 == 0) {
-      nc_mid1 = ncol(fft_mat)/2
-      nc_mid2 = ncol(fft_mat)/2+1
+    if(nc %% 2 == 0) {
+      nc_mid1 = nc/2
+      nc_mid2 = nc/2+1
     } else {
-      nc_mid1 = floor(ncol(fft_mat)/2)
-      nc_mid2 = floor(ncol(fft_mat)/2)+1
+      nc_mid1 = floor(nc/2)
+      nc_mid2 = floor(nc/2)+1
     }
     fftcorn_nw = fft_mat[1:nr_mid1, 1:nc_mid1]
-    fftcorn_ne = fft_mat[1:nr_mid1, nc_mid2:ncol(fft_mat)]
-    fftcorn_sw = fft_mat[nr_mid2:nrow(fft_mat), 1:nc_mid1]
-    fftcorn_se = fft_mat[nr_mid2:nrow(fft_mat),nc_mid2:ncol(fft_mat)]
+    fftcorn_ne = fft_mat[1:nr_mid1, nc_mid2:nc]
+    fftcorn_sw = fft_mat[nr_mid2:nr, 1:nc_mid1]
+    fftcorn_se = fft_mat[nr_mid2:nr,nc_mid2:nc]
     rbind(cbind(fftcorn_se,fftcorn_sw), cbind(fftcorn_ne,fftcorn_nw))
   }
   if(!is.null(filename)) {
