@@ -79,7 +79,7 @@ The origin of the coordinate system is the center of the matrix." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -155,14 +155,18 @@ The origin of the coordinate system is the center of the matrix." />
 <p>The origin of the coordinate system is the center of the matrix.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>generate_2d_disk</span><span class='op'>(</span>dim <span class='op'>=</span> <span class='fl'>11</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>generate_2d_disk</span><span class='op'>(</span>dim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>11</span>, <span class='fl'>11</span><span class='op'>)</span>, radius <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>dim</th>
-      <td><p>Default <code>11</code>. The dimensions of the resulting square matrix.</p></td>
+      <td><p>Default <code><a href='https://rdrr.io/r/base/c.html'>c(11, 11)</a></code>. The dimensions of the matrix.</p></td>
+    </tr>
+    <tr>
+      <th>radius</th>
+      <td><p>Default <code>1</code>. Radius of the disk, compared to the dimensions. Should be less than one.</p></td>
     </tr>
     </table>
 

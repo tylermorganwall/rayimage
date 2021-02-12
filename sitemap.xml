@@ -7,6 +7,12 @@
     <loc>https://www.rayimage.dev/reference/add_image_overlay.html</loc>
   </url>
   <url>
+    <loc>https://www.rayimage.dev/reference/add_multi_padding.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayimage.dev/reference/add_padding.html</loc>
+  </url>
+  <url>
     <loc>https://www.rayimage.dev/reference/add_title.html</loc>
   </url>
   <url>
@@ -20,6 +26,9 @@
   </url>
   <url>
     <loc>https://www.rayimage.dev/reference/dragondepth.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayimage.dev/reference/expand_to_fit.html</loc>
   </url>
   <url>
     <loc>https://www.rayimage.dev/reference/fliplr.html</loc>
@@ -46,6 +55,9 @@
     <loc>https://www.rayimage.dev/reference/make_vignette_overlay.html</loc>
   </url>
   <url>
+    <loc>https://www.rayimage.dev/reference/pad_to_fit.html</loc>
+  </url>
+  <url>
     <loc>https://www.rayimage.dev/reference/pipe.html</loc>
   </url>
   <url>
@@ -58,7 +70,13 @@
     <loc>https://www.rayimage.dev/reference/render_bokeh.html</loc>
   </url>
   <url>
+    <loc>https://www.rayimage.dev/reference/render_boolean_distance.html</loc>
+  </url>
+  <url>
     <loc>https://www.rayimage.dev/reference/render_convolution.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayimage.dev/reference/render_convolution_fft.html</loc>
   </url>
   <url>
     <loc>https://www.rayimage.dev/reference/render_reorient.html</loc>
@@ -68,5 +86,8 @@
   </url>
   <url>
     <loc>https://www.rayimage.dev/reference/save_png.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayimage.dev/reference/trim_padding.html</loc>
   </url>
 </urlset>

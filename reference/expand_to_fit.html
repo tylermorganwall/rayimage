@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add Vignette Effect — add_vignette • rayimage</title>
+<title>expand to fit — expand_to_fit • rayimage</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Add Vignette Effect — add_vignette" />
-<meta property="og:description" content="Takes an RGB array/filename and adds a camera vignette effect." />
+<meta property="og:title" content="expand to fit — expand_to_fit" />
+<meta property="og:description" content="Pads to a rect" />
 
 
 
@@ -132,65 +132,30 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add Vignette Effect</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tylermorganwall/rayimage/blob/master/R/add_vignette.R'><code>R/add_vignette.R</code></a></small>
-    <div class="hidden name"><code>add_vignette.Rd</code></div>
+    <h1>expand to fit</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tylermorganwall/rayimage/blob/master/R/add_padding.R'><code>R/add_padding.R</code></a></small>
+    <div class="hidden name"><code>expand_to_fit.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Takes an RGB array/filename and adds a camera vignette effect.</p>
+    <p>Pads to a rect</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_vignette</span><span class='op'>(</span><span class='va'>image</span>, vignette <span class='op'>=</span> <span class='fl'>0.5</span>, filename <span class='op'>=</span> <span class='cn'>NULL</span>, preview <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>expand_to_fit</span><span class='op'>(</span><span class='va'>dim</span>, <span class='va'>kernel</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>image</th>
-      <td><p>Image filename or 3-layer RGB array.</p></td>
-    </tr>
-    <tr>
-      <th>vignette</th>
-      <td><p>Default <code>0.5</code>. A camera vignetting effect will be added to the image.
-<code>1</code> is the darkest vignetting, while <code>0</code> is no vignetting. If vignette is a length-2 vector, the second entry will
-control the blurriness of the vignette effect (<code>1</code> is the default, e.g. <code>2</code> would double the blurriness but would take
-much longer to compute).</p></td>
-    </tr>
-    <tr>
-      <th>filename</th>
-      <td><p>Default <code>NULL</code>. Filename which to save the image. If <code>NULL</code> and <code>preview = FALSE</code>,
-returns an RGB array.</p></td>
-    </tr>
-    <tr>
-      <th>preview</th>
-      <td><p>Default <code>FALSE</code>. If <code>TRUE</code>, it will display the image in addition
-to returning it.</p></td>
+      <th>dim</th>
+      <td><p>desired size</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>3-layer RGB array of the processed image.</p>
+    <p>Hillshade with edges trimmed</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>#Plot the dragon</span>
-<span class='fu'><a href='plot_image.html'>plot_image</a></span><span class='op'>(</span><span class='va'>dragon</span><span class='op'>)</span>
-</div><div class='img'><img src='add_vignette-1.png' alt='' width='700' height='700' /></div><div class='input'>
-<span class='co'>#Add a vignette effect:</span>
-<span class='co'># \donttest{</span>
-<span class='fu'>add_vignette</span><span class='op'>(</span><span class='va'>dragon</span>, preview <span class='op'>=</span> <span class='cn'>TRUE</span>, vignette <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
-</div><div class='img'><img src='add_vignette-2.png' alt='' width='700' height='700' /></div><div class='input'><span class='co'># }</span>
-<span class='co'>#Darken the vignette effect:</span>
-<span class='co'># \donttest{</span>
-<span class='fu'>add_vignette</span><span class='op'>(</span><span class='va'>dragon</span>, preview <span class='op'>=</span> <span class='cn'>TRUE</span>, vignette <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='img'><img src='add_vignette-3.png' alt='' width='700' height='700' /></div><div class='input'><span class='co'># }</span>
-
-<span class='co'>#Increase the width of the blur by 50%:</span>
-<span class='co'># \donttest{</span>
-<span class='fu'>add_vignette</span><span class='op'>(</span><span class='va'>dragon</span>, preview <span class='op'>=</span> <span class='cn'>TRUE</span>, vignette <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1.5</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='add_vignette-4.png' alt='' width='700' height='700' /></div><div class='input'><span class='co'># }</span>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
