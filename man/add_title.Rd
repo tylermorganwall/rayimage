@@ -7,13 +7,14 @@
 add_title(
   image,
   title_text = "",
-  title_offset = c(20, 20),
+  title_offset = c(15, 15),
   title_color = "black",
   title_size = 30,
   title_font = "sans",
   title_style = "normal",
   title_bar_color = NULL,
   title_bar_alpha = 0.5,
+  title_bar_width = NULL,
   title_position = "northwest",
   filename = NULL,
   preview = FALSE
@@ -24,7 +25,7 @@ add_title(
 
 \item{title_text}{Default \code{NULL}. Text. Adds a title to the image, using magick::image_annotate.}
 
-\item{title_offset}{Default \code{c(20,20)}. Distance from the top-left (default, \code{gravity} direction in
+\item{title_offset}{Default \code{c(15,15)}. Distance from the top-left (default, \code{gravity} direction in
 image_annotate) corner to offset the title.}
 
 \item{title_color}{Default \code{black}. Font color.}
@@ -39,6 +40,8 @@ image_annotate) corner to offset the title.}
 \item{title_bar_color}{Default \code{NULL}. If a color, this will create a colored bar under the title.}
 
 \item{title_bar_alpha}{Default \code{0.5}. Transparency of the title bar.}
+
+\item{title_bar_width}{Default \code{NULL}, automatic. Width of the title bar in pixels.}
 
 \item{title_position}{Default \code{northwest}. Position of the title.}
 

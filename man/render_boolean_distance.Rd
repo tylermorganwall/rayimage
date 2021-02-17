@@ -7,7 +7,7 @@
 render_boolean_distance(boolean, rescale = FALSE)
 }
 \arguments{
-\item{boolean}{Logical matrix, where distance will be measured to the \code{TRUE} values.}
+\item{boolean}{Logical matrix (or matrix of 1s and 0s), where distance will be measured to the \code{TRUE} values.}
 
 \item{rescale}{Default \code{FALSE}. Rescales the calculated distance to a range of 0-1.
 Useful for visualizing the distance matrix.}
