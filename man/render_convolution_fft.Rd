@@ -100,6 +100,6 @@ custom = diag(10) + (diag(10)[,10:1])
 custom = custom / 20
 \donttest{
 plot_image(custom*20)
-render_convolution_fft(dragon, kernel = custom/20, preview = TRUE)
+render_convolution_fft(dragon, kernel = custom, preview = TRUE)
 }
 }
