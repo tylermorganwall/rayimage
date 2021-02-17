@@ -126,8 +126,9 @@ render_convolution_fft = function(image, kernel = "gaussian",
   if(is.numeric(kernel) && length(kernel) == 1) {
     kernel = generate_2d_gaussian(kernel,1,kernel_dim,kernel_extent)
   }
+
   if(any(dim(kernel)[1:2] != dim(temp_image)[1:2])) {
-    if(all(dim(kernel)[1:2] < dim(temp_image)[1:2])) {
+    if(all(dim(kernel)[1:2] <= dim(temp_image)[1:2])) {
       kernel = expand_to_fit(dim(temp_image)[1:2],kernel)
     } else {
       stop("kernel can't have greater dimensions than image")
@@ -137,7 +138,6 @@ render_convolution_fft = function(image, kernel = "gaussian",
     temp_image = add_multi_padding(temp_image,pad)
     kernel = add_multi_padding(kernel,pad)
   }
-
 
   if(any(dim(kernel) > dim(temp_image)[1:2]*2 + 1)) {
     stop("kernel dimensions: ", paste0(dim(kernel),collapse="x"),
