@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -141,7 +141,14 @@
     <p>Resizes an image or a matrix, using bilinear interpolation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>render_resized</span><span class='op'>(</span><span class='va'>image</span>, mag <span class='op'>=</span> <span class='fl'>1</span>, dims <span class='op'>=</span> <span class='cn'>NULL</span>, filename <span class='op'>=</span> <span class='cn'>NULL</span>, preview <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>render_resized</span><span class='op'>(</span>
+  <span class='va'>image</span>,
+  mag <span class='op'>=</span> <span class='fl'>1</span>,
+  dims <span class='op'>=</span> <span class='cn'>NULL</span>,
+  filename <span class='op'>=</span> <span class='cn'>NULL</span>,
+  preview <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  method <span class='op'>=</span> <span class='st'>"tri"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,6 +173,11 @@
     <tr>
       <th>preview</th>
       <td><p>Default <code>FALSE</code>. Whether to plot the convolved image, or just to return the values.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>Default <code>trilinear</code>. Filters to up/downsample the image. Options: <code>bilinear</code>, <code>box</code>, <code>trilinear</code>,
+<code>catmull</code>, <code>mitchell</code>.</p></td>
     </tr>
     </table>
 
