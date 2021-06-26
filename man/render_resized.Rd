@@ -4,7 +4,14 @@
 \alias{render_resized}
 \title{Resize Image}
 \usage{
-render_resized(image, mag = 1, dims = NULL, filename = NULL, preview = FALSE)
+render_resized(
+  image,
+  mag = 1,
+  dims = NULL,
+  filename = NULL,
+  preview = FALSE,
+  method = "tri"
+)
 }
 \arguments{
 \item{image}{Image filename, 3-layer RGB array, or matrix.}
@@ -17,6 +24,9 @@ render_resized(image, mag = 1, dims = NULL, filename = NULL, preview = FALSE)
 \item{filename}{Default \code{NULL}. The filename of the image to be saved. If this is not given, the image will be plotted instead.}
 
 \item{preview}{Default \code{FALSE}. Whether to plot the convolved image, or just to return the values.}
+
+\item{method}{Default \code{trilinear}. Filters to up/downsample the image. Options: \code{bilinear}, \code{box}, \code{trilinear},
+\code{catmull}, \code{mitchell}.}
 }
 \value{
 3-layer RGB resized array or matrix.

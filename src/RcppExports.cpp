@@ -67,6 +67,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// resize_matrix_stb
+NumericMatrix resize_matrix_stb(NumericMatrix image, int width, int height, int method);
+RcppExport SEXP _rayimage_resize_matrix_stb(SEXP imageSEXP, SEXP widthSEXP, SEXP heightSEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type image(imageSEXP);
+    Rcpp::traits::input_parameter< int >::type width(widthSEXP);
+    Rcpp::traits::input_parameter< int >::type height(heightSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(resize_matrix_stb(image, width, height, method));
+    return rcpp_result_gen;
+END_RCPP
+}
 // generate_disk
 arma::mat generate_disk(float radius, int dim, bool offsetx, bool offsety);
 RcppExport SEXP _rayimage_generate_disk(SEXP radiusSEXP, SEXP dimSEXP, SEXP offsetxSEXP, SEXP offsetySEXP) {
@@ -188,6 +202,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rayimage_rayinterp2", (DL_FUNC) &_rayimage_rayinterp2, 3},
     {"_rayimage_resize_image", (DL_FUNC) &_rayimage_resize_image, 2},
     {"_rayimage_resize_image_xy", (DL_FUNC) &_rayimage_resize_image_xy, 3},
+    {"_rayimage_resize_matrix_stb", (DL_FUNC) &_rayimage_resize_matrix_stb, 4},
     {"_rayimage_generate_disk", (DL_FUNC) &_rayimage_generate_disk, 4},
     {"_rayimage_gen_ellipse", (DL_FUNC) &_rayimage_gen_ellipse, 3},
     {"_rayimage_subsample_rect", (DL_FUNC) &_rayimage_subsample_rect, 3},

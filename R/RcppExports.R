@@ -21,6 +21,10 @@ resize_image_xy <- function(image, XI, YI) {
     .Call(`_rayimage_resize_image_xy`, image, XI, YI)
 }
 
+resize_matrix_stb <- function(image, width, height, method) {
+    .Call(`_rayimage_resize_matrix_stb`, image, width, height, method)
+}
+
 generate_disk <- function(radius, dim, offsetx, offsety) {
     .Call(`_rayimage_generate_disk`, radius, dim, offsetx, offsety)
 }

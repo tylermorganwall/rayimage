@@ -27,7 +27,7 @@ render_bokeh(
 
 \item{depthmap}{Depth map filename or 1d array.}
 
-\item{focus}{Defaults \code{0.5}. Depth in which to blur. Minimum 0, maximum 1.}
+\item{focus}{Defaults \code{0.5}. Depth in which to blur.}
 
 \item{focallength}{Default \code{100}. Focal length of the virtual camera.}
 

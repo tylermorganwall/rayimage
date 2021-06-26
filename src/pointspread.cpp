@@ -1,5 +1,8 @@
+#define STB_IMAGE_RESIZE_IMPLEMENTATION
+
 #include <RcppArmadillo.h>
 #include <RProgress.h>
+#include "stb_image_resize.h"
 // [[Rcpp::depends(RcppArmadillo)]]
 using namespace Rcpp;
 
@@ -88,6 +91,51 @@ arma::mat resize_image_xy(arma::mat& image, arma::vec XI, arma::vec YI) {
   arma::mat ZI;
   arma::interp2(X, Y, image, XI, YI, ZI);
   return(ZI);
+}
+
+// [[Rcpp::export]]
+NumericMatrix resize_matrix_stb(NumericMatrix image, int width, int height, int method) {
+  float* resized_image = new float[width * height];
+  float* original_image = new float[image.ncol() * image.nrow()];
+
+  int size_mat = image.ncol() * image.nrow();
+  for(int i = 0; i < image.nrow(); i++ ) {
+    for(int j = 0; j < image.ncol(); j++) {
+      original_image[i + image.nrow() * j] = image(i,j);
+    }
+  }
+  stbir_filter interp_type;
+  switch(method) {
+    case 0:
+      interp_type = STBIR_FILTER_DEFAULT;
+      break;
+    case 1:
+      interp_type = STBIR_FILTER_BOX;
+      break;
+    case 2:
+      interp_type = STBIR_FILTER_TRIANGLE;
+      break;
+    case 3:
+      interp_type = STBIR_FILTER_CUBICBSPLINE;
+      break;
+    case 4:
+      interp_type = STBIR_FILTER_CATMULLROM;
+      break;
+    case 5:
+      interp_type = STBIR_FILTER_MITCHELL;
+      break;
+  }
+
+  stbir_resize_float_generic(original_image, image.nrow(), image.ncol(), 0,
+                             resized_image, width, height, 0,
+                             1, 0, 0, STBIR_EDGE_WRAP, interp_type, STBIR_COLORSPACE_LINEAR, NULL);
+  NumericMatrix resized_mat(width,height);
+  for(int i = 0; i < width; i++ ) {
+    for(int j = 0; j < height; j++) {
+      resized_mat(i,j) = resized_image[i + width * j];
+    }
+  }
+  return(resized_mat);
 }
 
 float evaluate_disk(float x) {
