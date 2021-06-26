@@ -2,7 +2,7 @@ Package: rayimage
 Type: Package
 Title: Image Processing for Simulated Cameras
 Version: 0.6.1
-Author: c(person("Tyler", "Morgan-Wall", email = "tylermw@gmail.com", 
+Authors@R: c(person("Tyler", "Morgan-Wall", email = "tylermw@gmail.com", 
     role = c("aut", "cph", "cre"), comment = c(ORCID = "0000-0002-3131-3814")),
     person("Sean", "Barrett", role = c("ctb", "cph")))
 Maintainer: Tyler Morgan-Wall <tylermw@gmail.com>
