@@ -98,7 +98,6 @@ NumericMatrix resize_matrix_stb(NumericMatrix image, int width, int height, int 
   float* resized_image = new float[width * height];
   float* original_image = new float[image.ncol() * image.nrow()];
 
-  int size_mat = image.ncol() * image.nrow();
   for(int i = 0; i < image.nrow(); i++ ) {
     for(int j = 0; j < image.ncol(); j++) {
       original_image[i + image.nrow() * j] = image(i,j);
@@ -135,6 +134,9 @@ NumericMatrix resize_matrix_stb(NumericMatrix image, int width, int height, int 
       resized_mat(i,j) = resized_image[i + width * j];
     }
   }
+  delete[] resized_image;
+  delete[] original_image;
+
   return(resized_mat);
 }
 
