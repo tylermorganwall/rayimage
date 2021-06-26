@@ -21,6 +21,7 @@
 #'@return 3-layer RGB array of the processed image.
 #'@export
 #'@examples
+#'#if(interactive()){
 #'#Perform a convolution with the default gaussian kernel
 #'
 #'plot_image(dragon)
@@ -74,6 +75,7 @@
 #'plot_image(custom*20)
 #'render_convolution_fft(dragon, kernel = custom, preview = TRUE)
 #'}
+#'#end}
 render_convolution_fft = function(image, kernel = "gaussian",
                                   kernel_dim = c(11, 11),
                                   kernel_extent = 3, absolute = TRUE, pad = 50,

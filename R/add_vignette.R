@@ -16,6 +16,7 @@
 #'@import grDevices
 #'@export
 #'@examples
+#'#if(interactive()){
 #'#Plot the dragon
 #'plot_image(dragon)
 #'
@@ -32,6 +33,7 @@
 #'\donttest{
 #'add_vignette(dragon, preview = TRUE, vignette = c(1,1.5))
 #'}
+#'#end}
 add_vignette = function(image, vignette = 0.5, filename = NULL, preview = FALSE) {
   imagetype = get_file_type(image)
   temp = tempfile(fileext = ".png")

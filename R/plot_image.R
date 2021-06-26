@@ -9,8 +9,10 @@
 #'@param ... Additional arguments to pass to the `raster::plotRGB` function that displays the map.
 #'@export
 #'@examples
+#'#if(interactive()){
 #'#Plot the dragon array
 #'plot_image(dragon)
+#'#end}
 plot_image = function(input, rotate=0, keep_user_par = FALSE, ...) {
   imagetype = get_file_type(input)
   if(imagetype == "jpg") {

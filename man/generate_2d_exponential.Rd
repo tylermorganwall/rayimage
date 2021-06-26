@@ -18,5 +18,7 @@ Generates a 2D exponential distribution, with an optional
 argument to take the exponential to a user-defined power.
 }
 \examples{
+#if(interactive()){
 image(generate_2d_exponential(1,31,3), asp=1)
+#end}
 }

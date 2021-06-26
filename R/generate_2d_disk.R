@@ -20,7 +20,9 @@
 #'@param radius Default `1`. Radius of the disk, compared to the dimensions. Should be less than one.
 #'@export
 #'@examples
+#'#if(interactive()){
 #'image(generate_2d_disk(101), asp=1)
+#'#end}
 generate_2d_disk = function(dim = c(11,11), radius = 1) {
   dim = rev(dim)
   mindim = min(dim)

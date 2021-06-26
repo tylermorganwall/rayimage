@@ -23,9 +23,11 @@
 #'@import grDevices
 #'@export
 #'@examples
+#'#if(interactive()){
 #'#Plot the dragon
+#'\donttest{
 #'add_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20)
-#'
+#'}
 #'#That's hard to see--let's add a title bar:
 #'\donttest{
 #'add_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20,
@@ -48,7 +50,7 @@
 #'add_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20, title_bar_alpha = 0.8,
 #'          title_bar_color="red", title_color = "white", title_offset = c(12,12))
 #'}
-#'
+#'#end}
 add_title = function(image,
                      title_text = "", title_offset = c(15,15),
                      title_color = "black", title_size = 30,

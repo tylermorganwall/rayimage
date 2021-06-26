@@ -49,6 +49,7 @@ a user-supplied or built-in kernel. This function uses a fast-fourier transform 
 does the convolution in the frequency domain, so it should be faster for much larger kernels.
 }
 \examples{
+#if(interactive()){
 #Perform a convolution with the default gaussian kernel
 
 plot_image(dragon)
@@ -102,4 +103,5 @@ custom = custom / 20
 plot_image(custom*20)
 render_convolution_fft(dragon, kernel = custom, preview = TRUE)
 }
+#end}
 }

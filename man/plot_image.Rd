@@ -20,6 +20,8 @@ want to set up a multi-pane plot (e.g. set \code{par(mfrow)}).}
 Displays the image in the current device.
 }
 \examples{
+#if(interactive()){
 #Plot the dragon array
 plot_image(dragon)
+#end}
 }

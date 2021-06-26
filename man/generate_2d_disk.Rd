@@ -29,5 +29,7 @@ Disk generated using the following formula:
 The origin of the coordinate system is the center of the matrix.
 }
 \examples{
+#if(interactive()){
 image(generate_2d_disk(101), asp=1)
+#end}
 }

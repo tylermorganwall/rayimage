@@ -9,7 +9,9 @@
 #'@import stats
 #'@export
 #'@examples
+#'#if(interactive()){
 #'image(generate_2d_exponential(1,31,3), asp=1)
+#'#end}
 generate_2d_exponential = function(falloff = 1, dim = c(11,11), width = 3) {
   if(length(dim) == 1) {
     dim = c(dim, dim)

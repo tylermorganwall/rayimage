@@ -22,8 +22,10 @@ Given a series of X and Y coordinates and an array/matrix, interpolates the Z co
 using bilinear interpolation.
 }
 \examples{
+#if(interactive()){
 #Interpolate a matrix
 interpolate_array(volcano,c(10,10.1,11),c(30,30.5,33))
 #Interpolate a 3-layer array (returns list for each channel)
 interpolate_array(dragon,c(10,10.1,11),c(30,30.5,33))
+#end}
 }

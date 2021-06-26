@@ -35,6 +35,7 @@ render_resized(
 Resizes an image or a matrix, using bilinear interpolation.
 }
 \examples{
+#if(interactive()){
 #Plot the image with a title
 \donttest{
 dragon \%>\%
@@ -64,4 +65,5 @@ render_resized(dragon, dim = c(320,160)) \%>\%
            title_size=20, title_color = "white") \%>\%
  plot_image()
 }
+#end}
 }

@@ -13,6 +13,7 @@
 #'@return 3-layer RGB resized array or matrix.
 #'@export
 #'@examples
+#'#if(interactive()){
 #'#Plot the image with a title
 #'\donttest{
 #'dragon %>%
@@ -42,6 +43,7 @@
 #'            title_size=20, title_color = "white") %>%
 #'  plot_image()
 #'}
+#'#end}
 render_resized = function(image, mag = 1, dims = NULL, filename=NULL, preview=FALSE,
                           method = "tri") {
   if(!is.null(filename)) {

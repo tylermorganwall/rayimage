@@ -20,5 +20,7 @@ Generates a 2D gaussian distribution, with an optional
 argument to take the gaussian to a user-defined power.
 }
 \examples{
+#if(interactive()){
 image(generate_2d_gaussian(1,1,31), asp=1)
+#end}
 }

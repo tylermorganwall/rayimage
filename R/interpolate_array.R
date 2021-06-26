@@ -12,10 +12,12 @@
 #'@export
 #'
 #'@examples
+#'#if(interactive()){
 #'#Interpolate a matrix
 #'interpolate_array(volcano,c(10,10.1,11),c(30,30.5,33))
 #'#Interpolate a 3-layer array (returns list for each channel)
 #'interpolate_array(dragon,c(10,10.1,11),c(30,30.5,33))
+#'#end}
 interpolate_array = function(image, x, y) {
   imagetype = get_file_type(image)
   #Load and rotate images if png

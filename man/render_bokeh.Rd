@@ -64,6 +64,7 @@ Takes an image and a depth map to render the image with depth of field
 or use one of the built-in bokeh types.
 }
 \examples{
+#if(interactive()){
 #Plot the dragon
 plot_image(dragon)
 
@@ -104,4 +105,5 @@ render_bokeh(dragon, dragondepth,
 render_bokeh(dragon, dragondepth, bokehshape = "hex", rotation=15,
             focallength=300, focus=600)
 }
+#end}
 }

@@ -39,6 +39,7 @@ to returning it.}
 Takes an RGB array/filename and adds an image overlay.
 }
 \examples{
+#if(interactive()){
 #Plot the dragon
 plot_image(dragon)
 
@@ -57,4 +58,5 @@ dragon_clipped[dragon_clipped > 1] = 1
 add_image_overlay(dragon_clipped, image_overlay = rgba_array,
                  alpha=0.5, preview = TRUE)
 }
+#end}
 }
