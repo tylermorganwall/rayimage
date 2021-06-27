@@ -98,8 +98,8 @@ NumericMatrix resize_matrix_stb(NumericMatrix image, int width, int height, int 
   float* resized_image = new float[width * height];
   float* original_image = new float[image.ncol() * image.nrow()];
 
-  for(int i = 0; i < image.nrow(); i++ ) {
-    for(int j = 0; j < image.ncol(); j++) {
+  for(unsigned int i = 0; i < image.nrow(); i++ ) {
+    for(unsigned int j = 0; j < image.ncol(); j++) {
       original_image[i + image.nrow() * j] = image(i,j);
     }
   }
@@ -123,6 +123,8 @@ NumericMatrix resize_matrix_stb(NumericMatrix image, int width, int height, int 
     case 5:
       interp_type = STBIR_FILTER_MITCHELL;
       break;
+  default:
+    interp_type = STBIR_FILTER_MITCHELL;
   }
 
   stbir_resize_float_generic(original_image, image.nrow(), image.ncol(), 0,
