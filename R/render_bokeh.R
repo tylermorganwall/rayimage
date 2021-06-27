@@ -121,6 +121,7 @@ render_bokeh = function(image, depthmap,
   }
 
   depthmap[is.na(depthmap)] = max(depthmap, na.rm = TRUE)*2
+  depthmap = t((depthmap))
   if(gamma_correction) {
     temp_image = temp_image^2.2
   }
@@ -134,9 +135,9 @@ render_bokeh = function(image, depthmap,
       depthmap2 = calc_bokeh_size(depthmap,focus,focallength, fstop,1-aberration)
     }
     depthmap2[depthmap2 > max_size] = max_size
-    temp_image[,,i] = flipud(t(psf(t(flipud(temp_image[,,i])),depthmap2,
+    temp_image[,,i] = psf(temp_image[,,i],depthmap2,
                                 depthmap, focus, bokehshape, custombokeh = custombokeh,
-                                bokehintensity, bokehlimit, rotation, progbar = progress,channel = i)))
+                                bokehintensity, bokehlimit, rotation, progbar = progress,channel = i)
   }
   if(gamma_correction) {
     temp_image = temp_image ^ (1/2.2)
