@@ -8,6 +8,7 @@ add_vignette(
   image,
   vignette = 0.5,
   color = "#000000",
+  radius = 1.3,
   filename = NULL,
   preview = FALSE
 )
@@ -21,6 +22,9 @@ control the blurriness of the vignette effect (\code{1} is the default, e.g. \co
 much longer to compute).}
 
 \item{color}{Default \code{"#000000"} (black). Color of the vignette.}
+
+\item{radius}{Default \code{1.3}. Multiplier for the size of the vignette. If \code{1}, the vignette touches
+the edge of the image.}
 
 \item{filename}{Default \code{NULL}. Filename which to save the image. If \code{NULL} and \code{preview = FALSE},
 returns an RGB array.}
@@ -48,6 +52,16 @@ add_vignette(dragon, preview = TRUE, vignette = 0.5)
 add_vignette(dragon, preview = TRUE, vignette = 1)
 }
 
+#Change the radius:
+\donttest{
+add_vignette(dragon, preview = TRUE, vignette = 1, radius=1.5)
+add_vignette(dragon, preview = TRUE, vignette = 1, radius=0.5)
+}
+
+#Change the color:
+\donttest{
+add_vignette(dragon, preview = TRUE, vignette = 1, color="white")
+}
 #Increase the width of the blur by 50\%:
 \donttest{
 add_vignette(dragon, preview = TRUE, vignette = c(1,1.5))

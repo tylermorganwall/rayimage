@@ -8,6 +8,7 @@ make_vignette_overlay(
   width,
   height,
   intensity = 0.3,
+  radius_multiplier = 1.3,
   radius = NULL,
   color = "#000000"
 )
@@ -18,6 +19,8 @@ make_vignette_overlay(
 \item{height}{Height of the image.}
 
 \item{intensity}{Default \code{0.4}. \code{1} is max intensity, \code{0} is min.}
+
+\item{radius_multiplier}{Default \code{1.3}.}
 
 \item{radius}{Default \code{NULL}. Max of height or width, divided by 2.}
 
