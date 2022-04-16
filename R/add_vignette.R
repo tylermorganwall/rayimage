@@ -9,6 +9,7 @@
 #'`1` is the darkest vignetting, while `0` is no vignetting. If vignette is a length-2 vector, the second entry will
 #'control the blurriness of the vignette effect (`1` is the default, e.g. `2` would double the blurriness but would take
 #'much longer to compute).
+#'@param color Default `"#000000"` (black). Color of the vignette.
 #'@param preview Default `FALSE`. If `TRUE`, it will display the image in addition
 #'to returning it.
 
@@ -34,7 +35,8 @@
 #'add_vignette(dragon, preview = TRUE, vignette = c(1,1.5))
 #'}
 #'#end}
-add_vignette = function(image, vignette = 0.5, filename = NULL, preview = FALSE) {
+add_vignette = function(image, vignette = 0.5, color = "#000000",
+                        filename = NULL, preview = FALSE) {
   imagetype = get_file_type(image)
   temp = tempfile(fileext = ".png")
   if(imagetype == "array") {
@@ -80,7 +82,7 @@ add_vignette = function(image, vignette = 0.5, filename = NULL, preview = FALSE)
   } else {
     vignette = 0.4
   }
-  imagefile = make_vignette_overlay(dimensions[1],dimensions[2], vignette, radiusval)
+  imagefile = make_vignette_overlay(dimensions[1],dimensions[2], vignette, radiusval, color=color)
   magick::image_read(temp) %>%
     magick::image_composite(magick::image_read(imagefile)) %>%
     magick::image_write(path = temp, format = "png")

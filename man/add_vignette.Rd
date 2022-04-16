@@ -4,7 +4,13 @@
 \alias{add_vignette}
 \title{Add Vignette Effect}
 \usage{
-add_vignette(image, vignette = 0.5, filename = NULL, preview = FALSE)
+add_vignette(
+  image,
+  vignette = 0.5,
+  color = "#000000",
+  filename = NULL,
+  preview = FALSE
+)
 }
 \arguments{
 \item{image}{Image filename or 3-layer RGB array.}
@@ -13,6 +19,8 @@ add_vignette(image, vignette = 0.5, filename = NULL, preview = FALSE)
 \code{1} is the darkest vignetting, while \code{0} is no vignetting. If vignette is a length-2 vector, the second entry will
 control the blurriness of the vignette effect (\code{1} is the default, e.g. \code{2} would double the blurriness but would take
 much longer to compute).}
+
+\item{color}{Default \code{"#000000"} (black). Color of the vignette.}
 
 \item{filename}{Default \code{NULL}. Filename which to save the image. If \code{NULL} and \code{preview = FALSE},
 returns an RGB array.}
