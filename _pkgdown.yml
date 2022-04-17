@@ -13,6 +13,7 @@ reference:
     desc: "Functions for transforming images."
     contents:
       - starts_with("render")
+      - starts_with("interpolate")
   - title: "Plotting and Saving Images"
     desc: "Functions for displaying/saving images"
     contents:
