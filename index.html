@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -44,14 +46,14 @@
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Blog
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://www.tylermw.com/portrait-mode-data/">Portrait Mode for Data: Rayshader + Rayfocus</a>
+      <a href="https://www.tylermw.com/portrait-mode-data/" class="external-link">Portrait Mode for Data: Rayshader + Rayfocus</a>
     </li>
   </ul>
 </li>
@@ -72,7 +74,7 @@
   </a>
 </li>
 <li>
-  <a href="https://github.com/tylermorganwall/rayimage">
+  <a href="https://github.com/tylermorganwall/rayimage" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
     GitHub
@@ -90,26 +92,26 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="rayimage" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#rayimage" class="anchor"></a>rayimage</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="rayimage">rayimage<a class="anchor" aria-label="anchor" href="#rayimage"></a>
+</h1></div>
 <p><img src="reference/figures/githubdemo.gif"></p>
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
 <p><strong>rayimage</strong> is an open source R package for image manipulation and simulated camera effects. <strong>rayfocus</strong> uses convolution-based techniques to generate simulated camera bokeh, depth of field, and other camera effects, using an image and an optional depth map. It includes functions to perform 2D convolutions, add image overlays, generate camera vignette effects, and add titles to images.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># To install the latest version from Github:</span>
 <span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"tylermorganwall/rayimage"</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"tylermorganwall/rayimage"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="functions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#functions" class="anchor"></a>Functions</h2>
+<div class="section level2">
+<h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
+</h2>
 <ul>
 <li><p><code><a href="reference/render_bokeh.html">render_bokeh()</a></code> takes two images as an input: an in-focus image, and a depth map for that image. These can either be in-memory representations of the image, or file paths to the images. The user can also specify various camera settings, including: focal length, f-stop, aperture shape (including custom aperture shapes passed by the user), aperture rotation, bokeh intensity, bokeh intensity limit. The output is either plotted to the current device, or save to a file (if a filename is passed to the function).</p></li>
 <li><p><code><a href="reference/render_convolution.html">render_convolution()</a></code> performs a discrete convolution with a user-supplied kernel (either custom, or using one of the built-in functions to generate a kernel: <code><a href="reference/generate_2d_gaussian.html">generate_2d_gaussian()</a></code>, <code><a href="reference/generate_2d_exponential.html">generate_2d_exponential()</a></code>, and <code><a href="reference/generate_2d_disk.html">generate_2d_disk()</a></code>). This function can be applied to either images represented by RGB arrays/filenames, or 2D matrices.</p></li>
@@ -121,22 +123,22 @@
 <li><p><code><a href="reference/plot_image.html">plot_image()</a></code> plots an RGB array to the current device.</p></li>
 </ul>
 </div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
 <p>The package comes with a sample image and depth map derived from Stanford “Chinese Dragon” 3D model. The image is included in rayimage as <code>dragon</code> and the depthmap is <code>dragondepth</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.rayimage.dev">rayimage</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.rayimage.dev">rayimage</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="reference/plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/image.html">image</a></span><span class="op">(</span><span class="va">dragondepth</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">hcl.colors</a></span><span class="op">(</span><span class="fl">256</span>, <span class="st">"YlOrRd"</span>, rev <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, 
+<span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="va">dragondepth</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">256</span>, <span class="st">"YlOrRd"</span>, rev <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, 
       axes<span class="op">=</span><span class="cn">FALSE</span>, asp<span class="op">=</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-1-1.png"><!-- --></p>
 <p>Preview the focal plane.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="reference/render_bokeh.html">render_bokeh</a></span><span class="op">(</span><span class="va">dragon</span>,<span class="va">dragondepth</span>,focus<span class="op">=</span><span class="fl">930</span>,preview_focus <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">## [1] "Focal range: 847.644-1410.17"</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -150,7 +152,7 @@
 <p><img src="reference/figures/unnamed-chunk-2-2.png"><!-- --></p>
 <p>We can also adjust the focal point, shape of the aperture, f-stop, focal length, as well as the bokeh intensity.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="reference/render_bokeh.html">render_bokeh</a></span><span class="op">(</span><span class="va">dragon</span>,<span class="va">dragondepth</span>,focus<span class="op">=</span><span class="fl">1100</span>,focallength <span class="op">=</span> <span class="fl">400</span>,
              bokehshape <span class="op">=</span> <span class="st">"hex"</span>, bokehintensity <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="fu"><a href="reference/render_bokeh.html">render_bokeh</a></span><span class="op">(</span><span class="va">dragon</span>,<span class="va">dragondepth</span>,focus<span class="op">=</span><span class="fl">900</span>,focallength <span class="op">=</span> <span class="fl">400</span>,
@@ -164,38 +166,38 @@
 <p><img src="reference/figures/unnamed-chunk-3-2.png"><!-- --></p>
 <p>We can add a camera vignette effect, titles, and add overlays (not shown here):</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">dragon</span> <span class="op">%&gt;%</span>
+<span class="va">dragon</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/add_title.html">add_title</a></span><span class="op">(</span><span class="st">"Dragon"</span>, title_size <span class="op">=</span> <span class="fl">20</span>, title_bar_color <span class="op">=</span> <span class="st">"red"</span>, 
-            title_bar_alpha<span class="op">=</span><span class="fl">0.8</span>, title_color<span class="op">=</span><span class="st">"white"</span>, title_offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+            title_bar_alpha<span class="op">=</span><span class="fl">0.8</span>, title_color<span class="op">=</span><span class="st">"white"</span>, title_offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="va">dragon</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/add_vignette.html">add_vignette</a></span><span class="op">(</span>vignette<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">dragon</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="reference/add_vignette.html">add_vignette</a></span><span class="op">(</span>vignette<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-4-1.png"><!-- --></p>
 <p>We can also resize images and matrices with <code>render_resize()</code>. We can do this before adding text to make the resulting text smoother.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">#Double the input size to make the resulting text smoother.</span>
-<span class="va">dragon</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/render_resized.html">render_resized</a></span><span class="op">(</span>mag <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">dragon</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="reference/render_resized.html">render_resized</a></span><span class="op">(</span>mag <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/add_title.html">add_title</a></span><span class="op">(</span><span class="st">"Dragon"</span>, title_size <span class="op">=</span> <span class="fl">20</span>, title_bar_color <span class="op">=</span> <span class="st">"red"</span>, 
-            title_bar_alpha<span class="op">=</span><span class="fl">0.8</span>, title_color<span class="op">=</span><span class="st">"white"</span>, title_offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+            title_bar_alpha<span class="op">=</span><span class="fl">0.8</span>, title_color<span class="op">=</span><span class="st">"white"</span>, title_offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co">#Specify resulting dimensions directly.</span>
-<span class="va">dragon</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/render_resized.html">render_resized</a></span><span class="op">(</span>dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">600</span>,<span class="fl">300</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">dragon</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="reference/render_resized.html">render_resized</a></span><span class="op">(</span>dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">600</span>,<span class="fl">300</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/add_title.html">add_title</a></span><span class="op">(</span><span class="st">"Dragon"</span>, title_size <span class="op">=</span> <span class="fl">20</span>, title_bar_color <span class="op">=</span> <span class="st">"red"</span>, 
-            title_bar_alpha<span class="op">=</span><span class="fl">0.8</span>, title_color<span class="op">=</span><span class="st">"white"</span>, title_offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+            title_bar_alpha<span class="op">=</span><span class="fl">0.8</span>, title_color<span class="op">=</span><span class="st">"white"</span>, title_offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-5-1.png"><!-- --></p>
 <p>Reorienting images and matrices can be done with <code><a href="reference/render_reorient.html">render_reorient()</a></code>:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="reference/render_reorient.html">render_reorient</a></span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="reference/render_reorient.html">render_reorient</a></span><span class="op">(</span><span class="va">dragon</span>, flipx <span class="op">=</span> <span class="cn">TRUE</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="reference/render_reorient.html">render_reorient</a></span><span class="op">(</span><span class="va">dragon</span>, flipy <span class="op">=</span> <span class="cn">TRUE</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
@@ -203,42 +205,42 @@
 <p><img src="reference/figures/unnamed-chunk-6-1.png"><!-- --></p>
 <p>We can also use the <code><a href="reference/render_convolution.html">render_convolution()</a></code> directly to perform a convolution with a user-defined (or built-in) kernel.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#Default gaussian kernel</span>
 <span class="fu"><a href="reference/render_convolution.html">render_convolution</a></span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="st">"gaussian"</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/image.html">image</a></span><span class="op">(</span><span class="fu"><a href="reference/generate_2d_gaussian.html">generate_2d_gaussian</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">11</span>,<span class="fl">3</span><span class="op">)</span>, asp<span class="op">=</span><span class="fl">1</span>, axes<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu"><a href="reference/generate_2d_gaussian.html">generate_2d_gaussian</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">11</span>,<span class="fl">3</span><span class="op">)</span>, asp<span class="op">=</span><span class="fl">1</span>, axes<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-7-1.png"><!-- --></p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Custom gaussian kernel</span>
 <span class="fu"><a href="reference/render_convolution.html">render_convolution</a></span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="fu"><a href="reference/generate_2d_gaussian.html">generate_2d_gaussian</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">1</span>,<span class="fl">31</span>,<span class="fl">21</span><span class="op">)</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> 
-<span class="fu"><a href="https://rdrr.io/r/graphics/image.html">image</a></span><span class="op">(</span><span class="fu"><a href="reference/generate_2d_gaussian.html">generate_2d_gaussian</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">1</span>,<span class="fl">31</span>,<span class="fl">21</span><span class="op">)</span>, asp<span class="op">=</span><span class="fl">1</span>, axes<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu"><a href="reference/generate_2d_gaussian.html">generate_2d_gaussian</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">1</span>,<span class="fl">31</span>,<span class="fl">21</span><span class="op">)</span>, asp<span class="op">=</span><span class="fl">1</span>, axes<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-7-2.png"><!-- --></p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Custom exponential kernel</span>
 <span class="fu"><a href="reference/render_convolution.html">render_convolution</a></span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="fu"><a href="reference/generate_2d_exponential.html">generate_2d_exponential</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">31</span>,<span class="fl">21</span><span class="op">)</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/image.html">image</a></span><span class="op">(</span><span class="fu"><a href="reference/generate_2d_exponential.html">generate_2d_exponential</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">31</span>,<span class="fl">21</span><span class="op">)</span>, asp<span class="op">=</span><span class="fl">1</span>, axes<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu"><a href="reference/generate_2d_exponential.html">generate_2d_exponential</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">31</span>,<span class="fl">21</span><span class="op">)</span>, asp<span class="op">=</span><span class="fl">1</span>, axes<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-7-3.png"><!-- --></p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Custom disk kernel</span>
 <span class="fu"><a href="reference/render_convolution.html">render_convolution</a></span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="fu"><a href="reference/generate_2d_disk.html">generate_2d_disk</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/image.html">image</a></span><span class="op">(</span><span class="fu"><a href="reference/generate_2d_disk.html">generate_2d_disk</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span>, asp<span class="op">=</span><span class="fl">1</span>, axes<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu"><a href="reference/generate_2d_disk.html">generate_2d_disk</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span>, asp<span class="op">=</span><span class="fl">1</span>, axes<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-7-4.png"><!-- --></p>
 <p>We can also use this to perform generate discrete 2D convolutions with matrices:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">volcano</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/graphics/image.html">image</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">volcano</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/render_convolution.html">render_convolution</a></span><span class="op">(</span>kernel<span class="op">=</span><span class="fu"><a href="reference/generate_2d_gaussian.html">generate_2d_gaussian</a></span><span class="op">(</span>sd<span class="op">=</span><span class="fl">1</span>,dim<span class="op">=</span><span class="fl">31</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/graphics/image.html">image</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="va">volcano</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">volcano</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="reference/render_convolution.html">render_convolution</a></span><span class="op">(</span>kernel<span class="op">=</span><span class="fu"><a href="reference/generate_2d_gaussian.html">generate_2d_gaussian</a></span><span class="op">(</span>sd<span class="op">=</span><span class="fl">1</span>,dim<span class="op">=</span><span class="fl">31</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-8-1.png"><!-- --></p>
 <p>And here we use a user-defined kernel, in the shape of a cross.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="va">custom1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">0</span>, nrow<span class="op">=</span><span class="fl">11</span>,ncol<span class="op">=</span><span class="fl">11</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="va">custom1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">0</span>, nrow<span class="op">=</span><span class="fl">11</span>,ncol<span class="op">=</span><span class="fl">11</span><span class="op">)</span>
 <span class="va">custom1</span><span class="op">[</span><span class="fl">6</span>,<span class="op">]</span> <span class="op">=</span> <span class="fl">1</span>
 <span class="va">custom1</span><span class="op">[</span>,<span class="fl">6</span><span class="op">]</span> <span class="op">=</span> <span class="fl">1</span>
-<span class="va">custom2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">[</span>,<span class="fl">10</span><span class="op">:</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
+<span class="va">custom2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">[</span>,<span class="fl">10</span><span class="op">:</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
 <span class="fu"><a href="reference/plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">custom1</span><span class="op">)</span>
 <span class="fu"><a href="reference/plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">custom2</span><span class="op">)</span>
 
@@ -253,48 +255,59 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=rayimage">https://​cloud.r-project.org/​package=rayimage</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/tylermorganwall/rayimage/">https://​github.com/​tylermorganwall/​rayimage/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/tylermorganwall/rayimage/issues">https://​github.com/​tylermorganwall/​rayimage/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=rayimage" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/tylermorganwall/rayimage/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/tylermorganwall/rayimage/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>
-<a href="https://www.tylermw.com">Tyler Morgan-Wall</a> <br><small class="roles"> Author, copyright holder, maintainer </small> <a href="https://orcid.org/0000-0002-3131-3814" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html#citation">Citing rayimage</a></li>
 </ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>
+<a href="https://www.tylermw.com" class="external-link">Tyler Morgan-Wall</a> <br><small class="roles"> Author, copyright holder, maintainer </small> <a href="https://orcid.org/0000-0002-3131-3814" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">More about authors...</a></li>
+</ul>
+</div>
+
+
 
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://www.tylermw.com">Tyler Morgan-Wall</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://www.tylermw.com" class="external-link">Tyler Morgan-Wall</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -302,6 +315,8 @@
 
   
 
+
+  
 
   </body>
 </html>

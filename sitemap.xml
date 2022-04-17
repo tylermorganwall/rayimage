@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.rayimage.dev/404.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayimage.dev/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayimage.dev/CONTRIBUTING.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayimage.dev/authors.html</loc>
+  </url>
+  <url>
     <loc>https://www.rayimage.dev/index.html</loc>
   </url>
   <url>
@@ -20,6 +32,9 @@
   </url>
   <url>
     <loc>https://www.rayimage.dev/reference/calc_bokeh_size.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayimage.dev/reference/convert_color.html</loc>
   </url>
   <url>
     <loc>https://www.rayimage.dev/reference/dragon.html</loc>
@@ -47,6 +62,9 @@
   </url>
   <url>
     <loc>https://www.rayimage.dev/reference/get_file_type.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayimage.dev/reference/index.html</loc>
   </url>
   <url>
     <loc>https://www.rayimage.dev/reference/interpolate_array.html</loc>
