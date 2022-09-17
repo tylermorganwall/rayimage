@@ -1,7 +1,7 @@
 Package: rayimage
 Type: Package
 Title: Image Processing for Simulated Cameras
-Version: 0.6.5
+Version: 0.7.0
 Authors@R: c(person("Tyler", "Morgan-Wall", email = "tylermw@gmail.com", 
     role = c("aut", "cph", "cre"), comment = c(ORCID = "0000-0002-3131-3814")),
     person("Sean", "Barrett", role = c("ctb", "cph")))
@@ -15,12 +15,12 @@ Imports:
     png,
     magrittr,
     jpeg,
-    grDevices
+    grDevices,
+    grid
 Suggests:
-    magick,
-    raster
+    magick
 LinkingTo: Rcpp, RcppArmadillo, progress
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
 URL: https://www.rayimage.dev, https://github.com/tylermorganwall/rayimage
 BugReports: https://github.com/tylermorganwall/rayimage/issues

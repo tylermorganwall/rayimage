@@ -5,6 +5,18 @@ get_boolean_distance <- function(input) {
     .Call(`_rayimage_get_boolean_distance`, input)
 }
 
+encode_native_image_rcpp_1 <- function(bw_image) {
+    .Call(`_rayimage_encode_native_image_rcpp_1`, bw_image)
+}
+
+encode_native_image_rcpp_3 <- function(r_image, g_image, b_image) {
+    .Call(`_rayimage_encode_native_image_rcpp_3`, r_image, g_image, b_image)
+}
+
+encode_native_image_rcpp_4 <- function(r_image, g_image, b_image, a_image) {
+    .Call(`_rayimage_encode_native_image_rcpp_4`, r_image, g_image, b_image, a_image)
+}
+
 subsample <- function(circle, size) {
     .Call(`_rayimage_subsample`, circle, size)
 }

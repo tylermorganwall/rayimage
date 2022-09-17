@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // get_boolean_distance
 NumericMatrix get_boolean_distance(LogicalMatrix input);
 RcppExport SEXP _rayimage_get_boolean_distance(SEXP inputSEXP) {
@@ -14,6 +19,44 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< LogicalMatrix >::type input(inputSEXP);
     rcpp_result_gen = Rcpp::wrap(get_boolean_distance(input));
+    return rcpp_result_gen;
+END_RCPP
+}
+// encode_native_image_rcpp_1
+IntegerVector encode_native_image_rcpp_1(NumericMatrix& bw_image);
+RcppExport SEXP _rayimage_encode_native_image_rcpp_1(SEXP bw_imageSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix& >::type bw_image(bw_imageSEXP);
+    rcpp_result_gen = Rcpp::wrap(encode_native_image_rcpp_1(bw_image));
+    return rcpp_result_gen;
+END_RCPP
+}
+// encode_native_image_rcpp_3
+IntegerVector encode_native_image_rcpp_3(NumericMatrix& r_image, NumericMatrix& g_image, NumericMatrix& b_image);
+RcppExport SEXP _rayimage_encode_native_image_rcpp_3(SEXP r_imageSEXP, SEXP g_imageSEXP, SEXP b_imageSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix& >::type r_image(r_imageSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type g_image(g_imageSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type b_image(b_imageSEXP);
+    rcpp_result_gen = Rcpp::wrap(encode_native_image_rcpp_3(r_image, g_image, b_image));
+    return rcpp_result_gen;
+END_RCPP
+}
+// encode_native_image_rcpp_4
+IntegerVector encode_native_image_rcpp_4(NumericMatrix& r_image, NumericMatrix& g_image, NumericMatrix& b_image, NumericMatrix& a_image);
+RcppExport SEXP _rayimage_encode_native_image_rcpp_4(SEXP r_imageSEXP, SEXP g_imageSEXP, SEXP b_imageSEXP, SEXP a_imageSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix& >::type r_image(r_imageSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type g_image(g_imageSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type b_image(b_imageSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type a_image(a_imageSEXP);
+    rcpp_result_gen = Rcpp::wrap(encode_native_image_rcpp_4(r_image, g_image, b_image, a_image));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -198,6 +241,9 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rayimage_get_boolean_distance", (DL_FUNC) &_rayimage_get_boolean_distance, 1},
+    {"_rayimage_encode_native_image_rcpp_1", (DL_FUNC) &_rayimage_encode_native_image_rcpp_1, 1},
+    {"_rayimage_encode_native_image_rcpp_3", (DL_FUNC) &_rayimage_encode_native_image_rcpp_3, 3},
+    {"_rayimage_encode_native_image_rcpp_4", (DL_FUNC) &_rayimage_encode_native_image_rcpp_4, 4},
     {"_rayimage_subsample", (DL_FUNC) &_rayimage_subsample, 2},
     {"_rayimage_rayinterp2", (DL_FUNC) &_rayimage_rayinterp2, 3},
     {"_rayimage_resize_image", (DL_FUNC) &_rayimage_resize_image, 2},

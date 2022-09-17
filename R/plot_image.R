@@ -6,6 +6,7 @@
 #'@param rotate Default 0. Rotates the output. Possible values: 0, 90, 180, 270.
 #'@param keep_user_par Default `TRUE`. Whether to keep the user's `par()` settings. Set to `FALSE` if you
 #'want to set up a multi-pane plot (e.g. set `par(mfrow)`).
+#'@param new_page  Default `TRUE`. Whether to call `grid::grid.newpage()` before plotting the image.
 #'@param ... Additional arguments to pass to the `raster::plotRGB` function that displays the map.
 #'@export
 #'@examples
@@ -13,7 +14,7 @@
 #'#Plot the dragon array
 #'plot_image(dragon)
 #'#end}
-plot_image = function(input, rotate=0, keep_user_par = FALSE, ...) {
+plot_image = function(input, rotate=0, keep_user_par = FALSE, new_page = TRUE, ...) {
   imagetype = get_file_type(input)
   if(imagetype == "jpg") {
     input = suppressWarnings(jpeg::readJPEG(input))
@@ -66,7 +67,11 @@ plot_image = function(input, rotate=0, keep_user_par = FALSE, ...) {
       input[input > 1] = 1
       input[input < 0] = 0
     }
-    suppressWarnings(raster::plotRGB(raster::brick(input, xmn = 0.5, xmx = dim(input)[2]+ 0.5,ymn = 0.5, ymx = dim(input)[1] + 0.5, ...),scale=1,  asp=1, maxpixels=3*nrow(input)*ncol(input),...))
+    nr = convert_to_native_raster(input)
+    if(new_page) {
+      grid::grid.newpage()
+    }
+    grid::grid.raster(nr, interpolate = FALSE)
   } else if(length(dim(input)) == 2) {
     if(number_of_rots != 0) {
       for(j in 1:number_of_rots) {
@@ -77,8 +82,12 @@ plot_image = function(input, rotate=0, keep_user_par = FALSE, ...) {
       input[input > 1] = 1
       input[input < 0] = 0
     }
-    array_from_mat = array(flipud(t(input)),dim=c(ncol(input),nrow(input),3))
-    suppressWarnings(raster::plotRGB(raster::brick(array_from_mat, xmn = 0.5, xmx = dim(array_from_mat)[2] + 0.5,ymn =  0.5, ymx = dim(array_from_mat)[1] +  0.5, ...),scale=1,asp=1, maxpixels=3*nrow(input)*ncol(input), ...))
+    array_from_mat = array(input,dim=c(nrow(input),ncol(input),3))
+    nr = convert_to_native_raster(array_from_mat)
+    if(new_page) {
+      grid::grid.newpage()
+    }
+    grid::grid.raster(nr, interpolate = FALSE)
   } else {
     stop("`input` is neither array nor matrix--convert to either to plot.")
   }
