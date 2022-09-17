@@ -18,7 +18,7 @@ argument to take the gaussian to a user-defined power."><!-- mathjax --><script 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
@@ -80,27 +80,34 @@ argument to take the gaussian to a user-defined power.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">generate_2d_gaussian</span><span class="op">(</span>sd <span class="op">=</span> <span class="fl">1</span>, power <span class="op">=</span> <span class="fl">1</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11</span>, <span class="fl">11</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">generate_2d_gaussian</span><span class="op">(</span>sd <span class="op">=</span> <span class="fl">1</span>, power <span class="op">=</span> <span class="fl">1</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11</span>, <span class="fl">11</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>sd</dt>
 <dd><p>Default <code>1</code>. Standard deviation of the normal distribution</p></dd>
+
+
 <dt>power</dt>
 <dd><p>Default <code>1</code>. Power to take the distribution. Higher values will result in a sharper peak.</p></dd>
+
+
 <dt>dim</dt>
 <dd><p>Default <code>c(11, 11)</code>. The dimensions of the matrix.</p></dd>
+
+
 <dt>width</dt>
 <dd><p>Default <code>3</code> (<code>-10</code> to <code>10</code>). The range in which to compute the distribution.</p></dd>
+
 </dl></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#if(interactive()){</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu">generate_2d_gaussian</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">31</span><span class="op">)</span>, asp<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#if(interactive()){</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu">generate_2d_gaussian</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">31</span><span class="op">)</span>, asp<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="generate_2d_gaussian-1.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co">#end}</span></span>
+<span class="r-in"><span><span class="co">#end}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -115,7 +122,7 @@ argument to take the gaussian to a user-defined power.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

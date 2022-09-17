@@ -20,7 +20,7 @@ kernel for the edges)."><!-- mathjax --><script src="https://cdnjs.cloudflare.co
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
@@ -84,122 +84,143 @@ kernel for the edges).</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">render_convolution</span><span class="op">(</span>
-  <span class="va">image</span>,
-  kernel <span class="op">=</span> <span class="st">"gaussian"</span>,
-  kernel_dim <span class="op">=</span> <span class="fl">11</span>,
-  kernel_extent <span class="op">=</span> <span class="fl">3</span>,
-  absolute <span class="op">=</span> <span class="cn">TRUE</span>,
-  min_value <span class="op">=</span> <span class="cn">NULL</span>,
-  filename <span class="op">=</span> <span class="cn">NULL</span>,
-  preview <span class="op">=</span> <span class="cn">FALSE</span>,
-  gamma_correction <span class="op">=</span> <span class="cn">FALSE</span>,
-  progress <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">render_convolution</span><span class="op">(</span></span>
+<span>  <span class="va">image</span>,</span>
+<span>  kernel <span class="op">=</span> <span class="st">"gaussian"</span>,</span>
+<span>  kernel_dim <span class="op">=</span> <span class="fl">11</span>,</span>
+<span>  kernel_extent <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  absolute <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  min_value <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  preview <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  gamma_correction <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  progress <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>Image filename or 3-layer RGB array.</p></dd>
+
+
 <dt>kernel</dt>
 <dd><p>Default <code>gaussian</code>. By default, an 11x11 Gaussian kernel with a mean
 of <code>0</code> and a standard deviation of <code>1</code>, running from <code>-kernel_extent</code> to <code>kernel_extent</code>.
 If numeric, this will be the standard deviation of the normal distribution. If a
 matrix, it will be used directly as the convolution kernel (but resized always to be an odd number
 of columns and rows).</p></dd>
+
+
 <dt>kernel_dim</dt>
 <dd><p>Default <code>11</code>. The dimension of the <code>gaussian</code> kernel. Ignored
 if user specifies their own kernel.</p></dd>
+
+
 <dt>kernel_extent</dt>
 <dd><p>Default <code>3</code>. Extent over which to calculate the kernel.</p></dd>
+
+
 <dt>absolute</dt>
 <dd><p>Default <code>TRUE</code>. Whether to take the absolute value of the convolution.</p></dd>
+
+
 <dt>min_value</dt>
 <dd><p>Default <code>NULL</code>. If numeric, specifies he minimum value (for any color channel)
 for a pixel to have the convolution performed.</p></dd>
+
+
 <dt>filename</dt>
 <dd><p>Default <code>NULL</code>. The filename of the image to be saved. If this is not given, the image will be plotted instead.</p></dd>
+
+
 <dt>preview</dt>
 <dd><p>Default <code>TRUE</code>. Whether to plot the convolved image, or just to return the values.</p></dd>
+
+
 <dt>gamma_correction</dt>
 <dd><p>Default <code>TRUE</code>. Controls gamma correction when adding colors. Default exponent of 2.2.</p></dd>
+
+
 <dt>progress</dt>
 <dd><p>Default <code>TRUE</code>. Whether to display a progress bar.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>3-layer RGB array of the processed image.</p>
+    
+
+<p>3-layer RGB array of the processed image.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#if(interactive()){</span></span>
-<span class="r-in"><span class="co">#Perform a convolution with the default gaussian kernel</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#if(interactive()){</span></span></span>
+<span class="r-in"><span><span class="co">#Perform a convolution with the default gaussian kernel</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(dragon):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Perform a convolution with the default gaussian kernel</span></span></span>
+<span class="r-in"><span><span class="fu">render_convolution</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(temp_image_final):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Increase the width of the kernel</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">render_convolution</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="fl">2</span>, kernel_dim<span class="op">=</span><span class="fl">21</span>,kernel_extent<span class="op">=</span><span class="fl">6</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(temp_image_final):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Perform edge detection using a edge detection kernel</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="va">edge</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">8</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span><span class="op">)</span>,<span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">render_convolution</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="va">edge</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, absolute<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(temp_image_final):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Perform edge detection with Sobel matrices</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="va">sobel1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">2</span>,<span class="op">-</span><span class="fl">1</span><span class="op">)</span>,<span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sobel2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">2</span>,<span class="op">-</span><span class="fl">1</span><span class="op">)</span>,<span class="fl">3</span>,<span class="fl">3</span>,byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sob1</span> <span class="op">=</span> <span class="fu">render_convolution</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="va">sobel1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sob2</span> <span class="op">=</span> <span class="fu">render_convolution</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="va">sobel2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sob_all</span> <span class="op">=</span> <span class="va">sob1</span> <span class="op">+</span> <span class="va">sob2</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">sob_all</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(sob_all):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#Only perform the convolution on bright pixels (bloom)</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">render_convolution</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="fl">5</span>, kernel_dim<span class="op">=</span><span class="fl">24</span>, kernel_extent<span class="op">=</span><span class="fl">24</span>,</span></span>
+<span class="r-in"><span>                  min_value<span class="op">=</span><span class="fl">1</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(temp_image_final):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Use a built-in kernel:</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">render_convolution</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="fu"><a href="generate_2d_exponential.html">generate_2d_exponential</a></span><span class="op">(</span>falloff<span class="op">=</span><span class="fl">2</span>, dim<span class="op">=</span><span class="fl">31</span>, width<span class="op">=</span><span class="fl">21</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                  preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(temp_image_final):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#We can also apply this function to matrices:</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="va">volcano</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="render_convolution-1.png" alt="" width="700" height="700"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Perform a convolution with the default gaussian kernel</span></span>
-<span class="r-in"><span class="fu">render_convolution</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">volcano</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu">render_convolution</span><span class="op">(</span>kernel<span class="op">=</span><span class="fu"><a href="generate_2d_gaussian.html">generate_2d_gaussian</a></span><span class="op">(</span>sd<span class="op">=</span><span class="fl">1</span>,dim<span class="op">=</span><span class="fl">31</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="render_convolution-2.png" alt="" width="700" height="700"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Increase the width of the kernel</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">render_convolution</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="fl">2</span>, kernel_dim<span class="op">=</span><span class="fl">21</span>,kernel_extent<span class="op">=</span><span class="fl">6</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_convolution-3.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Perform edge detection using a edge detection kernel</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="va">edge</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">8</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span><span class="op">)</span>,<span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">render_convolution</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="va">edge</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, absolute<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_convolution-4.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Perform edge detection with Sobel matrices</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="va">sobel1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">2</span>,<span class="op">-</span><span class="fl">1</span><span class="op">)</span>,<span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sobel2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">2</span>,<span class="op">-</span><span class="fl">1</span><span class="op">)</span>,<span class="fl">3</span>,<span class="fl">3</span>,byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sob1</span> <span class="op">=</span> <span class="fu">render_convolution</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="va">sobel1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sob2</span> <span class="op">=</span> <span class="fu">render_convolution</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="va">sobel2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sob_all</span> <span class="op">=</span> <span class="va">sob1</span> <span class="op">+</span> <span class="va">sob2</span></span>
-<span class="r-in"><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">sob_all</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_convolution-5.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="co">#Only perform the convolution on bright pixels (bloom)</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">render_convolution</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="fl">5</span>, kernel_dim<span class="op">=</span><span class="fl">24</span>, kernel_extent<span class="op">=</span><span class="fl">24</span>,</span>
-<span class="r-in">                  min_value<span class="op">=</span><span class="fl">1</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_convolution-6.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Use a built-in kernel:</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">render_convolution</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="fu"><a href="generate_2d_exponential.html">generate_2d_exponential</a></span><span class="op">(</span>falloff<span class="op">=</span><span class="fl">2</span>, dim<span class="op">=</span><span class="fl">31</span>, width<span class="op">=</span><span class="fl">21</span><span class="op">)</span>,</span>
-<span class="r-in">                  preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_convolution-7.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#We can also apply this function to matrices:</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="va">volcano</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_convolution-8.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="va">volcano</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu">render_convolution</span><span class="op">(</span>kernel<span class="op">=</span><span class="fu"><a href="generate_2d_gaussian.html">generate_2d_gaussian</a></span><span class="op">(</span>sd<span class="op">=</span><span class="fl">1</span>,dim<span class="op">=</span><span class="fl">31</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_convolution-9.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Use a custom kernel (in this case, an X shape):</span></span>
-<span class="r-in"><span class="va">custom</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">[</span>,<span class="fl">10</span><span class="op">:</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">custom</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_convolution-10.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="fu">render_convolution</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="va">custom</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_convolution-11.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="co">#end}</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Use a custom kernel (in this case, an X shape):</span></span></span>
+<span class="r-in"><span><span class="va">custom</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">[</span>,<span class="fl">10</span><span class="op">:</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">custom</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(custom):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="fu">render_convolution</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="va">custom</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(temp_image_final):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#end}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -214,7 +235,7 @@ for a pixel to have the convolution performed.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

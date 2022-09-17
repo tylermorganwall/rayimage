@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
@@ -78,75 +78,88 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">render_resized</span><span class="op">(</span>
-  <span class="va">image</span>,
-  mag <span class="op">=</span> <span class="fl">1</span>,
-  dims <span class="op">=</span> <span class="cn">NULL</span>,
-  filename <span class="op">=</span> <span class="cn">NULL</span>,
-  preview <span class="op">=</span> <span class="cn">FALSE</span>,
-  method <span class="op">=</span> <span class="st">"tri"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">render_resized</span><span class="op">(</span></span>
+<span>  <span class="va">image</span>,</span>
+<span>  mag <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  dims <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  preview <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"tri"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>Image filename, 3-layer RGB array, or matrix.</p></dd>
+
+
 <dt>mag</dt>
 <dd><p>Default <code>1</code>. Amount to magnify the image, preserving aspect ratio. Overridden if
 <code>dim</code> is not <code>NULL</code>.</p></dd>
+
+
 <dt>dims</dt>
 <dd><p>Default <code>NULL</code>. Exact resized dimensions.</p></dd>
+
+
 <dt>filename</dt>
 <dd><p>Default <code>NULL</code>. The filename of the image to be saved. If this is not given, the image will be plotted instead.</p></dd>
+
+
 <dt>preview</dt>
 <dd><p>Default <code>FALSE</code>. Whether to plot the convolved image, or just to return the values.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>Default <code>trilinear</code>. Filters to up/downsample the image. Options: <code>bilinear</code>, <code>box</code>, <code>trilinear</code>,
 <code>catmull</code>, <code>mitchell</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>3-layer RGB resized array or matrix.</p>
+    
+
+<p>3-layer RGB resized array or matrix.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#if(interactive()){</span></span>
-<span class="r-in"><span class="co">#Plot the image with a title</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="va">dragon</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="add_title.html">add_title</a></span><span class="op">(</span><span class="st">"Dragon"</span>, title_offset<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">10</span><span class="op">)</span>, title_bar_color<span class="op">=</span><span class="st">"black"</span>,</span>
-<span class="r-in">           title_size<span class="op">=</span><span class="fl">20</span>, title_color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_resized-1.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Half of the resolution</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">render_resized</span><span class="op">(</span><span class="va">dragon</span>, mag <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="add_title.html">add_title</a></span><span class="op">(</span><span class="st">"Dragon (half res)"</span>, title_offset<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">5</span><span class="op">)</span>, title_bar_color<span class="op">=</span><span class="st">"black"</span>,</span>
-<span class="r-in">           title_size<span class="op">=</span><span class="fl">10</span>, title_color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_resized-2.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="co">#Double the resolution</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">render_resized</span><span class="op">(</span><span class="va">dragon</span>, mag <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="add_title.html">add_title</a></span><span class="op">(</span><span class="st">"Dragon (2x res)"</span>, title_offset<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">20</span><span class="op">)</span>, title_bar_color<span class="op">=</span><span class="st">"black"</span>,</span>
-<span class="r-in">           title_size<span class="op">=</span><span class="fl">40</span>, title_color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_resized-3.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="co">#Specify the exact resulting dimensions</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">render_resized</span><span class="op">(</span><span class="va">dragon</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">320</span>,<span class="fl">160</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="add_title.html">add_title</a></span><span class="op">(</span><span class="st">"Dragon (custom size)"</span>, title_offset<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">10</span><span class="op">)</span>, title_bar_color<span class="op">=</span><span class="st">"black"</span>,</span>
-<span class="r-in">           title_size<span class="op">=</span><span class="fl">20</span>, title_color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_resized-4.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="co">#end}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#if(interactive()){</span></span></span>
+<span class="r-in"><span><span class="co">#Plot the image with a title</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="va">dragon</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="add_title.html">add_title</a></span><span class="op">(</span><span class="st">"Dragon"</span>, title_offset<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">10</span><span class="op">)</span>, title_bar_color<span class="op">=</span><span class="st">"black"</span>,</span></span>
+<span class="r-in"><span>           title_size<span class="op">=</span><span class="fl">20</span>, title_color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(.):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Half of the resolution</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">render_resized</span><span class="op">(</span><span class="va">dragon</span>, mag <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="add_title.html">add_title</a></span><span class="op">(</span><span class="st">"Dragon (half res)"</span>, title_offset<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">5</span><span class="op">)</span>, title_bar_color<span class="op">=</span><span class="st">"black"</span>,</span></span>
+<span class="r-in"><span>           title_size<span class="op">=</span><span class="fl">10</span>, title_color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(.):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#Double the resolution</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">render_resized</span><span class="op">(</span><span class="va">dragon</span>, mag <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="add_title.html">add_title</a></span><span class="op">(</span><span class="st">"Dragon (2x res)"</span>, title_offset<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">20</span><span class="op">)</span>, title_bar_color<span class="op">=</span><span class="st">"black"</span>,</span></span>
+<span class="r-in"><span>           title_size<span class="op">=</span><span class="fl">40</span>, title_color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(.):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#Specify the exact resulting dimensions</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">render_resized</span><span class="op">(</span><span class="va">dragon</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">320</span>,<span class="fl">160</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="add_title.html">add_title</a></span><span class="op">(</span><span class="st">"Dragon (custom size)"</span>, title_offset<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">10</span><span class="op">)</span>, title_bar_color<span class="op">=</span><span class="st">"black"</span>,</span></span>
+<span class="r-in"><span>           title_size<span class="op">=</span><span class="fl">20</span>, title_color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(.):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#end}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -161,7 +174,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

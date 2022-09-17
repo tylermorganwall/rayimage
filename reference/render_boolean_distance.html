@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
@@ -78,35 +78,40 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">render_boolean_distance</span><span class="op">(</span><span class="va">boolean</span>, rescale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">render_boolean_distance</span><span class="op">(</span><span class="va">boolean</span>, rescale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>boolean</dt>
 <dd><p>Logical matrix (or matrix of 1s and 0s), where distance will be measured to the <code>TRUE</code> values.</p></dd>
+
+
 <dt>rescale</dt>
 <dd><p>Default <code>FALSE</code>. Rescales the calculated distance to a range of 0-1.
 Useful for visualizing the distance matrix.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Matrix of distance values.</p>
+    
+
+<p>Matrix of distance values.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#if(interactive()){</span></span>
-<span class="r-in"><span class="co">#Measure distance to</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu">render_boolean_distance</span><span class="op">(</span><span class="va">volcano</span> <span class="op">&gt;</span> <span class="fl">150</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#if(interactive()){</span></span></span>
+<span class="r-in"><span><span class="co">#Measure distance to</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu">render_boolean_distance</span><span class="op">(</span><span class="va">volcano</span> <span class="op">&gt;</span> <span class="fl">150</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="render_boolean_distance-1.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu">render_boolean_distance</span><span class="op">(</span><span class="va">volcano</span> <span class="op">&lt;</span> <span class="fl">150</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu">render_boolean_distance</span><span class="op">(</span><span class="va">volcano</span> <span class="op">&lt;</span> <span class="fl">150</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="render_boolean_distance-2.png" alt="" width="700" height="700"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#If we want to rescale this to zero to one (to visualize like an image), set rescale=TRUE</span></span>
-<span class="r-in"><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="fu">render_boolean_distance</span><span class="op">(</span><span class="va">volcano</span> <span class="op">&gt;</span> <span class="fl">150</span>,rescale<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_boolean_distance-3.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co">#end}</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#If we want to rescale this to zero to one (to visualize like an image), set rescale=TRUE</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="fu">render_boolean_distance</span><span class="op">(</span><span class="va">volcano</span> <span class="op">&gt;</span> <span class="fl">150</span>,rescale<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(render_boolean_distance(volcano &gt; 150, rescale = TRUE)):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co">#end}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -121,7 +126,7 @@ Useful for visualizing the distance matrix.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

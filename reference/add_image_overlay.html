@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
@@ -78,66 +78,79 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">add_image_overlay</span><span class="op">(</span>
-  <span class="va">image</span>,
-  image_overlay <span class="op">=</span> <span class="cn">NULL</span>,
-  rescale_original <span class="op">=</span> <span class="cn">FALSE</span>,
-  alpha <span class="op">=</span> <span class="cn">NULL</span>,
-  filename <span class="op">=</span> <span class="cn">NULL</span>,
-  preview <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_image_overlay</span><span class="op">(</span></span>
+<span>  <span class="va">image</span>,</span>
+<span>  image_overlay <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  rescale_original <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  preview <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>Image filename or 3-layer RGB array.</p></dd>
+
+
 <dt>image_overlay</dt>
 <dd><p>Default <code>NULL</code>. Either a string indicating the location of a png image to overlay
 over the image (transparency included), or a 4-layer RGBA array. This image will be resized to the
 dimension of the image if it does not match exactly.</p></dd>
+
+
 <dt>rescale_original</dt>
 <dd><p>Default <code>FALSE</code>. If <code>TRUE</code>, function will resize the original image to match
 the overlay.</p></dd>
+
+
 <dt>alpha</dt>
 <dd><p>Default <code>NULL</code>, using overlay's alpha channel. Otherwise, this sets the alpha transparency
 by multiplying the existing alpha channel by this value (between 0 and 1).</p></dd>
+
+
 <dt>filename</dt>
 <dd><p>Default <code>NULL</code>. File to save the image to. If <code>NULL</code> and <code>preview = FALSE</code>,
 returns an RGB array.</p></dd>
+
+
 <dt>preview</dt>
 <dd><p>Default <code>FALSE</code>. If <code>TRUE</code>, it will display the image in addition
 to returning it.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>3-layer RGB array of the processed image.</p>
+    
+
+<p>3-layer RGB array of the processed image.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#if(interactive()){</span></span>
-<span class="r-in"><span class="co">#Plot the dragon</span></span>
-<span class="r-in"><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="add_image_overlay-1.png" alt="" width="700" height="700"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Add an overlay of a red semi-transparent circle:</span></span>
-<span class="r-in"><span class="va">circlemat</span> <span class="op">=</span> <span class="fu"><a href="generate_2d_disk.html">generate_2d_disk</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">circlemat</span> <span class="op">=</span> <span class="va">circlemat</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">circlemat</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Create RGBA image, with a transparency of 0.5</span></span>
-<span class="r-in"><span class="va">rgba_array</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fl">1</span>, dim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">circlemat</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">circlemat</span><span class="op">)</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">rgba_array</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="va">circlemat</span></span>
-<span class="r-in"><span class="va">rgba_array</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0</span></span>
-<span class="r-in"><span class="va">rgba_array</span><span class="op">[</span>,,<span class="fl">3</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0</span></span>
-<span class="r-in"><span class="va">dragon_clipped</span> <span class="op">=</span> <span class="va">dragon</span></span>
-<span class="r-in"><span class="va">dragon_clipped</span><span class="op">[</span><span class="va">dragon_clipped</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="fl">1</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">add_image_overlay</span><span class="op">(</span><span class="va">dragon_clipped</span>, image_overlay <span class="op">=</span> <span class="va">rgba_array</span>,</span>
-<span class="r-in">                 alpha<span class="op">=</span><span class="fl">0.5</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="add_image_overlay-2.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="co">#end}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#if(interactive()){</span></span></span>
+<span class="r-in"><span><span class="co">#Plot the dragon</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(dragon):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Add an overlay of a red semi-transparent circle:</span></span></span>
+<span class="r-in"><span><span class="va">circlemat</span> <span class="op">=</span> <span class="fu"><a href="generate_2d_disk.html">generate_2d_disk</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">circlemat</span> <span class="op">=</span> <span class="va">circlemat</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">circlemat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Create RGBA image, with a transparency of 0.5</span></span></span>
+<span class="r-in"><span><span class="va">rgba_array</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fl">1</span>, dim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">circlemat</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">circlemat</span><span class="op">)</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rgba_array</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="va">circlemat</span></span></span>
+<span class="r-in"><span><span class="va">rgba_array</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span><span class="va">rgba_array</span><span class="op">[</span>,,<span class="fl">3</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span><span class="va">dragon_clipped</span> <span class="op">=</span> <span class="va">dragon</span></span></span>
+<span class="r-in"><span><span class="va">dragon_clipped</span><span class="op">[</span><span class="va">dragon_clipped</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">add_image_overlay</span><span class="op">(</span><span class="va">dragon_clipped</span>, image_overlay <span class="op">=</span> <span class="va">rgba_array</span>,</span></span>
+<span class="r-in"><span>                 alpha<span class="op">=</span><span class="fl">0.5</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(temp, keep_user_par = FALSE):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#end}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -152,7 +165,7 @@ to returning it.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

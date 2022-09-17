@@ -19,7 +19,7 @@ or use one of the built-in bokeh types.'><!-- mathjax --><script src="https://cd
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
@@ -82,121 +82,152 @@ or use one of the built-in bokeh types.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">render_bokeh</span><span class="op">(</span>
-  <span class="va">image</span>,
-  <span class="va">depthmap</span>,
-  focus <span class="op">=</span> <span class="fl">0.5</span>,
-  focallength <span class="op">=</span> <span class="fl">100</span>,
-  fstop <span class="op">=</span> <span class="fl">4</span>,
-  filename <span class="op">=</span> <span class="cn">NULL</span>,
-  preview <span class="op">=</span> <span class="cn">TRUE</span>,
-  preview_focus <span class="op">=</span> <span class="cn">FALSE</span>,
-  bokehshape <span class="op">=</span> <span class="st">"circle"</span>,
-  bokehintensity <span class="op">=</span> <span class="fl">1</span>,
-  bokehlimit <span class="op">=</span> <span class="fl">0.8</span>,
-  rotation <span class="op">=</span> <span class="fl">0</span>,
-  aberration <span class="op">=</span> <span class="fl">0</span>,
-  gamma_correction <span class="op">=</span> <span class="cn">TRUE</span>,
-  progress <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">render_bokeh</span><span class="op">(</span></span>
+<span>  <span class="va">image</span>,</span>
+<span>  <span class="va">depthmap</span>,</span>
+<span>  focus <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  focallength <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  fstop <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  preview <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  preview_focus <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  bokehshape <span class="op">=</span> <span class="st">"circle"</span>,</span>
+<span>  bokehintensity <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  bokehlimit <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>  rotation <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  aberration <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  gamma_correction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  progress <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>Image filename or 3-layer RGB array.</p></dd>
+
+
 <dt>depthmap</dt>
 <dd><p>Depth map filename or 1d array.</p></dd>
+
+
 <dt>focus</dt>
 <dd><p>Defaults <code>0.5</code>. Depth in which to blur.</p></dd>
+
+
 <dt>focallength</dt>
 <dd><p>Default <code>100</code>. Focal length of the virtual camera.</p></dd>
+
+
 <dt>fstop</dt>
 <dd><p>Default <code>4</code>. F-stop of the virtual camera.</p></dd>
+
+
 <dt>filename</dt>
 <dd><p>Default <code>NULL</code>. The filename of the image to be saved. If this is not given, the image will be plotted instead.</p></dd>
+
+
 <dt>preview</dt>
 <dd><p>Default <code>TRUE</code>. If <code>FALSE</code>, it will not display the image and just return the RGB array.</p></dd>
+
+
 <dt>preview_focus</dt>
 <dd><p>Default <code>FALSE</code>. If <code>TRUE</code>, a red line will be drawn across the image
 showing where the camera will be focused.</p></dd>
+
+
 <dt>bokehshape</dt>
 <dd><p>Default <code>circle</code>. Also built-in: <code>hex</code>. The shape of the bokeh. If the user
 passes in a 2D matrix, that matrix will control the shape of the bokeh.</p></dd>
+
+
 <dt>bokehintensity</dt>
 <dd><p>Default <code>1</code>. Intensity of the bokeh when the pixel intensity is greater than <code>bokehlimit</code>.</p></dd>
+
+
 <dt>bokehlimit</dt>
 <dd><p>Default <code>0.8</code>. Limit after which the bokeh intensity is increased by <code>bokehintensity</code>.</p></dd>
+
+
 <dt>rotation</dt>
 <dd><p>Default <code>0</code>. Number of degrees to rotate the hexagonal bokeh shape.</p></dd>
+
+
 <dt>aberration</dt>
 <dd><p>Default <code>0</code>. Adds chromatic aberration to the image. Maximum of <code>1</code>.</p></dd>
+
+
 <dt>gamma_correction</dt>
 <dd><p>Default <code>TRUE</code>. Controls gamma correction when adding colors. Default exponent of 2.2.</p></dd>
+
+
 <dt>progress</dt>
 <dd><p>Default <code>TRUE</code>. Whether to display a progress bar.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>3-layer RGB array of the processed image.</p>
+    
+
+<p>3-layer RGB array of the processed image.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#if(interactive()){</span></span>
-<span class="r-in"><span class="co">#Plot the dragon</span></span>
-<span class="r-in"><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#if(interactive()){</span></span></span>
+<span class="r-in"><span><span class="co">#Plot the dragon</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(dragon):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Plot the depth map</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="va">dragondepth</span>, asp <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">heat.colors</a></span><span class="op">(</span><span class="fl">256</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="render_bokeh-1.png" alt="" width="700" height="700"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Plot the depth map</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="va">dragondepth</span>, asp <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">heat.colors</a></span><span class="op">(</span><span class="fl">256</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_bokeh-2.png" alt="" width="700" height="700"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Preview the focal plane:</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, focus<span class="op">=</span><span class="fl">950</span>, preview_focus <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Preview the focal plane:</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, focus<span class="op">=</span><span class="fl">950</span>, preview_focus <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Focal range: 847.644-1410.17</span>
-<span class="r-plt img"><img src="render_bokeh-3.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="co">#Change the focal length:</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, focus<span class="op">=</span><span class="fl">950</span>, focallength<span class="op">=</span><span class="fl">300</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_bokeh-4.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="co">#Add chromatic aberration:</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, focus<span class="op">=</span><span class="fl">950</span>, focallength<span class="op">=</span><span class="fl">300</span>, aberration <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_bokeh-5.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="co">#Change the focal distance:</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, focus<span class="op">=</span><span class="fl">600</span>, focallength<span class="op">=</span><span class="fl">300</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_bokeh-6.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, focus<span class="op">=</span><span class="fl">1300</span>, focallength<span class="op">=</span><span class="fl">300</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_bokeh-7.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="co">#Change the bokeh shape to a hexagon:</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, bokehshape <span class="op">=</span> <span class="st">"hex"</span>,</span>
-<span class="r-in">            focallength<span class="op">=</span><span class="fl">300</span>, focus<span class="op">=</span><span class="fl">600</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_bokeh-8.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="co">#Change the bokeh intensity:</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>,</span>
-<span class="r-in">            focallength<span class="op">=</span><span class="fl">400</span>, focus<span class="op">=</span><span class="fl">900</span>, bokehintensity <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_bokeh-9.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>,</span>
-<span class="r-in">            focallength<span class="op">=</span><span class="fl">400</span>, focus<span class="op">=</span><span class="fl">900</span>, bokehintensity <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_bokeh-10.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="co">#Rotate the hexagonal shape:</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, bokehshape <span class="op">=</span> <span class="st">"hex"</span>, rotation<span class="op">=</span><span class="fl">15</span>,</span>
-<span class="r-in">            focallength<span class="op">=</span><span class="fl">300</span>, focus<span class="op">=</span><span class="fl">600</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="render_bokeh-11.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="co">#end}</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(image):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#Change the focal length:</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, focus<span class="op">=</span><span class="fl">950</span>, focallength<span class="op">=</span><span class="fl">300</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(aperm(temp_image, c(2, 1, 3))):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#Add chromatic aberration:</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, focus<span class="op">=</span><span class="fl">950</span>, focallength<span class="op">=</span><span class="fl">300</span>, aberration <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(aperm(temp_image, c(2, 1, 3))):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#Change the focal distance:</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, focus<span class="op">=</span><span class="fl">600</span>, focallength<span class="op">=</span><span class="fl">300</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(aperm(temp_image, c(2, 1, 3))):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, focus<span class="op">=</span><span class="fl">1300</span>, focallength<span class="op">=</span><span class="fl">300</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(aperm(temp_image, c(2, 1, 3))):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#Change the bokeh shape to a hexagon:</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, bokehshape <span class="op">=</span> <span class="st">"hex"</span>,</span></span>
+<span class="r-in"><span>            focallength<span class="op">=</span><span class="fl">300</span>, focus<span class="op">=</span><span class="fl">600</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(aperm(temp_image, c(2, 1, 3))):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#Change the bokeh intensity:</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>,</span></span>
+<span class="r-in"><span>            focallength<span class="op">=</span><span class="fl">400</span>, focus<span class="op">=</span><span class="fl">900</span>, bokehintensity <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(aperm(temp_image, c(2, 1, 3))):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>,</span></span>
+<span class="r-in"><span>            focallength<span class="op">=</span><span class="fl">400</span>, focus<span class="op">=</span><span class="fl">900</span>, bokehintensity <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(aperm(temp_image, c(2, 1, 3))):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#Rotate the hexagonal shape:</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, bokehshape <span class="op">=</span> <span class="st">"hex"</span>, rotation<span class="op">=</span><span class="fl">15</span>,</span></span>
+<span class="r-in"><span>            focallength<span class="op">=</span><span class="fl">300</span>, focus<span class="op">=</span><span class="fl">600</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(aperm(temp_image, c(2, 1, 3))):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#end}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -211,7 +242,7 @@ passes in a 2D matrix, that matrix will control the shape of the bokeh.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

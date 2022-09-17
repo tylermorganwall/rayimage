@@ -1,8 +1,8 @@
 pandoc: 2.7.3
-pkgdown: 2.0.2
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles: {}
-last_built: 2022-04-17T02:36Z
+last_built: 2022-09-17T15:06Z
 urls:
   reference: https://www.rayimage.dev/reference
   article: https://www.rayimage.dev/articles

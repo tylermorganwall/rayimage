@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
@@ -78,79 +78,92 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">add_vignette</span><span class="op">(</span>
-  <span class="va">image</span>,
-  vignette <span class="op">=</span> <span class="fl">0.5</span>,
-  color <span class="op">=</span> <span class="st">"#000000"</span>,
-  radius <span class="op">=</span> <span class="fl">1.3</span>,
-  filename <span class="op">=</span> <span class="cn">NULL</span>,
-  preview <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_vignette</span><span class="op">(</span></span>
+<span>  <span class="va">image</span>,</span>
+<span>  vignette <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  color <span class="op">=</span> <span class="st">"#000000"</span>,</span>
+<span>  radius <span class="op">=</span> <span class="fl">1.3</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  preview <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>Image filename or 3-layer RGB array.</p></dd>
+
+
 <dt>vignette</dt>
 <dd><p>Default <code>0.5</code>. A camera vignetting effect will be added to the image.
 <code>1</code> is the darkest vignetting, while <code>0</code> is no vignetting. If vignette is a length-2 vector, the second entry will
 control the blurriness of the vignette effect (<code>1</code> is the default, e.g. <code>2</code> would double the blurriness but would take
 much longer to compute).</p></dd>
+
+
 <dt>color</dt>
 <dd><p>Default <code>"#000000"</code> (black). Color of the vignette.</p></dd>
+
+
 <dt>radius</dt>
 <dd><p>Default <code>1.3</code>. Multiplier for the size of the vignette. If <code>1</code>, the vignette touches
 the edge of the image.</p></dd>
+
+
 <dt>filename</dt>
 <dd><p>Default <code>NULL</code>. Filename which to save the image. If <code>NULL</code> and <code>preview = FALSE</code>,
 returns an RGB array.</p></dd>
+
+
 <dt>preview</dt>
 <dd><p>Default <code>FALSE</code>. If <code>TRUE</code>, it will display the image in addition
 to returning it.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>3-layer RGB array of the processed image.</p>
+    
+
+<p>3-layer RGB array of the processed image.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#if(interactive()){</span></span>
-<span class="r-in"><span class="co">#Plot the dragon</span></span>
-<span class="r-in"><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="add_vignette-1.png" alt="" width="700" height="700"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Add a vignette effect:</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="add_vignette-2.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="co">#Darken the vignette effect:</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="add_vignette-3.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Change the radius:</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">1</span>, radius<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="add_vignette-4.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">1</span>, radius<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="add_vignette-5.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Change the color:</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">1</span>, color<span class="op">=</span><span class="st">"white"</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="add_vignette-6.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="co">#Increase the width of the blur by 50%:</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1.5</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="add_vignette-7.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="co">#end}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#if(interactive()){</span></span></span>
+<span class="r-in"><span><span class="co">#Plot the dragon</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(dragon):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Add a vignette effect:</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(temp, keep_user_par = FALSE):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#Darken the vignette effect:</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(temp, keep_user_par = FALSE):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Change the radius:</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">1</span>, radius<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(temp, keep_user_par = FALSE):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">1</span>, radius<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(temp, keep_user_par = FALSE):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Change the color:</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">1</span>, color<span class="op">=</span><span class="st">"white"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(temp, keep_user_par = FALSE):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#Increase the width of the blur by 50%:</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1.5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(temp, keep_user_par = FALSE):</span> `raster` package required for plot_image()</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co">#end}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -165,7 +178,7 @@ to returning it.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -18,7 +18,7 @@ using bilinear interpolation."><!-- mathjax --><script src="https://cdnjs.cloudf
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
@@ -80,32 +80,39 @@ using bilinear interpolation.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">interpolate_array</span><span class="op">(</span><span class="va">image</span>, <span class="va">x</span>, <span class="va">y</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">interpolate_array</span><span class="op">(</span><span class="va">image</span>, <span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>Image filename, a matrix, or a 3-layer RGB array.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>X indices (or fractional index) to interpolate.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>Y indices (or fractional index) to interpolate.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Either a vector of values (if image is a matrix) or a list of interpolated values
+    
+
+<p>Either a vector of values (if image is a matrix) or a list of interpolated values
 from each layer.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#if(interactive()){</span></span>
-<span class="r-in"><span class="co">#Interpolate a matrix</span></span>
-<span class="r-in"><span class="fu">interpolate_array</span><span class="op">(</span><span class="va">volcano</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">10.1</span>,<span class="fl">11</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>,<span class="fl">30.5</span>,<span class="fl">33</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#if(interactive()){</span></span></span>
+<span class="r-in"><span><span class="co">#Interpolate a matrix</span></span></span>
+<span class="r-in"><span><span class="fu">interpolate_array</span><span class="op">(</span><span class="va">volcano</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">10.1</span>,<span class="fl">11</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>,<span class="fl">30.5</span>,<span class="fl">33</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 141.00 139.75 136.00</span>
-<span class="r-in"><span class="co">#Interpolate a 3-layer array (returns list for each channel)</span></span>
-<span class="r-in"><span class="fu">interpolate_array</span><span class="op">(</span><span class="va">dragon</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">10.1</span>,<span class="fl">11</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>,<span class="fl">30.5</span>,<span class="fl">33</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co">#Interpolate a 3-layer array (returns list for each channel)</span></span></span>
+<span class="r-in"><span><span class="fu">interpolate_array</span><span class="op">(</span><span class="va">dragon</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">10.1</span>,<span class="fl">11</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>,<span class="fl">30.5</span>,<span class="fl">33</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $r</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1212292 0.1245874 0.1293542</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -115,7 +122,7 @@ from each layer.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $b</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1288862 0.1320293 0.1379057</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="co">#end}</span></span>
+<span class="r-in"><span><span class="co">#end}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -130,7 +137,7 @@ from each layer.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
