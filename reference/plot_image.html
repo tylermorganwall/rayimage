@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.1</span>
       </span>
     </div>
 
@@ -78,7 +78,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_image</span><span class="op">(</span><span class="va">input</span>, rotate <span class="op">=</span> <span class="fl">0</span>, keep_user_par <span class="op">=</span> <span class="cn">FALSE</span>, new_page <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_image</span><span class="op">(</span></span>
+<span>  <span class="va">input</span>,</span>
+<span>  rotate <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  keep_user_par <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  asp <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  new_page <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -94,6 +101,11 @@
 <dt>keep_user_par</dt>
 <dd><p>Default <code>TRUE</code>. Whether to keep the user's <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> settings. Set to <code>FALSE</code> if you
 want to set up a multi-pane plot (e.g. set <code>par(mfrow)</code>).</p></dd>
+
+
+<dt>asp</dt>
+<dd><p>Default <code>1</code>. Aspect ratio of the pixels in the plot. For example, an aspect ratio of <code>4/3</code> will
+slightly widen the image.</p></dd>
 
 
 <dt>new_page</dt>
