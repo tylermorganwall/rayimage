@@ -17,7 +17,7 @@
 #'plot_image(dragon)
 #'#end}
 plot_image = function(input, rotate=0, keep_user_par = FALSE,
-                      asp = NA, new_page = TRUE, ...) {
+                      asp = 1, new_page = TRUE, ...) {
   imagetype = get_file_type(input)
   if(imagetype == "jpg") {
     input = suppressWarnings(jpeg::readJPEG(input))
@@ -70,9 +70,6 @@ plot_image = function(input, rotate=0, keep_user_par = FALSE,
     nr = convert_to_native_raster(input)
     xlim = dim(input)[2]
     ylim = dim(input)[1]
-    if(is.na(asp)) {
-      asp = xlim/ylim
-    }
 
     if(new_page) {
       grid::grid.newpage()
