@@ -132,7 +132,7 @@ to returning it.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#if(interactive()){</span></span></span>
 <span class="r-in"><span><span class="co">#Plot the dragon</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(dragon):</span> `raster` package required for plot_image()</span>
+<span class="r-plt img"><img src="add_image_overlay-1.png" alt="" width="700" height="700"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#Add an overlay of a red semi-transparent circle:</span></span></span>
 <span class="r-in"><span><span class="va">circlemat</span> <span class="op">=</span> <span class="fu"><a href="generate_2d_disk.html">generate_2d_disk</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -148,7 +148,7 @@ to returning it.</p></dd>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">add_image_overlay</span><span class="op">(</span><span class="va">dragon_clipped</span>, image_overlay <span class="op">=</span> <span class="va">rgba_array</span>,</span></span>
 <span class="r-in"><span>                 alpha<span class="op">=</span><span class="fl">0.5</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_image(temp, keep_user_par = FALSE):</span> `raster` package required for plot_image()</span>
+<span class="r-plt img"><img src="add_image_overlay-2.png" alt="" width="700" height="700"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="co">#end}</span></span></span>
 </code></pre></div>
