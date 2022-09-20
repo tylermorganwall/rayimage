@@ -6,6 +6,8 @@
 #'@param rotate Default 0. Rotates the output. Possible values: 0, 90, 180, 270.
 #'@param keep_user_par Default `TRUE`. Whether to keep the user's `par()` settings. Set to `FALSE` if you
 #'want to set up a multi-pane plot (e.g. set `par(mfrow)`).
+#'@param asp Default `1`. Aspect ratio of the pixels in the plot. For example, an aspect ratio of `4/3` will
+#'slightly widen the image.
 #'@param new_page  Default `TRUE`. Whether to call `grid::grid.newpage()` before plotting the image.
 #'@param ... Additional arguments to pass to the `raster::plotRGB` function that displays the map.
 #'@export
@@ -14,7 +16,8 @@
 #'#Plot the dragon array
 #'plot_image(dragon)
 #'#end}
-plot_image = function(input, rotate=0, keep_user_par = FALSE, new_page = TRUE, ...) {
+plot_image = function(input, rotate=0, keep_user_par = FALSE,
+                      asp = NA, new_page = TRUE, ...) {
   imagetype = get_file_type(input)
   if(imagetype == "jpg") {
     input = suppressWarnings(jpeg::readJPEG(input))
@@ -68,10 +71,29 @@ plot_image = function(input, rotate=0, keep_user_par = FALSE, new_page = TRUE, .
       input[input < 0] = 0
     }
     nr = convert_to_native_raster(input)
+    xlim = dim(input)[2]
+    ylim = dim(input)[1]
+    if(is.na(asp)) {
+      asp = xlim/ylim
+    }
+
     if(new_page) {
       grid::grid.newpage()
     }
-    grid::grid.raster(nr, interpolate = FALSE)
+    flip = FALSE
+    if(min(1,xlim/ylim)*asp > 1) {
+      flip = TRUE
+    }
+    if(flip) {
+      grid::grid.raster(nr, interpolate = FALSE,
+                        x=0.5, y=0.5,
+                        width=grid::unit(min(1,ylim/xlim), "snpc"),
+                        height=grid::unit(min(1,ylim/xlim)/asp, "snpc"))
+    } else {
+      grid::grid.raster(nr, interpolate = FALSE,
+                        width=grid::unit(min(1,xlim/ylim)*asp, "snpc"),
+                        height=grid::unit(min(1,ylim/xlim), "snpc"))
+    }
   } else if(length(dim(input)) == 2) {
     if(number_of_rots != 0) {
       for(j in 1:number_of_rots) {
@@ -87,7 +109,20 @@ plot_image = function(input, rotate=0, keep_user_par = FALSE, new_page = TRUE, .
     if(new_page) {
       grid::grid.newpage()
     }
-    grid::grid.raster(nr, interpolate = FALSE)
+    flip = FALSE
+    if(min(1,xlim/ylim)*asp > 1) {
+      flip = TRUE
+    }
+    if(flip) {
+      grid::grid.raster(nr, interpolate = FALSE,
+                        x=0.5, y=0.5,
+                        width=grid::unit(min(1,ylim/xlim), "snpc"),
+                        height=grid::unit(min(1,ylim/xlim)/asp, "snpc"))
+    } else {
+      grid::grid.raster(nr, interpolate = FALSE,
+                        width=grid::unit(min(1,xlim/ylim)*asp, "snpc"),
+                        height=grid::unit(min(1,ylim/xlim), "snpc"))
+    }
   } else {
     stop("`input` is neither array nor matrix--convert to either to plot.")
   }

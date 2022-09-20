@@ -4,7 +4,14 @@
 \alias{plot_image}
 \title{Plot Image}
 \usage{
-plot_image(input, rotate = 0, keep_user_par = FALSE, new_page = TRUE, ...)
+plot_image(
+  input,
+  rotate = 0,
+  keep_user_par = FALSE,
+  asp = NA,
+  new_page = TRUE,
+  ...
+)
 }
 \arguments{
 \item{input}{Image or filename of an image to be plotted.}
@@ -13,6 +20,9 @@ plot_image(input, rotate = 0, keep_user_par = FALSE, new_page = TRUE, ...)
 
 \item{keep_user_par}{Default \code{TRUE}. Whether to keep the user's \code{par()} settings. Set to \code{FALSE} if you
 want to set up a multi-pane plot (e.g. set \code{par(mfrow)}).}
+
+\item{asp}{Default \code{1}. Aspect ratio of the pixels in the plot. For example, an aspect ratio of \code{4/3} will
+slightly widen the image.}
 
 \item{new_page}{Default \code{TRUE}. Whether to call \code{grid::grid.newpage()} before plotting the image.}
 
