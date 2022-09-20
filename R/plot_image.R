@@ -24,9 +24,6 @@ plot_image = function(input, rotate=0, keep_user_par = FALSE,
   } else if (imagetype == "png"){
     input = suppressWarnings(png::readPNG(input))
   }
-  if(!("raster" %in% rownames(utils::installed.packages()))) {
-    stop("`raster` package required for plot_image()")
-  }
   if(keep_user_par) {
     old.par = graphics::par(no.readonly = TRUE)
     on.exit(graphics::par(old.par))
