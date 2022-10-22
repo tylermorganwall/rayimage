@@ -8,7 +8,7 @@ plot_image(
   input,
   rotate = 0,
   keep_user_par = FALSE,
-  asp = NA,
+  asp = 1,
   new_page = TRUE,
   ...
 )

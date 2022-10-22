@@ -98,6 +98,8 @@ plot_image = function(input, rotate=0, keep_user_par = FALSE,
       input[input > 1] = 1
       input[input < 0] = 0
     }
+    xlim = dim(input)[2]
+    ylim = dim(input)[1]
     array_from_mat = array(input,dim=c(nrow(input),ncol(input),3))
     nr = convert_to_native_raster(array_from_mat)
     if(new_page) {
