@@ -10,6 +10,7 @@ plot_image(
   keep_user_par = FALSE,
   asp = 1,
   new_page = TRUE,
+  return_grob = FALSE,
   ...
 )
 }
@@ -25,6 +26,8 @@ want to set up a multi-pane plot (e.g. set \code{par(mfrow)}).}
 slightly widen the image.}
 
 \item{new_page}{Default \code{TRUE}. Whether to call \code{grid::grid.newpage()} before plotting the image.}
+
+\item{return_grob}{Default \code{FALSE}. Whether to return the grob object.}
 
 \item{...}{Additional arguments to pass to the \code{raster::plotRGB} function that displays the map.}
 }

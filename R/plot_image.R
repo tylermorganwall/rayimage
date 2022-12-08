@@ -9,6 +9,7 @@
 #'@param asp Default `1`. Aspect ratio of the pixels in the plot. For example, an aspect ratio of `4/3` will
 #'slightly widen the image.
 #'@param new_page  Default `TRUE`. Whether to call `grid::grid.newpage()` before plotting the image.
+#'@param return_grob Default `FALSE`. Whether to return the grob object.
 #'@param ... Additional arguments to pass to the `raster::plotRGB` function that displays the map.
 #'@export
 #'@examples
@@ -17,7 +18,7 @@
 #'plot_image(dragon)
 #'#end}
 plot_image = function(input, rotate=0, keep_user_par = FALSE,
-                      asp = 1, new_page = TRUE, ...) {
+                      asp = 1, new_page = TRUE, return_grob = FALSE, ...) {
   imagetype = get_file_type(input)
   if(imagetype == "jpg") {
     input = suppressWarnings(jpeg::readJPEG(input))
@@ -78,15 +79,28 @@ plot_image = function(input, rotate=0, keep_user_par = FALSE,
     if(min(1,xlim/ylim)*asp > 1) {
       flip = TRUE
     }
-    if(flip) {
-      grid::grid.raster(nr, interpolate = FALSE,
-                        x=0.5, y=0.5,
-                        width=grid::unit(min(1,ylim/xlim), "snpc"),
-                        height=grid::unit(min(1,ylim/xlim)/asp, "snpc"))
+    if(!return_grob) {
+      if(flip) {
+        grid::grid.raster(nr, interpolate = FALSE,
+                          x=0.5, y=0.5,
+                          width=grid::unit(min(1,ylim/xlim), "snpc"),
+                          height=grid::unit(min(1,ylim/xlim)/asp, "snpc"))
+      } else {
+        grid::grid.raster(nr, interpolate = FALSE,
+                          width=grid::unit(min(1,xlim/ylim)*asp, "snpc"),
+                          height=grid::unit(min(1,ylim/xlim), "snpc"))
+      }
     } else {
-      grid::grid.raster(nr, interpolate = FALSE,
-                        width=grid::unit(min(1,xlim/ylim)*asp, "snpc"),
-                        height=grid::unit(min(1,ylim/xlim), "snpc"))
+      if(flip) {
+        grid::rasterGrob(nr, interpolate = FALSE,
+                          x=0.5, y=0.5,
+                          width=grid::unit(min(1,ylim/xlim), "snpc"),
+                          height=grid::unit(min(1,ylim/xlim)/asp, "snpc"))
+      } else {
+        grid::rasterGrob(nr, interpolate = FALSE,
+                          width=grid::unit(min(1,xlim/ylim)*asp, "snpc"),
+                          height=grid::unit(min(1,ylim/xlim), "snpc"))
+      }
     }
   } else if(length(dim(input)) == 2) {
     if(number_of_rots != 0) {
@@ -109,15 +123,28 @@ plot_image = function(input, rotate=0, keep_user_par = FALSE,
     if(min(1,xlim/ylim)*asp > 1) {
       flip = TRUE
     }
-    if(flip) {
-      grid::grid.raster(nr, interpolate = FALSE,
-                        x=0.5, y=0.5,
-                        width=grid::unit(min(1,ylim/xlim), "snpc"),
-                        height=grid::unit(min(1,ylim/xlim)/asp, "snpc"))
+    if(!return_grob) {
+      if(flip) {
+        grid::grid.raster(nr, interpolate = FALSE,
+                          x=0.5, y=0.5,
+                          width=grid::unit(min(1,ylim/xlim), "snpc"),
+                          height=grid::unit(min(1,ylim/xlim)/asp, "snpc"))
+      } else {
+        grid::grid.raster(nr, interpolate = FALSE,
+                          width=grid::unit(min(1,xlim/ylim)*asp, "snpc"),
+                          height=grid::unit(min(1,ylim/xlim), "snpc"))
+      }
     } else {
-      grid::grid.raster(nr, interpolate = FALSE,
-                        width=grid::unit(min(1,xlim/ylim)*asp, "snpc"),
-                        height=grid::unit(min(1,ylim/xlim), "snpc"))
+      if(flip) {
+        grid::rasterGrob(nr, interpolate = FALSE,
+                         x=0.5, y=0.5,
+                         width=grid::unit(min(1,ylim/xlim), "snpc"),
+                         height=grid::unit(min(1,ylim/xlim)/asp, "snpc"))
+      } else {
+        grid::rasterGrob(nr, interpolate = FALSE,
+                         width=grid::unit(min(1,xlim/ylim)*asp, "snpc"),
+                         height=grid::unit(min(1,ylim/xlim), "snpc"))
+      }
     }
   } else {
     stop("`input` is neither array nor matrix--convert to either to plot.")
