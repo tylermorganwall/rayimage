@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.8.0</span>
       </span>
     </div>
 
@@ -168,13 +168,13 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">dragon</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">dragon</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/add_title.html">add_title</a></span><span class="op">(</span><span class="st">"Dragon"</span>, title_size <span class="op">=</span> <span class="fl">20</span>, title_bar_color <span class="op">=</span> <span class="st">"red"</span>, </span>
-<span>            title_bar_alpha<span class="op">=</span><span class="fl">0.8</span>, title_color<span class="op">=</span><span class="st">"white"</span>, title_offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>            title_bar_alpha<span class="op">=</span><span class="fl">0.8</span>, title_color<span class="op">=</span><span class="st">"white"</span>, title_offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">dragon</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="reference/add_vignette.html">add_vignette</a></span><span class="op">(</span>vignette<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">dragon</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/add_vignette.html">add_vignette</a></span><span class="op">(</span>vignette<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-4-1.png"><!-- --></p>
 <p>We can also resize images and matrices with <code>render_resize()</code>. We can do this before adding text to make the resulting text smoother.</p>
@@ -182,17 +182,17 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#Double the input size to make the resulting text smoother.</span></span>
-<span><span class="va">dragon</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="reference/render_resized.html">render_resized</a></span><span class="op">(</span>mag <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">dragon</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/render_resized.html">render_resized</a></span><span class="op">(</span>mag <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/add_title.html">add_title</a></span><span class="op">(</span><span class="st">"Dragon"</span>, title_size <span class="op">=</span> <span class="fl">20</span>, title_bar_color <span class="op">=</span> <span class="st">"red"</span>, </span>
-<span>            title_bar_alpha<span class="op">=</span><span class="fl">0.8</span>, title_color<span class="op">=</span><span class="st">"white"</span>, title_offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>            title_bar_alpha<span class="op">=</span><span class="fl">0.8</span>, title_color<span class="op">=</span><span class="st">"white"</span>, title_offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#Specify resulting dimensions directly.</span></span>
-<span><span class="va">dragon</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="reference/render_resized.html">render_resized</a></span><span class="op">(</span>dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">600</span>,<span class="fl">300</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">dragon</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/render_resized.html">render_resized</a></span><span class="op">(</span>dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">600</span>,<span class="fl">300</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/add_title.html">add_title</a></span><span class="op">(</span><span class="st">"Dragon"</span>, title_size <span class="op">=</span> <span class="fl">20</span>, title_bar_color <span class="op">=</span> <span class="st">"red"</span>, </span>
-<span>            title_bar_alpha<span class="op">=</span><span class="fl">0.8</span>, title_color<span class="op">=</span><span class="st">"white"</span>, title_offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>            title_bar_alpha<span class="op">=</span><span class="fl">0.8</span>, title_color<span class="op">=</span><span class="st">"white"</span>, title_offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-5-1.png"><!-- --></p>
 <p>Reorienting images and matrices can be done with <code><a href="reference/render_reorient.html">render_reorient()</a></code>:</p>
@@ -229,9 +229,9 @@
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">volcano</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">volcano</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="reference/render_convolution.html">render_convolution</a></span><span class="op">(</span>kernel<span class="op">=</span><span class="fu"><a href="reference/generate_2d_gaussian.html">generate_2d_gaussian</a></span><span class="op">(</span>sd<span class="op">=</span><span class="fl">1</span>,dim<span class="op">=</span><span class="fl">31</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="va">volcano</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">volcano</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="reference/render_convolution.html">render_convolution</a></span><span class="op">(</span>kernel<span class="op">=</span><span class="fu"><a href="reference/generate_2d_gaussian.html">generate_2d_gaussian</a></span><span class="op">(</span>sd<span class="op">=</span><span class="fl">1</span>,dim<span class="op">=</span><span class="fl">31</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-8-1.png"><!-- --></p>
 <p>And here we use a user-defined kernel, in the shape of a cross.</p>
@@ -307,7 +307,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
