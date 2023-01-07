@@ -96,8 +96,8 @@ add_vignette = function(image, vignette = 0.5, color = "#000000", radius = 1.3,
   }
   imagefile = make_vignette_overlay(width=dimensions[1],height=dimensions[2],
                                     intensity=vignette, radius=radiusval, radius_multiplier = radius, color=color)
-  magick::image_read(temp) %>%
-    magick::image_composite(magick::image_read(imagefile)) %>%
+  magick::image_read(temp) |>
+    magick::image_composite(magick::image_read(imagefile)) |>
     magick::image_write(path = temp, format = "png")
   temp = png::readPNG(temp)
   if(length(dim(temp)) == 3 && dim(temp)[3] == 2) {

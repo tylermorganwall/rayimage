@@ -23,18 +23,18 @@ make_vignette_overlay = function(width, height, intensity=0.3, radius_multiplier
   png::writePNG(value,tempcircle)
   imageval = magick::image_read(tempcircle)
   if(radius_multiplier >= 1) {
-    imageval %>%
-      magick::image_blur(radius=radius/2, sigma = radius/4) %>%
+    imageval |>
+      magick::image_blur(radius=radius/2, sigma = radius/4) |>
       magick::image_crop(sprintf("%ix%i+%i+%i",
                                  height,
                                  width,
                                  floor((height*radius_multiplier-height)/2),
-                                 floor((width*radius_multiplier-width)/2))) %>%
+                                 floor((width*radius_multiplier-width)/2))) |>
       magick::image_write(tempcircle)
   } else {
-    imageval %>%
-      magick::image_border(geometry = sprintf("%ix%i",(height-floor(height*radius_multiplier))/2,(width-floor(width*radius_multiplier))/2), color=hex_color) %>%
-      magick::image_blur(radius=radius/2, sigma = radius/4) %>%
+    imageval |>
+      magick::image_border(geometry = sprintf("%ix%i",(height-floor(height*radius_multiplier))/2,(width-floor(width*radius_multiplier))/2), color=hex_color) |>
+      magick::image_blur(radius=radius/2, sigma = radius/4) |>
       magick::image_write(tempcircle)
   }
   return(tempcircle)

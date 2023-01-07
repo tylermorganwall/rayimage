@@ -19,22 +19,22 @@
 #'
 #'#Flip the dragon image horizontally
 #'\donttest{
-#'dragon %>%
-#'  render_reorient(flipx = TRUE) %>%
+#'dragon |>
+#'  render_reorient(flipx = TRUE) |>
 #'  plot_image()
 #'}
 #'
 #'#Flip the dragon image vertically
 #'\donttest{
-#'dragon %>%
-#'  render_reorient(flipy = TRUE) %>%
+#'dragon |>
+#'  render_reorient(flipy = TRUE) |>
 #'  plot_image()
 #'}
 #'
 #'#'#Transpose the dragon image
 #'\donttest{
-#'dragon %>%
-#'  render_reorient(transpose = TRUE) %>%
+#'dragon |>
+#'  render_reorient(transpose = TRUE) |>
 #'  plot_image()
 #'}
 #'#end}

@@ -167,16 +167,16 @@ add_image_overlay = function(image, image_overlay = NULL, rescale_original = FAL
   }
   dimensions_overlay = dim(tempover)
   if(!rescale_original) {
-    magick::image_read(temp) %>%
+    magick::image_read(temp) |>
       magick::image_composite(
         magick::image_scale(magick::image_read(image_overlay_file),
                             paste0(dimensions[1],"x",dimensions[2],"!")), operator = "Over"
-      ) %>%
+      ) |>
       magick::image_write(path = temp, format = "png")
   } else {
-    magick::image_read(temp) %>%
-      magick::image_scale(paste0(dimensions_overlay[1],"x",dimensions_overlay[2],"!")) %>%
-      magick::image_composite(magick::image_read(image_overlay_file), operator = "Over") %>%
+    magick::image_read(temp) |>
+      magick::image_scale(paste0(dimensions_overlay[1],"x",dimensions_overlay[2],"!")) |>
+      magick::image_composite(magick::image_read(image_overlay_file), operator = "Over") |>
       magick::image_write(path = temp, format = "png")
   }
   temp = png::readPNG(temp)

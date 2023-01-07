@@ -128,13 +128,13 @@ here):
 ``` r
 par(mfrow = c(1,2))
 
-dragon %>%
+dragon |>
   add_title("Dragon", title_size = 20, title_bar_color = "red", 
-            title_bar_alpha=0.8, title_color="white", title_offset = c(12,12)) %>%
+            title_bar_alpha=0.8, title_color="white", title_offset = c(12,12)) |>
   plot_image()
 
-dragon %>%
-  add_vignette(vignette=0.8) %>%
+dragon |>
+  add_vignette(vignette=0.8) |>
   plot_image()
 ```
 
@@ -147,17 +147,17 @@ this before adding text to make the resulting text smoother.
 par(mfrow = c(1,2))
 
 #Double the input size to make the resulting text smoother.
-dragon %>%
-  render_resized(mag = 2) %>%
+dragon |>
+  render_resized(mag = 2) |>
   add_title("Dragon", title_size = 20, title_bar_color = "red", 
-            title_bar_alpha=0.8, title_color="white", title_offset = c(12,12)) %>%
+            title_bar_alpha=0.8, title_color="white", title_offset = c(12,12)) |>
   plot_image()
 
 #Specify resulting dimensions directly.
-dragon %>%
-  render_resized(dim = c(600,300)) %>%
+dragon |>
+  render_resized(dim = c(600,300)) |>
   add_title("Dragon", title_size = 20, title_bar_color = "red", 
-            title_bar_alpha=0.8, title_color="white", title_offset = c(12,12)) %>%
+            title_bar_alpha=0.8, title_color="white", title_offset = c(12,12)) |>
   plot_image()
 ```
 
@@ -217,9 +217,9 @@ matrices:
 ``` r
 par(mfrow = c(1,2))
 
-volcano %>% image()
-volcano %>% 
-  render_convolution(kernel=generate_2d_gaussian(sd=1,dim=31)) %>% 
+volcano |> image()
+volcano |> 
+  render_convolution(kernel=generate_2d_gaussian(sd=1,dim=31)) |> 
   image()
 ```
 

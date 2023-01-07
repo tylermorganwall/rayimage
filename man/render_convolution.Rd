@@ -96,9 +96,9 @@ render_convolution(dragon, kernel = generate_2d_exponential(falloff=2, dim=31, w
 
 #We can also apply this function to matrices:
 \donttest{
-volcano \%>\% image()
-volcano \%>\%
- render_convolution(kernel=generate_2d_gaussian(sd=1,dim=31)) \%>\%
+volcano |> image()
+volcano |>
+ render_convolution(kernel=generate_2d_gaussian(sd=1,dim=31)) |>
  image()
 }
 
