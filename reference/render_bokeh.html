@@ -19,7 +19,7 @@ or use one of the built-in bokeh types.'><!-- mathjax --><script src="https://cd
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.0</span>
       </span>
     </div>
 
@@ -97,7 +97,8 @@ or use one of the built-in bokeh types.</p>
 <span>  rotation <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  aberration <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  gamma_correction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  progress <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  progress <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -164,6 +165,10 @@ passes in a 2D matrix, that matrix will control the shape of the bokeh.</p></dd>
 <dt>progress</dt>
 <dd><p>Default <code>TRUE</code>. Whether to display a progress bar.</p></dd>
 
+
+<dt>...</dt>
+<dd><p>Additional arguments to pass to <code><a href="plot_image.html">plot_image()</a></code> if <code>preview = TRUE</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -180,7 +185,7 @@ passes in a 2D matrix, that matrix will control the shape of the bokeh.</p></dd>
 <span class="r-plt img"><img src="render_bokeh-1.png" alt="" width="700" height="700"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#Plot the depth map</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="va">dragondepth</span>, asp <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">heat.colors</a></span><span class="op">(</span><span class="fl">256</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="va">dragondepth</span>, asp <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">heat.colors</a></span><span class="op">(</span><span class="fl">256</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="render_bokeh-2.png" alt="" width="700" height="700"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#Preview the focal plane:</span></span></span>
