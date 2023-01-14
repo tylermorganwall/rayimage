@@ -69,38 +69,19 @@ plot_image = function(input, rotate=0, keep_user_par = FALSE,
       input[input < 0] = 0
     }
     nr = convert_to_native_raster(input)
-    xlim = dim(input)[2]
-    ylim = dim(input)[1]
 
     if(new_page) {
       grid::grid.newpage()
     }
-    flip = FALSE
-    if(min(1,xlim/ylim)*asp > 1) {
-      flip = TRUE
-    }
     if(!return_grob) {
-      if(flip) {
-        grid::grid.raster(nr, interpolate = FALSE,
-                          x=0.5, y=0.5,
-                          width=grid::unit(min(1,ylim/xlim), "snpc"),
-                          height=grid::unit(min(1,ylim/xlim)/asp, "snpc"))
-      } else {
-        grid::grid.raster(nr, interpolate = FALSE,
-                          width=grid::unit(min(1,xlim/ylim)*asp, "snpc"),
-                          height=grid::unit(min(1,ylim/xlim), "snpc"))
-      }
+      grid::pushViewport(
+        grid::viewport(layout = grid::grid.layout(1,1,
+                                                  widths=grid::unit(1,"null"),
+                                                  height=grid::unit(1/asp,"null"), respect = TRUE))
+      )
+      grid::grid.raster(nr, interpolate = FALSE)
     } else {
-      if(flip) {
-        grid::rasterGrob(nr, interpolate = FALSE,
-                          x=0.5, y=0.5,
-                          width=grid::unit(min(1,ylim/xlim), "snpc"),
-                          height=grid::unit(min(1,ylim/xlim)/asp, "snpc"))
-      } else {
-        grid::rasterGrob(nr, interpolate = FALSE,
-                          width=grid::unit(min(1,xlim/ylim)*asp, "snpc"),
-                          height=grid::unit(min(1,ylim/xlim), "snpc"))
-      }
+      grid::rasterGrob(nr, interpolate = FALSE)
     }
   } else if(length(dim(input)) == 2) {
     if(number_of_rots != 0) {
@@ -112,39 +93,21 @@ plot_image = function(input, rotate=0, keep_user_par = FALSE,
       input[input > 1] = 1
       input[input < 0] = 0
     }
-    xlim = dim(input)[2]
-    ylim = dim(input)[1]
     array_from_mat = array(input,dim=c(nrow(input),ncol(input),3))
     nr = convert_to_native_raster(array_from_mat)
+
     if(new_page) {
       grid::grid.newpage()
     }
-    flip = FALSE
-    if(min(1,xlim/ylim)*asp > 1) {
-      flip = TRUE
-    }
     if(!return_grob) {
-      if(flip) {
-        grid::grid.raster(nr, interpolate = FALSE,
-                          x=0.5, y=0.5,
-                          width=grid::unit(min(1,ylim/xlim), "snpc"),
-                          height=grid::unit(min(1,ylim/xlim)/asp, "snpc"))
-      } else {
-        grid::grid.raster(nr, interpolate = FALSE,
-                          width=grid::unit(min(1,xlim/ylim)*asp, "snpc"),
-                          height=grid::unit(min(1,ylim/xlim), "snpc"))
-      }
+      grid::pushViewport(
+        grid::viewport(layout = grid::grid.layout(1,1,
+                                                  widths=grid::unit(1,"null"),
+                                                  height=grid::unit(1/asp,"null"), respect = TRUE))
+      )
+      grid::grid.raster(nr, interpolate = FALSE)
     } else {
-      if(flip) {
-        grid::rasterGrob(nr, interpolate = FALSE,
-                         x=0.5, y=0.5,
-                         width=grid::unit(min(1,ylim/xlim), "snpc"),
-                         height=grid::unit(min(1,ylim/xlim)/asp, "snpc"))
-      } else {
-        grid::rasterGrob(nr, interpolate = FALSE,
-                         width=grid::unit(min(1,xlim/ylim)*asp, "snpc"),
-                         height=grid::unit(min(1,ylim/xlim), "snpc"))
-      }
+      grid::rasterGrob(nr, interpolate = FALSE)
     }
   } else {
     stop("`input` is neither array nor matrix--convert to either to plot.")

@@ -21,6 +21,7 @@
 #'@param aberration Default `0`. Adds chromatic aberration to the image. Maximum of `1`.
 #'@param gamma_correction Default `TRUE`. Controls gamma correction when adding colors. Default exponent of 2.2.
 #'@param progress Default `TRUE`. Whether to display a progress bar.
+#'@param ... Additional arguments to pass to `plot_image()` if `preview = TRUE`.
 #'@return 3-layer RGB array of the processed image.
 #'@export
 #'@examples
@@ -29,7 +30,7 @@
 #'plot_image(dragon)
 #'
 #'#Plot the depth map
-#'image(dragondepth, asp = 1, col = grDevices::heat.colors(256))
+#'graphics::image(dragondepth, asp = 1, col = grDevices::heat.colors(256))
 #'
 #'#Preview the focal plane:
 #'\donttest{
@@ -70,7 +71,8 @@ render_bokeh = function(image, depthmap,
                         focus=0.5, focallength = 100, fstop = 4, filename=NULL,
                         preview = TRUE, preview_focus = FALSE,
                         bokehshape = "circle", bokehintensity = 1, bokehlimit = 0.8, rotation=0,
-                        aberration = 0, gamma_correction = TRUE, progress = interactive()) {
+                        aberration = 0, gamma_correction = TRUE, progress = interactive(),
+                        ...) {
   if(!is.null(filename)) {
     if(tools::file_ext(filename) != "png") {
       filename = paste0(filename,".png")
@@ -81,12 +83,6 @@ render_bokeh = function(image, depthmap,
     temp_image = aperm(image,c(2,1,3))
   }
   depthtype = get_file_type(depthmap)
-  if(depthtype == "array") {
-    depthmap = flipud(aperm(depthmap,c(2,1,3)))
-  }
-  if(depthtype == "matrix") {
-    depthmap = flipud(t(depthmap))
-  }
   if(preview_focus) {
     preview_focus(image, depthmap, focus, imagetype, depthtype)
     return(invisible())
@@ -122,6 +118,7 @@ render_bokeh = function(image, depthmap,
 
   depthmap[is.na(depthmap)] = max(depthmap, na.rm = TRUE)*2
   depthmap = t((depthmap))
+
   if(gamma_correction) {
     temp_image = temp_image^2.2
   }
@@ -134,10 +131,15 @@ render_bokeh = function(image, depthmap,
     } else {
       depthmap2 = calc_bokeh_size(depthmap,focus,focallength, fstop,1-aberration)
     }
+    if(any(dim(depthmap2)[1:2] != dim(temp_image)[1:2])) {
+      stop(sprintf("{rayimage}: dimensions of image (%ix%i) and depth map (%ix%i) don't match",
+                   dim(temp_image)[1],dim(temp_image)[2],
+                   dim(depthmap2)[1], dim(depthmap2)[2]))
+    }
     depthmap2[depthmap2 > max_size] = max_size
     temp_image[,,i] = psf(temp_image[,,i],depthmap2,
-                                depthmap, focus, bokehshape, custombokeh = custombokeh,
-                                bokehintensity, bokehlimit, rotation, progbar = progress,channel = i)
+                          depthmap, focus, bokehshape, custombokeh = custombokeh,
+                          bokehintensity, bokehlimit, rotation, progbar = progress,channel = i)
   }
   if(gamma_correction) {
     temp_image = temp_image ^ (1/2.2)
@@ -148,7 +150,7 @@ render_bokeh = function(image, depthmap,
     if(!preview) {
       return(aperm(temp_image,c(2,1,3)))
     }
-    plot_image(aperm(temp_image,c(2,1,3)))
+    plot_image(aperm(temp_image,c(2,1,3)), ...)
     return(invisible(aperm(temp_image,c(2,1,3))))
   } else {
     save_png(aperm(temp_image,c(2,1,3)),filename)

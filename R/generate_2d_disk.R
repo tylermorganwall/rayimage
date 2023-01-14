@@ -18,12 +18,15 @@
 #'
 #'@param dim Default `c(11, 11)`. The dimensions of the matrix.
 #'@param radius Default `1`. Radius of the disk, compared to the dimensions. Should be less than one.
+#'@param rescale_unity Default `FALSE`. If `TRUE`, this will rescale the max value to one. Useful
+#'if wanting to plot the distribution with `plot_image()`.
 #'@export
 #'@examples
 #'#if(interactive()){
 #'image(generate_2d_disk(101), asp=1)
 #'#end}
-generate_2d_disk = function(dim = c(11,11), radius = 1) {
+generate_2d_disk = function(dim = c(11,11), radius = 1,
+                            rescale_unity = FALSE) {
   dim = rev(dim)
   mindim = min(dim)
   add_offset_x = FALSE
@@ -45,5 +48,8 @@ generate_2d_disk = function(dim = c(11,11), radius = 1) {
   }
   disk = (disk - min(disk))/(max(disk)-min(disk))
   disk = disk/sum(disk)
+  if(rescale_unity) {
+    return(disk/max(disk))
+  }
   return(disk)
 }

@@ -7,13 +7,16 @@
 #'@param power Default `1`. Power to take the distribution. Higher values will result in a sharper peak.
 #'@param dim Default `c(11, 11)`. The dimensions of the matrix.
 #'@param width Default `3` (`-10` to `10`). The range in which to compute the distribution.
+#'@param rescale_unity Default `FALSE`. If `TRUE`, this will rescale the max value to one. Useful
+#'if wanting to plot the distribution with `plot_image()`.
 #'@import stats
 #'@export
 #'@examples
 #'#if(interactive()){
 #'image(generate_2d_gaussian(1,1,31), asp=1)
 #'#end}
-generate_2d_gaussian = function(sd = 1, power = 1, dim = c(11,11), width = 3) {
+generate_2d_gaussian = function(sd = 1, power = 1, dim = c(11,11), width = 3,
+                                rescale_unity = FALSE) {
   if(length(dim) == 1) {
     dim = c(dim, dim)
   }
@@ -38,6 +41,10 @@ generate_2d_gaussian = function(sd = 1, power = 1, dim = c(11,11), width = 3) {
     }
   } else {
     stop("Kernel dimension too small")
+  }
+  if(rescale_unity) {
+    temp = testmat/sum(testmat)
+    return(temp/max(temp))
   }
   testmat/sum(testmat)
 }

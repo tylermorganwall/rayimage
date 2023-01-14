@@ -19,7 +19,8 @@ render_bokeh(
   rotation = 0,
   aberration = 0,
   gamma_correction = TRUE,
-  progress = interactive()
+  progress = interactive(),
+  ...
 )
 }
 \arguments{
@@ -54,6 +55,8 @@ passes in a 2D matrix, that matrix will control the shape of the bokeh.}
 \item{gamma_correction}{Default \code{TRUE}. Controls gamma correction when adding colors. Default exponent of 2.2.}
 
 \item{progress}{Default \code{TRUE}. Whether to display a progress bar.}
+
+\item{...}{Additional arguments to pass to \code{plot_image()} if \code{preview = TRUE}.}
 }
 \value{
 3-layer RGB array of the processed image.
@@ -69,7 +72,7 @@ or use one of the built-in bokeh types.
 plot_image(dragon)
 
 #Plot the depth map
-image(dragondepth, asp = 1, col = grDevices::heat.colors(256))
+graphics::image(dragondepth, asp = 1, col = grDevices::heat.colors(256))
 
 #Preview the focal plane:
 \donttest{
