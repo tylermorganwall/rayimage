@@ -59,39 +59,33 @@ to returning it.}
 Takes an RGB array/filename and adds a title with an optional titlebar.
 }
 \examples{
-#if(interactive()){
+if(rayimage:::run_documentation()){
 #Plot the dragon
-\donttest{
 add_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20)
 }
+if(rayimage:::run_documentation()){
 #That's hard to see--let's add a title bar:
-\donttest{
 add_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20,
          title_bar_color="white")
 }
-
+if(rayimage:::run_documentation()){
 #Change the width of the bar:
-\donttest{
 add_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20,
          title_bar_color="white", title_offset = c(12,12))
 }
-
+if(rayimage:::run_documentation()){
 #The width of the bar will also automatically adjust for newlines:
-\donttest{
 add_title(dragon, preview = TRUE, title_text = "Dragon\n(Blue)", title_size=20,
          title_bar_color="white", title_offset = c(12,12))
 }
-
+if(rayimage:::run_documentation()){
 #Change the color and title color:
-\donttest{
 add_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20,
          title_bar_color="red", title_color = "white", title_offset = c(12,12))
 }
-
+if(rayimage:::run_documentation()){
 #Change the transparency:
-\donttest{
 add_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20, title_bar_alpha = 0.8,
          title_bar_color="red", title_color = "white", title_offset = c(12,12))
 }
-#end}
 }

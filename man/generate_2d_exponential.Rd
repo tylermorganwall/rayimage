@@ -4,7 +4,12 @@
 \alias{generate_2d_exponential}
 \title{Generate 2D exponential Distribution}
 \usage{
-generate_2d_exponential(falloff = 1, dim = c(11, 11), width = 3)
+generate_2d_exponential(
+  falloff = 1,
+  dim = c(11, 11),
+  width = 3,
+  rescale_unity = FALSE
+)
 }
 \arguments{
 \item{falloff}{Default \code{1}. Falloff of the exponential.}
@@ -12,13 +17,16 @@ generate_2d_exponential(falloff = 1, dim = c(11, 11), width = 3)
 \item{dim}{Default \code{c(11, 11)}. The dimensions of the matrix.}
 
 \item{width}{Default \code{3} (\code{-10} to \code{10}). The range in which to compute the distribution.}
+
+\item{rescale_unity}{Default \code{FALSE}. If \code{TRUE}, this will rescale the max value to one. Useful
+if wanting to plot the distribution with \code{plot_image()}.}
 }
 \description{
 Generates a 2D exponential distribution, with an optional
 argument to take the exponential to a user-defined power.
 }
 \examples{
-#if(interactive()){
+if(rayimage:::run_documentation()){
 image(generate_2d_exponential(1,31,3), asp=1)
-#end}
+}
 }

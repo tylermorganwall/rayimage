@@ -49,32 +49,30 @@ a user-supplied or built-in kernel. This function uses a fast-fourier transform 
 does the convolution in the frequency domain, so it should be faster for much larger kernels.
 }
 \examples{
-#if(interactive()){
+if(rayimage:::run_documentation()){
 #Perform a convolution with the default gaussian kernel
-
 plot_image(dragon)
-
+}
+if(rayimage:::run_documentation()){
 #Perform a convolution with the default gaussian kernel
 render_convolution_fft(dragon, kernel=0.1,preview = TRUE)
-
+}
+if(rayimage:::run_documentation()){
 #Increase the width of the kernel
-\donttest{
 render_convolution_fft(dragon, kernel = 2, kernel_dim=21,kernel_extent=6, preview = TRUE)
 }
-
+if(rayimage:::run_documentation()){
 #Use a built-in kernel:
-\donttest{
 render_convolution_fft(dragon, kernel = generate_2d_exponential(falloff=2, dim=31, width=21),
                   preview = TRUE)
 }
+if(rayimage:::run_documentation()){
 #Perform edge detection
-\donttest{
 edge = matrix(c(-1,-1,-1,-1,8,-1,-1,-1,-1),3,3)
 render_convolution_fft(dragon, kernel = edge, preview = TRUE)
 }
-
+if(rayimage:::run_documentation()){
 #Perform edge detection with Sobel matrices
-\donttest{
 sobel1 = matrix(c(1,2,1,0,0,0,-1,-2,-1),3,3)
 sobel2 = matrix(c(1,2,1,0,0,0,-1,-2,-1),3,3,byrow=TRUE)
 sob1 = render_convolution_fft(dragon, kernel = sobel1)
@@ -82,26 +80,23 @@ sob2 = render_convolution_fft(dragon, kernel = sobel2)
 sob_all = sob1 + sob2
 plot_image(sob_all)
 }
-
+if(rayimage:::run_documentation()){
 #We can also apply this function to matrices:
-\donttest{
 volcano |> image()
 volcano |>
  render_convolution_fft(kernel=generate_2d_gaussian(sd=1,dim=31)) |>
  image()
 }
+if(rayimage:::run_documentation()){
 #Because this function uses the fast-fourier transform, large kernels will be much faster.
-\donttest{
 render_convolution_fft(dragon, kernel = , preview = TRUE)
 }
-
+if(rayimage:::run_documentation()){
 #Use a custom kernel (in this case, an X shape):
 custom = diag(10) + (diag(10)[,10:1])
 #Normalize
 custom = custom / 20
-\donttest{
 plot_image(custom*20)
 render_convolution_fft(dragon, kernel = custom, preview = TRUE)
 }
-#end}
 }

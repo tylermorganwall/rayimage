@@ -4,12 +4,15 @@
 \alias{generate_2d_disk}
 \title{Generate 2D Disk}
 \usage{
-generate_2d_disk(dim = c(11, 11), radius = 1)
+generate_2d_disk(dim = c(11, 11), radius = 1, rescale_unity = FALSE)
 }
 \arguments{
 \item{dim}{Default \code{c(11, 11)}. The dimensions of the matrix.}
 
 \item{radius}{Default \code{1}. Radius of the disk, compared to the dimensions. Should be less than one.}
+
+\item{rescale_unity}{Default \code{FALSE}. If \code{TRUE}, this will rescale the max value to one. Useful
+if wanting to plot the distribution with \code{plot_image()}.}
 }
 \description{
 Generates a 2D disk with a gradual falloff.
@@ -29,7 +32,7 @@ Disk generated using the following formula:
 The origin of the coordinate system is the center of the matrix.
 }
 \examples{
-#if(interactive()){
+if(rayimage:::run_documentation()){
 image(generate_2d_disk(101), asp=1)
-#end}
+}
 }

@@ -12,9 +12,9 @@
 #'@import stats
 #'@export
 #'@examples
-#'#if(interactive()){
+#'if(rayimage:::run_documentation()){
 #'image(generate_2d_gaussian(1,1,31), asp=1)
-#'#end}
+#'}
 generate_2d_gaussian = function(sd = 1, power = 1, dim = c(11,11), width = 3,
                                 rescale_unity = FALSE) {
   if(length(dim) == 1) {

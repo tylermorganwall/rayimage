@@ -25,48 +25,48 @@
 #'@return 3-layer RGB array of the processed image.
 #'@export
 #'@examples
-#'#if(interactive()){
+#'if(rayimage:::run_documentation()){
 #'#Plot the dragon
 #'plot_image(dragon)
-#'
+#'}
+#'if(rayimage:::run_documentation()){
 #'#Plot the depth map
 #'graphics::image(dragondepth, asp = 1, col = grDevices::heat.colors(256))
-#'
+#'}
+#'if(rayimage:::run_documentation()){
 #'#Preview the focal plane:
-#'\donttest{
 #'render_bokeh(dragon, dragondepth, focus=950, preview_focus = TRUE)
 #'}
+#'if(rayimage:::run_documentation()){
 #'#Change the focal length:
-#'\donttest{
 #'render_bokeh(dragon, dragondepth, focus=950, focallength=300)
 #'}
+#'if(rayimage:::run_documentation()){
 #'#Add chromatic aberration:
-#'\donttest{
 #'render_bokeh(dragon, dragondepth, focus=950, focallength=300, aberration = 0.5)
 #'}
+#'if(rayimage:::run_documentation()){
 #'#Change the focal distance:
-#'\donttest{
 #'render_bokeh(dragon, dragondepth, focus=600, focallength=300)
 #'render_bokeh(dragon, dragondepth, focus=1300, focallength=300)
 #'}
+#'if(rayimage:::run_documentation()){
 #'#Change the bokeh shape to a hexagon:
-#'\donttest{
 #'render_bokeh(dragon, dragondepth, bokehshape = "hex",
 #'             focallength=300, focus=600)
 #'}
+#'if(rayimage:::run_documentation()){
 #'#Change the bokeh intensity:
-#'\donttest{
 #'render_bokeh(dragon, dragondepth,
 #'             focallength=400, focus=900, bokehintensity = 1)
 #'render_bokeh(dragon, dragondepth,
 #'             focallength=400, focus=900, bokehintensity = 3)
 #'}
+#'if(rayimage:::run_documentation()){
 #'#Rotate the hexagonal shape:
-#'\donttest{
 #'render_bokeh(dragon, dragondepth, bokehshape = "hex", rotation=15,
 #'             focallength=300, focus=600)
 #'}
-#'#end}
 render_bokeh = function(image, depthmap,
                         focus=0.5, focallength = 100, fstop = 4, filename=NULL,
                         preview = TRUE, preview_focus = FALSE,

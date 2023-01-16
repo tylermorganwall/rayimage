@@ -24,27 +24,25 @@
 #'@return 3-layer RGB array of the processed image.
 #'@export
 #'@examples
-#'#if(interactive()){
+#'if(rayimage:::run_documentation()){
 #'#Perform a convolution with the default gaussian kernel
-#'
 #'plot_image(dragon)
-#'
+#'}
+#'if(rayimage:::run_documentation()){
 #'#Perform a convolution with the default gaussian kernel
 #'render_convolution(dragon, preview = TRUE)
-#'
+#'}
+#'if(rayimage:::run_documentation()){
 #'#Increase the width of the kernel
-#'\donttest{
 #'render_convolution(dragon, kernel = 2, kernel_dim=21,kernel_extent=6, preview = TRUE)
 #'}
-#'
+#'if(rayimage:::run_documentation()){
 #'#Perform edge detection using a edge detection kernel
-#'\donttest{
 #'edge = matrix(c(-1,-1,-1,-1,8,-1,-1,-1,-1),3,3)
 #'render_convolution(dragon, kernel = edge, preview = TRUE, absolute=FALSE)
 #'}
-#'
+#'if(rayimage:::run_documentation()){
 #'#Perform edge detection with Sobel matrices
-#'\donttest{
 #'sobel1 = matrix(c(1,2,1,0,0,0,-1,-2,-1),3,3)
 #'sobel2 = matrix(c(1,2,1,0,0,0,-1,-2,-1),3,3,byrow=TRUE)
 #'sob1 = render_convolution(dragon, kernel = sobel1)
@@ -52,33 +50,29 @@
 #'sob_all = sob1 + sob2
 #'plot_image(sob_all)
 #'}
+#'if(rayimage:::run_documentation()){
 #'#Only perform the convolution on bright pixels (bloom)
-#'\donttest{
 #'render_convolution(dragon, kernel = 5, kernel_dim=24, kernel_extent=24,
 #'                   min_value=1, preview = TRUE)
 #'}
-#'
+#'if(rayimage:::run_documentation()){
 #'#Use a built-in kernel:
-#'\donttest{
 #'render_convolution(dragon, kernel = generate_2d_exponential(falloff=2, dim=31, width=21),
 #'                   preview = TRUE)
 #'}
-#'
+#'if(rayimage:::run_documentation()){
 #'#We can also apply this function to matrices:
-#'\donttest{
 #'volcano |> image()
 #'volcano |>
 #'  render_convolution(kernel=generate_2d_gaussian(sd=1,dim=31)) |>
 #'  image()
 #'}
-#'
+#'if(rayimage:::run_documentation()){
 #'#Use a custom kernel (in this case, an X shape):
 #'custom = diag(10) + (diag(10)[,10:1])
-#'\donttest{
 #'plot_image(custom)
 #'render_convolution(dragon, kernel = custom, preview = TRUE)
 #'}
-#'#end}
 render_convolution = function(image, kernel = "gaussian",
                               kernel_dim = 11, kernel_extent = 3, absolute = TRUE,
                               min_value=NULL,

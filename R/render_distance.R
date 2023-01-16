@@ -8,14 +8,15 @@
 #'@return Matrix of distance values.
 #'@export
 #'@examples
-#'#if(interactive()){
+#'if(rayimage:::run_documentation()){
 #'#Measure distance to
 #'image(render_boolean_distance(volcano > 150))
 #'image(render_boolean_distance(volcano < 150))
-#'
+#'}
+#'if(rayimage:::run_documentation()){
 #'#If we want to rescale this to zero to one (to visualize like an image), set rescale=TRUE
 #'plot_image(render_boolean_distance(volcano > 150,rescale=TRUE))
-#'#end}
+#'}
 render_boolean_distance = function(boolean, rescale = FALSE) {
   if(any(is.na(boolean))) {
     stop("`boolean` must not have any NA values")
