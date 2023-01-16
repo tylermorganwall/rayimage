@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1</span>
       </span>
     </div>
 
@@ -129,41 +129,38 @@ to returning it.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#if(interactive()){</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu">rayimage</span><span class="fu">:::</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Plot the dragon</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="add_vignette-1.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu">rayimage</span><span class="fu">:::</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Add a vignette effect:</span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="add_vignette-2.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu">rayimage</span><span class="fu">:::</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Darken the vignette effect:</span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="add_vignette-3.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu">rayimage</span><span class="fu">:::</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Change the radius:</span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">1</span>, radius<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="add_vignette-4.png" alt="" width="700" height="700"></span>
 <span class="r-in"><span><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">1</span>, radius<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-plt img"><img src="add_vignette-4.png" alt="" width="700" height="700"></span>
 <span class="r-plt img"><img src="add_vignette-5.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu">rayimage</span><span class="fu">:::</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Change the color:</span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">1</span>, color<span class="op">=</span><span class="st">"white"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="add_vignette-6.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu">rayimage</span><span class="fu">:::</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Increase the width of the blur by 50%:</span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">add_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1.5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="add_vignette-7.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
-<span class="r-in"><span><span class="co">#end}</span></span></span>
 </code></pre></div>
     </div>
   </div>

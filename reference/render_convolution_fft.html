@@ -19,7 +19,7 @@ does the convolution in the frequency domain, so it should be faster for much la
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1</span>
       </span>
     </div>
 
@@ -147,72 +147,67 @@ if user specifies their own kernel.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#if(interactive()){</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu">rayimage</span><span class="fu">:::</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Perform a convolution with the default gaussian kernel</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="render_convolution_fft-1.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu">rayimage</span><span class="fu">:::</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Perform a convolution with the default gaussian kernel</span></span></span>
 <span class="r-in"><span><span class="fu">render_convolution_fft</span><span class="op">(</span><span class="va">dragon</span>, kernel<span class="op">=</span><span class="fl">0.1</span>,preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="render_convolution_fft-2.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu">rayimage</span><span class="fu">:::</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Increase the width of the kernel</span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">render_convolution_fft</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="fl">2</span>, kernel_dim<span class="op">=</span><span class="fl">21</span>,kernel_extent<span class="op">=</span><span class="fl">6</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="render_convolution_fft-3.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu">rayimage</span><span class="fu">:::</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Use a built-in kernel:</span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">render_convolution_fft</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="fu"><a href="generate_2d_exponential.html">generate_2d_exponential</a></span><span class="op">(</span>falloff<span class="op">=</span><span class="fl">2</span>, dim<span class="op">=</span><span class="fl">31</span>, width<span class="op">=</span><span class="fl">21</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="render_convolution_fft-4.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu">rayimage</span><span class="fu">:::</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Perform edge detection</span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">edge</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">8</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span><span class="op">)</span>,<span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">render_convolution_fft</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="va">edge</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="render_convolution_fft-5.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu">rayimage</span><span class="fu">:::</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Perform edge detection with Sobel matrices</span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">sobel1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">2</span>,<span class="op">-</span><span class="fl">1</span><span class="op">)</span>,<span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sobel2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">2</span>,<span class="op">-</span><span class="fl">1</span><span class="op">)</span>,<span class="fl">3</span>,<span class="fl">3</span>,byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sob1</span> <span class="op">=</span> <span class="fu">render_convolution_fft</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="va">sobel1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sob2</span> <span class="op">=</span> <span class="fu">render_convolution_fft</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="va">sobel2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sob_all</span> <span class="op">=</span> <span class="va">sob1</span> <span class="op">+</span> <span class="va">sob2</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">sob_all</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="render_convolution_fft-6.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu">rayimage</span><span class="fu">:::</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#We can also apply this function to matrices:</span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">volcano</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="render_convolution_fft-7.png" alt="" width="700" height="700"></span>
 <span class="r-in"><span><span class="va">volcano</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span> <span class="fu">render_convolution_fft</span><span class="op">(</span>kernel<span class="op">=</span><span class="fu"><a href="generate_2d_gaussian.html">generate_2d_gaussian</a></span><span class="op">(</span>sd<span class="op">=</span><span class="fl">1</span>,dim<span class="op">=</span><span class="fl">31</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span> <span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-plt img"><img src="render_convolution_fft-7.png" alt="" width="700" height="700"></span>
 <span class="r-plt img"><img src="render_convolution_fft-8.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu">rayimage</span><span class="fu">:::</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Because this function uses the fast-fourier transform, large kernels will be much faster.</span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">render_convolution_fft</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> , preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="render_convolution_fft-9.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu">rayimage</span><span class="fu">:::</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Use a custom kernel (in this case, an X shape):</span></span></span>
 <span class="r-in"><span><span class="va">custom</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">[</span>,<span class="fl">10</span><span class="op">:</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co">#Normalize</span></span></span>
 <span class="r-in"><span><span class="va">custom</span> <span class="op">=</span> <span class="va">custom</span> <span class="op">/</span> <span class="fl">20</span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">custom</span><span class="op">*</span><span class="fl">20</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="render_convolution_fft-10.png" alt="" width="700" height="700"></span>
 <span class="r-in"><span><span class="fu">render_convolution_fft</span><span class="op">(</span><span class="va">dragon</span>, kernel <span class="op">=</span> <span class="va">custom</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-plt img"><img src="render_convolution_fft-10.png" alt="" width="700" height="700"></span>
 <span class="r-plt img"><img src="render_convolution_fft-11.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
-<span class="r-in"><span><span class="co">#end}</span></span></span>
 </code></pre></div>
     </div>
   </div>

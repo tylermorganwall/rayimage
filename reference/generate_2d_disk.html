@@ -24,7 +24,7 @@ The origin of the coordinate system is the center of the matrix."><!-- mathjax -
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1</span>
       </span>
     </div>
 
@@ -92,7 +92,7 @@ The origin of the coordinate system is the center of the matrix."><!-- mathjax -
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">generate_2d_disk</span><span class="op">(</span>dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11</span>, <span class="fl">11</span><span class="op">)</span>, radius <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">generate_2d_disk</span><span class="op">(</span>dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11</span>, <span class="fl">11</span><span class="op">)</span>, radius <span class="op">=</span> <span class="fl">1</span>, rescale_unity <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -104,14 +104,19 @@ The origin of the coordinate system is the center of the matrix."><!-- mathjax -
 <dt>radius</dt>
 <dd><p>Default <code>1</code>. Radius of the disk, compared to the dimensions. Should be less than one.</p></dd>
 
+
+<dt>rescale_unity</dt>
+<dd><p>Default <code>FALSE</code>. If <code>TRUE</code>, this will rescale the max value to one. Useful
+if wanting to plot the distribution with <code><a href="plot_image.html">plot_image()</a></code>.</p></dd>
+
 </dl></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#if(interactive()){</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu">rayimage</span><span class="fu">:::</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu">generate_2d_disk</span><span class="op">(</span><span class="fl">101</span><span class="op">)</span>, asp<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="generate_2d_disk-1.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span><span class="co">#end}</span></span></span>
 </code></pre></div>
     </div>
   </div>
