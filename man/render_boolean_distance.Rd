@@ -21,11 +21,11 @@ Takes an matrix (or  and returns the nearest distance to each TRUE.
 \examples{
 if(rayimage:::run_documentation()){
 #Measure distance to
-image(render_boolean_distance(volcano > 150))
-image(render_boolean_distance(volcano < 150))
+plot_image(render_boolean_distance(t(volcano) > 150))
+plot_image(render_boolean_distance(t(volcano) < 150))
 }
 if(rayimage:::run_documentation()){
 #If we want to rescale this to zero to one (to visualize like an image), set rescale=TRUE
-plot_image(render_boolean_distance(volcano > 150,rescale=TRUE))
+plot_image(render_boolean_distance(t(volcano) > 150,rescale=TRUE))
 }
 }
