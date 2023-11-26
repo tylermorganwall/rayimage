@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0</span>
       </span>
     </div>
 
@@ -81,11 +81,10 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_image</span><span class="op">(</span></span>
 <span>  <span class="va">input</span>,</span>
 <span>  rotate <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  keep_user_par <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  draw_grid <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  asp <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  new_page <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  return_grob <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">...</span></span>
+<span>  return_grob <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -99,9 +98,10 @@
 <dd><p>Default 0. Rotates the output. Possible values: 0, 90, 180, 270.</p></dd>
 
 
-<dt>keep_user_par</dt>
-<dd><p>Default <code>TRUE</code>. Whether to keep the user's <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> settings. Set to <code>FALSE</code> if you
-want to set up a multi-pane plot (e.g. set <code>par(mfrow)</code>).</p></dd>
+<dt>draw_grid</dt>
+<dd><p>Default <code>FALSE</code>. If <code>TRUE</code>, this will draw a grid in the background to help
+disambiguate the actual image from the device (helpful if the image background is the same as the
+device's background).</p></dd>
 
 
 <dt>asp</dt>
@@ -116,10 +116,6 @@ slightly widen the image.</p></dd>
 <dt>return_grob</dt>
 <dd><p>Default <code>FALSE</code>. Whether to return the grob object.</p></dd>
 
-
-<dt>...</dt>
-<dd><p>Additional arguments to pass to the <code>raster::plotRGB</code> function that displays the map.</p></dd>
-
 </dl></div>
 
     <div id="ref-examples">
@@ -128,6 +124,15 @@ slightly widen the image.</p></dd>
 <span class="r-in"><span><span class="co">#Plot the dragon array</span></span></span>
 <span class="r-in"><span><span class="fu">plot_image</span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_image-1.png" alt="" width="700" height="700"></span>
+<span class="r-in"><span><span class="co">#Make pixels twice as wide as tall</span></span></span>
+<span class="r-in"><span><span class="fu">plot_image</span><span class="op">(</span><span class="va">dragon</span>, asp <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_image-2.png" alt="" width="700" height="700"></span>
+<span class="r-in"><span><span class="co">#Plot non-square images</span></span></span>
+<span class="r-in"><span><span class="fu">plot_image</span><span class="op">(</span><span class="va">dragon</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>,,<span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_image-3.png" alt="" width="700" height="700"></span>
+<span class="r-in"><span><span class="co">#Make pixels twice as tall as wide</span></span></span>
+<span class="r-in"><span><span class="fu">plot_image</span><span class="op">(</span><span class="va">dragon</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>,,<span class="op">]</span>, asp <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_image-4.png" alt="" width="700" height="700"></span>
 <span class="r-in"><span><span class="co">#end}</span></span></span>
 </code></pre></div>
     </div>

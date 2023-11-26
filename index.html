@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0</span>
       </span>
     </div>
 
@@ -95,6 +95,8 @@
 <div class="section level1">
 <div class="page-header"><h1 id="rayimage">rayimage<a class="anchor" aria-label="anchor" href="#rayimage"></a>
 </h1></div>
+<!-- badges: start -->
+
 <p><img src="reference/figures/githubdemo.gif"></p>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
@@ -107,7 +109,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># To install the latest version from Github:</span></span>
 <span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"tylermorganwall/rayimage"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"tylermorganwall/rayimage"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
@@ -144,14 +146,14 @@
 <p>Preview the focal plane.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/render_bokeh.html">render_bokeh</a></span><span class="op">(</span><span class="va">dragon</span>,<span class="va">dragondepth</span>,focus<span class="op">=</span><span class="fl">930</span>,preview_focus <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">## Focal range: 847.644-1410.17</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Focal range: 847.644-1410.17</span></span></code></pre></div>
 <p><img src="reference/figures/focal-1.png"><!-- --></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/render_bokeh.html">render_bokeh</a></span><span class="op">(</span><span class="va">dragon</span>,<span class="va">dragondepth</span>,focus<span class="op">=</span><span class="fl">930</span>,focallength<span class="op">=</span><span class="fl">250</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/focal-2.png"><!-- --></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/render_bokeh.html">render_bokeh</a></span><span class="op">(</span><span class="va">dragon</span>,<span class="va">dragondepth</span>,focus<span class="op">=</span><span class="fl">1300</span>,preview_focus <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">## Focal range: 847.644-1410.17</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Focal range: 847.644-1410.17</span></span></code></pre></div>
 <p><img src="reference/figures/focal-3.png"><!-- --></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/render_bokeh.html">render_bokeh</a></span><span class="op">(</span><span class="va">dragon</span>,<span class="va">dragondepth</span>,focus<span class="op">=</span><span class="fl">1300</span>,focallength<span class="op">=</span><span class="fl">250</span><span class="op">)</span></span></code></pre></div>
@@ -300,7 +302,12 @@
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/tylermorganwall/rayimage/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/tylermorganwall/rayimage/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
+</div>
 
   </div>
 </div>
