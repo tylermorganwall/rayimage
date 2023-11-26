@@ -156,7 +156,7 @@ add_title = function(image,
     if(!preview) {
       return(temp)
     }
-    plot_image(temp, keep_user_par = FALSE)
+    plot_image(temp)
     return(invisible(temp))
   } else {
     save_png(temp, filename)

@@ -115,7 +115,7 @@ add_vignette = function(image, vignette = 0.5, color = "#000000", radius = 1.3,
     if(!preview) {
       return(temp)
     }
-    plot_image(temp, keep_user_par = FALSE)
+    plot_image(temp)
     return(invisible(temp))
   } else {
     save_png(temp, filename)

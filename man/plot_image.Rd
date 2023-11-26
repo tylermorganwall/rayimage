@@ -7,11 +7,10 @@
 plot_image(
   input,
   rotate = 0,
-  keep_user_par = FALSE,
+  draw_grid = FALSE,
   asp = 1,
   new_page = TRUE,
-  return_grob = FALSE,
-  ...
+  return_grob = FALSE
 )
 }
 \arguments{
@@ -19,8 +18,9 @@ plot_image(
 
 \item{rotate}{Default 0. Rotates the output. Possible values: 0, 90, 180, 270.}
 
-\item{keep_user_par}{Default \code{TRUE}. Whether to keep the user's \code{par()} settings. Set to \code{FALSE} if you
-want to set up a multi-pane plot (e.g. set \code{par(mfrow)}).}
+\item{draw_grid}{Default \code{FALSE}. If \code{TRUE}, this will draw a grid in the background to help
+disambiguate the actual image from the device (helpful if the image background is the same as the
+device's background).}
 
 \item{asp}{Default \code{1}. Aspect ratio of the pixels in the plot. For example, an aspect ratio of \code{4/3} will
 slightly widen the image.}
@@ -28,8 +28,6 @@ slightly widen the image.}
 \item{new_page}{Default \code{TRUE}. Whether to call \code{grid::grid.newpage()} before plotting the image.}
 
 \item{return_grob}{Default \code{FALSE}. Whether to return the grob object.}
-
-\item{...}{Additional arguments to pass to the \code{raster::plotRGB} function that displays the map.}
 }
 \description{
 Displays the image in the current device.
@@ -38,5 +36,11 @@ Displays the image in the current device.
 #if(interactive()){
 #Plot the dragon array
 plot_image(dragon)
+#Make pixels twice as wide as tall
+plot_image(dragon, asp = 2)
+#Plot non-square images
+plot_image(dragon[1:100,,])
+#Make pixels twice as tall as wide
+plot_image(dragon[1:100,,], asp = 1/2)
 #end}
 }
