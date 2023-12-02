@@ -6,11 +6,6 @@
 \usage{
 pad_to_fit(dim, kernel)
 }
-\arguments{
-\item{heightmap}{A two-dimensional matrix, where each entry in the matrix is the elevation at that point. All points are assumed to be evenly spaced.}
-
-\item{pad}{Number of padding entries}
-}
 \value{
 Hillshade with edges trimmed
 }

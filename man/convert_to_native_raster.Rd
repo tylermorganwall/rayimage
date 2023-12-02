@@ -8,10 +8,6 @@ convert_to_native_raster(input)
 }
 \arguments{
 \item{input}{Array to get converted to a native raster}
-
-\item{ncol}{Number of columns}
-
-\item{nrow}{Number of rows}
 }
 \description{
 Displays the image in the current device.

@@ -79,8 +79,6 @@ trim_padding = function(heightmap, pad = 1) {
 #'
 #'@description Pads to a rect
 #'
-#'@param heightmap A two-dimensional matrix, where each entry in the matrix is the elevation at that point. All points are assumed to be evenly spaced.
-#'@param pad Number of padding entries
 #'@return Hillshade with edges trimmed
 #'@keywords internal
 pad_to_fit = function(dim, kernel) {
@@ -115,7 +113,6 @@ pad_to_fit = function(dim, kernel) {
 #'
 #'@description Pads to a rect
 #'
-#'@param dim desired size
 #'@return Hillshade with edges trimmed
 #'@keywords internal
 expand_to_fit = function(dim, kernel) {

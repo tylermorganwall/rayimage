@@ -3,8 +3,6 @@
 #'@description Displays the image in the current device.
 #'
 #'@param input Array to get converted to a native raster
-#'@param ncol Number of columns
-#'@param nrow Number of rows
 #'@keywords internal
 convert_to_native_raster = function(input) {
   ncol = ncol(input)

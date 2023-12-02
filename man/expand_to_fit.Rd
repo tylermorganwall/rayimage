@@ -6,9 +6,6 @@
 \usage{
 expand_to_fit(dim, kernel)
 }
-\arguments{
-\item{dim}{desired size}
-}
 \value{
 Hillshade with edges trimmed
 }
