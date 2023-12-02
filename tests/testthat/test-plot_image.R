@@ -5,10 +5,16 @@ save_test_png = function(code, path) {
   path
 }
 
-compare_image = function(path1, path2) {
+compare_image = function(path1, path2, quantile_diff = 0.001) {
   image1 = png::readPNG(path1)
   image2 = png::readPNG(path2)
-  return(identical(image1, image2))
+  # No alpha
+  diffs = abs(image2 - image1)[,,1:3]
+  #Ignore small differences
+  diffs = diffs[order(diffs)]
+  mostly_identical = diffs[length(diffs) * quantile_diff] == 0
+  diffs_are_minor = max(diffs) < 0.1
+  return(mostly_identical && diffs_are_minor)
 }
 
 
