@@ -11,7 +11,9 @@ compare_image = function(path1, path2) {
   return(identical(image1, image2))
 }
 
-run_tests = function(func, argument_grid, plot_prefix="", ...) {
+
+
+run_tests = function(func, argument_grid, plot_prefix="", warning_rows = NULL, error_rows = NULL, ...) {
   stopifnot(inherits(argument_grid,"data.frame"))
   for(i in seq_len(nrow(argument_grid))){
     args = unlist(argument_grid[i,], recursive = FALSE)
@@ -22,10 +24,19 @@ run_tests = function(func, argument_grid, plot_prefix="", ...) {
     args = append(args, ...)
     # args = append(args, list(filename = path))
     # browser()
-    save_test_png(do.call(func, args = args), path) |>
-      suppressMessages() |>
-      suppressWarnings() |>
-      expect_snapshot_file(name = test_filename, compare = compare_image)
+    if(i %in% warning_rows) {
+      expect_snapshot_warning(do.call(func, args = args))
+    } else if(i %in% error_rows) {
+      expect_snapshot_error(do.call(func, args = args))
+    }
+    if(interactive()) {
+      do.call(func, args = args)
+    } else {
+      save_test_png(do.call(func, args = args), path) |>
+        suppressMessages() |>
+        suppressWarnings() |>
+        expect_snapshot_file(name = test_filename, compare = compare_image)
+    }
   }
 }
 
@@ -37,6 +48,7 @@ test_that("Checking plot_image", {
                              new_page = list(TRUE, FALSE))
 
   run_tests("plot_image", plt_img_args, plot_prefix = "plt_img",
+            warning_rows = NULL, error_rows = NULL,
             list(input = dragon))
 })
 
@@ -49,7 +61,11 @@ test_that("Checking plot_image_grid", {
                                         c(2,1)),
                              draw_grid = list(FALSE, TRUE),
                              asp = list(c(0.5,1,2,3)))
-  plt_img_args = plt_img_args[-6,] #False positive
+  # plt_img_args = plt_img_args[-6,] #False positive
 
-  run_tests("plot_image_grid", plt_img_args, plot_prefix = "plt_img_grid", list())
+  warning_rows = c(1,3,4,5,7,8)
+
+  run_tests("plot_image_grid", plt_img_args, plot_prefix = "plt_img_grid",
+            warning_rows = warning_rows, error_rows = NULL,
+            list())
 })
