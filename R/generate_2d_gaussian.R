@@ -12,7 +12,7 @@
 #'@import stats
 #'@export
 #'@examples
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'image(generate_2d_gaussian(1,1,31), asp=1)
 #'}
 generate_2d_gaussian = function(sd = 1, power = 1, dim = c(11,11), width = 3,

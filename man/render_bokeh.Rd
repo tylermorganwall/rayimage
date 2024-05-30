@@ -67,44 +67,44 @@ Takes an image and a depth map to render the image with depth of field
 or use one of the built-in bokeh types.
 }
 \examples{
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Plot the dragon
 plot_image(dragon)
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Plot the depth map
-graphics::image(dragondepth, asp = 1, col = grDevices::heat.colors(256))
+plot_image(dragondepth/1500)
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Preview the focal plane:
 render_bokeh(dragon, dragondepth, focus=950, preview_focus = TRUE)
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Change the focal length:
 render_bokeh(dragon, dragondepth, focus=950, focallength=300)
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Add chromatic aberration:
 render_bokeh(dragon, dragondepth, focus=950, focallength=300, aberration = 0.5)
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Change the focal distance:
 render_bokeh(dragon, dragondepth, focus=600, focallength=300)
 render_bokeh(dragon, dragondepth, focus=1300, focallength=300)
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Change the bokeh shape to a hexagon:
 render_bokeh(dragon, dragondepth, bokehshape = "hex",
             focallength=300, focus=600)
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Change the bokeh intensity:
 render_bokeh(dragon, dragondepth,
             focallength=400, focus=900, bokehintensity = 1)
 render_bokeh(dragon, dragondepth,
             focallength=400, focus=900, bokehintensity = 3)
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Rotate the hexagonal shape:
 render_bokeh(dragon, dragondepth, bokehshape = "hex", rotation=15,
             focallength=300, focus=600)

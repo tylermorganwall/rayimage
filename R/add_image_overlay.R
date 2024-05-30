@@ -19,11 +19,11 @@
 #'@import grDevices
 #'@export
 #'@examples
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Plot the dragon
 #'plot_image(dragon)
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Add an overlay of a red semi-transparent circle:
 #'circlemat = generate_2d_disk(min(dim(dragon)[1:2]))
 #'circlemat = circlemat/max(circlemat)
@@ -41,53 +41,15 @@
 add_image_overlay = function(image, image_overlay = NULL, rescale_original = FALSE,
                              alpha = NULL, filename = NULL, preview = FALSE) {
   imagetype = get_file_type(image)
-  image_overlay_type = get_file_type(image)
+  image_overlay_type = get_file_type(image_overlay)
 
   temp = tempfile(fileext = ".png")
   temp_overlay = tempfile(fileext = ".png")
+  image_overlay = ray_read_image(image_overlay)
 
-  if(imagetype == "array") {
-    #Clip HDR images
-    image[image > 1] = 1
-    png::writePNG(image,temp)
-    image = temp
-  } else if (imagetype == "matrix") {
-    newarray = array(1,dim=c(nrow(image),ncol(image),4))
-    newarray[,,1] = image
-    newarray[,,2] = image
-    newarray[,,3] = image
-    #Clip HDR images
-    newarray[newarray > 1] = 1
-    png::writePNG(newarray,temp)
-    image = temp
-  } else if (imagetype == "png") {
-    image = png::readPNG(image)
-    png::writePNG(image,temp)
-  } else if (imagetype == "jpg") {
-    image = jpeg::readJPEG(image)
-    png::writePNG(image,temp)
-  }
-  if(image_overlay_type == "array") {
-    #Clip HDR images
-    image_overlay[image_overlay > 1] = 1
-    png::writePNG(image_overlay,temp_overlay)
-    image_overlay = temp_overlay
-  } else if (image_overlay_type == "matrix") {
-    newarray = array(1,dim=c(nrow(image_overlay),ncol(image_overlay),4))
-    newarray[,,1] = image_overlay
-    newarray[,,2] = image_overlay
-    newarray[,,3] = image_overlay
-    #Clip HDR images
-    newarray[newarray > 1] = 1
-    png::writePNG(newarray,temp_overlay)
-    image_overlay = temp_overlay
-  } else if (image_overlay_type == "png") {
-    image_overlay = png::readPNG(image_overlay)
-    png::writePNG(image_overlay,temp_overlay)
-  } else if (image_overlay_type == "jpg") {
-    image_overlay = jpeg::readJPEG(image_overlay)
-    png::writePNG(image_overlay,temp_overlay)
-  }
+  ray_write_image(image, temp)
+  ray_write_image(image_overlay, temp_overlay)
+
   tempmap = aperm(png::readPNG(temp),c(2,1,3))
 
   dimensions = dim(tempmap)
@@ -198,10 +160,10 @@ add_image_overlay = function(image, image_overlay = NULL, rescale_original = FAL
     if(!preview) {
       return(temp)
     }
-    plot_image(temp)
+    plot_image(render_clamp(temp))
     return(invisible(temp))
   } else {
-    save_png(temp, filename)
+    ray_write_image(render_clamp(temp), filename)
     return(invisible(temp))
   }
 }

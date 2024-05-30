@@ -23,20 +23,20 @@ device's background).}
 Displays the image in the current device.
 }
 \examples{
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Plot the dragon array
 plot_image_grid(list(dragon, 1-dragon), dim = c(1,2))
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 plot_image_grid(list(dragon, 1-dragon), dim = c(2,1))
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 plot_image_grid(list(dragon, NULL, 1-dragon), dim = c(2,2), asp = c(2,1,1/2))
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 plot_image_grid(list(dragon, NULL, NULL, dragon), dim = c(2,2), asp = c(2,1,1,1/2))
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Plot alongside the depth matrix
 dragon_depth_reoriented = render_reorient(dragondepth,
                                          transpose = TRUE,

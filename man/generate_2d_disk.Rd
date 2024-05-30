@@ -32,7 +32,7 @@ Disk generated using the following formula:
 The origin of the coordinate system is the center of the matrix.
 }
 \examples{
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 image(generate_2d_disk(101), asp=1)
 }
 }

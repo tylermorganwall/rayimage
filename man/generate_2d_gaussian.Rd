@@ -29,7 +29,7 @@ Generates a 2D gaussian distribution, with an optional
 argument to take the gaussian to a user-defined power.
 }
 \examples{
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 image(generate_2d_gaussian(1,1,31), asp=1)
 }
 }

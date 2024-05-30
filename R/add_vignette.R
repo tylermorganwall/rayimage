@@ -19,56 +19,36 @@
 #'@import grDevices
 #'@export
 #'@examples
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Plot the dragon
 #'plot_image(dragon)
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Add a vignette effect:
 #'add_vignette(dragon, preview = TRUE, vignette = 0.5)
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Darken the vignette effect:
 #'add_vignette(dragon, preview = TRUE, vignette = 1)
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Change the radius:
 #'add_vignette(dragon, preview = TRUE, vignette = 1, radius=1.5)
 #'add_vignette(dragon, preview = TRUE, vignette = 1, radius=0.5)
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Change the color:
 #'add_vignette(dragon, preview = TRUE, vignette = 1, color="white")
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Increase the width of the blur by 50%:
 #'add_vignette(dragon, preview = TRUE, vignette = c(1,1.5))
 #'}
 add_vignette = function(image, vignette = 0.5, color = "#000000", radius = 1.3,
                         filename = NULL, preview = FALSE) {
-  imagetype = get_file_type(image)
   temp = tempfile(fileext = ".png")
-  if(imagetype == "array") {
-    #Clip HDR images
-    image[image > 1] = 1
-    png::writePNG(image,temp)
-    image = temp
-  } else if (imagetype == "matrix") {
-    newarray = array(0,dim=c(nrow(image),ncol(image),3))
-    newarray[,,1] = image
-    newarray[,,2] = image
-    newarray[,,3] = image
-    #Clip HDR images
-    newarray[newarray > 1] = 1
-    png::writePNG(newarray,temp)
-    image = temp
-  } else if (imagetype == "png") {
-    image = png::readPNG(image)
-    png::writePNG(image,temp)
-  } else if (imagetype == "jpg") {
-    image = jpeg::readJPEG(image)
-    png::writePNG(image,temp)
-  }
+  ray_write_image(image, temp)
+
   tempmap = png::readPNG(temp)
   dimensions = dim(tempmap)
 
@@ -115,10 +95,10 @@ add_vignette = function(image, vignette = 0.5, color = "#000000", radius = 1.3,
     if(!preview) {
       return(temp)
     }
-    plot_image(temp)
+    plot_image(render_clamp(temp))
     return(invisible(temp))
   } else {
-    save_png(temp, filename)
+    ray_write_image(render_clamp(temp), filename)
     return(invisible(temp))
   }
 }

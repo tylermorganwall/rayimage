@@ -39,11 +39,11 @@ to returning it.}
 Takes an RGB array/filename and adds an image overlay.
 }
 \examples{
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Plot the dragon
 plot_image(dragon)
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Add an overlay of a red semi-transparent circle:
 circlemat = generate_2d_disk(min(dim(dragon)[1:2]))
 circlemat = circlemat/max(circlemat)

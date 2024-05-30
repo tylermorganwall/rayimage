@@ -13,28 +13,28 @@
 #'@return 3-layer RGB resized array or matrix.
 #'@export
 #'@examples
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Plot the image with a title
 #'dragon |>
 #'  add_title("Dragon", title_offset=c(10,10), title_bar_color="black",
 #'            title_size=20, title_color = "white") |>
 #'  plot_image()
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Half of the resolution
 #'render_resized(dragon, mag = 1/2) |>
 #'  add_title("Dragon (half res)", title_offset=c(5,5), title_bar_color="black",
 #'            title_size=10, title_color = "white") |>
 #'  plot_image()
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Double the resolution
 #'render_resized(dragon, mag = 2) |>
 #'  add_title("Dragon (2x res)", title_offset=c(20,20), title_bar_color="black",
 #'            title_size=40, title_color = "white") |>
 #'  plot_image()
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Specify the exact resulting dimensions
 #'render_resized(dragon, dim = c(320,160)) |>
 #'  add_title("Dragon (custom size)", title_offset=c(10,10), title_bar_color="black",
@@ -49,15 +49,8 @@ render_resized = function(image, mag = 1, dims = NULL, filename=NULL, preview=FA
     }
   }
   imagetype = get_file_type(image)
-  if(imagetype == "array") {
-    temp_image = aperm(image,c(2,1,3))
-  } else if(imagetype == "jpg") {
-    temp_image = suppressWarnings(aperm(jpeg::readJPEG(image),c(2,1,3)))
-  } else if (imagetype == "png"){
-    temp_image = suppressWarnings(aperm(png::readPNG(image),c(2,1,3)))
-  } else if (imagetype == "matrix") {
-    temp_image = t(image)
-  }
+  temp_image = ray_read_image(image)
+
   if(method %in% c("bi","bilinear")) {
     if(!is.null(dims)) {
       dims = dims[1:2]/dim(temp_image)[1:2]
@@ -66,11 +59,11 @@ render_resized = function(image, mag = 1, dims = NULL, filename=NULL, preview=FA
     if(imagetype != "matrix") {
       for(i in 1:3) {
         if(is.null(dims)) {
-          temp_list[[i]] = resize_image(t(flipud(temp_image[,,i])), mag)
+          temp_list[[i]] = resize_image(temp_image[,,i], mag)
         } else {
           x1 = seq(1, nrow(temp_image), length.out = nrow(temp_image)*dims[1]);
           y1 = seq(1, ncol(temp_image), length.out = ncol(temp_image)*dims[2]);
-          temp_list[[i]] = resize_image_xy(t(flipud(temp_image[,,i])), x1, y1)
+          temp_list[[i]] = resize_image_xy(temp_image[,,i], x1, y1)
         }
       }
       temp_image = array(0, dim = c(nrow(temp_list[[1]]), ncol(temp_list[[1]]), 3))
@@ -96,30 +89,24 @@ render_resized = function(image, mag = 1, dims = NULL, filename=NULL, preview=FA
     temp_list = list()
     if(imagetype != "matrix") {
       for(i in 1:(dim(image)[3])) {
-        temp_list[[i]] = resize_matrix_stb(t(flipud(temp_image[,,i])), dims[1],dims[2],method)
+        temp_list[[i]] = resize_matrix_stb(temp_image[,,i], dims[1],dims[2],method)
       }
       temp_image = array(0, dim = c(dims[1], dims[2], dim(image)[3]))
       for(i in 1:(dim(image)[3])) {
         temp_image[,,i] = temp_list[[i]]
       }
     } else {
-      temp_image = resize_matrix_stb(t(flipud(temp_image)), dims[1],dims[2],method)
+      temp_image = resize_matrix_stb(temp_image, dims[1],dims[2],method)
     }
   }
   if(is.null(filename)) {
     if(preview) {
-      temp_image = abs(temp_image)
-      temp_image[temp_image > 1] = 1
-      temp_image[temp_image < 0] = 0
-
-      plot_image(fliplr(temp_image))
+      plot_image(render_clamp(temp_image))
+      return(invisible(temp_image))
     } else {
-      fliplr(temp_image)
+      temp_image
     }
   } else {
-    temp_image = abs(temp_image)
-    temp_image[temp_image > 1] = 1
-    temp_image[temp_image < 0] = 0
-    save_png(fliplr(temp_image),filename)
+    ray_write_image(render_clamp(temp_image),filename)
   }
 }

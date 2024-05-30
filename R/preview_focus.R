@@ -9,12 +9,12 @@
 #'@examples
 #'#Plot the dragon
 preview_focus = function(image, depthmap, focus, imagetype, depthtype) {
-  if(imagetype %in% c("png","jpeg")) {
-    image = png::readPNG(image)
+  image = ray_read_image(image)
+  depthmap = ray_read_image(depthmap, convert_to_array = FALSE)
+  if(length(dim(depthmap)) == 3) {
+    depthmap = depthmap[,,1]
   }
-  if(depthtype %in% c("png","jpeg")) {
-    depthmap = png::readPNG(depthmap)
-  }
+
   isimage = max(depthmap, na.rm=TRUE) == 1
   if(isimage) {
     maxval = max(depthmap[depthmap != 1],na.rm=TRUE)
@@ -33,7 +33,7 @@ preview_focus = function(image, depthmap, focus, imagetype, depthtype) {
   if(any(depthmap < range_depth_high, na.rm=TRUE) & any(depthmap > range_depth_low, na.rm=TRUE)) {
     image[,,1][depthmap < range_depth_high & depthmap > range_depth_low] = 1
     image[,,2][depthmap < range_depth_high & depthmap > range_depth_low] = 0
-    image[,,2][depthmap < range_depth_high & depthmap > range_depth_low] = 0
+    image[,,3][depthmap < range_depth_high & depthmap > range_depth_low] = 0
     message(sprintf("Focal range: %g-%g", depthrange[1], depthrange[2]))
     plot_image(image)
   } else {

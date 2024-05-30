@@ -22,7 +22,7 @@
 #'if wanting to plot the distribution with `plot_image()`.
 #'@export
 #'@examples
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'image(generate_2d_disk(101), asp=1)
 #'}
 generate_2d_disk = function(dim = c(11,11), radius = 1,

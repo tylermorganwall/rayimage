@@ -24,34 +24,34 @@
 #'@import grDevices
 #'@export
 #'@examples
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Plot the dragon
 #'add_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20)
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#That's hard to see--let's add a title bar:
 #'add_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20,
 #'          title_bar_color="white")
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Change the width of the bar:
 #'add_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20,
-#'          title_bar_color="white", title_offset = c(12,12))
+#'          title_bar_color="white", title_offset = c(8,8))
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#The width of the bar will also automatically adjust for newlines:
 #'add_title(dragon, preview = TRUE, title_text = "Dragon\n(Blue)", title_size=20,
-#'          title_bar_color="white", title_offset = c(12,12))
+#'          title_bar_color="white")
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Change the color and title color:
 #'add_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20,
-#'          title_bar_color="red", title_color = "white", title_offset = c(12,12))
+#'          title_bar_color="red", title_color = "white")
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Change the transparency:
 #'add_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20, title_bar_alpha = 0.8,
-#'          title_bar_color="red", title_color = "white", title_offset = c(12,12))
+#'          title_bar_color="red", title_color = "white")
 #'}
 add_title = function(image,
                      title_text = "", title_offset = c(15,15),
@@ -62,27 +62,8 @@ add_title = function(image,
                      filename = NULL, preview = FALSE) {
   imagetype = get_file_type(image)
   temp = tempfile(fileext = ".png")
-  if(imagetype == "array") {
-    #Clip HDR images
-    image[image > 1] = 1
-    png::writePNG(image,temp)
-    image = temp
-  } else if (imagetype == "matrix") {
-    newarray = array(0,dim=c(nrow(image),ncol(image),3))
-    newarray[,,1] = image
-    newarray[,,2] = image
-    newarray[,,3] = image
-    #Clip HDR images
-    newarray[newarray > 1] = 1
-    png::writePNG(newarray,temp)
-    image = temp
-  } else if (imagetype == "png") {
-    image = png::readPNG(image)
-    png::writePNG(image,temp)
-  } else if (imagetype == "jpg") {
-    image = jpeg::readJPEG(image)
-    png::writePNG(image,temp)
-  }
+  ray_write_image(image, temp)
+
   tempmap = png::readPNG(temp)
   dimensions = dim(tempmap)
 
@@ -159,7 +140,7 @@ add_title = function(image,
     plot_image(temp)
     return(invisible(temp))
   } else {
-    save_png(temp, filename)
+    ray_write_image(temp, filename)
     return(invisible(temp))
   }
 }

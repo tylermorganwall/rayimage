@@ -18,6 +18,8 @@ reference:
     desc: "Functions for displaying/saving images"
     contents:
       - starts_with("plot")
+      - starts_with("ray_write")
+      - starts_with("ray_read")
   - title: "Kernels"
     desc: "Functions to generate 2D distributions"
     contents:
@@ -26,6 +28,10 @@ reference:
     desc: "Example data/depth map."
     contents:
       - starts_with("dragon")
+  - title: "pkgdown utils"
+    desc: "Internal but must be exported to meet CRAN guidelines"
+    contents:
+      - starts_with("run")
 
 figures:
   fig.asp: 1

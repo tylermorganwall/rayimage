@@ -5,7 +5,7 @@
 \title{Plot Image}
 \usage{
 plot_image(
-  input,
+  image,
   rotate = 0,
   draw_grid = FALSE,
   asp = 1,
@@ -14,7 +14,7 @@ plot_image(
 )
 }
 \arguments{
-\item{input}{Image or filename of an image to be plotted.}
+\item{image}{Image array or filename of an image to be plotted.}
 
 \item{rotate}{Default 0. Rotates the output. Possible values: 0, 90, 180, 270.}
 

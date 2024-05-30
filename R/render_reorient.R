@@ -11,23 +11,23 @@
 #'@return 3-layer RGB reoriented array or matrix.
 #'@export
 #'@examples
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Original orientation
 #'plot_image(dragon)
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Flip the dragon image horizontally
 #'dragon |>
 #'  render_reorient(flipx = TRUE) |>
 #'  plot_image()
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Flip the dragon image vertically
 #'dragon |>
 #'  render_reorient(flipy = TRUE) |>
 #'  plot_image()
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Transpose the dragon image
 #'dragon |>
 #'  render_reorient(transpose = TRUE) |>
@@ -41,15 +41,8 @@ render_reorient = function(image, flipx = FALSE, flipy = FALSE, transpose = FALS
     }
   }
   imagetype = get_file_type(image)
-  if(imagetype == "array") {
-    temp_image = image
-  } else if(imagetype == "jpg") {
-    temp_image = suppressWarnings(jpeg::readJPEG(image))
-  } else if (imagetype == "png"){
-    temp_image = suppressWarnings(png::readPNG(image))
-  } else if (imagetype == "matrix") {
-    temp_image = image
-  }
+  temp_image = ray_read_image(image, convert_to_array = FALSE)
+
   if(flipx) {
     temp_image = fliplr(temp_image)
   }
@@ -65,15 +58,12 @@ render_reorient = function(image, flipx = FALSE, flipy = FALSE, transpose = FALS
   }
   if(is.null(filename)) {
     if(preview) {
-      temp_image[temp_image > 1] = 1
-      temp_image[temp_image < 0] = 0
-      plot_image(temp_image)
+      plot_image(render_clamp(temp_image))
+      return(invisible(temp_image))
     } else {
       temp_image
     }
   } else {
-    temp_image[temp_image > 1] = 1
-    temp_image[temp_image < 0] = 0
-    save_png(temp_image, filename)
+    ray_write_image(render_clamp(temp_image), filename)
   }
 }

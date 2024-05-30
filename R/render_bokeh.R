@@ -25,44 +25,44 @@
 #'@return 3-layer RGB array of the processed image.
 #'@export
 #'@examples
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Plot the dragon
 #'plot_image(dragon)
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Plot the depth map
-#'graphics::image(dragondepth, asp = 1, col = grDevices::heat.colors(256))
+#' plot_image(dragondepth/1500)
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Preview the focal plane:
 #'render_bokeh(dragon, dragondepth, focus=950, preview_focus = TRUE)
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Change the focal length:
 #'render_bokeh(dragon, dragondepth, focus=950, focallength=300)
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Add chromatic aberration:
 #'render_bokeh(dragon, dragondepth, focus=950, focallength=300, aberration = 0.5)
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Change the focal distance:
 #'render_bokeh(dragon, dragondepth, focus=600, focallength=300)
 #'render_bokeh(dragon, dragondepth, focus=1300, focallength=300)
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Change the bokeh shape to a hexagon:
 #'render_bokeh(dragon, dragondepth, bokehshape = "hex",
 #'             focallength=300, focus=600)
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Change the bokeh intensity:
 #'render_bokeh(dragon, dragondepth,
 #'             focallength=400, focus=900, bokehintensity = 1)
 #'render_bokeh(dragon, dragondepth,
 #'             focallength=400, focus=900, bokehintensity = 3)
 #'}
-#'if(rayimage:::run_documentation()){
+#'if(run_documentation()){
 #'#Rotate the hexagonal shape:
 #'render_bokeh(dragon, dragondepth, bokehshape = "hex", rotation=15,
 #'             focallength=300, focus=600)
@@ -79,9 +79,8 @@ render_bokeh = function(image, depthmap,
     }
   }
   imagetype = get_file_type(image)
-  if(imagetype == "array") {
-    temp_image = aperm(image,c(2,1,3))
-  }
+  temp_image = ray_read_image(image)
+
   depthtype = get_file_type(depthmap)
   if(preview_focus) {
     preview_focus(image, depthmap, focus, imagetype, depthtype)
@@ -101,23 +100,15 @@ render_bokeh = function(image, depthmap,
   if(aberration >= 1 || aberration <= -1) {
     stop("aberration value must be less than 1 and greater than -1")
   }
-  #Load and rotate images if png
-  if(imagetype == "jpg") {
-    temp_image = suppressWarnings(aperm(jpeg::readJPEG(image),c(2,1,3)))
-  } else if (imagetype == "png"){
-    temp_image = suppressWarnings(aperm(png::readPNG(image),c(2,1,3)))
-  }
-  if(depthtype == "jpg") {
-    depthmap = suppressWarnings(jpeg::readJPEG(depthmap))
-  } else if (depthtype == "png"){
-    depthmap = suppressWarnings(png::readPNG(depthmap))
-  }
+
+  depthmap = ray_read_image(depthmap, convert_to_array = FALSE)
+
   if(length(dim(depthmap)) == 3) {
     depthmap = depthmap[,,1]
   }
 
   depthmap[is.na(depthmap)] = max(depthmap, na.rm = TRUE)*2
-  depthmap = t((depthmap))
+  # depthmap = t((depthmap))
 
   if(gamma_correction) {
     temp_image = temp_image^2.2
@@ -144,16 +135,15 @@ render_bokeh = function(image, depthmap,
   if(gamma_correction) {
     temp_image = temp_image ^ (1/2.2)
   }
-  temp_image[temp_image > 1] = 1
-  temp_image[temp_image < 0] = 0
+  temp_image = render_clamp(temp_image)
   if(is.null(filename)) {
     if(!preview) {
-      return(aperm(temp_image,c(2,1,3)))
+      return(temp_image)
     }
-    plot_image(aperm(temp_image,c(2,1,3)), ...)
-    return(invisible(aperm(temp_image,c(2,1,3))))
+    plot_image(temp_image, ...)
+    return(invisible(temp_image))
   } else {
-    save_png(aperm(temp_image,c(2,1,3)),filename)
-    return(invisible(aperm(temp_image,c(2,1,3))))
+    ray_write_image(temp_image,filename, ...)
+    return(invisible(temp_image))
   }
 }

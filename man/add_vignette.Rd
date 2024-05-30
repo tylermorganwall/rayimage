@@ -39,28 +39,28 @@ to returning it.}
 Takes an RGB array/filename and adds a camera vignette effect.
 }
 \examples{
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Plot the dragon
 plot_image(dragon)
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Add a vignette effect:
 add_vignette(dragon, preview = TRUE, vignette = 0.5)
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Darken the vignette effect:
 add_vignette(dragon, preview = TRUE, vignette = 1)
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Change the radius:
 add_vignette(dragon, preview = TRUE, vignette = 1, radius=1.5)
 add_vignette(dragon, preview = TRUE, vignette = 1, radius=0.5)
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Change the color:
 add_vignette(dragon, preview = TRUE, vignette = 1, color="white")
 }
-if(rayimage:::run_documentation()){
+if(run_documentation()){
 #Increase the width of the blur by 50\%:
 add_vignette(dragon, preview = TRUE, vignette = c(1,1.5))
 }
