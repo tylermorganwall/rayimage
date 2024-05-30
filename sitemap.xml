@@ -91,10 +91,22 @@
     <loc>https://www.rayimage.dev/reference/preview_focus.html</loc>
   </url>
   <url>
+    <loc>https://www.rayimage.dev/reference/ray_read_image.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayimage.dev/reference/ray_write_image.html</loc>
+  </url>
+  <url>
     <loc>https://www.rayimage.dev/reference/render_bokeh.html</loc>
   </url>
   <url>
     <loc>https://www.rayimage.dev/reference/render_boolean_distance.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayimage.dev/reference/render_bw.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayimage.dev/reference/render_clamp.html</loc>
   </url>
   <url>
     <loc>https://www.rayimage.dev/reference/render_convolution.html</loc>
