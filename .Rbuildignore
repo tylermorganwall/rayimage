@@ -16,3 +16,5 @@
 ^CONTRIBUTING\.md$
 ^tests/.*$
 ^.*\.DS_Store$
+^compile_commands\.json$
+^\.cache$
