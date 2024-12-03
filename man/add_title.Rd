@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_title.R
 \name{add_title}
 \alias{add_title}
-\title{Add Title}
+\title{Add Title to an Image}
 \usage{
 add_title(
   image,
@@ -10,54 +10,72 @@ add_title(
   title_offset = c(15, 15),
   title_color = "black",
   title_size = 30,
-  title_font = "sans",
-  title_style = "basic",
-  title_bar_color = NULL,
+  title_font = "Arial",
+  title_style = "plain",
+  title_bar_color = NA,
   title_bar_alpha = 0.5,
   title_bar_width = NULL,
   title_position = NA,
+  title_just = "left",
   use_magick = FALSE,
   filename = NULL,
   preview = FALSE
 )
 }
 \arguments{
-\item{image}{Image filename or 3-layer RGB array.}
+\item{image}{Image filename or 3-layer RGB array. Specifies the image to process.}
 
-\item{title_text}{Default \code{NULL}. Text. Adds a title to the image, using \code{magick::image_annotate()}.}
+\item{title_text}{Default \code{""}. Text string to be added as the title to the image.}
 
-\item{title_offset}{Default \code{c(15,15)}. Distance from the top-left (default, \code{gravity} direction in
-image_annotate) corner to offset the title.}
+\item{title_offset}{Default \code{c(15,15)}. Numeric vector specifying the horizontal
+and vertical offset of the title text, relative to its anchor position.}
 
-\item{title_color}{Default \code{black}. Font color.}
+\item{title_color}{Default \code{"black"}. String specifying the color of the title text.}
 
-\item{title_size}{Default \code{30}. Font size in pixels.}
+\item{title_size}{Default \code{30}. Numeric value specifying the font size of the title text.}
 
-\item{title_font}{Default \code{sans}. String with font family such as "sans", "mono", "serif", "Times", "Helvetica",
-"Trebuchet", "Georgia", "Palatino" or "Comic Sans".}
+\item{title_font}{Default \code{"Arial"}. String specifying the font family for the title text.
+Common options include \code{"sans"}, \code{"mono"}, \code{"serif"}, \code{"Times"}, \code{"Helvetica"}, etc.}
 
-\item{title_style}{Default \code{normal}. Font style (e.g. \code{italic}).}
+\item{title_style}{Default \code{"plain"}. String specifying the font style, such as
+\code{"plain"}, \code{"italic"}, or \code{"bold"}.}
 
-\item{title_bar_color}{Default \code{NULL}. If a color, this will create a colored bar under the title.}
+\item{title_bar_color}{Default \code{NULL}. Color of the optional title bar. If \code{NULL}, no bar is added.}
 
-\item{title_bar_alpha}{Default \code{0.5}. Transparency of the title bar.}
+\item{title_bar_alpha}{Default \code{0.5}. Transparency level of the title bar. A value
+between \code{0} (fully transparent) and \code{1} (fully opaque).}
 
-\item{title_bar_width}{Default \code{NULL}, automaticly calculated from the size of the text and
-the number of line breaks. Width of the title bar in pixels.}
+\item{title_bar_width}{Default \code{NULL}. Numeric value for the height of the title bar in pixels.
+If \code{NULL}, it is automatically calculated based on the text size and line breaks.}
 
-\item{title_position}{Default \code{northwest}. Position of the title.}
+\item{title_position}{Default \code{"northwest"}. String specifying the position of the title text.
+Only used when \code{use_magick = TRUE}. Common options include \code{"northwest"}, \code{"center"}, \code{"south"}, etc.}
 
-\item{filename}{Default \code{NULL}. File to save the image to. If \code{NULL} and \code{preview = FALSE},
-returns an RGB array.}
+\item{title_just}{Default \code{"left"}. Horizontal alignment of the title text: \code{"left"},
+\code{"center"}, or \code{"right"}.}
 
-\item{preview}{Default \code{FALSE}. If \code{TRUE}, it will display the image in addition
-to returning it.}
+\item{use_magick}{Default \code{FALSE}. Boolean indicating whether to use the \code{magick} package for
+rendering titles. This option will be deprecated in future versions.}
+
+\item{filename}{Default \code{NULL}. String specifying the file path to save the resulting image.
+If \code{NULL} and \code{preview = FALSE}, the function returns the processed RGB array.}
+
+\item{preview}{Default \code{FALSE}. Boolean indicating whether to display the image after processing.
+If \code{TRUE}, the image is displayed but not saved or returned.}
 }
 \value{
-3-layer RGB array of the processed image.
+A 3-layer RGB array of the processed image if \code{filename = NULL} and \code{preview = FALSE}.
+Otherwise, writes the image to the specified file or displays it if \code{preview = TRUE}.
 }
 \description{
-Takes an RGB array/filename and adds a title with an optional titlebar.
+Adds a title with optional styling and a title bar to an image.
+The image can be previewed or saved to a file. Supports both the \code{grid}-based
+method and (deprecated) \code{magick} package for rendering the title.
+}
+\note{
+The \code{use_magick} parameter and all functionality tied to the \code{magick} package are
+planned for deprecation. It is recommended to use the \code{grid}-based method for
+future compatibility.
 }
 \examples{
 if(run_documentation()){

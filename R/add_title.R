@@ -1,29 +1,46 @@
-#'@title Add Title
+#' @title Add Title to an Image
 #'
-#'@description Takes an RGB array/filename and adds a title with an optional titlebar.
+#' @description Adds a title with optional styling and a title bar to an image. 
+#' The image can be previewed or saved to a file. Supports both the `grid`-based 
+#' method and (deprecated) `magick` package for rendering the title.
 #'
-#'@param image Image filename or 3-layer RGB array.
-#'@param filename Default `NULL`. File to save the image to. If `NULL` and `preview = FALSE`,
-#'returns an RGB array.
-#'@param preview Default `FALSE`. If `TRUE`, it will display the image in addition
-#'to returning it.
-#'@param title_text Default `NULL`. Text. Adds a title to the image, using `magick::image_annotate()`.
-#'@param title_offset Default `c(15,15)`. Distance from the top-left (default, `gravity` direction in
-#'image_annotate) corner to offset the title.
-#'@param title_size Default `30`. Font size in pixels.
-#'@param title_color Default `black`. Font color.
-#'@param title_font Default `sans`. String with font family such as "sans", "mono", "serif", "Times", "Helvetica",
-#'"Trebuchet", "Georgia", "Palatino" or "Comic Sans".
-#'@param title_style Default `normal`. Font style (e.g. `italic`).
-#'@param title_bar_color Default `NULL`. If a color, this will create a colored bar under the title.
-#'@param title_bar_alpha Default `0.5`. Transparency of the title bar.
-#'@param title_bar_width Default `NULL`, automaticly calculated from the size of the text and
-#'the number of line breaks. Width of the title bar in pixels.
-#'@param title_position Default `northwest`. Position of the title.
-#'@return 3-layer RGB array of the processed image.
-#'@import grDevices
-#'@export
-#'@examples
+#' @param image Image filename or 3-layer RGB array. Specifies the image to process.
+#' @param title_text Default `""`. Text string to be added as the title to the image.
+#' @param title_offset Default `c(15,15)`. Numeric vector specifying the horizontal 
+#' and vertical offset of the title text, relative to its anchor position.
+#' @param title_color Default `"black"`. String specifying the color of the title text.
+#' @param title_size Default `30`. Numeric value specifying the font size of the title text.
+#' @param title_font Default `"Arial"`. String specifying the font family for the title text.
+#' Common options include `"sans"`, `"mono"`, `"serif"`, `"Times"`, `"Helvetica"`, etc.
+#' @param title_style Default `"plain"`. String specifying the font style, such as 
+#' `"plain"`, `"italic"`, or `"bold"`.
+#' @param title_bar_color Default `NULL`. Color of the optional title bar. If `NULL`, no bar is added.
+#' @param title_bar_alpha Default `0.5`. Transparency level of the title bar. A value 
+#' between `0` (fully transparent) and `1` (fully opaque).
+#' @param title_bar_width Default `NULL`. Numeric value for the height of the title bar in pixels. 
+#' If `NULL`, it is automatically calculated based on the text size and line breaks.
+#' @param title_position Default `"northwest"`. String specifying the position of the title text. 
+#' Only used when `use_magick = TRUE`. Common options include `"northwest"`, `"center"`, `"south"`, etc.
+#' @param title_just Default `"left"`. Horizontal alignment of the title text: `"left"`, 
+#' `"center"`, or `"right"`.
+#' @param use_magick Default `FALSE`. Boolean indicating whether to use the `magick` package for 
+#' rendering titles. This option will be deprecated in future versions.
+#' @param filename Default `NULL`. String specifying the file path to save the resulting image. 
+#' If `NULL` and `preview = FALSE`, the function returns the processed RGB array.
+#' @param preview Default `FALSE`. Boolean indicating whether to display the image after processing. 
+#' If `TRUE`, the image is displayed but not saved or returned.
+#' 
+#' @return A 3-layer RGB array of the processed image if `filename = NULL` and `preview = FALSE`. 
+#' Otherwise, writes the image to the specified file or displays it if `preview = TRUE`.
+#'
+#' @note The `use_magick` parameter and all functionality tied to the `magick` package are 
+#' planned for deprecation. It is recommended to use the `grid`-based method for 
+#' future compatibility.
+#'
+#' @import grDevices grid
+#' @export
+#' 
+#' @examples
 #'if(run_documentation()){
 #'#Plot the dragon
 #'add_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20)
@@ -58,7 +75,7 @@ add_title = function(image,
                      title_color = "black", title_size = 30,
                      title_font = "Arial", title_style = "plain",
                      title_bar_color = NA, title_bar_alpha = 0.5, title_bar_width = NULL,
-                     title_position = NA, 
+                     title_position = NA, title_just = "left",
                      use_magick = FALSE,
                      filename = NULL, preview = FALSE) {
   imagetype = get_file_type(image)
@@ -185,7 +202,8 @@ add_title = function(image,
       padding_x = 10, padding_y = 10,
       gp_text = grid::gpar(col = "white", fontsize = 12),
       line_spacing = 0.5,
-      bg_color = "black", bg_alpha = 0.65) {
+      bg_color = "black", bg_alpha = 0.65,
+      title_just = c("left", "top")) {
       grDevices::png(temp,
         width = ncol(image),
         height = nrow(image),
@@ -237,7 +255,19 @@ add_title = function(image,
       text_height = sum(line_heights) + n_lines * single_line_height
     
       # Position adjustments
-      x = padding_x
+      if (!title_just[1] %in% c('left', 'center', 'right')) {
+        stop('Invalid title_just value for horizontal alignment. Must be "left", "center", or "right".')
+      }
+      if (title_just[1] == 'left') {
+        x = padding_x
+        just = c('left', 'top')
+      } else if (title_just[1] == 'center') {
+        x = image_width / 2
+        just = c('center', 'top')
+      } else if (title_just[1] == 'right') {
+        x = image_width - padding_x
+        just = c('right', 'top')
+      }
       y = 0 # Start from top (y increases downward)
       # Draw background rectangle
       descend_adj = font_metrics$descender_adjustment
@@ -252,11 +282,10 @@ add_title = function(image,
       # Draw each line of text
       current_y = padding_y
       for (i in seq_along(lines)) {
-        current_y = current_y
         grid::grid.text(
           lines[i],
           x = x, y = current_y,
-          just = c("left", "top"),
+          just = just,
           default.units = "native",
           gp = gp_text
         )
@@ -275,7 +304,8 @@ add_title = function(image,
         fontfamily = title_font, 
         fontface = title_style, fill = NA),
       line_spacing = 0.5,
-      bg_color = title_bar_color, bg_alpha = title_bar_alpha)
+      bg_color = title_bar_color, bg_alpha = title_bar_alpha,
+      title_just = title_just)
   }
   temp = png::readPNG(temp)
   if(length(dim(temp)) == 3 && dim(temp)[3] == 2) {
