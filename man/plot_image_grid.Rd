@@ -4,7 +4,13 @@
 \alias{plot_image_grid}
 \title{Plot Image Grid}
 \usage{
-plot_image_grid(input_list, dim = c(1, 1), asp = 1, draw_grid = FALSE)
+plot_image_grid(
+  input_list,
+  dim = c(1, 1),
+  asp = 1,
+  draw_grid = FALSE,
+  gp = grid::gpar()
+)
 }
 \arguments{
 \item{input_list}{List of array (or matrix) image inputs.}

@@ -24,7 +24,8 @@
 #'plot_image(dragon[1:100,,], asp = 1/2)
 #'#end}
 plot_image = function(image, rotate=0, draw_grid = FALSE,
-                      asp = 1, new_page = TRUE, return_grob = FALSE) {
+                      asp = 1, new_page = TRUE, return_grob = FALSE,
+                      gp = grid::gpar()) {
   image = ray_read_image(image) #Always output RGB array
   if(dim(image)[3] == 4) {
     if(any(image[,,4] != 1)) {
@@ -71,13 +72,17 @@ plot_image = function(image, rotate=0, draw_grid = FALSE,
     grid::grid.newpage()
   }
 
+  image_dim = dim(image)
+
   # Draw a grid to differentiate image from background
   if(draw_grid) {
     draw_grid_fxn = function() {
       grid::pushViewport(
-        grid::viewport(layout = grid::grid.layout(1, 1,
-                                                  widths = grid::unit(1, "npc"),
-                                                  heights = grid::unit(1, "npc")))
+        grid::viewport(
+          layout = grid::grid.layout(1, 1,
+                                     widths = grid::unit(image_dim[1], "pt"),
+                                     heights = grid::unit(image_dim[2], "pt"))),
+          gp = gp
       )
       # Define grid density and angle
       grid_density = 0.01 # Adjust this value for tighter or looser grid

@@ -33,7 +33,8 @@
 #'plot_image_grid(list(dragondepth/2000, dragon, dragon, dragondepth/2000),
 #'                dim = c(2,2))
 #'}
-plot_image_grid = function(input_list, dim = c(1,1), asp = 1, draw_grid = FALSE) {
+plot_image_grid = function(input_list, dim = c(1,1), asp = 1, draw_grid = FALSE,
+                           gp = grid::gpar()) {
   if(length(dim) != 2) {
     stop("length of `dim` argument must equal 2")
   }
@@ -74,14 +75,15 @@ plot_image_grid = function(input_list, dim = c(1,1), asp = 1, draw_grid = FALSE)
   layout_idx = data.frame(y=rep(seq_len(dim[1]),each=dim[2]),
                           x=rep(seq_len(dim[2]), dim[1]))
   grid::pushViewport(grid::viewport(name = "image_array",
-                                    layout = gl))
+                                    layout = gl, gp = gp))
   for(i in seq_len(length(input_list))) {
     grid::seekViewport("image_array")
     grid::pushViewport(viewport = grid::viewport(layout.pos.row = layout_idx$y[i],
                                                  layout.pos.col = layout_idx$x[i],
                                                  name = sprintf("grid_%i_%i",
                                                                 layout_idx$x[i],
-                                                                layout_idx$y[i])))
+                                                                layout_idx$y[i]),
+                                                 gp = gp))
     if(!is.null(input_list[[i]])) {
       rayimage::plot_image(input_list[[i]],
                            asp = asp[i],

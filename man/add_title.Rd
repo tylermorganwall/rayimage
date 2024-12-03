@@ -11,11 +11,12 @@ add_title(
   title_color = "black",
   title_size = 30,
   title_font = "sans",
-  title_style = "normal",
+  title_style = "basic",
   title_bar_color = NULL,
   title_bar_alpha = 0.5,
   title_bar_width = NULL,
-  title_position = "northwest",
+  title_position = NA,
+  use_magick = FALSE,
   filename = NULL,
   preview = FALSE
 )

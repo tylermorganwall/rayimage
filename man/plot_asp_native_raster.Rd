@@ -4,7 +4,13 @@
 \alias{plot_asp_native_raster}
 \title{Plot Native Raster with Custom Aspect Ratio}
 \usage{
-plot_asp_native_raster(nr, asp = 1, show = FALSE, return_grob = FALSE)
+plot_asp_native_raster(
+  nr,
+  asp = 1,
+  show = FALSE,
+  return_grob = FALSE,
+  gp = grid::gpar()
+)
 }
 \description{
 Plot Native Raster with Custom Aspect Ratio

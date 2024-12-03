@@ -10,7 +10,8 @@ plot_image(
   draw_grid = FALSE,
   asp = 1,
   new_page = TRUE,
-  return_grob = FALSE
+  return_grob = FALSE,
+  gp = grid::gpar()
 )
 }
 \arguments{
