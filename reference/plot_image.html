@@ -3,7 +3,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.11.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.0</span>
       </span>
     </div>
 
@@ -25,13 +25,13 @@
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home"></span>
-     
+
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Blog
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -41,21 +41,21 @@
 <li>
   <a href="../news/index.html">
     <span class="fa fa-newspaper-o"></span>
-     
+
     Changelog
   </a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="../reference/index.html">
     <span class="fa fa-file-code-o"></span>
-     
+
     functions
   </a>
 </li>
 <li>
   <a href="https://github.com/tylermorganwall/rayimage" class="external-link">
     <span class="fa fa-github fa-lg"></span>
-     
+
     GitHub
   </a>
 </li>
@@ -63,13 +63,13 @@
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Image</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tylermorganwall/rayimage/blob/HEAD/R/plot_image.R" class="external-link"><code>R/plot_image.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tylermorganwall/rayimage/blob/master/R/plot_image.R" class="external-link"><code>R/plot_image.R</code></a></small>
     <div class="hidden name"><code>plot_image.Rd</code></div>
     </div>
 
@@ -84,36 +84,39 @@
 <span>  draw_grid <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  asp <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  new_page <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  return_grob <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  return_grob <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  gp <span class="op">=</span> <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>image</dt>
+
+
+<dl><dt id="arg-image">image<a class="anchor" aria-label="anchor" href="#arg-image"></a></dt>
 <dd><p>Image array or filename of an image to be plotted.</p></dd>
 
 
-<dt>rotate</dt>
+<dt id="arg-rotate">rotate<a class="anchor" aria-label="anchor" href="#arg-rotate"></a></dt>
 <dd><p>Default 0. Rotates the output. Possible values: 0, 90, 180, 270.</p></dd>
 
 
-<dt>draw_grid</dt>
+<dt id="arg-draw-grid">draw_grid<a class="anchor" aria-label="anchor" href="#arg-draw-grid"></a></dt>
 <dd><p>Default <code>FALSE</code>. If <code>TRUE</code>, this will draw a grid in the background to help
 disambiguate the actual image from the device (helpful if the image background is the same as the
 device's background).</p></dd>
 
 
-<dt>asp</dt>
+<dt id="arg-asp">asp<a class="anchor" aria-label="anchor" href="#arg-asp"></a></dt>
 <dd><p>Default <code>1</code>. Aspect ratio of the pixels in the plot. For example, an aspect ratio of <code>4/3</code> will
 slightly widen the image.</p></dd>
 
 
-<dt>new_page</dt>
+<dt id="arg-new-page">new_page<a class="anchor" aria-label="anchor" href="#arg-new-page"></a></dt>
 <dd><p>Default <code>TRUE</code>. Whether to call <code><a href="https://rdrr.io/r/grid/grid.newpage.html" class="external-link">grid::grid.newpage()</a></code> before plotting the image.</p></dd>
 
 
-<dt>return_grob</dt>
+<dt id="arg-return-grob">return_grob<a class="anchor" aria-label="anchor" href="#arg-return-grob"></a></dt>
 <dd><p>Default <code>FALSE</code>. Whether to return the grob object.</p></dd>
 
 </dl></div>
@@ -148,15 +151,15 @@ slightly widen the image.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

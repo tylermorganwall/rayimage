@@ -1,132 +1,46 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://www.rayimage.dev/404.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/index.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/add_image_overlay.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/add_multi_padding.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/add_padding.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/add_title.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/add_vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/calc_bokeh_size.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/convert_color.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/convert_to_native_raster.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/dragon.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/dragondepth.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/expand_to_fit.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/fliplr.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/flipud.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/generate_2d_disk.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/generate_2d_exponential.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/generate_2d_gaussian.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/get_file_type.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/interpolate_array.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/make_vignette_overlay.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/pad_to_fit.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/plot_asp_native_raster.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/plot_image.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/plot_image_grid.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/preview_focus.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/ray_read_image.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/ray_write_image.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/render_bokeh.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/render_boolean_distance.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/render_bw.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/render_clamp.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/render_convolution.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/render_convolution_fft.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/render_reorient.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/render_resized.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/run_documentation.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/save_png.html</loc>
-  </url>
-  <url>
-    <loc>https://www.rayimage.dev/reference/trim_padding.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://www.rayimage.dev/404.html</loc></url>
+<url><loc>https://www.rayimage.dev/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://www.rayimage.dev/CONTRIBUTING.html</loc></url>
+<url><loc>https://www.rayimage.dev/authors.html</loc></url>
+<url><loc>https://www.rayimage.dev/index.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/add_image_overlay.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/add_multi_padding.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/add_padding.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/add_title.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/add_vignette.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/calc_bokeh_size.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/convert_color.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/convert_to_native_raster.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/dragon.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/dragondepth.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/expand_to_fit.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/fliplr.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/flipud.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/generate_2d_disk.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/generate_2d_exponential.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/generate_2d_gaussian.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/get_file_type.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/index.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/interpolate_array.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/make_vignette_overlay.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/pad_to_fit.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/plot_asp_native_raster.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/plot_image.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/plot_image_grid.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/preview_focus.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/ray_read_image.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/ray_write_image.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_bokeh.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_boolean_distance.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_bw.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_clamp.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_convolution.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_convolution_fft.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_reorient.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_resized.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/run_documentation.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/save_png.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/trim_padding.html</loc></url>
 </urlset>
+
