@@ -20,6 +20,10 @@ reference:
       - starts_with("plot")
       - starts_with("ray_write")
       - starts_with("ray_read")
+  - title: "Calculating Font Info"
+    desc: "Functions for extracting size information about fonts"
+    contents:
+      - starts_with("get_font")
   - title: "Kernels"
     desc: "Functions to generate 2D distributions"
     contents:

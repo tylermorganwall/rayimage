@@ -147,54 +147,6 @@ add_title = function(image,
       magick::image_write(path = temp, format = "png")
 
   } else {
-    get_font_metrics = function(font, font_size, style = "plain") {
-      # Create a temporary file to write and read the images
-      temp_ascender = tempfile(fileext = ".png")
-      temp_descender = tempfile(fileext = ".png")
-      temp_neutral = tempfile(fileext = ".png")
-      
-      # Characters for bounding box measurement
-      char_ascender = "d" # Tall character
-      char_descender = "g" # Descending character
-      char_neutral = "x" # Neutral character
-      
-      # Function to render a character and return dimensions
-      render_character = function(char, output_file) {
-        grDevices::png(output_file, width = 100, height = 100, bg = "transparent")
-        grid::grid.newpage()
-        grid::grid.text(char, x = 0.5, y = 0.5, 
-                        gp = grid::gpar(fontfamily = font, fontsize = font_size, fontface = style))
-        dev.off()
-        img = png::readPNG(output_file)
-        bounding_box = which(apply(img,1,sum) != 0)
-        dimensions = list(
-          top = min(bounding_box),
-          bottom = max(bounding_box),
-          height = max(bounding_box) - min(bounding_box) + 1
-        )
-        return(dimensions)
-      }
-      
-      # Render each character and compute dimensions
-      metrics_ascender = render_character(char_ascender, temp_ascender)
-      metrics_descender = render_character(char_descender, temp_descender)
-      metrics_neutral = render_character(char_neutral, temp_neutral)
-      
-      # Calculate adjustments
-      ascender_height = metrics_ascender$height
-      descender_height = metrics_descender$height
-      neutral_height = metrics_neutral$height
-      
-      ascender_adjustment = ascender_height - neutral_height
-      descender_adjustment = descender_height - neutral_height
-      
-      # Return metrics
-      list(
-        ascender_adjustment = ascender_adjustment,
-        descender_adjustment = descender_adjustment,
-        neutral_height = neutral_height
-      )
-    }
     font_metrics  = get_font_metrics(title_font, title_size, title_style)
     draw_title_card = function(
       image,
