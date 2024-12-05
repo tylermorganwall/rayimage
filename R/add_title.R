@@ -176,23 +176,37 @@ add_title = function(image,
     
       # Wrap text into lines based on available width
       wrap_text = function(text, available_width) {
-        words = strsplit(text, "\\s+")[[1]]
-        lines = character(0)
-        current_line = words[1]
-    
-        for (word in words[-1]) {
-          test_line = paste(current_line, word)
-          test_width = grid::convertWidth(grid::stringWidth(test_line), "native", valueOnly = TRUE)
-          if (test_width > available_width) {
+          # Split text into segments by newline characters
+          segments = unlist(strsplit(text, "\n"))
+          all_lines = character(0)
+          
+          for (segment in segments) {
+            words = strsplit(segment, "\\s+")[[1]]
+            if (length(words) == 0) {
+              all_lines = c(all_lines, "")  # Add an empty line for consecutive newlines
+              next
+            }
+            
+            lines = character(0)
+            current_line = words[1]
+            
+            for (word in words[-1]) {
+              test_line = paste(current_line, word)
+              test_width = grid::convertWidth(grid::stringWidth(test_line), "native", valueOnly = TRUE)
+              if (test_width > available_width) {
+                lines = c(lines, current_line)
+                current_line = word
+              } else {
+                current_line = test_line
+              }
+            }
+            
             lines = c(lines, current_line)
-            current_line = word
-          } else {
-            current_line = test_line
+            all_lines = c(all_lines, lines)
           }
+          
+          return(all_lines)
         }
-        lines = c(lines, current_line)
-        return(lines)
-      }
     
       # Wrap the title text
       lines = wrap_text(title, available_width)
