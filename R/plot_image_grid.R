@@ -10,6 +10,7 @@
 #'@param draw_grid Default `FALSE`. If `TRUE`, this will draw a grid in the background to help
 #'disambiguate the actual image from the device (helpful if the image background is the same as the
 #'device's background).
+#'@param gp A `grid::gpar()` object to include for the grid viewport displaying the image.
 #'@export
 #'@examples
 #'if(run_documentation()){

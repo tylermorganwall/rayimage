@@ -11,6 +11,7 @@
 #'slightly widen the image.
 #'@param new_page  Default `TRUE`. Whether to call `grid::grid.newpage()` before plotting the image.
 #'@param return_grob Default `FALSE`. Whether to return the grob object.
+#'@param gp A `grid::gpar()` object to include for the grid viewport displaying the image.
 #'@export
 #'@examples
 #'#if(interactive()){

@@ -29,6 +29,8 @@ slightly widen the image.}
 \item{new_page}{Default \code{TRUE}. Whether to call \code{grid::grid.newpage()} before plotting the image.}
 
 \item{return_grob}{Default \code{FALSE}. Whether to return the grob object.}
+
+\item{gp}{A \code{grid::gpar()} object to include for the grid viewport displaying the image.}
 }
 \description{
 Displays the image in the current device.
