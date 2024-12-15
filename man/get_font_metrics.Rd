@@ -27,3 +27,7 @@ Calculates font metrics for a specified font, font size, and style. The function
 \details{
 The function renders specific characters (\code{"d"} for ascender, \code{"g"} for descender, \code{"x"} for neutral) using the specified font parameters. It calculates the bounding box of each character to determine the necessary adjustments for accurate text positioning.
 }
+\examples{
+# Get height of basic sans font
+get_font_metrics("sans", 60)
+}

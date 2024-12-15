@@ -19,6 +19,9 @@
 #'
 #' @import grDevices grid png
 #' @export
+#' @examples
+#' # Get height of basic sans font
+#' get_font_metrics("sans", 60)
 get_font_metrics = function(font, font_size, style = "plain") {
   # Create a temporary file to write and read the images
   temp_ascender = tempfile(fileext = ".png")
@@ -32,7 +35,7 @@ get_font_metrics = function(font, font_size, style = "plain") {
 
   # Function to render a character and return dimensions
   render_character = function(char, output_file) {
-    grDevices::png(output_file, width = 100, height = 100, bg = "transparent")
+    grDevices::png(output_file, width = font_size*10, height = font_size*10, bg = "transparent")
     grid::grid.newpage()
     grid::grid.text(char, x = 0.5, y = 0.5, 
                     gp = grid::gpar(fontfamily = font, fontsize = font_size, fontface = style))
