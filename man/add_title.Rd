@@ -7,9 +7,10 @@
 add_title(
   image,
   title_text = "",
-  title_offset = c(15, 15),
-  title_color = "black",
   title_size = 30,
+  title_offset = rep(title_size/2, 2),
+  title_lineheight = 1,
+  title_color = "black",
   title_font = "Arial",
   title_style = "plain",
   title_bar_color = NA,
@@ -27,12 +28,14 @@ add_title(
 
 \item{title_text}{Default \code{""}. Text string to be added as the title to the image.}
 
+\item{title_size}{Default \code{30}. Numeric value specifying the font size of the title text.}
+
 \item{title_offset}{Default \code{c(15,15)}. Numeric vector specifying the horizontal
 and vertical offset of the title text, relative to its anchor position.}
 
-\item{title_color}{Default \code{"black"}. String specifying the color of the title text.}
+\item{title_lineheight}{Default \code{1}. Multiplier for the lineheight.}
 
-\item{title_size}{Default \code{30}. Numeric value specifying the font size of the title text.}
+\item{title_color}{Default \code{"black"}. String specifying the color of the title text.}
 
 \item{title_font}{Default \code{"Arial"}. String specifying the font family for the title text.
 Common options include \code{"sans"}, \code{"mono"}, \code{"serif"}, \code{"Times"}, \code{"Helvetica"}, etc.}

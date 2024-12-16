@@ -8,6 +8,7 @@
 #' @param title_text Default `""`. Text string to be added as the title to the image.
 #' @param title_offset Default `c(15,15)`. Numeric vector specifying the horizontal 
 #' and vertical offset of the title text, relative to its anchor position.
+#' @param title_lineheight Default `1`. Multiplier for the lineheight.
 #' @param title_color Default `"black"`. String specifying the color of the title text.
 #' @param title_size Default `30`. Numeric value specifying the font size of the title text.
 #' @param title_font Default `"Arial"`. String specifying the font family for the title text.
@@ -71,8 +72,10 @@
 #'          title_bar_color="red", title_color = "white")
 #'}
 add_title = function(image,
-                     title_text = "", title_offset = c(15,15),
-                     title_color = "black", title_size = 30,
+                     title_text = "", title_size = 30,
+                     title_offset = rep(title_size/2,2),
+                     title_lineheight = 1,
+                     title_color = "black", 
                      title_font = "Arial", title_style = "plain",
                      title_bar_color = NA, title_bar_alpha = 0.5, title_bar_width = NULL,
                      title_position = NA, title_just = "left",
@@ -147,19 +150,19 @@ add_title = function(image,
       magick::image_write(path = temp, format = "png")
 
   } else {
-    font_metrics  = get_font_metrics(title_font, title_size, title_style)
     draw_title_card = function(
       image,
       title,
       padding_x = 10, padding_y = 10,
-      gp_text = grid::gpar(col = "white", fontsize = 12),
-      line_spacing = 0.5,
+      gp_text = grid::gpar(col = "white", fontsize = title_size),
       bg_color = "black", bg_alpha = 0.65,
       title_just = c("left", "top")) {
       grDevices::png(temp,
         width = ncol(image),
         height = nrow(image),
-        pointsize = gp_text$fontsize,
+        pointsize = 12,
+        family = title_font,
+        res = 72
       )
       grid::grid.newpage()
       plot_image(image, gp = gp_text)
@@ -173,53 +176,49 @@ add_title = function(image,
     
       # Available width for text
       available_width = image_width - padding_x * 2
-    
+      
       # Wrap text into lines based on available width
       wrap_text = function(text, available_width) {
-          # Split text into segments by newline characters
-          segments = unlist(strsplit(text, "\n"))
-          all_lines = character(0)
-          
-          for (segment in segments) {
-            words = strsplit(segment, "\\s+")[[1]]
-            if (length(words) == 0) {
-              all_lines = c(all_lines, "")  # Add an empty line for consecutive newlines
-              next
-            }
-            
-            lines = character(0)
-            current_line = words[1]
-            
-            for (word in words[-1]) {
-              test_line = paste(current_line, word)
-              test_width = grid::convertWidth(grid::stringWidth(test_line), "native", valueOnly = TRUE)
-              if (test_width > available_width) {
-                lines = c(lines, current_line)
-                current_line = word
-              } else {
-                current_line = test_line
-              }
-            }
-            
-            lines = c(lines, current_line)
-            all_lines = c(all_lines, lines)
+        # Split text into segments by newline characters
+        segments = unlist(strsplit(text, "\n"))
+        all_lines = character(0)
+        
+        for (segment in segments) {
+          words = strsplit(segment, "\\s+")[[1]]
+          if (length(words) == 0) {
+            all_lines = c(all_lines, "")  # Add an empty line for consecutive newlines
+            next
           }
           
-          return(all_lines)
+          lines = character(0)
+          current_line = words[1]
+          
+          for (word in words[-1]) {
+            test_line = paste(current_line, word)
+            test_width = grid::convertWidth(grid::stringWidth(test_line), "native", valueOnly = TRUE)
+            if (test_width > available_width) {
+              lines = c(lines, current_line)
+              current_line = word
+            } else {
+              current_line = test_line
+            }
+          }
+          
+          lines = c(lines, current_line)
+          all_lines = c(all_lines, lines)
         }
+        
+        return(all_lines)
+      }
     
       # Wrap the title text
       lines = wrap_text(title, available_width)
-      n_lines = length(lines)
-      # Calculate text dimensions
-      line_heights = sapply(lines, function(line) {
-        abs(grid::convertHeight(grid::stringHeight(line), "native", valueOnly = TRUE))
-      })
-      single_line_height = abs(grid::convertHeight(grid::unit(line_spacing, "strheight", data = ""), 
-                               "native", valueOnly = TRUE))
-      
-      text_height = sum(line_heights) + n_lines * single_line_height
-    
+      lines_with_newlines = paste0(lines, collapse="\n")
+
+      text_size = systemfonts::shape_string(lines_with_newlines, 
+        size = title_size, vjust = 0,
+        res=72, lineheight = title_lineheight, 
+        family = title_font)[["metrics"]]
       # Position adjustments
       if (!title_just[1] %in% c('left', 'center', 'right')) {
         stop('Invalid title_just value for horizontal alignment. Must be "left", "center", or "right".')
@@ -229,34 +228,37 @@ add_title = function(image,
         just = c('left', 'top')
       } else if (title_just[1] == 'center') {
         x = image_width / 2
+        padding_x = 0
         just = c('center', 'top')
       } else if (title_just[1] == 'right') {
         x = image_width - padding_x
         just = c('right', 'top')
       }
-      y = 0 # Start from top (y increases downward)
+      height_with_padding = text_size$height - 
+        text_size$top_bearing - 
+        text_size$bottom_bearing -
+        text_size$top_border +
+        padding_y*2
       # Draw background rectangle
-      descend_adj = font_metrics$descender_adjustment
       grid::grid.rect(
-        x = 0, y = y,
-        width = image_width, height = text_height + padding_y * 2 - descend_adj ,
+        x = 0, y = 0,
+        width = image_width, 
+        height = height_with_padding,
         just = c("left", "bottom"),
         default.units = "native",
-        gp = grid::gpar(fill = grDevices::adjustcolor(bg_color, alpha.f = bg_alpha), col = NA)
+        gp = grid::gpar(fill = 
+          grDevices::adjustcolor(bg_color, alpha.f = bg_alpha), col = NA)
       )
-    
-      # Draw each line of text
-      current_y = padding_y
-      for (i in seq_along(lines)) {
-        grid::grid.text(
-          lines[i],
-          x = x, y = current_y,
-          just = just,
-          default.units = "native",
-          gp = gp_text
-        )
-        current_y = current_y + line_heights[i] + single_line_height
-      }
+      grid::grid.text(label = lines_with_newlines,
+        x = padding_x, y = padding_y, 
+        default.units = "native",
+        just = c("left","top"),
+        gp = grid::gpar(
+          fontsize = title_size, 
+          lineheight = title_lineheight,
+          cex = 1,
+          fontfamily = title_font)
+      )
       dev.off()
     }
     if(!is.na(title_position)) {
@@ -266,10 +268,11 @@ add_title = function(image,
       temp_image,
       title = title_text,
       padding_x = title_offset[1], padding_y = title_offset[2],
-      gp_text = grid::gpar(col = title_color, fontsize = title_size,
+      gp_text = grid::gpar(col = title_color, 
+        fontsize = title_size,
         fontfamily = title_font, 
+        lineheight = title_lineheight,
         fontface = title_style, fill = NA),
-      line_spacing = 0.5,
       bg_color = title_bar_color, bg_alpha = title_bar_alpha,
       title_just = title_just)
   }
