@@ -167,14 +167,5 @@ render_convolution_fft = function(image, kernel = "gaussian",
   if(pad != 0) {
     vals = trim_padding(vals,pad)
   }
-  if(is.null(filename)) {
-    if(preview) {
-      plot_image(render_clamp(vals))
-      return(invisible(vals))
-    } else {
-      vals
-    }
-  } else {
-    ray_write_image(render_clamp(vals),filename)
-  }
+  handle_image_output(vals, filename = filename, preview = preview)
 }

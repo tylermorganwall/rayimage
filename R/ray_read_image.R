@@ -40,10 +40,11 @@ ray_read_image = function(image, convert_to_array = TRUE, preview = FALSE, ...) 
   process_image_dim = function(image2) {
     if(length(dim(image2)) == 2) {
       if(convert_to_array) {
-        newarray = array(1,dim=c(nrow(image2),ncol(image2),3))
+        newarray = array(1,dim=c(nrow(image2),ncol(image2),4))
         newarray[,,1] = image2
         newarray[,,2] = image2
         newarray[,,3] = image2
+        newarray[,,4] = 1
       } else {
         return(image2)
       }
@@ -53,10 +54,11 @@ ray_read_image = function(image, convert_to_array = TRUE, preview = FALSE, ...) 
       return(newarray)
     } else if (dim(image2)[3] == 1) {
       if(convert_to_array) {
-        newarray = array(1,dim=c(nrow(image2),ncol(image2),3))
+        newarray = array(1,dim=c(nrow(image2),ncol(image2),4))
         newarray[,,1] = image2[,,1]
         newarray[,,2] = image2[,,1]
         newarray[,,3] = image2[,,1]
+        newarray[,,4] = 1
       } else {
         return(image2)
       }
@@ -65,20 +67,21 @@ ray_read_image = function(image, convert_to_array = TRUE, preview = FALSE, ...) 
       }
       return(newarray)
     } else if (dim(image2)[3] == 2) {
-      newarray = array(1,dim=c(nrow(image2),ncol(image2),3))
+      newarray = array(1,dim=c(nrow(image2),ncol(image2),4))
       newarray[,,1] = image2[,,1]
       newarray[,,2] = image2[,,1]
       newarray[,,3] = image2[,,1]
-      # newarray[,,4] = image2[,,2]
+      newarray[,,4] = image2[,,2]
       if(preview) {
         plot_image(newarray)
       }
       return(newarray)
     } else if (dim(image2)[3] == 3) {
-      newarray = array(1,dim=c(nrow(image2),ncol(image2),3))
+      newarray = array(1,dim=c(nrow(image2),ncol(image2),4))
       newarray[,,1] = image2[,,1]
       newarray[,,2] = image2[,,2]
       newarray[,,3] = image2[,,3]
+      newarray[,,4] = 1
       if(preview) {
         plot_image(newarray)
       }

@@ -35,11 +35,6 @@
 #'}
 render_reorient = function(image, flipx = FALSE, flipy = FALSE, transpose = FALSE,
                            filename=NULL, preview=FALSE) {
-  if(!is.null(filename)) {
-    if(tools::file_ext(filename) != "png") {
-      filename = paste0(filename,".png")
-    }
-  }
   imagetype = get_file_type(image)
   temp_image = ray_read_image(image, convert_to_array = FALSE)
 
@@ -56,14 +51,5 @@ render_reorient = function(image, flipx = FALSE, flipy = FALSE, transpose = FALS
       temp_image = aperm(temp_image,c(2,1,3))
     }
   }
-  if(is.null(filename)) {
-    if(preview) {
-      plot_image(render_clamp(temp_image))
-      return(invisible(temp_image))
-    } else {
-      temp_image
-    }
-  } else {
-    ray_write_image(render_clamp(temp_image), filename)
-  }
+  handle_image_output(temp_image, filename = filename, preview = preview)
 }

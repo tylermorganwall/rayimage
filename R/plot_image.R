@@ -24,15 +24,10 @@
 #'#Make pixels twice as tall as wide
 #'plot_image(dragon[1:100,,], asp = 1/2)
 #'#end}
-plot_image = function(image, rotate=0, draw_grid = FALSE,
+plot_image = function(image, rotate=0, draw_grid = FALSE, ignore_alpha = FALSE,
                       asp = 1, new_page = TRUE, return_grob = FALSE,
                       gp = grid::gpar()) {
-  image = ray_read_image(image) #Always output RGB array
-  if(dim(image)[3] == 4) {
-    if(any(image[,,4] != 1)) {
-      message("Note: alpha channel will be ignored when plotting image.")
-    }
-  }
+  image = ray_read_image(image) #Always output RGBA array
   rotatef = function(x) t(apply(x, 2, rev))
   if(!(rotate %in% c(0,90,180,270))) {
     if(length(rotate) == 1) {
@@ -47,9 +42,10 @@ plot_image = function(image, rotate=0, draw_grid = FALSE,
 
   if(number_of_rots != 0) {
     newarray = image
-    newarrayt = array(0,dim=c(ncol(image),nrow(image),3))
+    channels = dim(image)[3]
+    newarrayt = array(0,dim=c(ncol(image),nrow(image),channels))
     for(i in seq_len(number_of_rots)) {
-      for(j in 1:3) {
+      for(j in seq_len(channels)) {
         if(i == 2) {
           newarray[,,j] = rotatef(newarrayt[,,j])
         } else {

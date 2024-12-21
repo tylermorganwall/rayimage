@@ -19,25 +19,11 @@
 #'}
 render_bw = function(image, rgb_coef = c(0.2126, 0.7152, 0.0722),
                      filename=NULL, preview=FALSE) {
-  if(!is.null(filename)) {
-    if(tools::file_ext(filename) != "png") {
-      filename = paste0(filename,".png")
-    }
-  }
   stopifnot(length(rgb_coef) == 3 && is.numeric(rgb_coef))
   temp_image = ray_read_image(image)
 
   # Calculate luminance
   temp_image = rgb_coef[1] * temp_image[,,1] + rgb_coef[2] * temp_image[,,2] + rgb_coef[3] * temp_image[,,3]
 
-  if(is.null(filename)) {
-    if(preview) {
-      plot_image(render_clamp(temp_image))
-      return(invisible(temp_image))
-    } else {
-      temp_image
-    }
-  } else {
-    ray_write_image(render_clamp(temp_image),filename)
-  }
+  handle_image_output(temp_image, filename = filename, preview = preview)
 }

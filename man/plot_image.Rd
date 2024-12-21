@@ -8,6 +8,7 @@ plot_image(
   image,
   rotate = 0,
   draw_grid = FALSE,
+  ignore_alpha = FALSE,
   asp = 1,
   new_page = TRUE,
   return_grob = FALSE,

@@ -145,14 +145,5 @@ render_convolution = function(image, kernel = "gaussian",
   if(gamma_correction) {
     temp_image_final ^ (1/2.2)
   }
-  if(is.null(filename)) {
-    if(preview) {
-      plot_image(render_clamp(temp_image_final))
-      return(invisible(temp_image_final))
-    } else {
-      temp_image_final
-    }
-  } else {
-    ray_write_image(render_clamp(temp_image_final),filename)
-  }
+  handle_image_output(temp_image_final, filename = filename, preview = preview)
 }

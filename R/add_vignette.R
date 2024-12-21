@@ -91,14 +91,5 @@ add_vignette = function(image, vignette = 0.5, color = "#000000", radius = 1.3,
     temparray[,,3] = temp
     temp = temparray
   }
-  if(missing(filename)) {
-    if(!preview) {
-      return(temp)
-    }
-    plot_image(render_clamp(temp))
-    return(invisible(temp))
-  } else {
-    ray_write_image(render_clamp(temp), filename)
-    return(invisible(temp))
-  }
+  handle_image_output(temp, filename = filename, preview = preview)
 }

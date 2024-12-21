@@ -13,6 +13,9 @@ generate_text_image(
   just = "left",
   background_color = "white",
   background_alpha = 1,
+  use_ragg = TRUE,
+  width = NA,
+  height = NA,
   filename = NULL,
   preview = FALSE
 )
@@ -67,6 +70,12 @@ if (run_documentation()) {
   #Change the background color and transparency
   generate_text_image("Some text", size = 50, color="purple", 
                       background_color="purple", background_alpha = 0.5,
+                      preview = TRUE)
+}
+if (run_documentation()) {
+  #Plot an emoji with the agg device
+  generate_text_image("😀🚀", size = 50, color="purple", use_ragg = TRUE,
+                      background_alpha = 0,
                       preview = TRUE)
 }
 }

@@ -44,6 +44,12 @@
 #'                       background_color="purple", background_alpha = 0.5,
 #'                       preview = TRUE)
 #' }
+#' if (run_documentation()) {
+#'   #Plot an emoji with the agg device
+#'   generate_text_image("😀🚀", size = 50, color="purple", use_ragg = TRUE,
+#'                       background_alpha = 0,
+#'                       preview = TRUE)
+#' }
 generate_text_image = function(
     text,
     lineheight = 1,
@@ -53,6 +59,7 @@ generate_text_image = function(
     just = "left",
     background_color = "white",
     background_alpha = 1,
+    use_ragg = TRUE, width = NA, height = NA,
     filename = NULL,
     preview = FALSE) {
   text_metrics = systemfonts::shape_string(text,
@@ -61,45 +68,65 @@ generate_text_image = function(
     family = font
   )[["metrics"]]
   bg_col = convert_color(background_color)
+  metrics_string = systemfonts::string_metrics_dev(text, unit="inches", size=size) * 72
+  max_total_width = ceiling(metrics_string$width) + 2
+  max_total_height = ceiling(text_metrics$height)
+  n_newlines = sum(strsplit(text, "") == "\n")
+  if(!is.na(width)) {
+    max_total_width = width  
+  }
+  if(!is.na(height)) {
+    max_total_height = height  
+  }
   final_array = array(1, dim = c(
-    ceiling(text_metrics$height) - 
-      floor(text_metrics$top_border) - 
-      floor(text_metrics$top_bearing) - 
-      floor(text_metrics$bottom_bearing),
-    ceiling(text_metrics$width), 4
+    max_total_height,max_total_width,
+    4
   ))
-  final_array[, , 1] = bg_col[1]
-  final_array[, , 2] = bg_col[2]
-  final_array[, , 3] = bg_col[3]
-  final_array[, , 4] = background_alpha
   temp = tempfile(fileext = ".png")
   ray_write_image(final_array, temp)
   temp_image = png::readPNG(temp)
 
-  grDevices::png(temp,
-    width = ncol(temp_image),
-    height = nrow(temp_image),
-    pointsize = size,
-    family = font,
-    res = 72
-  )
-
-  gp_text = grid::gpar(col = color, fontsize = size)
+  if(length(find.package("ragg",quiet=TRUE)) > 0 && use_ragg) {
+    ragg::agg_png(temp,
+      width = ncol(temp_image),
+      height = nrow(temp_image),
+      units = "px",
+      res = 72,
+      background = NA
+    )
+  } else {
+    grDevices::png(temp,
+      width = ncol(temp_image),
+      height = nrow(temp_image),
+      pointsize = size,
+      family = font,
+      res = 72,
+      bg = NA
+    )
+  }
+  
   grid::grid.newpage()
-  plot_image(temp_image, gp = gp_text)
-  grid::seekViewport("image")
-
+  grid::grid.rect(
+    x = 0.5, y = 0.5,
+    width = 1, 
+    height = 1,
+    just = c("center"),
+    default.units = "npc",
+    gp = grid::gpar(fill = 
+      grDevices::adjustcolor(background_color, alpha.f = background_alpha), col = NA)
+  )
   grid::grid.text(
     label = text,
-    x = 0, y = 0.5,
+    x = 0.5, y = 0.5, 
     default.units = "npc",
-    just = c(just, "center"),
+    just = c("center", "center"),
     gp = grid::gpar(
       fontsize = size,
       lineheight = lineheight,
       cex = 1,
       col = color,
       fontfamily = font
+      
     )
   )
   dev.off()
@@ -119,14 +146,5 @@ generate_text_image = function(
     temparray[, , 3] = temp
     temp = temparray
   }
-  if (is.null(filename)) {
-    if (!preview) {
-      return(temp)
-    }
-    plot_image(temp)
-    return(invisible(temp))
-  } else {
-    ray_write_image(temp, filename)
-    return(invisible(temp))
-  }
+  handle_image_output(temp, filename = filename, preview = preview)
 }

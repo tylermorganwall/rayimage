@@ -99,14 +99,5 @@ render_resized = function(image, mag = 1, dims = NULL, filename=NULL, preview=FA
       temp_image = resize_matrix_stb(temp_image, dims[1],dims[2],method)
     }
   }
-  if(is.null(filename)) {
-    if(preview) {
-      plot_image(render_clamp(temp_image))
-      return(invisible(temp_image))
-    } else {
-      temp_image
-    }
-  } else {
-    ray_write_image(render_clamp(temp_image),filename)
-  }
+  handle_image_output(temp_image, filename = filename, preview = preview)
 }

@@ -73,11 +73,6 @@ render_bokeh = function(image, depthmap,
                         bokehshape = "circle", bokehintensity = 1, bokehlimit = 0.8, rotation=0,
                         aberration = 0, gamma_correction = TRUE, progress = interactive(),
                         ...) {
-  if(!is.null(filename)) {
-    if(tools::file_ext(filename) != "png") {
-      filename = paste0(filename,".png")
-    }
-  }
   imagetype = get_file_type(image)
   temp_image = ray_read_image(image)
 
@@ -135,15 +130,5 @@ render_bokeh = function(image, depthmap,
   if(gamma_correction) {
     temp_image = temp_image ^ (1/2.2)
   }
-  temp_image = render_clamp(temp_image)
-  if(is.null(filename)) {
-    if(!preview) {
-      return(temp_image)
-    }
-    plot_image(temp_image, ...)
-    return(invisible(temp_image))
-  } else {
-    ray_write_image(temp_image,filename, ...)
-    return(invisible(temp_image))
-  }
+  handle_image_output(temp_image, filename = filename, preview = preview)
 }

@@ -291,14 +291,5 @@ add_title = function(image,
     temparray[,,3] = temp
     temp = temparray
   }
-  if(missing(filename)) {
-    if(!preview) {
-      return(temp)
-    }
-    plot_image(temp)
-    return(invisible(temp))
-  } else {
-    ray_write_image(temp, filename)
-    return(invisible(temp))
-  }
+  handle_image_output(temp, filename = filename, preview = preview)
 }
