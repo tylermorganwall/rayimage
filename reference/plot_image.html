@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0</span>
       </span>
     </div>
 
@@ -82,6 +82,7 @@
 <span>  <span class="va">image</span>,</span>
 <span>  rotate <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  draw_grid <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ignore_alpha <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  asp <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  new_page <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  return_grob <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -105,6 +106,10 @@
 <dd><p>Default <code>FALSE</code>. If <code>TRUE</code>, this will draw a grid in the background to help
 disambiguate the actual image from the device (helpful if the image background is the same as the
 device's background).</p></dd>
+
+
+<dt id="arg-ignore-alpha">ignore_alpha<a class="anchor" aria-label="anchor" href="#arg-ignore-alpha"></a></dt>
+<dd><p>Default <code>FALSE</code>. Whether to ignoe the alpha channel when plotting.</p></dd>
 
 
 <dt id="arg-asp">asp<a class="anchor" aria-label="anchor" href="#arg-asp"></a></dt>

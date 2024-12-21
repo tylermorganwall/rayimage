@@ -19,7 +19,7 @@ method and (deprecated) magick package for rendering the title."><!-- mathjax --
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0</span>
       </span>
     </div>
 
@@ -85,9 +85,10 @@ method and (deprecated) <code>magick</code> package for rendering the title.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_title</span><span class="op">(</span></span>
 <span>  <span class="va">image</span>,</span>
 <span>  title_text <span class="op">=</span> <span class="st">""</span>,</span>
-<span>  title_offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">15</span><span class="op">)</span>,</span>
-<span>  title_color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  title_size <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>  title_offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">title_size</span><span class="op">/</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  title_lineheight <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  title_color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  title_font <span class="op">=</span> <span class="st">"Arial"</span>,</span>
 <span>  title_style <span class="op">=</span> <span class="st">"plain"</span>,</span>
 <span>  title_bar_color <span class="op">=</span> <span class="cn">NA</span>,</span>
@@ -113,17 +114,21 @@ method and (deprecated) <code>magick</code> package for rendering the title.</p>
 <dd><p>Default <code>""</code>. Text string to be added as the title to the image.</p></dd>
 
 
+<dt id="arg-title-size">title_size<a class="anchor" aria-label="anchor" href="#arg-title-size"></a></dt>
+<dd><p>Default <code>30</code>. Numeric value specifying the font size of the title text.</p></dd>
+
+
 <dt id="arg-title-offset">title_offset<a class="anchor" aria-label="anchor" href="#arg-title-offset"></a></dt>
 <dd><p>Default <code>c(15,15)</code>. Numeric vector specifying the horizontal
 and vertical offset of the title text, relative to its anchor position.</p></dd>
 
 
+<dt id="arg-title-lineheight">title_lineheight<a class="anchor" aria-label="anchor" href="#arg-title-lineheight"></a></dt>
+<dd><p>Default <code>1</code>. Multiplier for the lineheight.</p></dd>
+
+
 <dt id="arg-title-color">title_color<a class="anchor" aria-label="anchor" href="#arg-title-color"></a></dt>
 <dd><p>Default <code>"black"</code>. String specifying the color of the title text.</p></dd>
-
-
-<dt id="arg-title-size">title_size<a class="anchor" aria-label="anchor" href="#arg-title-size"></a></dt>
-<dd><p>Default <code>30</code>. Numeric value specifying the font size of the title text.</p></dd>
 
 
 <dt id="arg-title-font">title_font<a class="anchor" aria-label="anchor" href="#arg-title-font"></a></dt>
