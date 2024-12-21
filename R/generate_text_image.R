@@ -13,6 +13,9 @@
 #' @param background_color Default `"white"`. Color of the background.
 #' @param background_alpha Default `1`. Transparency of the background. A value
 #' between `0` (fully transparent) and `1` (fully opaque).
+#' @param use_ragg Default `TRUE`. Whether to use the `ragg` package as the graphics device. Required for emojis.
+#' @param width Default `NA`. User-defined textbox width.
+#' @param height Default `NA`. User-defined textbox width.
 #' @param filename Default `NULL`. String specifying the file path to save the resulting image.
 #' If `NULL` and `preview = FALSE`, the function returns the processed RGB array.
 #' @param preview Default `FALSE`. Boolean indicating whether to display the image after processing.

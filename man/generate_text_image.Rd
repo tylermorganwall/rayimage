@@ -40,6 +40,12 @@ Common options include \code{"sans"}, \code{"mono"}, \code{"serif"}, \code{"Time
 \item{background_alpha}{Default \code{1}. Transparency of the background. A value
 between \code{0} (fully transparent) and \code{1} (fully opaque).}
 
+\item{use_ragg}{Default \code{TRUE}. Whether to use the \code{ragg} package as the graphics device. Required for emojis.}
+
+\item{width}{Default \code{NA}. User-defined textbox width.}
+
+\item{height}{Default \code{NA}. User-defined textbox width.}
+
 \item{filename}{Default \code{NULL}. String specifying the file path to save the resulting image.
 If \code{NULL} and \code{preview = FALSE}, the function returns the processed RGB array.}
 

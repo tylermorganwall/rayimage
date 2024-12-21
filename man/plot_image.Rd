@@ -24,6 +24,8 @@ plot_image(
 disambiguate the actual image from the device (helpful if the image background is the same as the
 device's background).}
 
+\item{ignore_alpha}{Default \code{FALSE}. Whether to ignoe the alpha channel when plotting.}
+
 \item{asp}{Default \code{1}. Aspect ratio of the pixels in the plot. For example, an aspect ratio of \code{4/3} will
 slightly widen the image.}
 
