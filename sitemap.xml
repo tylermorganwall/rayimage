@@ -20,7 +20,6 @@
 <url><loc>https://www.rayimage.dev/reference/generate_2d_disk.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/generate_2d_exponential.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/generate_2d_gaussian.html</loc></url>
-<url><loc>https://www.rayimage.dev/reference/generate_text_image.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/get_file_type.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/get_string_dimensions.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/handle_image_output.html</loc></url>
@@ -42,6 +41,7 @@
 <url><loc>https://www.rayimage.dev/reference/render_convolution_fft.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_reorient.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_resized.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_text_image.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/run_documentation.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/save_png.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/trim_padding.html</loc></url>
