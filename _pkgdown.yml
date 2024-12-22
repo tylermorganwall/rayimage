@@ -10,7 +10,7 @@ reference:
     contents:
       - starts_with("add")
   - title: "Render Image Transformations"
-    desc: "Functions for transforming images."
+    desc: "Functions for transforming/creating images."
     contents:
       - starts_with("render")
       - starts_with("interpolate")
@@ -25,7 +25,7 @@ reference:
     contents:
       - starts_with("get_string")
   - title: "Kernels"
-    desc: "Functions to generate 2D distributions/text images"
+    desc: "Functions to generate 2D distributions"
     contents:
       - starts_with("generate")
   - title: "Included Data"

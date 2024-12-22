@@ -31,29 +31,29 @@
 #' @examples
 #' if (run_documentation()) {
 #'   #Generate an image of some text
-#'   generate_text_image("Some text", preview = TRUE)
+#'   render_text_image("Some text", preview = TRUE)
 #' }
 #' if (run_documentation()) {
 #'   #Change the font size
-#'   generate_text_image("Some text", size = 100, preview = TRUE)
+#'   render_text_image("Some text", size = 100, preview = TRUE)
 #' }
 #' if (run_documentation()) {
 #'   #Change the font color
-#'   generate_text_image("Some text", size = 100, color="red",preview = TRUE)
+#'   render_text_image("Some text", size = 100, color="red",preview = TRUE)
 #' }
 #' if (run_documentation()) {
 #'   #Change the background color and transparency
-#'   generate_text_image("Some text", size = 50, color="purple", 
+#'   render_text_image("Some text", size = 50, color="purple", 
 #'                       background_color="purple", background_alpha = 0.5,
 #'                       preview = TRUE)
 #' }
 #' if (run_documentation()) {
 #'   #Plot an emoji with the agg device
-#'   generate_text_image("😀🚀", size = 50, color="purple", use_ragg = TRUE,
-#'                       background_alpha = 0,
-#'                       preview = TRUE)
+#'   render_text_image("😀🚀", size = 50, color="purple", use_ragg = TRUE,
+#'                      background_alpha = 0,
+#'                      preview = TRUE)
 #' }
-generate_text_image = function(
+render_text_image = function(
     text,
     lineheight = 1,
     color = "black",
@@ -85,29 +85,120 @@ generate_text_image = function(
     max_total_height,max_total_width,
     4
   ))
-  temp = tempfile(fileext = ".png")
-  ray_write_image(final_array, temp)
-  temp_image = png::readPNG(temp)
+  temp_filename = tempfile(fileext = ".png")
+  ray_write_image(final_array, temp_filename)
+  temp_image = png::readPNG(temp_filename)
+  image_width = ncol(temp_image)
+  image_height = nrow(temp_image)
 
   if(length(find.package("ragg",quiet=TRUE)) > 0 && use_ragg) {
-    ragg::agg_png(temp,
-      width = ncol(temp_image),
-      height = nrow(temp_image),
+    ragg::agg_png(temp_filename,
+      width = image_width,
+      height = image_height,
       units = "px",
       res = 72,
       background = NA
     )
   } else {
-    grDevices::png(temp,
-      width = ncol(temp_image),
-      height = nrow(temp_image),
+    grDevices::png(temp_filename,
+      width = image_width,
+      height = image_height,
       pointsize = size,
       family = font,
       res = 72,
       bg = NA
     )
   }
-  
+  test_edges = function(image_width, image_height) {
+    if(length(find.package("ragg",quiet=TRUE)) > 0 && use_ragg) {
+      ragg::agg_png(temp_filename,
+        width = image_width,
+        height = image_height,
+        units = "px",
+        res = 72,
+        background = NA
+      )
+    } else {
+      grDevices::png(temp_filename,
+        width = image_width,
+        height = image_height,
+        pointsize = size,
+        family = font,
+        res = 72,
+        bg = NA
+      )
+    }
+    
+    #First write with no background
+    grid::grid.newpage()
+    grid::grid.rect(
+      x = 0.5, y = 0.5,
+      width = 1, 
+      height = 1,
+      just = c("center"),
+      default.units = "npc",
+      gp = grid::gpar(fill = 
+        grDevices::adjustcolor("black", alpha.f = 0), col = NA)
+    )
+    grid::grid.text(
+      label = text,
+      x = 0.5, y = 0.5, 
+      default.units = "npc",
+      just = c("center", "center"),
+      gp = grid::gpar(
+        fontsize = size,
+        lineheight = lineheight,
+        cex = 1,
+        col = color,
+        fontfamily = font
+      )
+    )
+    dev.off()
+    temp = png::readPNG(temp_filename)
+    side_edges = temp[c(1,nrow(temp)),,4]
+    vert_edges = temp[,c(1,ncol(temp)),4]
+    return(c(any(vert_edges > 0), any(side_edges > 0)))
+  }
+  #First write with no background
+  test_edge_vec = test_edges(image_width, image_height)
+  while(any(test_edge_vec)) {
+    if(test_edge_vec[1]) {
+      image_width = image_width * 2
+    }
+    if(test_edge_vec[2]) {
+      image_height = image_height * 2
+    }
+    test_edge_vec = test_edges(image_width, image_height)
+  }
+  temp = png::readPNG(temp_filename)
+  vert_bbox = range(which(apply(temp[,,4],1,sum) != 0))
+  hori_bbox = range(which(apply(temp[,,4],2,sum) != 0))
+
+  vert_blank = (vert_bbox[1] - 1) +  (image_height - vert_bbox[2]) 
+  hori_blank = (hori_bbox[1] - 1) +  (image_width - hori_bbox[2])
+
+  image_height = image_height - vert_blank + 2
+  image_width = image_width - hori_blank + 2
+
+  #If no edges, proceed with normal render
+  if(length(find.package("ragg",quiet=TRUE)) > 0 && use_ragg) {
+    ragg::agg_png(temp_filename,
+      width = image_width,
+      height = image_height,
+      units = "px",
+      res = 72,
+      background = NA
+    )
+  } else {
+    grDevices::png(temp_filename,
+      width = image_width,
+      height = image_height,
+      pointsize = size,
+      family = font,
+      res = 72,
+      bg = NA
+    )
+  }
   grid::grid.newpage()
   grid::grid.rect(
     x = 0.5, y = 0.5,
@@ -134,7 +225,9 @@ generate_text_image = function(
   )
   dev.off()
 
-  temp = png::readPNG(temp)
+  temp = png::readPNG(temp_filename)
+
+
   if (length(dim(temp)) == 3 && dim(temp)[3] == 2) {
     temparray = array(0, dim = c(nrow(temp), ncol(temp), 3))
     temparray[, , 1] = temp[, , 1]
