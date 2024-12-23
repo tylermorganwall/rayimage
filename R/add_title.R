@@ -71,6 +71,13 @@
 #'add_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20, title_bar_alpha = 0.8,
 #'          title_bar_color="red", title_color = "white")
 #'}
+#'if(run_documentation()){
+#' #Read directly from a file
+#' temp_image = tempfile(fileext = ".png")
+#' ray_write_image(dragon, temp_image)
+#' add_title(temp_image, preview = TRUE, title_text = "Dragon", title_size=20, title_bar_alpha = 0.8,
+#'           title_bar_color="red", title_color = "white")
+#'}
 add_title = function(image,
                      title_text = "", title_size = 30,
                      title_offset = rep(title_size/2,2),
@@ -83,8 +90,12 @@ add_title = function(image,
                      filename = NULL, preview = FALSE) {
   imagetype = get_file_type(image)
   temp = tempfile(fileext = ".png")
-  ray_write_image(image, temp)
-  temp_image = png::readPNG(temp)
+  if(imagetype %in% c("matrix", "array")) {
+    ray_write_image(image, temp)
+    temp_image = png::readPNG(temp)
+  } else {
+    temp_image = image
+  }
 
   if(use_magick) {
     if(title_style == "plain") {
@@ -265,7 +276,7 @@ add_title = function(image,
       warning("Title position is ignored when not using {magick}")
     }
     draw_title_card(
-      temp_image,
+      ray_read_image(temp_image),
       title = title_text,
       padding_x = title_offset[1], padding_y = title_offset[2],
       gp_text = grid::gpar(col = title_color, 
