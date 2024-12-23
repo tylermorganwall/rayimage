@@ -16,6 +16,14 @@
 #' @param use_ragg Default `TRUE`. Whether to use the `ragg` package as the graphics device. Required for emojis.
 #' @param width Default `NA`. User-defined textbox width.
 #' @param height Default `NA`. User-defined textbox width.
+#' @param check_text_width Default `TRUE`. Whether to manually adjust the bounding
+#' box of the resulting image to ensure the string bbox is wide enough for the text.
+#' Not all systems provide accurate font sizes: this ensures the string is not cut off
+#' at the edges, at the cost of needing to repeatedly render the image internally until 
+#' a suitable image is found.
+#' @param check_text_height Default `FALSE`. Whether to manually adjust the bounding
+#' box of the resulting image to ensure the string bbox is tall enough for the text.
+#' This will ensure a tight vertical bounding box on the text.
 #' @param filename Default `NULL`. String specifying the file path to save the resulting image.
 #' If `NULL` and `preview = FALSE`, the function returns the processed RGB array.
 #' @param preview Default `FALSE`. Boolean indicating whether to display the image after processing.
@@ -48,9 +56,18 @@
 #'                       preview = TRUE)
 #' }
 #' if (run_documentation()) {
-#'   #Plot an emoji with the agg device
+#'   #Plot an emoji with the agg device.
 #'   render_text_image("😀🚀", size = 50, color="purple", use_ragg = TRUE,
 #'                      background_alpha = 0,
+#'                      preview = TRUE)
+#' }
+#' 
+#' if (run_documentation()) {
+#'   # Plot an emoji with the agg device and adjust the height and width (which
+#'   # is on by default) to be a tight fit.
+#'   render_text_image("😀🚀", size = 50, color="purple", use_ragg = TRUE,
+#'                      background_alpha = 0, check_text_width = TRUE,
+#'                      check_text_height = TRUE,
 #'                      preview = TRUE)
 #' }
 render_text_image = function(
@@ -63,7 +80,8 @@ render_text_image = function(
     background_color = "white",
     background_alpha = 1,
     use_ragg = TRUE, width = NA, height = NA,
-    filename = NULL,
+    filename = NULL, 
+    check_text_width = TRUE, check_text_height = FALSE,
     preview = FALSE) {
   text_metrics = systemfonts::shape_string(text,
     size = size, vjust = 0.5,
@@ -91,24 +109,6 @@ render_text_image = function(
   image_width = ncol(temp_image)
   image_height = nrow(temp_image)
 
-  if(length(find.package("ragg",quiet=TRUE)) > 0 && use_ragg) {
-    ragg::agg_png(temp_filename,
-      width = image_width,
-      height = image_height,
-      units = "px",
-      res = 72,
-      background = NA
-    )
-  } else {
-    grDevices::png(temp_filename,
-      width = image_width,
-      height = image_height,
-      pointsize = size,
-      family = font,
-      res = 72,
-      bg = NA
-    )
-  }
   test_edges = function(image_width, image_height) {
     if(length(find.package("ragg",quiet=TRUE)) > 0 && use_ragg) {
       ragg::agg_png(temp_filename,
@@ -160,26 +160,37 @@ render_text_image = function(
     return(c(any(vert_edges > 0), any(side_edges > 0)))
   }
   #First write with no background
-  test_edge_vec = test_edges(image_width, image_height)
-  while(any(test_edge_vec)) {
-    if(test_edge_vec[1]) {
-      image_width = image_width * 2
-    }
-    if(test_edge_vec[2]) {
-      image_height = image_height * 2
-    }
+  if(check_text_width || check_text_height) {
     test_edge_vec = test_edges(image_width, image_height)
+    if(!check_text_height) {
+      test_edge_vec[2] = FALSE
+    }
+    if(!check_text_width) {
+      test_edge_vec[1] = FALSE
+    }
+    while(any(test_edge_vec)) {
+      if(test_edge_vec[1]) {
+        image_width = image_width * 2
+      }
+      if(check_text_height) {
+        if(test_edge_vec[2]) {
+          image_height = image_height * 2
+        }
+      }
+      test_edge_vec = test_edges(image_width, image_height)
+    }
+    
+    temp = png::readPNG(temp_filename)
+    vert_bbox = range(which(apply(temp[,,4],1,sum) != 0))
+    hori_bbox = range(which(apply(temp[,,4],2,sum) != 0))
+
+    vert_blank = (vert_bbox[1] - 1) +  (image_height - vert_bbox[2]) 
+    hori_blank = (hori_bbox[1] - 1) +  (image_width - hori_bbox[2])
+    if(check_text_height) {
+      image_height = image_height - vert_blank
+    }
+    image_width = image_width - hori_blank + size
   }
-  temp = png::readPNG(temp_filename)
-  vert_bbox = range(which(apply(temp[,,4],1,sum) != 0))
-  hori_bbox = range(which(apply(temp[,,4],2,sum) != 0))
-
-  vert_blank = (vert_bbox[1] - 1) +  (image_height - vert_bbox[2]) 
-  hori_blank = (hori_bbox[1] - 1) +  (image_width - hori_bbox[2])
-
-  image_height = image_height - vert_blank + 2
-  image_width = image_width - hori_blank + 2
-
   #If no edges, proceed with normal render
   if(length(find.package("ragg",quiet=TRUE)) > 0 && use_ragg) {
     ragg::agg_png(temp_filename,
