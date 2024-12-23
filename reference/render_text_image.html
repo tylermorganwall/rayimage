@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.2</span>
       </span>
     </div>
 
@@ -69,7 +69,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Generate Text Image</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tylermorganwall/rayimage/blob/master/R/generate_text_image.R" class="external-link"><code>R/generate_text_image.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tylermorganwall/rayimage/blob/master/R/render_text_image.R" class="external-link"><code>R/render_text_image.R</code></a></small>
     <div class="hidden name"><code>render_text_image.Rd</code></div>
     </div>
 
@@ -91,6 +91,8 @@
 <span>  width <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  height <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  check_text_width <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  check_text_height <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  preview <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -151,6 +153,20 @@ between <code>0</code> (fully transparent) and <code>1</code> (fully opaque).</p
 If <code>NULL</code> and <code>preview = FALSE</code>, the function returns the processed RGB array.</p></dd>
 
 
+<dt id="arg-check-text-width">check_text_width<a class="anchor" aria-label="anchor" href="#arg-check-text-width"></a></dt>
+<dd><p>Default <code>TRUE</code>. Whether to manually adjust the bounding
+box of the resulting image to ensure the string bbox is wide enough for the text.
+Not all systems provide accurate font sizes: this ensures the string is not cut off
+at the edges, at the cost of needing to repeatedly render the image internally until
+a suitable image is found.</p></dd>
+
+
+<dt id="arg-check-text-height">check_text_height<a class="anchor" aria-label="anchor" href="#arg-check-text-height"></a></dt>
+<dd><p>Default <code>FALSE</code>. Whether to manually adjust the bounding
+box of the resulting image to ensure the string bbox is tall enough for the text.
+This will ensure a tight vertical bounding box on the text.</p></dd>
+
+
 <dt id="arg-preview">preview<a class="anchor" aria-label="anchor" href="#arg-preview"></a></dt>
 <dd><p>Default <code>FALSE</code>. Boolean indicating whether to display the image after processing.
 If <code>TRUE</code>, the image is displayed but not saved or returned.</p></dd>
@@ -187,7 +203,7 @@ Otherwise, writes the image to the specified file or displays it if <code>previe
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="render_text_image-4.png" alt="" width="700" height="700"></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="co">#Plot an emoji with the agg device</span></span></span>
+<span class="r-in"><span>  <span class="co">#Plot an emoji with the agg device.</span></span></span>
 <span class="r-in"><span>  <span class="fu">render_text_image</span><span class="op">(</span><span class="st">"😀🚀"</span>, size <span class="op">=</span> <span class="fl">50</span>, color<span class="op">=</span><span class="st">"purple"</span>, use_ragg <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>                     background_alpha <span class="op">=</span> <span class="fl">0</span>,</span></span>
 <span class="r-in"><span>                     preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
@@ -197,6 +213,20 @@ Otherwise, writes the image to the specified file or displays it if <code>previe
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>font metrics unknown for Unicode character U+1F600</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>font metrics unknown for Unicode character U+1F680</span>
 <span class="r-plt img"><img src="render_text_image-5.png" alt="" width="700" height="700"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co"># Plot an emoji with the agg device and adjust the height and width (which</span></span></span>
+<span class="r-in"><span>  <span class="co"># is on by default) to be a tight fit.</span></span></span>
+<span class="r-in"><span>  <span class="fu">render_text_image</span><span class="op">(</span><span class="st">"😀🚀"</span>, size <span class="op">=</span> <span class="fl">50</span>, color<span class="op">=</span><span class="st">"purple"</span>, use_ragg <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                     background_alpha <span class="op">=</span> <span class="fl">0</span>, check_text_width <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                     check_text_height <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                     preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>font metrics unknown for Unicode character U+1F600</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>font metrics unknown for Unicode character U+1F680</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>font metrics unknown for Unicode character U+1F600</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>font metrics unknown for Unicode character U+1F680</span>
+<span class="r-plt img"><img src="render_text_image-6.png" alt="" width="700" height="700"></span>
 </code></pre></div>
     </div>
   </div>
