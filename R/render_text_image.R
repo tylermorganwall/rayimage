@@ -88,7 +88,7 @@ render_text_image = function(
     res = 72, lineheight = lineheight,
     family = font
   )[["metrics"]]
-  bg_col = convert_color(background_color)
+  bg_col = convert_color(background_color, as_hex = TRUE)
   metrics_string = systemfonts::string_metrics_dev(text, unit="inches", size=size) * 72
   max_total_width = ceiling(metrics_string$width) + 2
   max_total_height = ceiling(text_metrics$height)
@@ -149,7 +149,7 @@ render_text_image = function(
         fontsize = size,
         lineheight = lineheight,
         cex = 1,
-        col = color,
+        col = "black",
         fontfamily = font
       )
     )
@@ -181,6 +181,8 @@ render_text_image = function(
     }
     
     temp = png::readPNG(temp_filename)
+    stopifnot(any(temp[,,4] != 0))
+
     vert_bbox = range(which(apply(temp[,,4],1,sum) != 0))
     hori_bbox = range(which(apply(temp[,,4],2,sum) != 0))
 
@@ -217,8 +219,8 @@ render_text_image = function(
     height = 1,
     just = c("center"),
     default.units = "npc",
-    gp = grid::gpar(fill = 
-      grDevices::adjustcolor(background_color, alpha.f = background_alpha), col = NA)
+    gp = grid::gpar(fill =
+      grDevices::adjustcolor(bg_col, alpha.f = background_alpha), col = NA)
   )
   grid::grid.text(
     label = text,
@@ -229,7 +231,7 @@ render_text_image = function(
       fontsize = size,
       lineheight = lineheight,
       cex = 1,
-      col = color,
+      col = convert_color(color, as_hex = TRUE),
       fontfamily = font
       
     )
