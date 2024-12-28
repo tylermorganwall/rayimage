@@ -5,7 +5,7 @@ save_test_png = function(code, path) {
   path
 }
 
-compare_image = function(path1, path2, quantile_diff = 0.001, 
+compare_image = function(path1, path2, quantile_diff = 0.001,
                          cdf_diff = 0.1,
                          max_diff = 0.25) {
   image1 = ray_read_image(path1)
@@ -16,6 +16,18 @@ compare_image = function(path1, path2, quantile_diff = 0.001,
   #Ignore small differences
   mostly_identical = sum(diffs > cdf_diff) < length(diffs) * quantile_diff
   diffs_are_minor = max(diffs) < max_diff
+  if(!mostly_identical) {
+    warning(sprintf("Number greater than CDF diff: %i vs %i/%i", sum(diffs > cdf_diff),
+            length(diffs) * quantile_diff, length(diffs)))
+  }
+  if(!diffs_are_minor) {
+    warning(sprintf("Max diff: %f vs %f", max(diffs), max_diff))
+  }
+  if(!all_dim_same) {
+    warning(sprintf("Dim not the same: %s vs %s",
+                    paste0(dim(image1),collapse="x"),
+                    paste0(dim(image2),collapse="x")))
+  }
   return(mostly_identical && diffs_are_minor && all_dim_same)
 }
 
@@ -58,7 +70,7 @@ expect_no_error_info = function(code, args, i) {
   })
 }
 
-run_tests = function(func, argument_grid, plot_prefix="", 
+run_tests = function(func, argument_grid, plot_prefix="",
                      warning_rows = NULL, error_rows = NULL, ...) {
   stopifnot(inherits(argument_grid,"data.frame"))
   for(i in seq_len(nrow(argument_grid))){
@@ -76,13 +88,13 @@ run_tests = function(func, argument_grid, plot_prefix="",
                             variant = Sys.info()[["sysname"]])
     }
     if(interactive()) {
-      do.call(func, args = args) |> 
+      do.call(func, args = args) |>
         expect_no_error_info(args = args, i = i)
     } else {
       save_test_png(do.call(func, args = args), path) |>
         suppressMessages() |>
         suppressWarnings() |>
-        expect_snapshot_file_info(name = test_filename, 
+        expect_snapshot_file_info(name = test_filename,
           compare = compare_image,
           variant = Sys.info()[["sysname"]], args = args, i = i)
     }
@@ -138,4 +150,3 @@ test_that("Checking ray_read/ray_write", {
   expect_true(compare_image(clamped_dragon, dragon_tiff))
 })
 
-  
