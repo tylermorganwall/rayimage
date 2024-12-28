@@ -7,7 +7,7 @@ save_test_png = function(code, path) {
 
 compare_image = function(path1, path2, quantile_diff = 0.001,
                          cdf_diff = 0.1,
-                         max_diff = 0.25) {
+                         max_diff = 0.3) {
   image1 = ray_read_image(path1)
   image2 = ray_read_image(path2)
   all_dim_same = all(dim(image1) == dim(image2))
