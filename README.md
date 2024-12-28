@@ -10,7 +10,8 @@ badge](https://tylermorganwall.r-universe.dev/badges/:name)](https://tylermorgan
 [![rayrender status
 badge](https://tylermorganwall.r-universe.dev/badges/rayimage)](https://tylermorganwall.r-universe.dev/rayimage)
 ![cran-badge rayrender
-package](http://www.r-pkg.org/badges/version/rayimage)
+package](http://www.r-pkg.org/badges/version/rayimage) [![Codecov test
+coverage](https://codecov.io/gh/tylermorganwall/rayimage/graph/badge.svg)](https://app.codecov.io/gh/tylermorganwall/rayimage)
 <!-- badges: end -->
 
 <img src="man/figures/githubdemo.gif" ></img>
