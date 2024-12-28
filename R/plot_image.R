@@ -79,8 +79,8 @@ plot_image = function(image, rotate=0, draw_grid = FALSE, ignore_alpha = FALSE,
         grid::viewport(
           layout = grid::grid.layout(1, 1,
                                      widths = grid::unit(image_dim[1], "pt"),
-                                     heights = grid::unit(image_dim[2], "pt"))),
-          gp = gp
+                                     heights = grid::unit(image_dim[2], "pt")),
+          gp = gp)
       )
       # Define grid density and angle
       grid_density = 0.01 # Adjust this value for tighter or looser grid
