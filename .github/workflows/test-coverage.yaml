@@ -47,8 +47,6 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Show testthat output
-        with:
-          upload-snapshots: true
         if: always()
         run: |
           ## --------------------------------------------------------------------
