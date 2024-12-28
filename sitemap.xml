@@ -39,9 +39,12 @@
 <url><loc>https://www.rayimage.dev/reference/render_clamp.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_convolution.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_convolution_fft.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_image_overlay.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_reorient.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_resized.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_text_image.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_title.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_vignette.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/run_documentation.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/save_png.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/trim_padding.html</loc></url>
