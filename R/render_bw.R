@@ -13,7 +13,7 @@
 #'if(run_documentation()){
 #'#Plot the image with a title
 #'dragon |>
-#'  add_title("Dragon", title_offset=c(10,10), title_bar_color="black",
+#'  render_title("Dragon", title_offset=c(10,10), title_bar_color="black",
 #'            title_size=20, title_color = "white") |>
 #'  render_bw(preview = TRUE)
 #'}

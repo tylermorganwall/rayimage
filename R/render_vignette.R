@@ -25,26 +25,26 @@
 #'}
 #'if(run_documentation()){
 #'#Add a vignette effect:
-#'add_vignette(dragon, preview = TRUE, vignette = 0.5)
+#'render_vignette(dragon, preview = TRUE, vignette = 0.5)
 #'}
 #'if(run_documentation()){
 #'#Darken the vignette effect:
-#'add_vignette(dragon, preview = TRUE, vignette = 1)
+#'render_vignette(dragon, preview = TRUE, vignette = 1)
 #'}
 #'if(run_documentation()){
 #'#Change the radius:
-#'add_vignette(dragon, preview = TRUE, vignette = 1, radius=1.5)
-#'add_vignette(dragon, preview = TRUE, vignette = 1, radius=0.5)
+#'render_vignette(dragon, preview = TRUE, vignette = 1, radius=1.5)
+#'render_vignette(dragon, preview = TRUE, vignette = 1, radius=0.5)
 #'}
 #'if(run_documentation()){
 #'#Change the color:
-#'add_vignette(dragon, preview = TRUE, vignette = 1, color="white")
+#'render_vignette(dragon, preview = TRUE, vignette = 1, color="white")
 #'}
 #'if(run_documentation()){
 #'#Increase the width of the blur by 50%:
-#'add_vignette(dragon, preview = TRUE, vignette = c(1,1.5))
+#'render_vignette(dragon, preview = TRUE, vignette = c(1,1.5))
 #'}
-add_vignette = function(image, vignette = 0.5, color = "#000000", radius = 1.3,
+render_vignette = function(image, vignette = 0.5, color = "#000000", radius = 1.3,
                         filename = NULL, preview = FALSE) {
   temp = tempfile(fileext = ".png")
   ray_write_image(image, temp)
@@ -93,3 +93,27 @@ add_vignette = function(image, vignette = 0.5, color = "#000000", radius = 1.3,
   }
   handle_image_output(temp, filename = filename, preview = preview)
 }
+
+#'@title Add Vignette Effect (Deprecated)
+#'
+#'@description Takes an RGB array/filename and adds a camera vignette effect.
+#'
+#'@param ... Arguments to pass to `render_title()` function.
+
+#'@return 3-layer RGB array of the processed image.
+#'@import grDevices
+#'@export
+#'@examples
+#'if(run_documentation()){
+#'#Plot the dragon
+#'plot_image(dragon)
+#'}
+#'if(run_documentation()){
+#'#Add a vignette effect:
+#'add_vignette(dragon, preview = TRUE, vignette = 0.5)
+#'}
+add_vignette = function(...) {
+  message("add_vignette() deprecated--use render_vignette() instead.")
+  render_vignette(...)
+}
+

@@ -5,10 +5,6 @@ articles: []
 url: https://www.rayimage.dev
 
 reference:
-  - title: "Image/Camera Effects"
-    desc: "Functions for adding effects to images."
-    contents:
-      - starts_with("add")
   - title: "Render Image Transformations"
     desc: "Functions for transforming/creating images."
     contents:
@@ -32,6 +28,10 @@ reference:
     desc: "Example data/depth map."
     contents:
       - starts_with("dragon")
+  - title: "Deprecated Functions"
+    desc: "Use the render_* versions instead."
+    contents:
+      - starts_with("add")
   - title: "pkgdown utils"
     desc: "Internal but must be exported to meet CRAN guidelines"
     contents:

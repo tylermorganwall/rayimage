@@ -4,13 +4,13 @@
 \alias{add_padding}
 \title{add_padding}
 \usage{
-add_padding(heightmap)
+add_padding(input)
 }
 \arguments{
-\item{heightmap}{A two-dimensional matrix, where each entry in the matrix is the elevation at that point. All points are assumed to be evenly spaced.}
+\item{input}{A two-dimensional matrix.}
 }
 \value{
-Hillshade with edges padded
+Matrix with edges padded
 }
 \description{
 Adds padding to the matrix

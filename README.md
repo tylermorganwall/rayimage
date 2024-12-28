@@ -3,7 +3,14 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/tylermorganwall/rayimage/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tylermorganwall/rayimage/actions/workflows/R-CMD-check.yaml)
+[![R build
+status](https://github.com/tylermorganwall/rayimage/workflows/R-CMD-check/badge.svg)](https://github.com/tylermorganwall/rayimage/actions)
+[![:name status
+badge](https://tylermorganwall.r-universe.dev/badges/:name)](https://tylermorganwall.r-universe.dev/)
+[![rayrender status
+badge](https://tylermorganwall.r-universe.dev/badges/rayimage)](https://tylermorganwall.r-universe.dev/rayimage)
+![cran-badge rayrender
+package](http://www.r-pkg.org/badges/version/rayimage)
 <!-- badges: end -->
 
 <img src="man/figures/githubdemo.gif" ></img>
@@ -36,12 +43,12 @@ remotes::install_github("tylermorganwall/rayimage")
   output is either plotted to the current device, or save to a file (if
   a filename is passed to the function).
 
-- `render_convolution()` performs a discrete convolution with a
-  user-supplied kernel (either custom, or using one of the built-in
-  functions to generate a kernel: `generate_2d_gaussian()`,
-  `generate_2d_exponential()`, and `generate_2d_disk()`). This function
-  can be applied to either images represented by RGB arrays/filenames,
-  or 2D matrices.
+- `render_convolution()`/`render_convolution_fft()` performs a
+  convolution with a user-supplied kernel (either custom, or using one
+  of the built-in functions to generate a kernel:
+  `generate_2d_gaussian()`, `generate_2d_exponential()`, and
+  `generate_2d_disk()`). This function can be applied to either images
+  represented by RGB arrays/file-names, or 2D matrices.
 
 - `render_resized()` resizes an image or a matrix using a magnification
   factor or the dimensions of the desired object. This function
@@ -50,15 +57,22 @@ remotes::install_github("tylermorganwall/rayimage")
 - `render_reorient()` reorients an image, either flipping horizontally,
   vertically, or with a transpose operation.
 
-- `add_title()` adds titles to images, with an optional title bar. User
-  can specify opacity, color, and font properties.
+- `render_text_image()` generates a tightly bounded image containing
+  text, with custom font support and emoji support if the `ragg` package
+  is installed.
 
-- `add_vignette()` adds a camera vignette effect, which is a slight
+- `render_title()` adds titles to images, with an optional title bar.
+  User can specify opacity, color, and font properties.
+
+- `render_vignette()` adds a camera vignette effect, which is a slight
   darkening by the edges of an image.
 
-- `add_image_overlay()` adds overlays to images.
+- `render_image_overlay()` adds overlays to images.
 
 - `plot_image()` plots an RGB array to the current device.
+
+- `plot_image_grid()` plots a list of RGB arrays in a user-specified
+  grid to the current device.
 
 ## Usage
 
@@ -144,16 +158,37 @@ here):
 
 ``` r
 image1 = dragon |>
-  add_title("Dragon", title_size = 20, title_bar_color = "red", 
+  render_title("Dragon", title_size = 20, title_bar_color = "red", 
             title_bar_alpha=0.8, title_color="white", title_offset = c(12,12))
 
 image2 = dragon |>
-  add_vignette(vignette=0.8)
+  render_vignette(vignette=0.8)
 
 plot_image_grid(list(image1,image2), dim = c(2,1))
 ```
 
 ![](man/figures/vignettetitle-1.png)<!-- -->
+
+We can generate images with custom fonts and emojis:
+
+``` r
+#Use a custom font.
+render_text_image("AVATAR", font = "Papyrus", size=100,
+                  color = "#aaddff", 
+                  background_color = "black",
+                  preview = TRUE)
+```
+
+![](man/figures/emoji-1.png)<!-- -->
+
+``` r
+#Plot an emoji with the agg device and increase resolution.
+render_text_image("😀🚀", size = 500,
+                   background_alpha = 0,
+                   preview = TRUE)
+```
+
+![](man/figures/emoji-2.png)<!-- -->
 
 We can also resize images and matrices with `render_resize()`. We can do
 this before adding text to make the resulting text smoother.
@@ -162,13 +197,13 @@ this before adding text to make the resulting text smoother.
 #Double the input size to make the resulting text smoother.
 image3 = dragon |>
   render_resized(mag = 2) |>
-  add_title("Dragon", title_size = 20, title_bar_color = "red", 
+  render_title("Dragon", title_size = 20, title_bar_color = "red", 
             title_bar_alpha=0.8, title_color="white", title_offset = c(12,12)) 
 
 #Specify resulting dimensions directly.
 image4 = dragon |>
   render_resized(dim = c(600,300)) |>
-  add_title("Dragon", title_size = 20, title_bar_color = "red", 
+  render_title("Dragon", title_size = 20, title_bar_color = "red", 
             title_bar_alpha=0.8, title_color="white", title_offset = c(12,12)) 
 
 plot_image_grid(list(image3,image4), dim = c(2,1))

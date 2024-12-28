@@ -4,15 +4,15 @@
 \alias{add_multi_padding}
 \title{add_multi_padding}
 \usage{
-add_multi_padding(heightmap, pad = 1)
+add_multi_padding(input, pad = 1)
 }
 \arguments{
-\item{heightmap}{A two-dimensional matrix, where each entry in the matrix is the elevation at that point. All points are assumed to be evenly spaced.}
+\item{input}{A two-dimensional matrix.}
 
 \item{pad}{Number of padding entries}
 }
 \value{
-Hillshade with edges padded
+Matrix with edges padded
 }
 \description{
 Adds multiple levels padding to the matrix

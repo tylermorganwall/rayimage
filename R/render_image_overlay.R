@@ -35,10 +35,10 @@
 #'rgba_array[,,3] = 0
 #'dragon_clipped = dragon
 #'dragon_clipped[dragon_clipped > 1] = 1
-#'add_image_overlay(dragon_clipped, image_overlay = rgba_array,
+#'render_image_overlay(dragon_clipped, image_overlay = rgba_array,
 #'                  alpha=0.5, preview = TRUE)
 #'}
-add_image_overlay = function(image, image_overlay = NULL, rescale_original = FALSE,
+render_image_overlay = function(image, image_overlay = NULL, rescale_original = FALSE,
                              alpha = NULL, filename = NULL, preview = FALSE) {
   imagetype = get_file_type(image)
   image_overlay_type = get_file_type(image_overlay)
@@ -158,3 +158,37 @@ add_image_overlay = function(image, image_overlay = NULL, rescale_original = FAL
   }
   handle_image_output(temp, filename = filename, preview = preview)
 }
+
+#'@title Add Overlay (Deprecated)
+#'
+#'@description Takes an RGB array/filename and adds an image overlay.
+#'
+#'@param ... to pass to `render_image_overlay()` function.
+
+#'@return 3-layer RGB array of the processed image.
+#'@export
+#'@examples
+#'if(run_documentation()){
+#'#Plot the dragon
+#'plot_image(dragon)
+#'}
+#'if(run_documentation()){
+#'#Add an overlay of a red semi-transparent circle:
+#'circlemat = generate_2d_disk(min(dim(dragon)[1:2]))
+#'circlemat = circlemat/max(circlemat)
+#'
+#'#Create RGBA image, with a transparency of 0.5
+#'rgba_array = array(1, dim=c(nrow(circlemat),ncol(circlemat),4))
+#'rgba_array[,,1] = circlemat
+#'rgba_array[,,2] = 0
+#'rgba_array[,,3] = 0
+#'dragon_clipped = dragon
+#'dragon_clipped[dragon_clipped > 1] = 1
+#'add_image_overlay(dragon_clipped, image_overlay = rgba_array,
+#'                  alpha=0.5, preview = TRUE)
+#'}
+add_image_overlay = function(...) {
+  message("add_image_overlay() deprecated--use render_image_overlay() instead.")
+  render_image_overlay(...)
+}
+
