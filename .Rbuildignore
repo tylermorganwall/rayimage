@@ -14,7 +14,6 @@
 ^\.github$
 ^CODE_OF_CONDUCT\.md$
 ^CONTRIBUTING\.md$
-^tests/.*$
 ^.*\.DS_Store$
 ^compile_commands\.json$
 ^\.cache$
