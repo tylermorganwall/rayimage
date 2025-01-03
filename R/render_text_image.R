@@ -81,7 +81,7 @@ render_text_image = function(
     background_alpha = 1,
     use_ragg = TRUE, width = NA, height = NA,
     filename = NULL, 
-    check_text_width = TRUE, check_text_height = FALSE,
+    check_text_width = TRUE, check_text_height = TRUE,
     preview = FALSE) {
   text_metrics = systemfonts::shape_string(text,
     size = size, vjust = 0.5,
@@ -189,7 +189,7 @@ render_text_image = function(
     vert_blank = (vert_bbox[1] - 1) +  (image_height - vert_bbox[2]) 
     hori_blank = (hori_bbox[1] - 1) +  (image_width - hori_bbox[2])
     if(check_text_height) {
-      image_height = image_height - vert_blank
+      image_height = image_height - vert_blank + size
     }
     image_width = image_width - hori_blank + size
   }
