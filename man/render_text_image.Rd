@@ -18,7 +18,7 @@ render_text_image(
   height = NA,
   filename = NULL,
   check_text_width = TRUE,
-  check_text_height = FALSE,
+  check_text_height = TRUE,
   preview = FALSE
 )
 }
