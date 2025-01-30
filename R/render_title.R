@@ -277,6 +277,12 @@ render_title = function(image,
     if(!is.na(title_position)) {
       warning("Title position is ignored when not using {magick}")
     }
+    if(is.null(title_bar_color)) {
+      title_bar_color = NA
+    }
+    if(is.null(title_bar_alpha)) {
+      title_bar_alpha = NA
+    }
     draw_title_card(
       ray_read_image(temp_image),
       title = title_text,
