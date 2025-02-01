@@ -51,24 +51,24 @@
 #' }
 #' if (run_documentation()) {
 #'   #Change the background color and transparency
-#'   render_text_image("Some text", size = 50, color="purple", 
+#'   render_text_image("Some text", size = 50, color="purple",
 #'                       background_color="purple", background_alpha = 0.5,
 #'                       preview = TRUE)
 #' }
 #' if (run_documentation()) {
-#'   #Plot an emoji with the agg device.
-#'   render_text_image("😀🚀", size = 50, color="purple", use_ragg = TRUE,
-#'                      background_alpha = 0,
-#'                      preview = TRUE)
+#'   # Plot an emoji with the agg device.
+#'   render_text_image("\U0001F600\U0001F680", size = 50, color = "purple", use_ragg = TRUE,
+#'                     background_alpha = 0,
+#'                     preview = TRUE)
 #' }
-#' 
+#'
 #' if (run_documentation()) {
 #'   # Plot an emoji with the agg device and adjust the height and width (which
 #'   # is on by default) to be a tight fit.
-#'   render_text_image("😀🚀", size = 50, color="purple", use_ragg = TRUE,
-#'                      background_alpha = 0, check_text_width = TRUE,
-#'                      check_text_height = TRUE,
-#'                      preview = TRUE)
+#'   render_text_image("\U0001F600\U0001F680", size = 50, color = "purple", use_ragg = TRUE,
+#'                     background_alpha = 0, check_text_width = TRUE,
+#'                     check_text_height = TRUE,
+#'                     preview = TRUE)
 #' }
 render_text_image = function(
     text,
@@ -80,7 +80,7 @@ render_text_image = function(
     background_color = "white",
     background_alpha = 1,
     use_ragg = TRUE, width = NA, height = NA,
-    filename = NULL, 
+    filename = NULL,
     check_text_width = TRUE, check_text_height = TRUE,
     preview = FALSE) {
   text_metrics = systemfonts::shape_string(text,
@@ -94,10 +94,10 @@ render_text_image = function(
   max_total_height = ceiling(text_metrics$height)
   n_newlines = sum(strsplit(text, "") == "\n")
   if(!is.na(width)) {
-    max_total_width = width  
+    max_total_width = width
   }
   if(!is.na(height)) {
-    max_total_height = height  
+    max_total_height = height
   }
   final_array = array(1, dim = c(
     max_total_height,max_total_width,
@@ -128,21 +128,21 @@ render_text_image = function(
         bg = NA
       )
     }
-    
+
     #First write with no background
     grid::grid.newpage()
     grid::grid.rect(
       x = 0.5, y = 0.5,
-      width = 1, 
+      width = 1,
       height = 1,
       just = c("center"),
       default.units = "npc",
-      gp = grid::gpar(fill = 
+      gp = grid::gpar(fill =
         grDevices::adjustcolor("black", alpha.f = 0), col = NA)
     )
     grid::grid.text(
       label = text,
-      x = 0.5, y = 0.5, 
+      x = 0.5, y = 0.5,
       default.units = "npc",
       just = c("center", "center"),
       gp = grid::gpar(
@@ -179,14 +179,14 @@ render_text_image = function(
       }
       test_edge_vec = test_edges(image_width, image_height)
     }
-    
+
     temp = png::readPNG(temp_filename)
     stopifnot(any(temp[,,4] != 0))
 
     vert_bbox = range(which(apply(temp[,,4],1,sum) != 0))
     hori_bbox = range(which(apply(temp[,,4],2,sum) != 0))
 
-    vert_blank = (vert_bbox[1] - 1) +  (image_height - vert_bbox[2]) 
+    vert_blank = (vert_bbox[1] - 1) +  (image_height - vert_bbox[2])
     hori_blank = (hori_bbox[1] - 1) +  (image_width - hori_bbox[2])
     if(check_text_height) {
       image_height = image_height - vert_blank + size
@@ -215,7 +215,7 @@ render_text_image = function(
   grid::grid.newpage()
   grid::grid.rect(
     x = 0.5, y = 0.5,
-    width = 1, 
+    width = 1,
     height = 1,
     just = c("center"),
     default.units = "npc",
@@ -224,7 +224,7 @@ render_text_image = function(
   )
   grid::grid.text(
     label = text,
-    x = 0.5, y = 0.5, 
+    x = 0.5, y = 0.5,
     default.units = "npc",
     just = c("center", "center"),
     gp = grid::gpar(
@@ -233,7 +233,7 @@ render_text_image = function(
       cex = 1,
       col = convert_color(color, as_hex = TRUE),
       fontfamily = font
-      
+
     )
   )
   dev.off()
