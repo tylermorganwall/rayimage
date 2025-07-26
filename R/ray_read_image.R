@@ -36,80 +36,99 @@
 #'ray_read_image(tmparr) |>
 #'   plot_image()
 #'}
-ray_read_image = function(image, convert_to_array = TRUE, preview = FALSE, ...) {
-  process_image_dim = function(image2) {
-    if(length(dim(image2)) == 2) {
-      if(convert_to_array) {
-        newarray = array(1,dim=c(nrow(image2),ncol(image2),4))
-        newarray[,,1] = image2
-        newarray[,,2] = image2
-        newarray[,,3] = image2
-        newarray[,,4] = 1
-      } else {
-        return(image2)
-      }
-      if(preview) {
-        plot_image(newarray)
-      }
-      return(newarray)
-    } else if (dim(image2)[3] == 1) {
-      if(convert_to_array) {
-        newarray = array(1,dim=c(nrow(image2),ncol(image2),4))
-        newarray[,,1] = image2[,,1]
-        newarray[,,2] = image2[,,1]
-        newarray[,,3] = image2[,,1]
-        newarray[,,4] = 1
-      } else {
-        return(image2)
-      }
-      if(preview) {
-        plot_image(newarray)
-      }
-      return(newarray)
-    } else if (dim(image2)[3] == 2) {
-      newarray = array(1,dim=c(nrow(image2),ncol(image2),4))
-      newarray[,,1] = image2[,,1]
-      newarray[,,2] = image2[,,1]
-      newarray[,,3] = image2[,,1]
-      newarray[,,4] = image2[,,2]
-      if(preview) {
-        plot_image(newarray)
-      }
-      return(newarray)
-    } else if (dim(image2)[3] == 3) {
-      newarray = array(1,dim=c(nrow(image2),ncol(image2),4))
-      newarray[,,1] = image2[,,1]
-      newarray[,,2] = image2[,,2]
-      newarray[,,3] = image2[,,3]
-      newarray[,,4] = 1
-      if(preview) {
-        plot_image(newarray)
-      }
-      return(newarray)
-    } else if (dim(image2)[3] == 4) {
-      if(preview) {
-        plot_image(image2)
-      }
-      return(image2)
-    } else {
-      stop("Unable to handle image of dimensions ", paste0(dim(image2), collapse = "x"))
-    }
-  }
-  imagetype = get_file_type(image)
-  if(imagetype == "array") {
-    return(process_image_dim(image))
-  } else if (imagetype == "matrix") {
-    return(process_image_dim(image))
-  } else if (imagetype == "png") {
-    image = png::readPNG(image, ...)
-    return(process_image_dim(image))
-  } else if (imagetype == "tif") {
-    image = tiff::readTIFF(image, ...)
-    return(process_image_dim(image))
-  } else if (imagetype == "jpg") {
-    image = jpeg::readJPEG(image, ...)
-    return(process_image_dim(image))
-  } else {
-    stop("This error should never be reached--please report a bug.")
-  }
+ray_read_image = function(
+	image,
+	convert_to_array = TRUE,
+	preview = FALSE,
+	...
+) {
+	process_image_dim = function(image2) {
+		if (length(dim(image2)) == 2) {
+			if (convert_to_array) {
+				newarray = array(1, dim = c(nrow(image2), ncol(image2), 4))
+				newarray[,, 1] = image2
+				newarray[,, 2] = image2
+				newarray[,, 3] = image2
+				newarray[,, 4] = 1
+			} else {
+				return(image2)
+			}
+			if (preview) {
+				plot_image(newarray)
+			}
+			return(newarray)
+		} else if (dim(image2)[3] == 1) {
+			if (convert_to_array) {
+				newarray = array(1, dim = c(nrow(image2), ncol(image2), 4))
+				newarray[,, 1] = image2[,, 1]
+				newarray[,, 2] = image2[,, 1]
+				newarray[,, 3] = image2[,, 1]
+				newarray[,, 4] = 1
+			} else {
+				return(image2)
+			}
+			if (preview) {
+				plot_image(newarray)
+			}
+			return(newarray)
+		} else if (dim(image2)[3] == 2) {
+			newarray = array(1, dim = c(nrow(image2), ncol(image2), 4))
+			newarray[,, 1] = image2[,, 1]
+			newarray[,, 2] = image2[,, 1]
+			newarray[,, 3] = image2[,, 1]
+			newarray[,, 4] = image2[,, 2]
+			if (preview) {
+				plot_image(newarray)
+			}
+			return(newarray)
+		} else if (dim(image2)[3] == 3) {
+			newarray = array(1, dim = c(nrow(image2), ncol(image2), 4))
+			newarray[,, 1] = image2[,, 1]
+			newarray[,, 2] = image2[,, 2]
+			newarray[,, 3] = image2[,, 3]
+			newarray[,, 4] = 1
+			if (preview) {
+				plot_image(newarray)
+			}
+			return(newarray)
+		} else if (dim(image2)[3] == 4) {
+			if (preview) {
+				plot_image(image2)
+			}
+			return(image2)
+		} else {
+			stop(
+				"Unable to handle image of dimensions ",
+				paste0(dim(image2), collapse = "x")
+			)
+		}
+	}
+	imagetype = get_file_type(image)
+	if (imagetype == "array") {
+		return(process_image_dim(image))
+	} else if (imagetype == "matrix") {
+		return(process_image_dim(image))
+	} else if (imagetype == "png") {
+		image = png::readPNG(image, ...)
+		return(process_image_dim(image))
+	} else if (imagetype == "tif") {
+		image = tiff::readTIFF(image, ...)
+		return(process_image_dim(image))
+	} else if (imagetype == "jpg") {
+		image = jpeg::readJPEG(image, ...)
+		return(process_image_dim(image))
+	} else if (imagetype == "exr") {
+		if (length(find.package("libopenexr", quiet = TRUE)) > 0) {
+			image_tmp = libopenexr::read_exr(image)
+			image = array(1, dim = c(image_tmp$height, image_tmp$width, 4))
+			image[,, 1] = image_tmp$r
+			image[,, 2] = image_tmp$g
+			image[,, 3] = image_tmp$b
+			return(process_image_dim(image))
+		} else {
+			stop("The 'libopenexr' package is required for EXR support.")
+		}
+	} else {
+		stop("This error should never be reached--please report a bug.")
+	}
 }

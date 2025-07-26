@@ -10,7 +10,7 @@ ray_write_image(image, filename, clamp = TRUE, ...)
 \item{image}{Image filename or 3-layer RGB array.}
 
 \item{filename}{File to write to, with filetype determined by extension. Filetype can be
-\code{PNG}, \code{JPEG}, or \code{TIFF}.}
+\code{PNG}, \code{JPEG}, \code{TIFF}, or \code{EXR}.}
 
 \item{clamp}{Default \code{TRUE}. Whether to clamp the image to 0-1. If the file extension is \code{PNG} of \code{JPEG},
 this is forced to \code{TRUE}.}
