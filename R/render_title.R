@@ -80,97 +80,160 @@
 #'              title_size=20, title_bar_alpha = 0.8,
 #'              title_bar_color="red", title_color = "white")
 #'}
-render_title = function(image,
-                     title_text = "", title_size = 30,
-                     title_offset = rep(title_size/2,2),
-                     title_lineheight = 1,
-                     title_color = "black",
-                     title_font = "Arial", title_style = "plain",
-                     title_bar_color = NA, title_bar_alpha = 0.5, title_bar_width = NULL,
-                     title_position = NA, title_just = "left",
-                     use_magick = FALSE,
-                     filename = NULL, preview = FALSE) {
+render_title = function(
+  image,
+  title_text = "",
+  title_size = 30,
+  title_offset = rep(title_size / 2, 2),
+  title_lineheight = 1,
+  title_color = "black",
+  title_font = "Arial",
+  title_style = "plain",
+  title_bar_color = NA,
+  title_bar_alpha = 0.5,
+  title_bar_width = NULL,
+  title_position = NA,
+  title_just = "left",
+  use_magick = FALSE,
+  filename = NULL,
+  preview = FALSE
+) {
   imagetype = get_file_type(image)
   temp = tempfile(fileext = ".png")
-  if(imagetype %in% c("matrix", "array")) {
+  if (imagetype %in% c("matrix", "array")) {
     ray_write_image(image, temp)
     temp_image = png::readPNG(temp)
   } else {
     temp_image = image
   }
 
-  if(use_magick) {
-    if(title_style == "plain") {
+  if (use_magick) {
+    if (title_style == "plain") {
       title_style = "normal"
     }
-    if(is.na(title_bar_color)) {
+    if (is.na(title_bar_color)) {
       title_bar_color = NULL
     }
-    if(is.na(title_position)) {
+    if (is.na(title_position)) {
       title_position = "northwest"
     }
     dimensions = dim(temp_image)
-    if(!("magick" %in% rownames(utils::installed.packages()))) {
+    if (!("magick" %in% rownames(utils::installed.packages()))) {
       stop("`magick` package required for adding title")
     }
 
-    if(!is.null(title_bar_color)) {
-      title_bar_color = col2rgb(title_bar_color)/255
-      title_bar = array(0,c(dimensions[1],dimensions[2],4))
-      if(is.null(title_bar_width)) {
+    if (!is.null(title_bar_color)) {
+      title_bar_color = col2rgb(title_bar_color) / 255
+      title_bar = array(0, c(dimensions[1], dimensions[2], 4))
+      if (is.null(title_bar_width)) {
         #Detect newlines and adjust title bar width
-        char_vector = unlist(strsplit(title_text,""))
+        char_vector = unlist(strsplit(title_text, ""))
         newline_indices = which(char_vector == "\n")
-        newline_indices = newline_indices[newline_indices != length(char_vector)]
+        newline_indices = newline_indices[
+          newline_indices != length(char_vector)
+        ]
         newlines = length(newline_indices)
         title_bar_width = 2 * title_offset[2] + title_size * (1 + newlines)
       }
-      if(title_bar_width > dimensions[1]) {
-        message(paste0(c("Input title_bar_width (", title_bar_width,
-                ") greater than image height (",
-                dimensions[1],
-                "), reducing size."),collapse=""))
+      if (title_bar_width > dimensions[1]) {
+        message(paste0(
+          c(
+            "Input title_bar_width (",
+            title_bar_width,
+            ") greater than image height (",
+            dimensions[1],
+            "), reducing size."
+          ),
+          collapse = ""
+        ))
         title_bar_width = dimensions[1]
       }
-      if(title_position %in% c("northwest","north","northeast")) {
-        title_bar[1:title_bar_width,,1] = title_bar_color[1]
-        title_bar[1:title_bar_width,,2] = title_bar_color[2]
-        title_bar[1:title_bar_width,,3] = title_bar_color[3]
-        title_bar[1:title_bar_width,,4] = title_bar_alpha
-      } else if (title_position %in% c("southwest","south","southeast")) {
-        title_bar[(nrow(title_bar)-title_bar_width):nrow(title_bar),,1] = title_bar_color[1]
-        title_bar[(nrow(title_bar)-title_bar_width):nrow(title_bar),,2] = title_bar_color[2]
-        title_bar[(nrow(title_bar)-title_bar_width):nrow(title_bar),,3] = title_bar_color[3]
-        title_bar[(nrow(title_bar)-title_bar_width):nrow(title_bar),,4] = title_bar_alpha
+      if (title_position %in% c("northwest", "north", "northeast")) {
+        title_bar[1:title_bar_width, , 1] = title_bar_color[1]
+        title_bar[1:title_bar_width, , 2] = title_bar_color[2]
+        title_bar[1:title_bar_width, , 3] = title_bar_color[3]
+        title_bar[1:title_bar_width, , 4] = title_bar_alpha
+      } else if (title_position %in% c("southwest", "south", "southeast")) {
+        title_bar[
+          (nrow(title_bar) - title_bar_width):nrow(title_bar),
+          ,
+          1
+        ] = title_bar_color[1]
+        title_bar[
+          (nrow(title_bar) - title_bar_width):nrow(title_bar),
+          ,
+          2
+        ] = title_bar_color[2]
+        title_bar[
+          (nrow(title_bar) - title_bar_width):nrow(title_bar),
+          ,
+          3
+        ] = title_bar_color[3]
+        title_bar[
+          (nrow(title_bar) - title_bar_width):nrow(title_bar),
+          ,
+          4
+        ] = title_bar_alpha
       } else {
-        title_bar[(nrow(title_bar)/2-title_bar_width/2):(nrow(title_bar)/2+title_bar_width/2),,1] = title_bar_color[1]
-        title_bar[(nrow(title_bar)/2-title_bar_width/2):(nrow(title_bar)/2+title_bar_width/2),,2] = title_bar_color[2]
-        title_bar[(nrow(title_bar)/2-title_bar_width/2):(nrow(title_bar)/2+title_bar_width/2),,3] = title_bar_color[3]
-        title_bar[(nrow(title_bar)/2-title_bar_width/2):(nrow(title_bar)/2+title_bar_width/2),,4] = title_bar_alpha
+        title_bar[
+          (nrow(title_bar) / 2 - title_bar_width / 2):(nrow(title_bar) /
+            2 +
+            title_bar_width / 2),
+          ,
+          1
+        ] = title_bar_color[1]
+        title_bar[
+          (nrow(title_bar) / 2 - title_bar_width / 2):(nrow(title_bar) /
+            2 +
+            title_bar_width / 2),
+          ,
+          2
+        ] = title_bar_color[2]
+        title_bar[
+          (nrow(title_bar) / 2 - title_bar_width / 2):(nrow(title_bar) /
+            2 +
+            title_bar_width / 2),
+          ,
+          3
+        ] = title_bar_color[3]
+        title_bar[
+          (nrow(title_bar) / 2 - title_bar_width / 2):(nrow(title_bar) /
+            2 +
+            title_bar_width / 2),
+          ,
+          4
+        ] = title_bar_alpha
       }
-      title_bar_temp = paste0(tempfile(),".png")
-      png::writePNG(title_bar,title_bar_temp)
+      title_bar_temp = paste0(tempfile(), ".png")
+      png::writePNG(title_bar, title_bar_temp)
       magick::image_read(temp) |>
-        magick::image_composite(magick::image_read(title_bar_temp),
-        ) |>
+        magick::image_composite(magick::image_read(title_bar_temp), ) |>
         magick::image_write(path = temp, format = "png")
     }
     magick::image_read(temp) |>
-      magick::image_annotate(title_text,
-                             location = paste0("+", title_offset[1],"+",title_offset[2]),
-                             size = title_size, color = title_color, style = title_style,
-                             font = title_font, gravity = title_position) |>
+      magick::image_annotate(
+        title_text,
+        location = paste0("+", title_offset[1], "+", title_offset[2]),
+        size = title_size,
+        color = title_color,
+        style = title_style,
+        font = title_font,
+        gravity = title_position
+      ) |>
       magick::image_write(path = temp, format = "png")
-
   } else {
     draw_title_card = function(
       image,
       title,
-      padding_x = 10, padding_y = 10,
+      padding_x = 10,
+      padding_y = 10,
       gp_text = grid::gpar(col = "white", fontsize = title_size),
-      bg_color = "black", bg_alpha = 0.65,
-      title_just = c("left", "top")) {
-      grDevices::png(temp,
+      bg_color = "black",
+      bg_alpha = 0.65,
+      title_just = c("left", "top")
+    ) {
+      grDevices::png(
+        temp,
         width = ncol(image),
         height = nrow(image),
         pointsize = 12,
@@ -199,7 +262,7 @@ render_title = function(image,
         for (segment in segments) {
           words = strsplit(segment, "\\s+")[[1]]
           if (length(words) == 0) {
-            all_lines = c(all_lines, "")  # Add an empty line for consecutive newlines
+            all_lines = c(all_lines, "") # Add an empty line for consecutive newlines
             next
           }
 
@@ -208,7 +271,11 @@ render_title = function(image,
 
           for (word in words[-1]) {
             test_line = paste(current_line, word)
-            test_width = grid::convertWidth(grid::stringWidth(test_line), "native", valueOnly = TRUE)
+            test_width = grid::convertWidth(
+              grid::stringWidth(test_line),
+              "native",
+              valueOnly = TRUE
+            )
             if (test_width > available_width) {
               lines = c(lines, current_line)
               current_line = word
@@ -226,15 +293,21 @@ render_title = function(image,
 
       # Wrap the title text
       lines = wrap_text(title, available_width)
-      lines_with_newlines = paste0(lines, collapse="\n")
+      lines_with_newlines = paste0(lines, collapse = "\n")
 
-      text_size = systemfonts::shape_string(lines_with_newlines,
-        size = title_size, vjust = 0,
-        res=72, lineheight = title_lineheight,
-        family = title_font)[["metrics"]]
+      text_size = systemfonts::shape_string(
+        lines_with_newlines,
+        size = title_size,
+        vjust = 0,
+        res = 72,
+        lineheight = title_lineheight,
+        family = title_font
+      )[["metrics"]]
       # Position adjustments
       if (!title_just[1] %in% c('left', 'center', 'right')) {
-        stop('Invalid title_just value for horizontal alignment. Must be "left", "center", or "right".')
+        stop(
+          'Invalid title_just value for horizontal alignment. Must be "left", "center", or "right".'
+        )
       }
       if (title_just[1] == 'left') {
         x = padding_x
@@ -251,63 +324,75 @@ render_title = function(image,
         text_size$top_bearing -
         text_size$bottom_bearing -
         text_size$top_border +
-        padding_y*2
+        padding_y * 2
       # Draw background rectangle
       grid::grid.rect(
-        x = 0, y = 0,
+        x = 0,
+        y = 0,
         width = image_width,
         height = height_with_padding,
         just = c("left", "bottom"),
         default.units = "native",
-        gp = grid::gpar(fill =
-          grDevices::adjustcolor(bg_color, alpha.f = bg_alpha), col = NA)
+        gp = grid::gpar(
+          fill = grDevices::adjustcolor(bg_color, alpha.f = bg_alpha),
+          col = NA
+        )
       )
-      grid::grid.text(label = lines_with_newlines,
-        x = padding_x, y = padding_y,
+      grid::grid.text(
+        label = lines_with_newlines,
+        x = padding_x,
+        y = padding_y,
         default.units = "native",
-        just = c("left","top"),
+        just = c("left", "top"),
         gp = grid::gpar(
           fontsize = title_size,
           lineheight = title_lineheight,
           cex = 1,
-          fontfamily = title_font)
+          fontfamily = title_font
+        )
       )
       dev.off()
     }
-    if(!is.na(title_position)) {
+    if (!is.na(title_position)) {
       warning("Title position is ignored when not using {magick}")
     }
-    if(is.null(title_bar_color)) {
+    if (is.null(title_bar_color)) {
       title_bar_color = NA
     }
-    if(is.null(title_bar_alpha)) {
+    if (is.null(title_bar_alpha)) {
       title_bar_alpha = NA
     }
     draw_title_card(
       ray_read_image(temp_image),
       title = title_text,
-      padding_x = title_offset[1], padding_y = title_offset[2],
-      gp_text = grid::gpar(col = title_color,
+      padding_x = title_offset[1],
+      padding_y = title_offset[2],
+      gp_text = grid::gpar(
+        col = title_color,
         fontsize = title_size,
         fontfamily = title_font,
         lineheight = title_lineheight,
-        fontface = title_style, fill = NA),
-      bg_color = title_bar_color, bg_alpha = title_bar_alpha,
-      title_just = title_just)
+        fontface = title_style,
+        fill = NA
+      ),
+      bg_color = title_bar_color,
+      bg_alpha = title_bar_alpha,
+      title_just = title_just
+    )
   }
   temp = png::readPNG(temp)
-  if(length(dim(temp)) == 3 && dim(temp)[3] == 2) {
-    temparray = array(0,dim = c(nrow(temp),ncol(temp),3))
-    temparray[,,1] = temp[,,1]
-    temparray[,,2] = temp[,,1]
-    temparray[,,3] = temp[,,1]
+  if (length(dim(temp)) == 3 && dim(temp)[3] == 2) {
+    temparray = array(0, dim = c(nrow(temp), ncol(temp), 3))
+    temparray[,, 1] = temp[,, 1]
+    temparray[,, 2] = temp[,, 1]
+    temparray[,, 3] = temp[,, 1]
     temp = temparray
   }
-  if(length(dim(temp)) == 2) {
-    temparray = array(0,dim = c(nrow(temp),ncol(temp),3))
-    temparray[,,1] = temp
-    temparray[,,2] = temp
-    temparray[,,3] = temp
+  if (length(dim(temp)) == 2) {
+    temparray = array(0, dim = c(nrow(temp), ncol(temp), 3))
+    temparray[,, 1] = temp
+    temparray[,, 2] = temp
+    temparray[,, 3] = temp
     temp = temparray
   }
   handle_image_output(temp, filename = filename, preview = preview)
@@ -331,4 +416,3 @@ add_title = function(...) {
   message("add_title() deprecated--use render_title() instead.")
   render_title(...)
 }
-

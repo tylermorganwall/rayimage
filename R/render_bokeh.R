@@ -67,68 +67,106 @@
 #'render_bokeh(dragon, dragondepth, bokehshape = "hex", rotation=15,
 #'             focallength=300, focus=600)
 #'}
-render_bokeh = function(image, depthmap,
-                        focus=0.5, focallength = 100, fstop = 4, filename=NULL,
-                        preview = TRUE, preview_focus = FALSE,
-                        bokehshape = "circle", bokehintensity = 1, bokehlimit = 0.8, rotation=0,
-                        aberration = 0, gamma_correction = TRUE, progress = interactive(),
-                        ...) {
+render_bokeh = function(
+  image,
+  depthmap,
+  focus = 0.5,
+  focallength = 100,
+  fstop = 4,
+  filename = NULL,
+  preview = TRUE,
+  preview_focus = FALSE,
+  bokehshape = "circle",
+  bokehintensity = 1,
+  bokehlimit = 0.8,
+  rotation = 0,
+  aberration = 0,
+  gamma_correction = TRUE,
+  progress = interactive(),
+  ...
+) {
   imagetype = get_file_type(image)
   temp_image = ray_read_image(image)
 
   depthtype = get_file_type(depthmap)
-  if(preview_focus) {
+  if (preview_focus) {
     preview_focus(image, depthmap, focus, imagetype, depthtype)
     return(invisible())
   }
-  if(is.matrix(bokehshape)) {
+  if (is.matrix(bokehshape)) {
     custombokeh = bokehshape
     bokehshape = 2L
   } else {
-    if(bokehshape == "circle") {
+    if (bokehshape == "circle") {
       bokehshape = 0L
     } else {
       bokehshape = 1L
     }
-    custombokeh = matrix(1,1,1)
+    custombokeh = matrix(1, 1, 1)
   }
-  if(aberration >= 1 || aberration <= -1) {
+  if (aberration >= 1 || aberration <= -1) {
     stop("aberration value must be less than 1 and greater than -1")
   }
 
   depthmap = ray_read_image(depthmap, convert_to_array = FALSE)
 
-  if(length(dim(depthmap)) == 3) {
-    depthmap = depthmap[,,1]
+  if (length(dim(depthmap)) == 3) {
+    depthmap = depthmap[,, 1]
   }
 
-  depthmap[is.na(depthmap)] = max(depthmap, na.rm = TRUE)*2
+  depthmap[is.na(depthmap)] = max(depthmap, na.rm = TRUE) * 2
   # depthmap = t((depthmap))
 
-  if(gamma_correction) {
+  if (gamma_correction) {
     temp_image = temp_image^2.2
   }
-  for(i in 1:3) {
-    max_size = min(c(max(dim(depthmap)),500))
-    if(i == 1) {
-      depthmap2 = calc_bokeh_size(depthmap,focus,focallength, fstop,1+aberration)
-    } else if(i ==2) {
-      depthmap2 = calc_bokeh_size(depthmap,focus,focallength, fstop,1)
+  for (i in 1:3) {
+    max_size = min(c(max(dim(depthmap)), 500))
+    if (i == 1) {
+      depthmap2 = calc_bokeh_size(
+        depthmap,
+        focus,
+        focallength,
+        fstop,
+        1 + aberration
+      )
+    } else if (i == 2) {
+      depthmap2 = calc_bokeh_size(depthmap, focus, focallength, fstop, 1)
     } else {
-      depthmap2 = calc_bokeh_size(depthmap,focus,focallength, fstop,1-aberration)
+      depthmap2 = calc_bokeh_size(
+        depthmap,
+        focus,
+        focallength,
+        fstop,
+        1 - aberration
+      )
     }
-    if(any(dim(depthmap2)[1:2] != dim(temp_image)[1:2])) {
-      stop(sprintf("{rayimage}: dimensions of image (%ix%i) and depth map (%ix%i) don't match",
-                   dim(temp_image)[1],dim(temp_image)[2],
-                   dim(depthmap2)[1], dim(depthmap2)[2]))
+    if (any(dim(depthmap2)[1:2] != dim(temp_image)[1:2])) {
+      stop(sprintf(
+        "{rayimage}: dimensions of image (%ix%i) and depth map (%ix%i) don't match",
+        dim(temp_image)[1],
+        dim(temp_image)[2],
+        dim(depthmap2)[1],
+        dim(depthmap2)[2]
+      ))
     }
     depthmap2[depthmap2 > max_size] = max_size
-    temp_image[,,i] = psf(temp_image[,,i],depthmap2,
-                          depthmap, focus, bokehshape, custombokeh = custombokeh,
-                          bokehintensity, bokehlimit, rotation, progbar = progress,channel = i)
+    temp_image[,, i] = psf(
+      temp_image[,, i],
+      depthmap2,
+      depthmap,
+      focus,
+      bokehshape,
+      custombokeh = custombokeh,
+      bokehintensity,
+      bokehlimit,
+      rotation,
+      progbar = progress,
+      channel = i
+    )
   }
-  if(gamma_correction) {
-    temp_image = temp_image ^ (1/2.2)
+  if (gamma_correction) {
+    temp_image = temp_image^(1 / 2.2)
   }
   handle_image_output(temp_image, filename = filename, preview = preview)
 }

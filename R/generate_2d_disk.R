@@ -25,31 +25,34 @@
 #'if(run_documentation()){
 #'image(generate_2d_disk(101), asp=1)
 #'}
-generate_2d_disk = function(dim = c(11,11), radius = 1,
-                            rescale_unity = FALSE) {
+generate_2d_disk = function(
+  dim = c(11, 11),
+  radius = 1,
+  rescale_unity = FALSE
+) {
   dim = rev(dim)
   mindim = min(dim)
   add_offset_x = FALSE
   add_offset_y = FALSE
-  if(length(dim) == 2) {
-    if(dim[2] - dim[1] > 0) {
-      if(abs(dim[2] - dim[1]) %% 2 != 0) {
+  if (length(dim) == 2) {
+    if (dim[2] - dim[1] > 0) {
+      if (abs(dim[2] - dim[1]) %% 2 != 0) {
         add_offset_x = TRUE
       }
-    } else if(dim[2] - dim[1] < 0) {
-      if(abs(dim[2] - dim[1]) %% 2 != 0) {
+    } else if (dim[2] - dim[1] < 0) {
+      if (abs(dim[2] - dim[1]) %% 2 != 0) {
         add_offset_y = TRUE
       }
     }
   }
-  disk = generate_disk((1/radius)*1.18, mindim, add_offset_x,add_offset_y)
-  if(length(dim) == 2) {
-    disk = pad_to_fit(dim,disk)
+  disk = generate_disk((1 / radius) * 1.18, mindim, add_offset_x, add_offset_y)
+  if (length(dim) == 2) {
+    disk = pad_to_fit(dim, disk)
   }
-  disk = (disk - min(disk))/(max(disk)-min(disk))
-  disk = disk/sum(disk)
-  if(rescale_unity) {
-    return(disk/max(disk))
+  disk = (disk - min(disk)) / (max(disk) - min(disk))
+  disk = disk / sum(disk)
+  if (rescale_unity) {
+    return(disk / max(disk))
   }
   return(disk)
 }

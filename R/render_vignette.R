@@ -44,51 +44,63 @@
 #'#Increase the width of the blur by 50%:
 #'render_vignette(dragon, preview = TRUE, vignette = c(1,1.5))
 #'}
-render_vignette = function(image, vignette = 0.5, color = "#000000", radius = 1.3,
-                        filename = NULL, preview = FALSE) {
+render_vignette = function(
+  image,
+  vignette = 0.5,
+  color = "#000000",
+  radius = 1.3,
+  filename = NULL,
+  preview = FALSE
+) {
   temp = tempfile(fileext = ".png")
   ray_write_image(image, temp)
 
   tempmap = png::readPNG(temp)
   dimensions = dim(tempmap)
 
-  if(!("magick" %in% rownames(utils::installed.packages()))) {
+  if (!("magick" %in% rownames(utils::installed.packages()))) {
     stop("`magick` package required for adding overlay")
   }
-  if(length(vignette) > 1) {
-    if(vignette[2] < 0) {
+  if (length(vignette) > 1) {
+    if (vignette[2] < 0) {
       stop("vignette[2] must be greater than 0")
     }
-    radiusval = min(c(dimensions[1],dimensions[2]))/2 * vignette[2]
+    radiusval = min(c(dimensions[1], dimensions[2])) / 2 * vignette[2]
     vignette = vignette[1]
   } else {
-    radiusval = min(c(dimensions[1],dimensions[2]))/2
+    radiusval = min(c(dimensions[1], dimensions[2])) / 2
   }
-  if(is.numeric(vignette)) {
-    if(vignette[1] > 1 || vignette[1] < 0) {
-      stop("vignette value (", vignette[1],") must be between 0 and 1.")
+  if (is.numeric(vignette)) {
+    if (vignette[1] > 1 || vignette[1] < 0) {
+      stop("vignette value (", vignette[1], ") must be between 0 and 1.")
     }
   } else {
     vignette = 0.4
   }
-  imagefile = make_vignette_overlay(width=dimensions[1],height=dimensions[2],
-                                    intensity=vignette, radius=radiusval, radius_multiplier = radius, color=color)
+  imagefile = make_vignette_overlay(
+    width = dimensions[1],
+    height = dimensions[2],
+    intensity = vignette,
+    radius = radiusval,
+    radius_multiplier = radius,
+    color = color
+  )
   magick::image_read(temp) |>
     magick::image_composite(magick::image_read(imagefile)) |>
     magick::image_write(path = temp, format = "png")
   temp = png::readPNG(temp)
-  if(length(dim(temp)) == 3 && dim(temp)[3] == 2) {
-    temparray = array(0,dim = c(nrow(temp),ncol(temp),3))
-    temparray[,,1] = temp[,,1]
-    temparray[,,2] = temp[,,1]
-    temparray[,,3] = temp[,,1]
+  if (length(dim(temp)) == 3 && dim(temp)[3] == 2) {
+    temparray = array(0, dim = c(nrow(temp), ncol(temp), 3))
+    temparray[,, 1] = temp[,, 1]
+    temparray[,, 2] = temp[,, 1]
+    temparray[,, 3] = temp[,, 1]
     temp = temparray
   }
-  if(length(dim(temp)) == 2) {
-    temparray = array(0,dim = c(nrow(temp),ncol(temp),3))
-    temparray[,,1] = temp
-    temparray[,,2] = temp
-    temparray[,,3] = temp
+  if (length(dim(temp)) == 2) {
+    temparray = array(0, dim = c(nrow(temp), ncol(temp), 3))
+    temparray[,, 1] = temp
+    temparray[,, 2] = temp
+    temparray[,, 3] = temp
     temp = temparray
   }
   handle_image_output(temp, filename = filename, preview = preview)
@@ -116,4 +128,3 @@ add_vignette = function(...) {
   message("add_vignette() deprecated--use render_vignette() instead.")
   render_vignette(...)
 }
-

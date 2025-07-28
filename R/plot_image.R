@@ -25,68 +25,95 @@
 #'#Make pixels twice as tall as wide
 #'plot_image(dragon[1:100,,], asp = 1/2)
 #'#end}
-plot_image = function(image, rotate=0, draw_grid = FALSE, ignore_alpha = FALSE,
-                      asp = 1, new_page = TRUE, return_grob = FALSE,
-                      gp = grid::gpar()) {
+plot_image = function(
+  image,
+  rotate = 0,
+  draw_grid = FALSE,
+  ignore_alpha = FALSE,
+  asp = 1,
+  new_page = TRUE,
+  return_grob = FALSE,
+  gp = grid::gpar()
+) {
   image = ray_read_image(image) #Always output RGBA array
   rotatef = function(x) t(apply(x, 2, rev))
-  if(!(rotate %in% c(0,90,180,270))) {
-    if(length(rotate) == 1) {
-      warning(paste0("Rotation value ",rotate," not in c(0,90,180,270). Ignoring"))
+  if (!(rotate %in% c(0, 90, 180, 270))) {
+    if (length(rotate) == 1) {
+      warning(paste0(
+        "Rotation value ",
+        rotate,
+        " not in c(0,90,180,270). Ignoring"
+      ))
     } else {
-      warning(paste0("Rotation argument `rotate` not in c(0,90,180,270). Ignoring"))
+      warning(paste0(
+        "Rotation argument `rotate` not in c(0,90,180,270). Ignoring"
+      ))
     }
     number_of_rots = 0
   } else {
-    number_of_rots = rotate/90
+    number_of_rots = rotate / 90
   }
 
-  if(number_of_rots != 0) {
+  if (number_of_rots != 0) {
     newarray = image
     channels = dim(image)[3]
-    newarrayt = array(0,dim=c(ncol(image),nrow(image),channels))
-    for(i in seq_len(number_of_rots)) {
-      for(j in seq_len(channels)) {
-        if(i == 2) {
-          newarray[,,j] = rotatef(newarrayt[,,j])
+    newarrayt = array(0, dim = c(ncol(image), nrow(image), channels))
+    for (i in seq_len(number_of_rots)) {
+      for (j in seq_len(channels)) {
+        if (i == 2) {
+          newarray[,, j] = rotatef(newarrayt[,, j])
         } else {
-          newarrayt[,,j] = rotatef(newarray[,,j])
+          newarrayt[,, j] = rotatef(newarray[,, j])
         }
       }
     }
-    if(number_of_rots == 2) {
+    if (number_of_rots == 2) {
       image = newarray
     } else {
       image = newarrayt
     }
   }
-  if(any(image > 1 | image < 0,na.rm = TRUE)) {
+  if (any(image > 1 | image < 0, na.rm = TRUE)) {
     image[image > 1] = 1
     image[image < 0] = 0
   }
   nr = convert_to_native_raster(image)
 
-  if(new_page) {
+  if (new_page) {
     grid::grid.newpage()
   }
 
   image_dim = dim(image)
 
   # Draw a grid to differentiate image from background
-  if(draw_grid) {
+  if (draw_grid) {
     draw_grid_fxn = function() {
       grid::pushViewport(
         grid::viewport(
-          layout = grid::grid.layout(1, 1,
-                                     widths = grid::unit(image_dim[1], "pt"),
-                                     heights = grid::unit(image_dim[2], "pt")),
-          gp = gp)
+          layout = grid::grid.layout(
+            1,
+            1,
+            widths = grid::unit(image_dim[1], "pt"),
+            heights = grid::unit(image_dim[2], "pt")
+          ),
+          gp = gp
+        )
       )
       # Define grid density and angle
       grid_density = 0.01 # Adjust this value for tighter or looser grid
       for (i in seq(-2, 2, by = grid_density)) {
-        grid::grid.lines(x = c(0, 1), y = c(i, i + 1), default.units = "npc", gp = grid::gpar(col = "grey"))
-        grid::grid.lines(x = c(0, 1), y = c(i, i - 1), default.units = "npc", gp = grid::gpar(col = "grey"))
+        grid::grid.lines(
+          x = c(0, 1),
+          y = c(i, i + 1),
+          default.units = "npc",
+          gp = grid::gpar(col = "grey")
+        )
+        grid::grid.lines(
+          x = c(0, 1),
+          y = c(i, i - 1),
+          default.units = "npc",
+          gp = grid::gpar(col = "grey")
+        )
       }
       grid::popViewport()
     }

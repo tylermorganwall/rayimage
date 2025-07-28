@@ -74,98 +74,115 @@
 #'plot_image(custom*20)
 #'render_convolution_fft(dragon, kernel = custom, preview = TRUE)
 #'}
-render_convolution_fft = function(image, kernel = "gaussian",
-                                  kernel_dim = c(11, 11),
-                                  kernel_extent = 3, absolute = TRUE, pad = 50,
-                                  filename=NULL, preview=FALSE,
-                                  gamma_correction = FALSE) {
+render_convolution_fft = function(
+  image,
+  kernel = "gaussian",
+  kernel_dim = c(11, 11),
+  kernel_extent = 3,
+  absolute = TRUE,
+  pad = 50,
+  filename = NULL,
+  preview = FALSE,
+  gamma_correction = FALSE
+) {
   shift_fft = function(fft_mat) {
     nr = dim(fft_mat)[1]
     nc = dim(fft_mat)[2]
-    if(nr %% 2 == 0) {
-      nr_mid1 = nr/2
-      nr_mid2 = nr/2+1
+    if (nr %% 2 == 0) {
+      nr_mid1 = nr / 2
+      nr_mid2 = nr / 2 + 1
     } else {
-      nr_mid1 = floor(nr/2)
-      nr_mid2 = floor(nr/2)+1
+      nr_mid1 = floor(nr / 2)
+      nr_mid2 = floor(nr / 2) + 1
     }
-    if(nc %% 2 == 0) {
-      nc_mid1 = nc/2
-      nc_mid2 = nc/2+1
+    if (nc %% 2 == 0) {
+      nc_mid1 = nc / 2
+      nc_mid2 = nc / 2 + 1
     } else {
-      nc_mid1 = floor(nc/2)
-      nc_mid2 = floor(nc/2)+1
+      nc_mid1 = floor(nc / 2)
+      nc_mid2 = floor(nc / 2) + 1
     }
     fftcorn_nw = fft_mat[1:nr_mid1, 1:nc_mid1]
     fftcorn_ne = fft_mat[1:nr_mid1, nc_mid2:nc]
     fftcorn_sw = fft_mat[nr_mid2:nr, 1:nc_mid1]
-    fftcorn_se = fft_mat[nr_mid2:nr,nc_mid2:nc]
-    rbind(cbind(fftcorn_se,fftcorn_sw), cbind(fftcorn_ne,fftcorn_nw))
+    fftcorn_se = fft_mat[nr_mid2:nr, nc_mid2:nc]
+    rbind(cbind(fftcorn_se, fftcorn_sw), cbind(fftcorn_ne, fftcorn_nw))
   }
-  if(!is.null(filename)) {
-    if(tools::file_ext(filename) != "png") {
-      filename = paste0(filename,".png")
+  if (!is.null(filename)) {
+    if (tools::file_ext(filename) != "png") {
+      filename = paste0(filename, ".png")
     }
   }
   temp_image = ray_read_image(image, convert_to_array = FALSE)
 
-  if(is.character(kernel)) {
-    if(kernel == "gaussian") {
-      kernel = generate_2d_gaussian(1,1,kernel_dim,kernel_extent)
+  if (is.character(kernel)) {
+    if (kernel == "gaussian") {
+      kernel = generate_2d_gaussian(1, 1, kernel_dim, kernel_extent)
     }
   }
-  if(is.numeric(kernel) && length(kernel) == 1) {
-    kernel = generate_2d_gaussian(kernel,1,kernel_dim,kernel_extent)
+  if (is.numeric(kernel) && length(kernel) == 1) {
+    kernel = generate_2d_gaussian(kernel, 1, kernel_dim, kernel_extent)
   }
 
-  if(any(dim(kernel)[1:2] != dim(temp_image)[1:2])) {
-    if(all(dim(kernel)[1:2] <= dim(temp_image)[1:2])) {
-      kernel = expand_to_fit(dim(temp_image)[1:2],kernel)
+  if (any(dim(kernel)[1:2] != dim(temp_image)[1:2])) {
+    if (all(dim(kernel)[1:2] <= dim(temp_image)[1:2])) {
+      kernel = expand_to_fit(dim(temp_image)[1:2], kernel)
     } else {
       stop("kernel can't have greater dimensions than image")
     }
   }
-  if(pad != 0) {
-    temp_image = add_multi_padding(temp_image,pad)
-    kernel = add_multi_padding(kernel,pad)
+  if (pad != 0) {
+    temp_image = add_multi_padding(temp_image, pad)
+    kernel = add_multi_padding(kernel, pad)
   }
 
-  if(any(dim(kernel) > dim(temp_image)[1:2]*2 + 1)) {
-    stop("kernel dimensions: ", paste0(dim(kernel),collapse="x"),
-         " must not be greater than 2x image dimensions: ", paste0(dim(temp_image)[1:2],collapse="x"),
-         ", plus one (here, ", paste0(dim(temp_image)[1:2]*2 + 1, collapse="x"),").")
+  if (any(dim(kernel) > dim(temp_image)[1:2] * 2 + 1)) {
+    stop(
+      "kernel dimensions: ",
+      paste0(dim(kernel), collapse = "x"),
+      " must not be greater than 2x image dimensions: ",
+      paste0(dim(temp_image)[1:2], collapse = "x"),
+      ", plus one (here, ",
+      paste0(dim(temp_image)[1:2] * 2 + 1, collapse = "x"),
+      ")."
+    )
   }
 
-  if(gamma_correction) {
+  if (gamma_correction) {
     temp_image = temp_image^2.2
   }
   temp_fft = temp_image
-  if(length(dim(temp_image)) == 2) {
+  if (length(dim(temp_image)) == 2) {
     temp_fft = stats::fft(temp_image)
   } else if (length(dim(temp_image)) == 3) {
-    for(i in seq_len(dim(temp_image)[3])) {
-      temp_fft[,,i] = stats::fft(temp_image[,,i])
+    for (i in seq_len(dim(temp_image)[3])) {
+      temp_fft[,, i] = stats::fft(temp_image[,, i])
     }
   }
 
   kernal_fft = stats::fft(kernel)
   vals = Re(temp_fft)
-  if(length(dim(temp_fft)) == 3) {
-    for(i in 1:(dim(temp_image)[3])) {
-      vals[,,i] = shift_fft(Re(stats::fft(temp_fft[,,i] * kernal_fft, inverse = TRUE))/length(vals[,,i]))
+  if (length(dim(temp_fft)) == 3) {
+    for (i in 1:(dim(temp_image)[3])) {
+      vals[,, i] = shift_fft(
+        Re(stats::fft(temp_fft[,, i] * kernal_fft, inverse = TRUE)) /
+          length(vals[,, i])
+      )
     }
   } else {
-    vals = shift_fft(Re(stats::fft(temp_fft * kernal_fft, inverse = TRUE))/length(vals))
+    vals = shift_fft(
+      Re(stats::fft(temp_fft * kernal_fft, inverse = TRUE)) / length(vals)
+    )
   }
-  if(absolute) {
+  if (absolute) {
     vals = abs(vals)
   }
 
-  if(gamma_correction) {
-    vals = vals ^ (1/2.2)
+  if (gamma_correction) {
+    vals = vals^(1 / 2.2)
   }
-  if(pad != 0) {
-    vals = trim_padding(vals,pad)
+  if (pad != 0) {
+    vals = trim_padding(vals, pad)
   }
   handle_image_output(vals, filename = filename, preview = preview)
 }

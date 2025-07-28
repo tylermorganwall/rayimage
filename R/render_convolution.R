@@ -76,74 +76,101 @@
 #'plot_image(custom)
 #'render_convolution(dragon, kernel = custom, preview = TRUE)
 #'}
-render_convolution = function(image, kernel = "gaussian",
-                              kernel_dim = 11, kernel_extent = 3, absolute = TRUE,
-                              min_value=NULL,
-                              filename=NULL, preview=FALSE,
-                              gamma_correction = FALSE, progress = FALSE) {
-  if(!is.null(filename)) {
-    if(tools::file_ext(filename) != "png") {
-      filename = paste0(filename,".png")
+render_convolution = function(
+  image,
+  kernel = "gaussian",
+  kernel_dim = 11,
+  kernel_extent = 3,
+  absolute = TRUE,
+  min_value = NULL,
+  filename = NULL,
+  preview = FALSE,
+  gamma_correction = FALSE,
+  progress = FALSE
+) {
+  if (!is.null(filename)) {
+    if (tools::file_ext(filename) != "png") {
+      filename = paste0(filename, ".png")
     }
   }
   imagetype = get_file_type(image)
   # temp_image = ray_read_image(image)
-  if(is.character(kernel)) {
-    if(kernel == "gaussian") {
-      kernel = generate_2d_gaussian(1,1,kernel_dim,kernel_extent)
+  if (is.character(kernel)) {
+    if (kernel == "gaussian") {
+      kernel = generate_2d_gaussian(1, 1, kernel_dim, kernel_extent)
     }
   }
-  if(is.numeric(kernel) && length(kernel) == 1) {
-    kernel = generate_2d_gaussian(kernel,1,kernel_dim,kernel_extent)
+  if (is.numeric(kernel) && length(kernel) == 1) {
+    kernel = generate_2d_gaussian(kernel, 1, kernel_dim, kernel_extent)
   }
-  if(!is.null(dim(kernel)) && all(dim(kernel) >= 2)) {
-    if(ncol(kernel) %% 2 == 0) {
+  if (!is.null(dim(kernel)) && all(dim(kernel) >= 2)) {
+    if (ncol(kernel) %% 2 == 0) {
       newkernel = matrix(0, ncol = ncol(kernel) + 1, nrow = nrow(kernel))
-      newkernel[,1:ncol(kernel)] = kernel
+      newkernel[, 1:ncol(kernel)] = kernel
       kernel = newkernel
     }
-    if(nrow(kernel) %% 2 == 0) {
+    if (nrow(kernel) %% 2 == 0) {
       newkernel = matrix(0, ncol = ncol(kernel), nrow = nrow(kernel) + 1)
-      newkernel[1:nrow(kernel),] = kernel
+      newkernel[1:nrow(kernel), ] = kernel
       kernel = newkernel
     }
   }
   temp_image = ray_read_image(image, convert_to_array = FALSE)
 
-  if(any(dim(kernel) > dim(temp_image)[1:2]*2 + 1)) {
-    stop("kernel dimensions: ", paste0(dim(kernel),collapse="x"),
-         " must not be greater than 2x image dimensions: ", paste0(dim(temp_image)[1:2],collapse="x"),
-         ", plus one (here, ", paste0(dim(temp_image)[1:2]*2 + 1, collapse="x"),").")
+  if (any(dim(kernel) > dim(temp_image)[1:2] * 2 + 1)) {
+    stop(
+      "kernel dimensions: ",
+      paste0(dim(kernel), collapse = "x"),
+      " must not be greater than 2x image dimensions: ",
+      paste0(dim(temp_image)[1:2], collapse = "x"),
+      ", plus one (here, ",
+      paste0(dim(temp_image)[1:2] * 2 + 1, collapse = "x"),
+      ")."
+    )
   }
 
-  if(gamma_correction) {
+  if (gamma_correction) {
     temp_image = temp_image^2.2
   }
   bloom_matrix = matrix(TRUE, nrow = nrow(temp_image), ncol = ncol(temp_image))
-  if(imagetype != "matrix") {
-    if(!is.null(min_value)) {
-      bloom_matrix[temp_image[,,1] <= min_value & temp_image[,,2] <= min_value & temp_image[,,3] <= min_value] = FALSE
+  if (imagetype != "matrix") {
+    if (!is.null(min_value)) {
+      bloom_matrix[
+        temp_image[,, 1] <= min_value &
+          temp_image[,, 2] <= min_value &
+          temp_image[,, 3] <= min_value
+      ] = FALSE
     }
   } else {
-    if(!is.null(min_value)) {
+    if (!is.null(min_value)) {
       bloom_matrix[temp_image <= min_value] = FALSE
     }
   }
   temp_image_final = temp_image
-  if(imagetype != "matrix") {
-    for(i in seq_len(dim(temp_image)[3])) {
-      temp_image_final[,,i] = convolution_cpp(temp_image[,,i], kernel = kernel,
-        progbar = progress, channel = i, bloom_matrix = bloom_matrix)
+  if (imagetype != "matrix") {
+    for (i in seq_len(dim(temp_image)[3])) {
+      temp_image_final[,, i] = convolution_cpp(
+        temp_image[,, i],
+        kernel = kernel,
+        progbar = progress,
+        channel = i,
+        bloom_matrix = bloom_matrix
+      )
     }
   } else {
-    temp_image_final = convolution_cpp(temp_image, kernel = kernel,
-      progbar = progress, channel = 1, bloom_matrix = bloom_matrix)
+    temp_image_final = convolution_cpp(
+      temp_image,
+      kernel = kernel,
+      progbar = progress,
+      channel = 1,
+      bloom_matrix = bloom_matrix
+    )
   }
-  if(absolute) {
+  if (absolute) {
     temp_image_final = abs(temp_image_final)
   }
-  if(gamma_correction) {
-    temp_image_final ^ (1/2.2)
+  if (gamma_correction) {
+    temp_image_final^(1 / 2.2)
   }
   handle_image_output(temp_image_final, filename = filename, preview = preview)
 }

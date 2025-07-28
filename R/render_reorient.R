@@ -33,22 +33,28 @@
 #'  render_reorient(transpose = TRUE) |>
 #'  plot_image()
 #'}
-render_reorient = function(image, flipx = FALSE, flipy = FALSE, transpose = FALSE,
-                           filename=NULL, preview=FALSE) {
+render_reorient = function(
+  image,
+  flipx = FALSE,
+  flipy = FALSE,
+  transpose = FALSE,
+  filename = NULL,
+  preview = FALSE
+) {
   imagetype = get_file_type(image)
   temp_image = ray_read_image(image, convert_to_array = FALSE)
 
-  if(flipx) {
+  if (flipx) {
     temp_image = fliplr(temp_image)
   }
-  if(flipy) {
+  if (flipy) {
     temp_image = flipud(temp_image)
   }
-  if(transpose) {
+  if (transpose) {
     if (imagetype == "matrix") {
       temp_image = t(temp_image)
     } else {
-      temp_image = aperm(temp_image,c(2,1,3))
+      temp_image = aperm(temp_image, c(2, 1, 3))
     }
   }
   handle_image_output(temp_image, filename = filename, preview = preview)

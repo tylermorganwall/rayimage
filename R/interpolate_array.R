@@ -20,19 +20,19 @@
 #'#end}
 interpolate_array = function(image, x, y) {
   imagetype = get_file_type(image)
-  xy = matrix(c(x,y),nrow=length(x),ncol=2)
+  xy = matrix(c(x, y), nrow = length(x), ncol = 2)
 
-  if(imagetype == "matrix") {
-    return(apply(xy,1,(function(x) rayinterp2(image, x[1],x[2]))))
+  if (imagetype == "matrix") {
+    return(apply(xy, 1, (function(x) rayinterp2(image, x[1], x[2]))))
   }
-  #Load and rotate images if png
+  #Load and rotate images if image
   image = ray_read_image(image) #Always output RGBA array
 
   output = list()
-  output$r = apply(xy,1,(function(x) rayinterp2(image[,,1], x[1],x[2])))
-  output$g = apply(xy,1,(function(x) rayinterp2(image[,,2], x[1],x[2])))
-  output$b = apply(xy,1,(function(x) rayinterp2(image[,,3], x[1],x[2])))
-  output$a = apply(xy,1,(function(x) rayinterp2(image[,,3], x[1],x[2])))
+  output$r = apply(xy, 1, (function(x) rayinterp2(image[,, 1], x[1], x[2])))
+  output$g = apply(xy, 1, (function(x) rayinterp2(image[,, 2], x[1], x[2])))
+  output$b = apply(xy, 1, (function(x) rayinterp2(image[,, 3], x[1], x[2])))
+  output$a = apply(xy, 1, (function(x) rayinterp2(image[,, 3], x[1], x[2])))
 
   return(output)
 }

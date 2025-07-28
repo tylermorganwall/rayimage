@@ -22,10 +22,16 @@
 #'render_clamp(dragon) |>
 #'  range()
 #'}
-render_clamp = function(image, min_value = 0, max_value = 1, preview = FALSE, ...) {
+render_clamp = function(
+  image,
+  min_value = 0,
+  max_value = 1,
+  preview = FALSE,
+  ...
+) {
   image[image < min_value] = min_value
   image[image > max_value] = max_value
-  if(preview) {
+  if (preview) {
     plot_image(image, ...)
   }
   return(image)

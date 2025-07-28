@@ -37,37 +37,37 @@
 #'   plot_image()
 #'}
 ray_write_image = function(image, filename, clamp = TRUE, ...) {
-	imagetype = get_file_type(image)
-	if (!imagetype %in% c("array", "matrix")) {
-		file.copy(image, filename)
-	} else {
-		fileext = tolower(tools::file_ext(filename))
-		if (!fileext %in% c("png", "jpeg", "jpg", "tiff", "exr")) {
-			stop(sprintf(
-				"File extension (%s) must be one of `png`, `jpeg`, `jpg`, `exr`, or `tiff`",
-				fileext
-			))
-		}
+  imagetype = get_file_type(image)
+  if (!imagetype %in% c("array", "matrix")) {
+    file.copy(image, filename)
+  } else {
+    fileext = tolower(tools::file_ext(filename))
+    if (!fileext %in% c("png", "jpeg", "jpg", "tiff", "exr")) {
+      stop(sprintf(
+        "File extension (%s) must be one of `png`, `jpeg`, `jpg`, `exr`, or `tiff`",
+        fileext
+      ))
+    }
 
-		if (clamp || fileext %in% c("jpg", "jpeg", "png")) {
-			image[image > 1] = 1
-			image[image < 0] = 0
-		}
-		if (fileext %in% c("jpeg", "jpg")) {
-			jpeg::writeJPEG(image, target = filename, ...)
-		} else if (fileext == "png") {
-			png::writePNG(image, target = filename, ...)
-		} else if (fileext == "exr") {
-			if (length(find.package("libopenexr", quiet = TRUE)) > 0) {
-				libopenexr::write_exr(
-					filename,
-					r = image[,, 1],
-					g = image[,, 2],
-					b = image[,, 3]
-				)
-			}
-		} else {
-			tiff::writeTIFF(image, where = filename, ...)
-		}
-	}
+    if (clamp || fileext %in% c("jpg", "jpeg", "png")) {
+      image[image > 1] = 1
+      image[image < 0] = 0
+    }
+    if (fileext %in% c("jpeg", "jpg")) {
+      jpeg::writeJPEG(image, target = filename, ...)
+    } else if (fileext == "png") {
+      png::writePNG(image, target = filename, ...)
+    } else if (fileext == "exr") {
+      if (length(find.package("libopenexr", quiet = TRUE)) > 0) {
+        libopenexr::write_exr(
+          filename,
+          r = image[,, 1],
+          g = image[,, 2],
+          b = image[,, 3]
+        )
+      }
+    } else {
+      tiff::writeTIFF(image, where = filename, ...)
+    }
+  }
 }

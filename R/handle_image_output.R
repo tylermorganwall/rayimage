@@ -3,7 +3,7 @@
 #' @description Handles image output logic: returning, saving to a file, or previewing.
 #'
 #' @param image 3D array. The image data.
-#' @param filename Default `NULL`. String specifying the file path to save the image. 
+#' @param filename Default `NULL`. String specifying the file path to save the image.
 #' If `NULL`, the image is returned or displayed.
 #' @param preview Default `FALSE`. If `TRUE`, the image is displayed.
 #'
