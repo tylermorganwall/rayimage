@@ -3,7 +3,7 @@
 #'@description Given a series of X and Y coordinates and an array/matrix, interpolates the Z coordinate
 #'using bilinear interpolation.
 #'
-#'@param image Image filename, a matrix, or a 3-layer RGB array.
+#'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param x X indices (or fractional index) to interpolate.
 #'@param y Y indices (or fractional index) to interpolate.
 #'

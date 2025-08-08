@@ -2,10 +2,9 @@
 #'
 #'@description Takes an RGB array/filename and adds an image overlay.
 #'
-#'@param image Image filename or 3-layer RGB array.
-#'@param image_overlay Default `NULL`. Either a string indicating the location of a png image to overlay
-#'over the image (transparency included), or a 4-layer RGBA array. This image will be resized to the
-#'dimension of the image if it does not match exactly.
+#'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
+#'@param image_overlay Default `NULL`. 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
+#'This image will be resized to the dimension of the image if it does not match exactly.
 #'@param rescale_original Default `FALSE`. If `TRUE`, function will resize the original image to match
 #'the overlay.
 #'@param alpha Default `NULL`, using overlay's alpha channel. Otherwise, this sets the alpha transparency

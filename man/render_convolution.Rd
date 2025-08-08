@@ -18,7 +18,7 @@ render_convolution(
 )
 }
 \arguments{
-\item{image}{Image filename or 3-layer RGB array.}
+\item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
 \item{kernel}{Default \code{gaussian}. By default, an 11x11 Gaussian kernel with a mean
 of \code{0} and a standard deviation of \code{1}, running from \code{-kernel_extent} to \code{kernel_extent}.

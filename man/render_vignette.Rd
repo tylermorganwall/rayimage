@@ -14,7 +14,7 @@ render_vignette(
 )
 }
 \arguments{
-\item{image}{Image filename or 3-layer RGB array.}
+\item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
 \item{vignette}{Default \code{0.5}. A camera vignetting effect will be added to the image.
 \code{1} is the darkest vignetting, while \code{0} is no vignetting. If vignette is a length-2 vector, the second entry will

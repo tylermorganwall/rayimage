@@ -4,7 +4,7 @@
 #' The image can be previewed or saved to a file. Supports both the `grid`-based
 #' method and (deprecated) `magick` package for rendering the title.
 #'
-#' @param image Image filename or 3-layer RGB array. Specifies the image to process.
+#' @param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #' @param title_text Default `""`. Text string to be added as the title to the image.
 #' @param title_offset Default `c(15,15)`. Numeric vector specifying the horizontal
 #' and vertical offset of the title text, relative to its anchor position.

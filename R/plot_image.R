@@ -2,7 +2,7 @@
 #'
 #'@description Displays the image in the current device.
 #'
-#'@param image Image array or filename of an image to be plotted.
+#'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param rotate Default 0. Rotates the output. Possible values: 0, 90, 180, 270.
 #'@param draw_grid Default `FALSE`. If `TRUE`, this will draw a grid in the background to help
 #'disambiguate the actual image from the device (helpful if the image background is the same as the
@@ -13,6 +13,8 @@
 #'@param ignore_alpha Default `FALSE`. Whether to ignoe the alpha channel when plotting.
 #'@param return_grob Default `FALSE`. Whether to return the grob object.
 #'@param gp A `grid::gpar()` object to include for the grid viewport displaying the image.
+#'@param gamma_correct Default `NA`, automatically determined. EXR images are automatically
+#'gamma corrected (power 1/2.2) unless this is set to `FALSE`.
 #'@export
 #'@examples
 #'#if(interactive()){
@@ -33,9 +35,11 @@ plot_image = function(
   asp = 1,
   new_page = TRUE,
   return_grob = FALSE,
-  gp = grid::gpar()
+  gp = grid::gpar(),
+  gamma_correct = NA
 ) {
   image = ray_read_image(image) #Always output RGBA array
+  image_type = attr(image, "filetype")
   rotatef = function(x) t(apply(x, 2, rev))
   if (!(rotate %in% c(0, 90, 180, 270))) {
     if (length(rotate) == 1) {
@@ -71,6 +75,15 @@ plot_image = function(
       image = newarray
     } else {
       image = newarrayt
+    }
+  }
+  if (is.na(gamma_correct)) {
+    if (image_type == "exr") {
+      image[,, 1:3] = image[,, 1:3]^(1 / 2.2)
+    }
+  } else {
+    if (gamma_correct) {
+      image[,, 1:3] = image[,, 1:3]^(1 / 2.2)
     }
   }
   if (any(image > 1 | image < 0, na.rm = TRUE)) {

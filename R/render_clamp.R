@@ -2,7 +2,7 @@
 #'
 #'@description Clamps an image to a user-specified range
 #'
-#'@param image Image filename or 3-layer RGB array.
+#'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param min_value Default `0`. Minimum value to clamp the image to.
 #'@param max_value Default `1`. Maximum value to clamp the image to.
 #'@param preview Default `FALSE`. If `TRUE`, it will display the image in addition

@@ -1,12 +1,12 @@
 #'@title Read Image
 #'
-#'@description Takes an RGB array/filename and adds an image overlay.
+#'@description Reads an image from a file/array/matrix. From files, supports `JPEG`, `PNG`, `TIFF`, and `EXR` images.
 #'
-#'@param image Image filename or 3-layer RGB array.
+#'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param convert_to_array Default `TRUE`. Whether to convert 2D B&W images/matrices to RGBA arrays.
 #'@param preview Default `FALSE`. If `TRUE`, it will display the image in addition
 #'to returning it.
-#'@param ... Arguments to pass to either `jpeg::readJPEG`, `png::readPNG`, or `tiff::readTIFF`.
+#'@param ... Arguments to pass to either `jpeg::readJPEG`, `png::readPNG`, `tiff::readTIFF`, or `libopenexr::read_exr()`.
 #'
 #'@return 3-layer RGB array of the processed image.
 #'@import grDevices
@@ -31,6 +31,15 @@
 #'if(run_documentation()){
 #'#Write as a tiff
 #'tmparr = tempfile(fileext=".tiff")
+#'ray_read_image(dragon) |>
+#'  ray_write_image(tmparr)
+#'ray_read_image(tmparr) |>
+#'   plot_image()
+#'}
+#'
+#'if(run_documentation()){
+#'#Write as an exr
+#'tmparr = tempfile(fileext=".exr")
 #'ray_read_image(dragon) |>
 #'  ray_write_image(tmparr)
 #'ray_read_image(tmparr) |>
@@ -103,20 +112,22 @@ ray_read_image = function(
       )
     }
   }
+
   imagetype = get_file_type(image)
+
   if (imagetype == "array") {
-    return(process_image_dim(image))
+    return(new_rayimg(process_image_dim(image), imagetype))
   } else if (imagetype == "matrix") {
-    return(process_image_dim(image))
+    return(new_rayimg(process_image_dim(image), imagetype))
   } else if (imagetype == "png") {
     image = png::readPNG(image, ...)
-    return(process_image_dim(image))
+    return(new_rayimg(process_image_dim(image), imagetype))
   } else if (imagetype == "tif") {
     image = tiff::readTIFF(image, ...)
-    return(process_image_dim(image))
+    return(new_rayimg(process_image_dim(image), imagetype))
   } else if (imagetype == "jpg") {
     image = jpeg::readJPEG(image, ...)
-    return(process_image_dim(image))
+    return(new_rayimg(process_image_dim(image), imagetype))
   } else if (imagetype == "exr") {
     if (length(find.package("libopenexr", quiet = TRUE)) > 0) {
       image_tmp = libopenexr::read_exr(image)
@@ -124,7 +135,7 @@ ray_read_image = function(
       image[,, 1] = image_tmp$r
       image[,, 2] = image_tmp$g
       image[,, 3] = image_tmp$b
-      return(process_image_dim(image))
+      return(new_rayimg(process_image_dim(image), imagetype))
     } else {
       stop("The 'libopenexr' package is required for EXR support.")
     }

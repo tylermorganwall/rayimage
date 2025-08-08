@@ -7,20 +7,20 @@
 ray_read_image(image, convert_to_array = TRUE, preview = FALSE, ...)
 }
 \arguments{
-\item{image}{Image filename or 3-layer RGB array.}
+\item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
 \item{convert_to_array}{Default \code{TRUE}. Whether to convert 2D B&W images/matrices to RGBA arrays.}
 
 \item{preview}{Default \code{FALSE}. If \code{TRUE}, it will display the image in addition
 to returning it.}
 
-\item{...}{Arguments to pass to either \code{jpeg::readJPEG}, \code{png::readPNG}, or \code{tiff::readTIFF}.}
+\item{...}{Arguments to pass to either \code{jpeg::readJPEG}, \code{png::readPNG}, \code{tiff::readTIFF}, or \code{libopenexr::read_exr()}.}
 }
 \value{
 3-layer RGB array of the processed image.
 }
 \description{
-Takes an RGB array/filename and adds an image overlay.
+Reads an image from a file/array/matrix. From files, supports \code{JPEG}, \code{PNG}, \code{TIFF}, and \code{EXR} images.
 }
 \examples{
 if(run_documentation()){
@@ -42,6 +42,15 @@ ray_read_image(tmparr) |>
 if(run_documentation()){
 #Write as a tiff
 tmparr = tempfile(fileext=".tiff")
+ray_read_image(dragon) |>
+ ray_write_image(tmparr)
+ray_read_image(tmparr) |>
+  plot_image()
+}
+
+if(run_documentation()){
+#Write as an exr
+tmparr = tempfile(fileext=".exr")
 ray_read_image(dragon) |>
  ray_write_image(tmparr)
 ray_read_image(tmparr) |>

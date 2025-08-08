@@ -14,7 +14,7 @@ render_resized(
 )
 }
 \arguments{
-\item{image}{Image filename, 3-layer RGB array, or matrix.}
+\item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
 \item{mag}{Default \code{1}. Amount to magnify the image, preserving aspect ratio. Overridden if
 \code{dim} is not \code{NULL}.}

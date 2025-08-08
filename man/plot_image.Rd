@@ -12,11 +12,12 @@ plot_image(
   asp = 1,
   new_page = TRUE,
   return_grob = FALSE,
-  gp = grid::gpar()
+  gp = grid::gpar(),
+  gamma_correct = NA
 )
 }
 \arguments{
-\item{image}{Image array or filename of an image to be plotted.}
+\item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
 \item{rotate}{Default 0. Rotates the output. Possible values: 0, 90, 180, 270.}
 
@@ -34,6 +35,9 @@ slightly widen the image.}
 \item{return_grob}{Default \code{FALSE}. Whether to return the grob object.}
 
 \item{gp}{A \code{grid::gpar()} object to include for the grid viewport displaying the image.}
+
+\item{gamma_correct}{Default \code{NA}, automatically determined. EXR images are automatically
+gamma corrected (power 1/2.2) unless this is set to \code{FALSE}.}
 }
 \description{
 Displays the image in the current device.

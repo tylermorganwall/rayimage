@@ -2,7 +2,7 @@
 #'
 #'@description Takes an RGB array/filename and writes it to file.
 #'
-#'@param image Image filename or 3-layer RGB array.
+#'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param filename File to write to, with filetype determined by extension. Filetype can be
 #'`PNG`, `JPEG`, `TIFF`, or `EXR`.
 #'@param clamp Default `TRUE`. Whether to clamp the image to 0-1. If the file extension is `PNG` of `JPEG`,

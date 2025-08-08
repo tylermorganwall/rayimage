@@ -2,7 +2,7 @@
 #'
 #'@description Transforms an image to black and white, preserving luminance.
 #'
-#'@param image Image filename, 3-layer RGB array, or matrix.
+#'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param rgb_coef Default `c(0.2126, 0.7152, 0.0722)`.
 #'Length-3 numeric vector listing coefficients to convert RGB to luminance.
 #'@param filename Default `NULL`. The filename of the image to be saved. If this is not given, the image will be plotted instead.

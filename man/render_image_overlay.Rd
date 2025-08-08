@@ -14,11 +14,10 @@ render_image_overlay(
 )
 }
 \arguments{
-\item{image}{Image filename or 3-layer RGB array.}
+\item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
-\item{image_overlay}{Default \code{NULL}. Either a string indicating the location of a png image to overlay
-over the image (transparency included), or a 4-layer RGBA array. This image will be resized to the
-dimension of the image if it does not match exactly.}
+\item{image_overlay}{Default \code{NULL}. 3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.
+This image will be resized to the dimension of the image if it does not match exactly.}
 
 \item{rescale_original}{Default \code{FALSE}. If \code{TRUE}, function will resize the original image to match
 the overlay.}

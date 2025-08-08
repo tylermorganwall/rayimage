@@ -2,7 +2,7 @@
 #'
 #'@description Displays the image in the current device.
 #'
-#'@param input_list List of array (or matrix) image inputs.
+#'@param input_list List of 3-layer RGB/4-layer RGBA array, `rayimg` class, or image filenames.
 #'@param dim Default `c(1,1)`. Width by height of output grid.
 #'@param asp Default `1`. Aspect ratio of the pixels(s). For example, an aspect ratio of `4/3` will
 #'slightly widen the image. This can also be a vector the same length of

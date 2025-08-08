@@ -12,7 +12,7 @@ render_bw(
 )
 }
 \arguments{
-\item{image}{Image filename, 3-layer RGB array, or matrix.}
+\item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
 \item{rgb_coef}{Default \code{c(0.2126, 0.7152, 0.0722)}.
 Length-3 numeric vector listing coefficients to convert RGB to luminance.}

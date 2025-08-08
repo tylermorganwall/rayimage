@@ -13,7 +13,7 @@ plot_image_grid(
 )
 }
 \arguments{
-\item{input_list}{List of array (or matrix) image inputs.}
+\item{input_list}{List of 3-layer RGB/4-layer RGBA array, \code{rayimg} class, or image filenames.}
 
 \item{dim}{Default \code{c(1,1)}. Width by height of output grid.}
 

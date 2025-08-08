@@ -7,7 +7,7 @@
 handle_image_output(image, filename = NULL, preview = FALSE)
 }
 \arguments{
-\item{image}{3D array. The image data.}
+\item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
 \item{filename}{Default \code{NULL}. String specifying the file path to save the image.
 If \code{NULL}, the image is returned or displayed.}

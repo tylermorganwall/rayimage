@@ -2,7 +2,7 @@
 #'
 #'@description Reorients an image or matrix. Transformations are applied in this order: x, y, and transpose.
 #'
-#'@param image Image filename, 3-layer RGB array, or matrix.
+#'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param flipx Default `FALSE`. Flip horizontally
 #'@param flipy Default `FALSE`. Flip vertically.
 #'@param transpose Default `FALSE`. Transpose image.

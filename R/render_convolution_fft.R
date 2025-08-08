@@ -4,7 +4,7 @@
 #'a user-supplied or built-in kernel. This function uses a fast-fourier transform and
 #'does the convolution in the frequency domain, so it should be faster for much larger kernels.
 #'
-#'@param image Image filename or 3-layer RGB array.
+#'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param filename Default `NULL`. The filename of the image to be saved. If this is not given, the image will be plotted instead.
 #'@param kernel Default `gaussian`. By default, an 11x11 Gaussian kernel with a mean
 #'of `0` and a standard deviation of `1`, running from `-kernel_extent` to `kernel_extent`.

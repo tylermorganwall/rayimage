@@ -24,7 +24,7 @@ render_bokeh(
 )
 }
 \arguments{
-\item{image}{Image filename or 3-layer RGB array.}
+\item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
 \item{depthmap}{Depth map filename or 1d array.}
 

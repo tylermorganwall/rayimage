@@ -2,7 +2,7 @@
 #'
 #'@description Takes an RGB array/filename and adds a camera vignette effect.
 #'
-#'@param image Image filename or 3-layer RGB array.
+#'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param filename Default `NULL`. Filename which to save the image. If `NULL` and `preview = FALSE`,
 #'returns an RGB array.
 #'@param vignette Default `0.5`. A camera vignetting effect will be added to the image.

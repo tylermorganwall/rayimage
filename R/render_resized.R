@@ -2,7 +2,7 @@
 #'
 #'@description Resizes an image or a matrix, using bilinear interpolation.
 #'
-#'@param image Image filename, 3-layer RGB array, or matrix.
+#'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param mag Default `1`. Amount to magnify the image, preserving aspect ratio. Overridden if
 #'`dim` is not `NULL`.
 #'@param dims Default `NULL`. Exact resized dimensions.

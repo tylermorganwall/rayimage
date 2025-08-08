@@ -7,7 +7,7 @@
 render_clamp(image, min_value = 0, max_value = 1, preview = FALSE, ...)
 }
 \arguments{
-\item{image}{Image filename or 3-layer RGB array.}
+\item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
 \item{min_value}{Default \code{0}. Minimum value to clamp the image to.}
 

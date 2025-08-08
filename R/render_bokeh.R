@@ -4,7 +4,7 @@
 #'(i.e. similar to "Portrait Mode" in an iPhone). User can specify a custom bokeh shape,
 #'or use one of the built-in bokeh types.
 #'
-#'@param image Image filename or 3-layer RGB array.
+#'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param depthmap Depth map filename or 1d array.
 #'@param focus Defaults `0.5`. Depth in which to blur.
 #'@param focallength Default `100`. Focal length of the virtual camera.

@@ -24,7 +24,7 @@ render_title(
 )
 }
 \arguments{
-\item{image}{Image filename or 3-layer RGB array. Specifies the image to process.}
+\item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
 \item{title_text}{Default \code{""}. Text string to be added as the title to the image.}
 

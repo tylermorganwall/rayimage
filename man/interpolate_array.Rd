@@ -7,7 +7,7 @@
 interpolate_array(image, x, y)
 }
 \arguments{
-\item{image}{Image filename, a matrix, or a 3-layer RGB array.}
+\item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
 \item{x}{X indices (or fractional index) to interpolate.}
 

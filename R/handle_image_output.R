@@ -2,7 +2,7 @@
 #'
 #' @description Handles image output logic: returning, saving to a file, or previewing.
 #'
-#' @param image 3D array. The image data.
+#' @param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #' @param filename Default `NULL`. String specifying the file path to save the image.
 #' If `NULL`, the image is returned or displayed.
 #' @param preview Default `FALSE`. If `TRUE`, the image is displayed.

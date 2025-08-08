@@ -2,7 +2,7 @@
 #'
 #'@description Displays the focal point
 #'
-#'@param image Image filename or 3-layer RGB array.
+#'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param depthmap Depth map filename or 1d array.
 #'@param focus Defaults `0.5`. Depth in which to blur. Minimum 0, maximum 1.
 #'@keywords internal

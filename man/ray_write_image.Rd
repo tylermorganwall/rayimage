@@ -7,7 +7,7 @@
 ray_write_image(image, filename, clamp = TRUE, ...)
 }
 \arguments{
-\item{image}{Image filename or 3-layer RGB array.}
+\item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
 \item{filename}{File to write to, with filetype determined by extension. Filetype can be
 \code{PNG}, \code{JPEG}, \code{TIFF}, or \code{EXR}.}

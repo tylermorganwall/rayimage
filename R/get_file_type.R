@@ -1,7 +1,7 @@
 #' Check Filename
 #'
 #' @param file Filename to be checked
-#' @return Flipped matrix
+#' @return Filename
 #' @keywords internal
 #'
 #' @examples

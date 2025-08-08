@@ -10,7 +10,7 @@ get_file_type(file)
 \item{file}{Filename to be checked}
 }
 \value{
-Flipped matrix
+Filename
 }
 \description{
 Check Filename
