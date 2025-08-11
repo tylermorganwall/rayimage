@@ -19,6 +19,8 @@
 #'interpolate_array(dragon,c(10,10.1,11),c(30,30.5,33))
 #'#end}
 interpolate_array = function(image, x, y) {
+  image = ray_read_image(image) #Always output RGBA array
+  #Check if file or image before below:
   imagetype = get_file_type(image)
   xy = matrix(c(x, y), nrow = length(x), ncol = 2)
 

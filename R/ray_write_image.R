@@ -37,6 +37,8 @@
 #'   plot_image()
 #'}
 ray_write_image = function(image, filename, clamp = TRUE, ...) {
+  image = ray_read_image(image) #Always output RGBA array
+  #Check if file or image before below:
   imagetype = get_file_type(image)
   if (!imagetype %in% c("array", "matrix")) {
     file.copy(image, filename)

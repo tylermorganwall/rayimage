@@ -106,7 +106,7 @@ render_bokeh(dragon, dragondepth,
 }
 if(run_documentation()){
 #Rotate the hexagonal shape:
-render_bokeh(dragon, dragondepth, bokehshape = "hex", rotation=15,
-            focallength=300, focus=600)
+render_bokeh(dragon, dragondepth, bokehshape = "hex", rotation=15, bokehintensity=3,
+            focallength=400, focus=800)
 }
 }

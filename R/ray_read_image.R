@@ -6,6 +6,8 @@
 #'@param convert_to_array Default `TRUE`. Whether to convert 2D B&W images/matrices to RGBA arrays.
 #'@param preview Default `FALSE`. If `TRUE`, it will display the image in addition
 #'to returning it.
+#'@param gamma_correct Default `NA`, automatically determined based on the image type.
+#'Whether to label the image as gamma corrected.
 #'@param ... Arguments to pass to either `jpeg::readJPEG`, `png::readPNG`, `tiff::readTIFF`, or `libopenexr::read_exr()`.
 #'
 #'@return 3-layer RGB array of the processed image.
@@ -49,6 +51,7 @@ ray_read_image = function(
   image,
   convert_to_array = TRUE,
   preview = FALSE,
+  gamma_correct = NA,
   ...
 ) {
   process_image_dim = function(image2) {
@@ -59,12 +62,11 @@ ray_read_image = function(
         newarray[,, 2] = image2
         newarray[,, 3] = image2
         newarray[,, 4] = 1
+        newarray = rayimg_mark_grey(newarray)
       } else {
         return(image2)
       }
-      if (preview) {
-        plot_image(newarray)
-      }
+      if (preview) plot_image(newarray)
       return(newarray)
     } else if (dim(image2)[3] == 1) {
       if (convert_to_array) {
@@ -73,12 +75,11 @@ ray_read_image = function(
         newarray[,, 2] = image2[,, 1]
         newarray[,, 3] = image2[,, 1]
         newarray[,, 4] = 1
+        newarray = rayimg_mark_grey(newarray)
       } else {
         return(image2)
       }
-      if (preview) {
-        plot_image(newarray)
-      }
+      if (preview) plot_image(newarray)
       return(newarray)
     } else if (dim(image2)[3] == 2) {
       newarray = array(1, dim = c(nrow(image2), ncol(image2), 4))
@@ -86,9 +87,8 @@ ray_read_image = function(
       newarray[,, 2] = image2[,, 1]
       newarray[,, 3] = image2[,, 1]
       newarray[,, 4] = image2[,, 2]
-      if (preview) {
-        plot_image(newarray)
-      }
+      newarray = rayimg_mark_grey(newarray)
+      if (preview) plot_image(newarray)
       return(newarray)
     } else if (dim(image2)[3] == 3) {
       newarray = array(1, dim = c(nrow(image2), ncol(image2), 4))
@@ -112,22 +112,40 @@ ray_read_image = function(
       )
     }
   }
-
+  # Return immediately if already loaded
   imagetype = get_file_type(image)
-
+  if (is.na(gamma_correct)) {
+    if (imagetype %in% c("png", "jpg")) {
+      gamma_correct = TRUE
+    } else {
+      gamma_correct = FALSE
+    }
+  }
+  if (inherits(image, "rayimg")) {
+    gamma_correct = attr(image, "gamma_correct")
+    return(new_rayimg(process_image_dim(image), imagetype, gamma_correct))
+  }
   if (imagetype == "array") {
-    return(new_rayimg(process_image_dim(image), imagetype))
+    return(new_rayimg(process_image_dim(image), imagetype, gamma_correct))
   } else if (imagetype == "matrix") {
-    return(new_rayimg(process_image_dim(image), imagetype))
+    return(new_rayimg(process_image_dim(image), imagetype, gamma_correct))
   } else if (imagetype == "png") {
     image = png::readPNG(image, ...)
-    return(new_rayimg(process_image_dim(image), imagetype))
+    return(new_rayimg(
+      process_image_dim(image),
+      imagetype,
+      gamma_correct
+    ))
   } else if (imagetype == "tif") {
     image = tiff::readTIFF(image, ...)
-    return(new_rayimg(process_image_dim(image), imagetype))
+    return(new_rayimg(process_image_dim(image), imagetype, gamma_correct))
   } else if (imagetype == "jpg") {
     image = jpeg::readJPEG(image, ...)
-    return(new_rayimg(process_image_dim(image), imagetype))
+    return(new_rayimg(
+      process_image_dim(image),
+      imagetype,
+      gamma_correct
+    ))
   } else if (imagetype == "exr") {
     if (length(find.package("libopenexr", quiet = TRUE)) > 0) {
       image_tmp = libopenexr::read_exr(image)
@@ -135,7 +153,7 @@ ray_read_image = function(
       image[,, 1] = image_tmp$r
       image[,, 2] = image_tmp$g
       image[,, 3] = image_tmp$b
-      return(new_rayimg(process_image_dim(image), imagetype))
+      return(new_rayimg(process_image_dim(image), imagetype, gamma_correct))
     } else {
       stop("The 'libopenexr' package is required for EXR support.")
     }

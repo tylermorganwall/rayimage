@@ -4,7 +4,13 @@
 \alias{ray_read_image}
 \title{Read Image}
 \usage{
-ray_read_image(image, convert_to_array = TRUE, preview = FALSE, ...)
+ray_read_image(
+  image,
+  convert_to_array = TRUE,
+  preview = FALSE,
+  gamma_correct = NA,
+  ...
+)
 }
 \arguments{
 \item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
@@ -13,6 +19,9 @@ ray_read_image(image, convert_to_array = TRUE, preview = FALSE, ...)
 
 \item{preview}{Default \code{FALSE}. If \code{TRUE}, it will display the image in addition
 to returning it.}
+
+\item{gamma_correct}{Default \code{NA}, automatically determined based on the image type.
+Whether to label the image as gamma corrected.}
 
 \item{...}{Arguments to pass to either \code{jpeg::readJPEG}, \code{png::readPNG}, \code{tiff::readTIFF}, or \code{libopenexr::read_exr()}.}
 }

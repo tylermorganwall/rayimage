@@ -20,7 +20,7 @@ get_file_type = function(file) {
       stop(
         "`",
         file,
-        "` not recognized class (png, tiff, jpeg, array, matrix)."
+        "` not recognized class (png, tiff, jpeg, exr, array, matrix)."
       )
     }
   } else if (length(dim(file)) == 3) {
@@ -28,6 +28,10 @@ get_file_type = function(file) {
   } else if (length(dim(file)) == 2) {
     imagetype = "matrix"
   } else {
-    stop("`", file, "` not recognized class (png, tiff, jpeg, array, matrix).")
+    stop(
+      "`",
+      file,
+      "` not recognized class (png, tiff, jpeg, exr, array, matrix)."
+    )
   }
 }

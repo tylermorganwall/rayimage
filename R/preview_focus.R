@@ -9,7 +9,8 @@
 #'@examples
 #'#Plot the dragon
 preview_focus = function(image, depthmap, focus, imagetype, depthtype) {
-  image = ray_read_image(image)
+  image = ray_read_image(image) #Always output RGBA array
+  #Check if file or image before below:
   depthmap = ray_read_image(depthmap, convert_to_array = FALSE)
   if (length(dim(depthmap)) == 3) {
     depthmap = depthmap[,, 1]

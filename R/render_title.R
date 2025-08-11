@@ -98,14 +98,15 @@ render_title = function(
   filename = NULL,
   preview = FALSE
 ) {
+  image = ray_read_image(image) #Always output RGBA array
+  #Check if file or image before below:
   imagetype = get_file_type(image)
+
   temp = tempfile(fileext = ".png")
-  if (imagetype %in% c("matrix", "array")) {
-    ray_write_image(image, temp)
-    temp_image = png::readPNG(temp)
-  } else {
-    temp_image = image
-  }
+  ray_write_image(
+    image = ray_read_image(array(0, dim = dim(image))),
+    filename = temp
+  )
 
   if (use_magick) {
     if (title_style == "plain") {
@@ -117,7 +118,7 @@ render_title = function(
     if (is.na(title_position)) {
       title_position = "northwest"
     }
-    dimensions = dim(temp_image)
+    dimensions = dim(image)
     if (!("magick" %in% rownames(utils::installed.packages()))) {
       stop("`magick` package required for adding title")
     }
@@ -345,6 +346,7 @@ render_title = function(
         default.units = "native",
         just = c("left", "top"),
         gp = grid::gpar(
+          col = title_color,
           fontsize = title_size,
           lineheight = title_lineheight,
           cex = 1,
@@ -363,7 +365,7 @@ render_title = function(
       title_bar_alpha = NA
     }
     draw_title_card(
-      ray_read_image(temp_image),
+      image,
       title = title_text,
       padding_x = title_offset[1],
       padding_y = title_offset[2],
@@ -380,22 +382,9 @@ render_title = function(
       title_just = title_just
     )
   }
-  temp = png::readPNG(temp)
-  if (length(dim(temp)) == 3 && dim(temp)[3] == 2) {
-    temparray = array(0, dim = c(nrow(temp), ncol(temp), 3))
-    temparray[,, 1] = temp[,, 1]
-    temparray[,, 2] = temp[,, 1]
-    temparray[,, 3] = temp[,, 1]
-    temp = temparray
-  }
-  if (length(dim(temp)) == 2) {
-    temparray = array(0, dim = c(nrow(temp), ncol(temp), 3))
-    temparray[,, 1] = temp
-    temparray[,, 2] = temp
-    temparray[,, 3] = temp
-    temp = temparray
-  }
-  handle_image_output(temp, filename = filename, preview = preview)
+  temp_text = ray_read_image(temp)
+  new_image = render_image_overlay(image, temp_text)
+  handle_image_output(new_image, filename = filename, preview = preview)
 }
 
 #' Add Title Function (deprecated)

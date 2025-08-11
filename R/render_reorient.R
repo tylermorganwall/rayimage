@@ -41,8 +41,9 @@ render_reorient = function(
   filename = NULL,
   preview = FALSE
 ) {
-  imagetype = get_file_type(image)
+  #Check if file or image before below:
   temp_image = ray_read_image(image, convert_to_array = FALSE)
+  imagetype = attr(temp_image, "filetype")
 
   if (flipx) {
     temp_image = fliplr(temp_image)

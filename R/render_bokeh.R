@@ -64,8 +64,8 @@
 #'}
 #'if(run_documentation()){
 #'#Rotate the hexagonal shape:
-#'render_bokeh(dragon, dragondepth, bokehshape = "hex", rotation=15,
-#'             focallength=300, focus=600)
+#'render_bokeh(dragon, dragondepth, bokehshape = "hex", rotation=15, bokehintensity=3,
+#'             focallength=400, focus=800)
 #'}
 render_bokeh = function(
   image,
@@ -85,10 +85,15 @@ render_bokeh = function(
   progress = interactive(),
   ...
 ) {
-  imagetype = get_file_type(image)
-  temp_image = ray_read_image(image)
+  temp_image = ray_read_image(image) #Always output RGBA array
+  #Check if file or image before below:
+  imagetype = attr(temp_image, "filetype")
 
-  depthtype = get_file_type(depthmap)
+  depthmap = ray_read_image(depthmap, convert_to_array = FALSE)
+  depthtype = attr(depthmap, "filetype")
+
+  image_gamma_correction = attr(temp_image, "gamma_correct")
+
   if (preview_focus) {
     preview_focus(image, depthmap, focus, imagetype, depthtype)
     return(invisible())
@@ -108,18 +113,16 @@ render_bokeh = function(
     stop("aberration value must be less than 1 and greater than -1")
   }
 
-  depthmap = ray_read_image(depthmap, convert_to_array = FALSE)
-
   if (length(dim(depthmap)) == 3) {
     depthmap = depthmap[,, 1]
   }
 
   depthmap[is.na(depthmap)] = max(depthmap, na.rm = TRUE) * 2
-  # depthmap = t((depthmap))
 
-  if (gamma_correction) {
-    temp_image = temp_image^2.2
+  if (image_gamma_correction) {
+    temp_image = to_linear(temp_image)
   }
+
   for (i in 1:3) {
     max_size = min(c(max(dim(depthmap)), 500))
     if (i == 1) {
@@ -165,8 +168,8 @@ render_bokeh = function(
       channel = i
     )
   }
-  if (gamma_correction) {
-    temp_image = temp_image^(1 / 2.2)
+  if (image_gamma_correction) {
+    temp_image = to_srgb(temp_image)
   }
   handle_image_output(temp_image, filename = filename, preview = preview)
 }

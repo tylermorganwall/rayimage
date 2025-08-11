@@ -27,7 +27,7 @@
 #'}
 #'if(run_documentation()){
 #'#Perform a convolution with the default gaussian kernel
-#'render_convolution_fft(dragon, kernel=0.1,preview = TRUE)
+#'render_convolution_fft(dragon, kernel=0.1, preview = TRUE)
 #'}
 #'if(run_documentation()){
 #'#Increase the width of the kernel
@@ -114,7 +114,9 @@ render_convolution_fft = function(
     }
   }
   temp_image = ray_read_image(image, convert_to_array = FALSE)
-
+  image = ray_read_image(image) #Always output RGBA array
+  #Check if file or image before below:
+  #
   if (is.character(kernel)) {
     if (kernel == "gaussian") {
       kernel = generate_2d_gaussian(1, 1, kernel_dim, kernel_extent)
@@ -155,7 +157,8 @@ render_convolution_fft = function(
   if (length(dim(temp_image)) == 2) {
     temp_fft = stats::fft(temp_image)
   } else if (length(dim(temp_image)) == 3) {
-    for (i in seq_len(dim(temp_image)[3])) {
+    for (i in seq_len(3)) {
+      #No alpha
       temp_fft[,, i] = stats::fft(temp_image[,, i])
     }
   }
@@ -163,7 +166,7 @@ render_convolution_fft = function(
   kernal_fft = stats::fft(kernel)
   vals = Re(temp_fft)
   if (length(dim(temp_fft)) == 3) {
-    for (i in 1:(dim(temp_image)[3])) {
+    for (i in seq_len(3)) {
       vals[,, i] = shift_fft(
         Re(stats::fft(temp_fft[,, i] * kernal_fft, inverse = TRUE)) /
           length(vals[,, i])

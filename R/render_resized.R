@@ -36,7 +36,7 @@
 #'}
 #'if(run_documentation()){
 #'#Specify the exact resulting dimensions
-#'render_resized(dragon, dim = c(320,160)) |>
+#'render_resized(dragon, dim = c(160,320)) |>
 #'  render_title("Dragon (custom size)", title_offset=c(10,10), title_bar_color="black",
 #'            title_size=20, title_color = "white") |>
 #'  plot_image()
@@ -54,8 +54,13 @@ render_resized = function(
       filename = paste0(filename, ".png")
     }
   }
-  imagetype = get_file_type(image)
-  temp_image = ray_read_image(image)
+  temp_image = ray_read_image(image) #Always output RGBA array
+  #Check if file or image before below:
+  imagetype = attr(temp_image, "filetype")
+  img_gamma_correct = attr(temp_image, "gamma_correct")
+  if (img_gamma_correct) {
+    temp_image[,, 1:3] = to_linear(temp_image[,, 1:3])
+  }
 
   if (method %in% c("bi", "bilinear")) {
     if (!is.null(dims)) {
@@ -63,7 +68,7 @@ render_resized = function(
     }
     temp_list = list()
     if (imagetype != "matrix") {
-      for (i in 1:3) {
+      for (i in 1:4) {
         if (is.null(dims)) {
           temp_list[[i]] = resize_image(temp_image[,, i], mag)
         } else {
@@ -74,11 +79,12 @@ render_resized = function(
       }
       temp_image = array(
         0,
-        dim = c(nrow(temp_list[[1]]), ncol(temp_list[[1]]), 3)
+        dim = c(nrow(temp_list[[1]]), ncol(temp_list[[1]]), 4)
       )
       temp_image[,, 1] = temp_list[[1]]
       temp_image[,, 2] = temp_list[[2]]
       temp_image[,, 3] = temp_list[[3]]
+      temp_image[,, 4] = temp_list[[4]]
     } else {
       if (is.null(dims)) {
         temp_image = resize_image(t(flipud(temp_image)), mag)
@@ -122,6 +128,14 @@ render_resized = function(
     } else {
       temp_image = resize_matrix_stb(temp_image, dims[1], dims[2], method)
     }
+  }
+  temp_image = ray_read_image(
+    temp_image,
+    filetype = imagetype,
+    gamma_correct = img_gamma_correct
+  )
+  if (img_gamma_correct) {
+    temp_image[,, 1:3] = to_srgb(temp_image[,, 1:3])
   }
   handle_image_output(temp_image, filename = filename, preview = preview)
 }

@@ -8,7 +8,7 @@ render_image_overlay(
   image,
   image_overlay = NULL,
   rescale_original = FALSE,
-  alpha = NULL,
+  alpha = NA,
   filename = NULL,
   preview = FALSE
 )
@@ -22,7 +22,7 @@ This image will be resized to the dimension of the image if it does not match ex
 \item{rescale_original}{Default \code{FALSE}. If \code{TRUE}, function will resize the original image to match
 the overlay.}
 
-\item{alpha}{Default \code{NULL}, using overlay's alpha channel. Otherwise, this sets the alpha transparency
+\item{alpha}{Default \code{NA}, using overlay's alpha channel. Otherwise, this sets the alpha transparency
 by multiplying the existing alpha channel by this value (between 0 and 1).}
 
 \item{filename}{Default \code{NULL}. File to save the image to. If \code{NULL} and \code{preview = FALSE},

@@ -29,6 +29,8 @@ render_clamp = function(
   preview = FALSE,
   ...
 ) {
+  image = ray_read_image(image) #Always output RGBA array
+  #Check if file or image before below:
   image[image < min_value] = min_value
   image[image > max_value] = max_value
   if (preview) {

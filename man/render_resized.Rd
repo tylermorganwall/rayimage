@@ -58,7 +58,7 @@ render_resized(dragon, mag = 2) |>
 }
 if(run_documentation()){
 #Specify the exact resulting dimensions
-render_resized(dragon, dim = c(320,160)) |>
+render_resized(dragon, dim = c(160,320)) |>
  render_title("Dragon (custom size)", title_offset=c(10,10), title_bar_color="black",
            title_size=20, title_color = "white") |>
  plot_image()

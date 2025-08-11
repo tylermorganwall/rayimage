@@ -55,7 +55,7 @@ plot_image(dragon)
 }
 if(run_documentation()){
 #Perform a convolution with the default gaussian kernel
-render_convolution_fft(dragon, kernel=0.1,preview = TRUE)
+render_convolution_fft(dragon, kernel=0.1, preview = TRUE)
 }
 if(run_documentation()){
 #Increase the width of the kernel

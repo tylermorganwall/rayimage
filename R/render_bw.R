@@ -24,13 +24,24 @@ render_bw = function(
   preview = FALSE
 ) {
   stopifnot(length(rgb_coef) == 3 && is.numeric(rgb_coef))
-  temp_image = ray_read_image(image)
+  src = ray_read_image(image)
+  d = dim(src)
+  # luminance
+  lum = rgb_coef[1] *
+    src[,, 1] +
+    rgb_coef[2] * src[,, 2] +
+    rgb_coef[3] * src[,, 3]
 
-  # Calculate luminance
-  temp_image = rgb_coef[1] *
-    temp_image[,, 1] +
-    rgb_coef[2] * temp_image[,, 2] +
-    rgb_coef[3] * temp_image[,, 3]
+  out = array(1, dim = c(d[1], d[2], 4))
+  out[,, 1] = lum
+  out[,, 2] = lum
+  out[,, 3] = lum
+  out[,, 4] = if (d[3] >= 4L) src[,, 4] else 1
 
-  handle_image_output(temp_image, filename = filename, preview = preview)
+  # keep filetype, wrap as rayimg, mark grey
+  attr(out, "filetype") = attr(src, "filetype")
+  class(out) = unique(c("rayimg", setdiff(class(out), "rayimg"), "array"))
+  out = rayimg_mark_grey(out)
+
+  handle_image_output(out, filename = filename, preview = preview)
 }

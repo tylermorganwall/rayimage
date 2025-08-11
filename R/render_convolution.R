@@ -19,7 +19,9 @@
 #'@param min_value Default `NULL`. If numeric, specifies he minimum value (for any color channel)
 #'for a pixel to have the convolution performed.
 #'@param preview Default `TRUE`. Whether to plot the convolved image, or just to return the values.
-#'@param gamma_correction Default `TRUE`. Controls gamma correction when adding colors. Default exponent of 2.2.
+#'@param gamma_correction Default `NA`, automatically determined (`FALSE` for matrix/array/exr/tiff,
+#' `TRUE` for jpg/png). Whether the image loaded has already had gamma correction applied and
+#' needs to be linearized. Controls gamma correction when adding colors. Uses exponent of 2.2.
 #'@param progress Default `TRUE`. Whether to display a progress bar.
 #'@return 3-layer RGB array of the processed image.
 #'@export
@@ -93,8 +95,6 @@ render_convolution = function(
       filename = paste0(filename, ".png")
     }
   }
-  imagetype = get_file_type(image)
-  # temp_image = ray_read_image(image)
   if (is.character(kernel)) {
     if (kernel == "gaussian") {
       kernel = generate_2d_gaussian(1, 1, kernel_dim, kernel_extent)
@@ -116,6 +116,7 @@ render_convolution = function(
     }
   }
   temp_image = ray_read_image(image, convert_to_array = FALSE)
+  imagetype = attr(temp_image, "filetype")
 
   if (any(dim(kernel) > dim(temp_image)[1:2] * 2 + 1)) {
     stop(
@@ -129,9 +130,6 @@ render_convolution = function(
     )
   }
 
-  if (gamma_correction) {
-    temp_image = temp_image^2.2
-  }
   bloom_matrix = matrix(TRUE, nrow = nrow(temp_image), ncol = ncol(temp_image))
   if (imagetype != "matrix") {
     if (!is.null(min_value)) {
@@ -148,7 +146,8 @@ render_convolution = function(
   }
   temp_image_final = temp_image
   if (imagetype != "matrix") {
-    for (i in seq_len(dim(temp_image)[3])) {
+    for (i in seq_len(3)) {
+      #Don't convolve alpha channel
       temp_image_final[,, i] = convolution_cpp(
         temp_image[,, i],
         kernel = kernel,

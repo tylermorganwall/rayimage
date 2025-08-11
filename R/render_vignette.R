@@ -52,11 +52,9 @@ render_vignette = function(
   filename = NULL,
   preview = FALSE
 ) {
-  temp = tempfile(fileext = ".png")
-  ray_write_image(image, temp)
-
-  tempmap = png::readPNG(temp)
-  dimensions = dim(tempmap)
+  image = ray_read_image(image)
+  image_gamma_correct = attr(image, "gamma_correct")
+  dimensions = dim(image)
 
   if (!("magick" %in% rownames(utils::installed.packages()))) {
     stop("`magick` package required for adding overlay")
@@ -77,7 +75,7 @@ render_vignette = function(
   } else {
     vignette = 0.4
   }
-  imagefile = make_vignette_overlay(
+  image_vignette = make_vignette_overlay(
     width = dimensions[1],
     height = dimensions[2],
     intensity = vignette,
@@ -85,24 +83,7 @@ render_vignette = function(
     radius_multiplier = radius,
     color = color
   )
-  magick::image_read(temp) |>
-    magick::image_composite(magick::image_read(imagefile)) |>
-    magick::image_write(path = temp, format = "png")
-  temp = png::readPNG(temp)
-  if (length(dim(temp)) == 3 && dim(temp)[3] == 2) {
-    temparray = array(0, dim = c(nrow(temp), ncol(temp), 3))
-    temparray[,, 1] = temp[,, 1]
-    temparray[,, 2] = temp[,, 1]
-    temparray[,, 3] = temp[,, 1]
-    temp = temparray
-  }
-  if (length(dim(temp)) == 2) {
-    temparray = array(0, dim = c(nrow(temp), ncol(temp), 3))
-    temparray[,, 1] = temp
-    temparray[,, 2] = temp
-    temparray[,, 3] = temp
-    temp = temparray
-  }
+  temp = render_image_overlay(image, image_vignette)
   handle_image_output(temp, filename = filename, preview = preview)
 }
 
