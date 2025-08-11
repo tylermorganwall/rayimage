@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.17.0</span>
       </span>
     </div>
 
@@ -86,7 +86,8 @@
 <span>  asp <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  new_page <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  return_grob <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  gp <span class="op">=</span> <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  gp <span class="op">=</span> <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  gamma_correct <span class="op">=</span> <span class="cn">NA</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -95,7 +96,7 @@
 
 
 <dl><dt id="arg-image">image<a class="anchor" aria-label="anchor" href="#arg-image"></a></dt>
-<dd><p>Image array or filename of an image to be plotted.</p></dd>
+<dd><p>3-layer RGB/4-layer RGBA array, <code>rayimg</code> class, or filename of an image.</p></dd>
 
 
 <dt id="arg-rotate">rotate<a class="anchor" aria-label="anchor" href="#arg-rotate"></a></dt>
@@ -127,6 +128,11 @@ slightly widen the image.</p></dd>
 
 <dt id="arg-gp">gp<a class="anchor" aria-label="anchor" href="#arg-gp"></a></dt>
 <dd><p>A <code><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">grid::gpar()</a></code> object to include for the grid viewport displaying the image.</p></dd>
+
+
+<dt id="arg-gamma-correct">gamma_correct<a class="anchor" aria-label="anchor" href="#arg-gamma-correct"></a></dt>
+<dd><p>Default <code>NA</code>, automatically determined. EXR images are automatically
+gamma corrected (power 1/2.2) unless this is set to <code>FALSE</code>.</p></dd>
 
 </dl></div>
 

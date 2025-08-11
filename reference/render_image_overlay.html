@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.17.0</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
 <span>  <span class="va">image</span>,</span>
 <span>  image_overlay <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  rescale_original <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  alpha <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  preview <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -93,13 +93,12 @@
 
 
 <dl><dt id="arg-image">image<a class="anchor" aria-label="anchor" href="#arg-image"></a></dt>
-<dd><p>Image filename or 3-layer RGB array.</p></dd>
+<dd><p>3-layer RGB/4-layer RGBA array, <code>rayimg</code> class, or filename of an image.</p></dd>
 
 
 <dt id="arg-image-overlay">image_overlay<a class="anchor" aria-label="anchor" href="#arg-image-overlay"></a></dt>
-<dd><p>Default <code>NULL</code>. Either a string indicating the location of a png image to overlay
-over the image (transparency included), or a 4-layer RGBA array. This image will be resized to the
-dimension of the image if it does not match exactly.</p></dd>
+<dd><p>Default <code>NULL</code>. 3-layer RGB/4-layer RGBA array, <code>rayimg</code> class, or filename of an image.
+This image will be resized to the dimension of the image if it does not match exactly.</p></dd>
 
 
 <dt id="arg-rescale-original">rescale_original<a class="anchor" aria-label="anchor" href="#arg-rescale-original"></a></dt>
@@ -108,7 +107,7 @@ the overlay.</p></dd>
 
 
 <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
-<dd><p>Default <code>NULL</code>, using overlay's alpha channel. Otherwise, this sets the alpha transparency
+<dd><p>Default <code>NA</code>, using overlay's alpha channel. Otherwise, this sets the alpha transparency
 by multiplying the existing alpha channel by this value (between 0 and 1).</p></dd>
 
 

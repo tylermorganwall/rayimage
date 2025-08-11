@@ -20,7 +20,7 @@ kernel for the edges)."><!-- mathjax --><script src="https://cdnjs.cloudflare.co
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.17.0</span>
       </span>
     </div>
 
@@ -103,7 +103,7 @@ kernel for the edges).</p>
 
 
 <dl><dt id="arg-image">image<a class="anchor" aria-label="anchor" href="#arg-image"></a></dt>
-<dd><p>Image filename or 3-layer RGB array.</p></dd>
+<dd><p>3-layer RGB/4-layer RGBA array, <code>rayimg</code> class, or filename of an image.</p></dd>
 
 
 <dt id="arg-kernel">kernel<a class="anchor" aria-label="anchor" href="#arg-kernel"></a></dt>
@@ -141,7 +141,9 @@ for a pixel to have the convolution performed.</p></dd>
 
 
 <dt id="arg-gamma-correction">gamma_correction<a class="anchor" aria-label="anchor" href="#arg-gamma-correction"></a></dt>
-<dd><p>Default <code>TRUE</code>. Controls gamma correction when adding colors. Default exponent of 2.2.</p></dd>
+<dd><p>Default <code>NA</code>, automatically determined (<code>FALSE</code> for matrix/array/exr/tiff,
+<code>TRUE</code> for jpg/png). Whether the image loaded has already had gamma correction applied and
+needs to be linearized. Controls gamma correction when adding colors. Uses exponent of 2.2.</p></dd>
 
 
 <dt id="arg-progress">progress<a class="anchor" aria-label="anchor" href="#arg-progress"></a></dt>

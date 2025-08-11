@@ -26,13 +26,18 @@
 <url><loc>https://www.rayimage.dev/reference/index.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/interpolate_array.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/make_vignette_overlay.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/new_rayimg.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/pad_to_fit.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/plot_asp_native_raster.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/plot_image.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/plot_image_grid.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/preview_focus.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/print.rayimg.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/ray_read_image.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/ray_write_image.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/rayimg_composite_checker.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/rayimg_mark_grey.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/rayimg_vertical_ellipsis.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_bokeh.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_boolean_distance.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_bw.html</loc></url>
@@ -47,6 +52,9 @@
 <url><loc>https://www.rayimage.dev/reference/render_vignette.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/run_documentation.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/save_png.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/sub-.rayimg.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/to_linear.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/to_srgb.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/trim_padding.html</loc></url>
 </urlset>
 
