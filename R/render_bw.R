@@ -18,30 +18,32 @@
 #'  render_bw(preview = TRUE)
 #'}
 render_bw = function(
-  image,
-  rgb_coef = c(0.2126, 0.7152, 0.0722),
-  filename = NULL,
-  preview = FALSE
+	image,
+	rgb_coef = c(0.2126, 0.7152, 0.0722),
+	filename = NULL,
+	preview = FALSE
 ) {
-  stopifnot(length(rgb_coef) == 3 && is.numeric(rgb_coef))
-  src = ray_read_image(image)
-  d = dim(src)
-  # luminance
-  lum = rgb_coef[1] *
-    src[,, 1] +
-    rgb_coef[2] * src[,, 2] +
-    rgb_coef[3] * src[,, 3]
+	stopifnot(length(rgb_coef) == 3 && is.numeric(rgb_coef))
+	src = ray_read_image(image)
+	d = dim(src)
+	# luminance
+	lum = rgb_coef[1] *
+		src[,, 1] +
+		rgb_coef[2] * src[,, 2] +
+		rgb_coef[3] * src[,, 3]
 
-  out = array(1, dim = c(d[1], d[2], 4))
-  out[,, 1] = lum
-  out[,, 2] = lum
-  out[,, 3] = lum
-  out[,, 4] = if (d[3] >= 4L) src[,, 4] else 1
+	out = array(1, dim = c(d[1], d[2], 4))
+	out[,, 1] = lum
+	out[,, 2] = lum
+	out[,, 3] = lum
+	out[,, 4] = if (d[3] >= 4L) src[,, 4] else 1
 
-  # keep filetype, wrap as rayimg, mark grey
-  attr(out, "filetype") = attr(src, "filetype")
-  class(out) = unique(c("rayimg", setdiff(class(out), "rayimg"), "array"))
-  out = rayimg_mark_grey(out)
+	# keep filetype, wrap as rayimg, mark grey
+	attr(out, "filetype") = attr(src, "filetype")
+	attr(out, "gamma_correct") = attr(src, "gamma_correct")
 
-  handle_image_output(out, filename = filename, preview = preview)
+	class(out) = unique(c("rayimg", setdiff(class(out), "rayimg"), "array"))
+	out = rayimg_mark_grey(out)
+
+	handle_image_output(out, filename = filename, preview = preview)
 }
