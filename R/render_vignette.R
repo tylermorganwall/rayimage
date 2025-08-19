@@ -14,8 +14,8 @@
 #'@param color Default `"#000000"` (black). Color of the vignette.
 #'@param preview Default `FALSE`. If `TRUE`, it will display the image in addition
 #'to returning it.
-
-#'@return 3-layer RGB array of the processed image.
+#'
+#'@return A `rayimg` RGBA array.
 #'@import grDevices
 #'@export
 #'@examples
@@ -93,7 +93,7 @@ render_vignette = function(
 #'
 #'@param ... Arguments to pass to `render_title()` function.
 
-#'@return 3-layer RGB array of the processed image.
+#'@return A `rayimg` RGBA array.
 #'@import grDevices
 #'@export
 #'@examples

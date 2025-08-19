@@ -59,7 +59,7 @@ passes in a 2D matrix, that matrix will control the shape of the bokeh.}
 \item{...}{Additional arguments to pass to \code{plot_image()} if \code{preview = TRUE}.}
 }
 \value{
-3-layer RGB array of the processed image.
+A \code{rayimg} RGBA array.
 }
 \description{
 Takes an image and a depth map to render the image with depth of field

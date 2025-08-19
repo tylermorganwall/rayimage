@@ -29,7 +29,7 @@ render_resized(
 \code{catmull}, \code{mitchell}.}
 }
 \value{
-3-layer RGB resized array or matrix.
+A \code{rayimg} RGBA array.
 }
 \description{
 Resizes an image or a matrix, using bilinear interpolation.

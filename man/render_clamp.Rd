@@ -19,14 +19,14 @@ to returning it.}
 \item{...}{Arguments to pass to either \code{jpeg::readJPEG}, \code{png::readPNG}, or \code{tiff::readTIFF}.}
 }
 \value{
-3-layer RGB array of the processed image.
+A \code{rayimg} RGBA array.
 }
 \description{
 Clamps an image to a user-specified range
 }
 \examples{
 if(run_documentation()){
-#The rnage of the unchanged image
+#The image of the unchanged image
 range(dragon)
 }
 if(run_documentation()){

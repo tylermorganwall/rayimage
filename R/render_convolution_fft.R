@@ -18,7 +18,7 @@
 #'@param pad Default `50`. Amount to pad the image to remove edge effects.
 #'@param preview Default `FALSE`. Whether to plot the convolved image, or just to return the values.
 #'@param gamma_correction Default `FALSE`. Controls gamma correction when adding colors. Default exponent of 2.2.
-#'@return 3-layer RGB array of the processed image.
+#'@return A `rayimg` RGBA array.
 #'@export
 #'@examples
 #'if(run_documentation()){
@@ -107,11 +107,6 @@ render_convolution_fft = function(
     fftcorn_sw = fft_mat[nr_mid2:nr, 1:nc_mid1]
     fftcorn_se = fft_mat[nr_mid2:nr, nc_mid2:nc]
     rbind(cbind(fftcorn_se, fftcorn_sw), cbind(fftcorn_ne, fftcorn_nw))
-  }
-  if (!is.null(filename)) {
-    if (tools::file_ext(filename) != "png") {
-      filename = paste0(filename, ".png")
-    }
   }
   temp_image = ray_read_image(image, convert_to_array = FALSE)
   image = ray_read_image(image) #Always output RGBA array

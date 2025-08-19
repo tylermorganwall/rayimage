@@ -41,7 +41,7 @@ if user specifies their own kernel.}
 \item{gamma_correction}{Default \code{FALSE}. Controls gamma correction when adding colors. Default exponent of 2.2.}
 }
 \value{
-3-layer RGB array of the processed image.
+A \code{rayimg} RGBA array.
 }
 \description{
 Takes an image and applys a convolution operation to it, using

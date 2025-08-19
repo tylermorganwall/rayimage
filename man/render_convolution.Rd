@@ -47,7 +47,7 @@ needs to be linearized. Controls gamma correction when adding colors. Uses expon
 \item{progress}{Default \code{TRUE}. Whether to display a progress bar.}
 }
 \value{
-3-layer RGB array of the processed image.
+A \code{rayimg} RGBA array.
 }
 \description{
 Takes an image and applys a convolution operation to it, using

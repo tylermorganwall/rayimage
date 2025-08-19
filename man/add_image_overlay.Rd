@@ -10,7 +10,7 @@ add_image_overlay(...)
 \item{...}{to pass to \code{render_image_overlay()} function.}
 }
 \value{
-3-layer RGB array of the processed image.
+A \code{rayimg} RGBA array.
 }
 \description{
 Takes an RGB array/filename and adds an image overlay.

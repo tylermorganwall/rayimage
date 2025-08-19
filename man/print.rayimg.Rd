@@ -27,7 +27,7 @@
 
 \item{ansi_preview}{Default \code{TRUE}. If \code{TRUE}, show a 24-bit color mosaic preview.}
 
-\item{ansi_size}{Default \code{20}. Mosaic size (N → N×N).}
+\item{ansi_size}{Default \code{20}. Mosaic size (N -> N×N).}
 
 \item{ansi_style}{Default \code{"bg"}. \code{"bg"} uses background color blocks, \code{"block"} uses \verb{█}.}
 

@@ -10,7 +10,7 @@
 #'Whether to label the image as gamma corrected.
 #'@param ... Arguments to pass to either `jpeg::readJPEG`, `png::readPNG`, `tiff::readTIFF`, or `libopenexr::read_exr()`.
 #'
-#'@return 3-layer RGB array of the processed image.
+#'@return A `rayimg` RGBA array.
 #'@import grDevices
 #'@export
 #'@examples

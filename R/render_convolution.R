@@ -23,7 +23,7 @@
 #' `TRUE` for jpg/png). Whether the image loaded has already had gamma correction applied and
 #' needs to be linearized. Controls gamma correction when adding colors. Uses exponent of 2.2.
 #'@param progress Default `TRUE`. Whether to display a progress bar.
-#'@return 3-layer RGB array of the processed image.
+#'@return A `rayimg` RGBA array.
 #'@export
 #'@examples
 #'if(run_documentation()){
@@ -90,11 +90,6 @@ render_convolution = function(
   gamma_correction = FALSE,
   progress = FALSE
 ) {
-  if (!is.null(filename)) {
-    if (tools::file_ext(filename) != "png") {
-      filename = paste0(filename, ".png")
-    }
-  }
   if (is.character(kernel)) {
     if (kernel == "gaussian") {
       kernel = generate_2d_gaussian(1, 1, kernel_dim, kernel_extent)

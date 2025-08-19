@@ -10,7 +10,7 @@ add_vignette(...)
 \item{...}{Arguments to pass to \code{render_title()} function.}
 }
 \value{
-3-layer RGB array of the processed image.
+A \code{rayimg} RGBA array.
 }
 \description{
 Takes an RGB array/filename and adds a camera vignette effect.

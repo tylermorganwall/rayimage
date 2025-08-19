@@ -79,17 +79,15 @@ plot_image = function(
   }
   if (is.na(gamma_correct)) {
     if (image_type == "exr") {
-      image[,, 1:3] = image[,, 1:3]^(1 / 2.2)
+      image[,, 1:3] = to_srgb(image[,, 1:3])
     }
   } else {
     if (gamma_correct) {
-      image[,, 1:3] = image[,, 1:3]^(1 / 2.2)
+      image[,, 1:3] = to_srgb(image[,, 1:3])
     }
   }
-  if (any(image > 1 | image < 0, na.rm = TRUE)) {
-    image[image > 1] = 1
-    image[image < 0] = 0
-  }
+  image = render_clamp(image)
+
   nr = convert_to_native_raster(image)
 
   if (new_page) {

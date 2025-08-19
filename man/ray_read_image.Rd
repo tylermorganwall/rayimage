@@ -26,7 +26,7 @@ Whether to label the image as gamma corrected.}
 \item{...}{Arguments to pass to either \code{jpeg::readJPEG}, \code{png::readPNG}, \code{tiff::readTIFF}, or \code{libopenexr::read_exr()}.}
 }
 \value{
-3-layer RGB array of the processed image.
+A \code{rayimg} RGBA array.
 }
 \description{
 Reads an image from a file/array/matrix. From files, supports \code{JPEG}, \code{PNG}, \code{TIFF}, and \code{EXR} images.

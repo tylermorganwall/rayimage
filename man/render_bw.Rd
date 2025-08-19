@@ -22,7 +22,7 @@ Length-3 numeric vector listing coefficients to convert RGB to luminance.}
 \item{preview}{Default \code{FALSE}. Whether to plot the convolved image, or just to return the values.}
 }
 \value{
-3-layer RGB resized array or matrix.
+A \code{rayimg} RGBA array.
 }
 \description{
 Transforms an image to black and white, preserving luminance.

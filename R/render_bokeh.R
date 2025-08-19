@@ -22,7 +22,7 @@
 #'@param gamma_correction Default `TRUE`. Controls gamma correction when adding colors. Default exponent of 2.2.
 #'@param progress Default `TRUE`. Whether to display a progress bar.
 #'@param ... Additional arguments to pass to `plot_image()` if `preview = TRUE`.
-#'@return 3-layer RGB array of the processed image.
+#'@return A `rayimg` RGBA array.
 #'@export
 #'@examples
 #'if(run_documentation()){

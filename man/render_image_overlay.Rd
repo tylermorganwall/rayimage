@@ -32,7 +32,7 @@ returns an RGB array.}
 to returning it.}
 }
 \value{
-3-layer RGB array of the processed image.
+A \code{rayimg} RGBA array.
 }
 \description{
 Takes an RGB array/filename and adds an image overlay.

@@ -9,12 +9,12 @@
 #'to returning it.
 #'@param ... Arguments to pass to either `jpeg::readJPEG`, `png::readPNG`, or `tiff::readTIFF`.
 #'
-#'@return 3-layer RGB array of the processed image.
+#'@return A `rayimg` RGBA array.
 #'@import grDevices
 #'@export
 #'@examples
 #'if(run_documentation()){
-#'#The rnage of the unchanged image
+#'#The image of the unchanged image
 #'range(dragon)
 #'}
 #'if(run_documentation()){

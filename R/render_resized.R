@@ -10,7 +10,7 @@
 #'@param preview Default `FALSE`. Whether to plot the convolved image, or just to return the values.
 #'@param method Default `trilinear`. Filters to up/downsample the image. Options: `bilinear`, `box`, `trilinear`,
 #' `catmull`, `mitchell`.
-#'@return 3-layer RGB resized array or matrix.
+#'@return A `rayimg` RGBA array.
 #'@export
 #'@examples
 #'if(run_documentation()){
@@ -49,11 +49,6 @@ render_resized = function(
   preview = FALSE,
   method = "tri"
 ) {
-  if (!is.null(filename)) {
-    if (tools::file_ext(filename) != "png") {
-      filename = paste0(filename, ".png")
-    }
-  }
   temp_image = ray_read_image(image) #Always output RGBA array
   #Check if file or image before below:
   imagetype = attr(temp_image, "filetype")

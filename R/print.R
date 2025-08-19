@@ -5,7 +5,7 @@
 #' @param decimals Default `3`. Number of decimal places to display in numeric preview.
 #' @param color Default `TRUE`. Colorize headers and R/G/B/A numeric cells when supported.
 #' @param ansi_preview Default `TRUE`. If `TRUE`, show a 24-bit color mosaic preview.
-#' @param ansi_size Default `20`. Mosaic size (N → N×N).
+#' @param ansi_size Default `20`. Mosaic size (N -> N×N).
 #' @param ansi_style Default `"bg"`. `"bg"` uses background color blocks, `"block"` uses `█`.
 #' @param ansi_replace Default `TRUE`. Show only mosaic; `FALSE` shows mosaic then numeric preview.
 #' @param ... Default ``. Ignored.

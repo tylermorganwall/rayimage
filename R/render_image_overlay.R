@@ -14,7 +14,7 @@
 #'@param preview Default `FALSE`. If `TRUE`, it will display the image in addition
 #'to returning it.
 
-#'@return 3-layer RGB array of the processed image.
+#'@return A `rayimg` RGBA array.
 #'@import grDevices
 #'@export
 #'@examples
@@ -131,7 +131,7 @@ render_image_overlay = function(
 #'
 #'@param ... to pass to `render_image_overlay()` function.
 
-#'@return 3-layer RGB array of the processed image.
+#'@return A `rayimg` RGBA array.
 #'@export
 #'@examples
 #'if(run_documentation()){
