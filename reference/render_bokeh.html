@@ -19,7 +19,7 @@ or use one of the built-in bokeh types.'><!-- mathjax --><script src="https://cd
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.18.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.18.1</span>
       </span>
     </div>
 
@@ -199,25 +199,24 @@ passes in a 2D matrix, that matrix will control the shape of the bokeh.</p></dd>
 <span class="r-in"><span><span class="co">#Change the focal length:</span></span></span>
 <span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, focus<span class="op">=</span><span class="fl">950</span>, focallength<span class="op">=</span><span class="fl">300</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="render_bokeh-4.png" alt="" width="700" height="700"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (image_gamma_correction) {    temp_image = to_linear(temp_image)}:</span> argument is of length zero</span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Add chromatic aberration:</span></span></span>
 <span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, focus<span class="op">=</span><span class="fl">950</span>, focallength<span class="op">=</span><span class="fl">300</span>, aberration <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="render_bokeh-5.png" alt="" width="700" height="700"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (image_gamma_correction) {    temp_image = to_linear(temp_image)}:</span> argument is of length zero</span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Change the focal distance:</span></span></span>
 <span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, focus<span class="op">=</span><span class="fl">600</span>, focallength<span class="op">=</span><span class="fl">300</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, focus<span class="op">=</span><span class="fl">1300</span>, focallength<span class="op">=</span><span class="fl">300</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="render_bokeh-6.png" alt="" width="700" height="700"></span>
-<span class="r-plt img"><img src="render_bokeh-7.png" alt="" width="700" height="700"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (image_gamma_correction) {    temp_image = to_linear(temp_image)}:</span> argument is of length zero</span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Change the bokeh shape to a hexagon:</span></span></span>
 <span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, bokehshape <span class="op">=</span> <span class="st">"hex"</span>,</span></span>
 <span class="r-in"><span>            focallength<span class="op">=</span><span class="fl">300</span>, focus<span class="op">=</span><span class="fl">600</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="render_bokeh-8.png" alt="" width="700" height="700"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (image_gamma_correction) {    temp_image = to_linear(temp_image)}:</span> argument is of length zero</span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Change the bokeh intensity:</span></span></span>
 <span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>,</span></span>
@@ -225,14 +224,13 @@ passes in a 2D matrix, that matrix will control the shape of the bokeh.</p></dd>
 <span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>,</span></span>
 <span class="r-in"><span>            focallength<span class="op">=</span><span class="fl">400</span>, focus<span class="op">=</span><span class="fl">900</span>, bokehintensity <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="render_bokeh-9.png" alt="" width="700" height="700"></span>
-<span class="r-plt img"><img src="render_bokeh-10.png" alt="" width="700" height="700"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (image_gamma_correction) {    temp_image = to_linear(temp_image)}:</span> argument is of length zero</span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Rotate the hexagonal shape:</span></span></span>
 <span class="r-in"><span><span class="fu">render_bokeh</span><span class="op">(</span><span class="va">dragon</span>, <span class="va">dragondepth</span>, bokehshape <span class="op">=</span> <span class="st">"hex"</span>, rotation<span class="op">=</span><span class="fl">15</span>, bokehintensity<span class="op">=</span><span class="fl">3</span>,</span></span>
 <span class="r-in"><span>            focallength<span class="op">=</span><span class="fl">400</span>, focus<span class="op">=</span><span class="fl">800</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="render_bokeh-11.png" alt="" width="700" height="700"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (image_gamma_correction) {    temp_image = to_linear(temp_image)}:</span> argument is of length zero</span>
 </code></pre></div>
     </div>
   </div>
