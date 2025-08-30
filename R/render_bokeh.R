@@ -92,7 +92,7 @@ render_bokeh = function(
   depthmap = ray_read_image(depthmap, convert_to_array = FALSE)
   depthtype = attr(depthmap, "filetype")
 
-  image_gamma_correction = attr(temp_image, "gamma_correct")
+  image_gamma_correction = attr(temp_image, "gamma_corrected")
 
   if (preview_focus) {
     preview_focus(image, depthmap, focus, imagetype, depthtype)

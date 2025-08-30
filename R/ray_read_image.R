@@ -122,8 +122,9 @@ ray_read_image = function(
     }
   }
   if (inherits(image, "rayimg")) {
-    gamma_correct = attr(image, "gamma_correct")
-    return(new_rayimg(process_image_dim(image), imagetype, gamma_correct))
+    gamma_correct = attr(image, "gamma_corrected")
+    filetype = attr(image, "filetype")
+    return(new_rayimg(process_image_dim(image), filetype, gamma_correct))
   }
   if (imagetype == "array") {
     return(new_rayimg(process_image_dim(image), imagetype, gamma_correct))

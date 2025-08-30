@@ -55,8 +55,8 @@ render_image_overlay = function(
 
 	img_type = attr(image, "filetype")
 	over_type = attr(image_overlay, "filetype")
-	img_gamma_correct = isTRUE(attr(image, "gamma_correct"))
-	overlay_gamma_correct = isTRUE(attr(image_overlay, "gamma_correct"))
+	img_gamma_correct = isTRUE(attr(image, "gamma_corrected"))
+	overlay_gamma_correct = isTRUE(attr(image_overlay, "gamma_corrected"))
 
 	if (!rescale_original) {
 		if (!all(dim(image)[1:2] == dim(image_overlay)[1:2])) {

@@ -41,7 +41,7 @@ ray_write_image = function(image, filename, clamp = NA, ...) {
   #Check if file or image before below:
   imagetype = get_file_type(image)
   #This isn't a check for rayimg type, it's just checking the base R type
-  gamma_corrected = attr(image, "gamma_correct")
+  gamma_corrected = attr(image, "gamma_corrected")
 
   if (!imagetype %in% c("array", "matrix")) {
     file.copy(image, filename)

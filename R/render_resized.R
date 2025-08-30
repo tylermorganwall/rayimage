@@ -52,7 +52,7 @@ render_resized = function(
   temp_image = ray_read_image(image) #Always output RGBA array
   #Check if file or image before below:
   imagetype = attr(temp_image, "filetype")
-  img_gamma_correct = attr(temp_image, "gamma_correct")
+  img_gamma_correct = attr(temp_image, "gamma_corrected")
   if (img_gamma_correct) {
     temp_image[,, 1:3] = to_linear(temp_image[,, 1:3])
   }
@@ -110,7 +110,7 @@ render_resized = function(
     if (imagetype != "matrix") {
       for (i in 1:(dim(image)[3])) {
         temp_list[[i]] = resize_matrix_stb(
-          temp_image[,, i],
+          unclass(temp_image[,, i]),
           dims[1],
           dims[2],
           method
@@ -121,7 +121,16 @@ render_resized = function(
         temp_image[,, i] = temp_list[[i]]
       }
     } else {
-      temp_image = resize_matrix_stb(temp_image, dims[1], dims[2], method)
+      bare_matrix = unclass(temp_image)
+      if (inherits(temp_image, "rayimg")) {
+        bare_matrix = bare_matrix[,, 1]
+      }
+      temp_image = resize_matrix_stb(
+        bare_matrix,
+        dims[1],
+        dims[2],
+        method
+      )
     }
   }
   temp_image = ray_read_image(

@@ -9,7 +9,7 @@
 new_rayimg = function(x = NULL, filetype = NULL, gamma_correct = FALSE) {
   if (is.null(x)) stop("new_rayimg(): 'x' cannot be NULL.")
   attr(x, "filetype") = filetype
-  attr(x, "gamma_correct") = gamma_correct
+  attr(x, "gamma_corrected") = gamma_correct
   class(x) = c("rayimg", setdiff(class(x), "rayimg"))
   x
 }
@@ -51,7 +51,7 @@ rayimg_mark_grey = function(x) {
 
   # preserve attrs/class
   attr(y, "filetype") = attr(x, "filetype")
-  attr(y, "gamma_correct") = attr(x, "gamma_correct")
+  attr(y, "gamma_corrected") = attr(x, "gamma_corrected")
 
   class(y) = unique(c("rayimg", setdiff(class(y), "rayimg"), "array"))
 

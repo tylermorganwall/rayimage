@@ -140,8 +140,8 @@ print.rayimg = function(
     "  ",
     "filetype: ",
     col_cyan(ft),
-    "  gamma_correction: ",
-    col_green(as.character(attr(x, "gamma_correct"))),
+    "  Gamma Corrected: ",
+    col_green(as.character(attr(x, "gamma_corrected"))),
     "\n",
     sep = ""
   )

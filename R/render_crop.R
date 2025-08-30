@@ -93,7 +93,7 @@ render_crop = function(
   # Normalize input and preserve metadata
   temp_image = ray_read_image(image)
   imagetype = attr(temp_image, "filetype")
-  img_gamma_correct = attr(temp_image, "gamma_correct")
+  img_gamma_correct = attr(temp_image, "gamma_corrected")
 
   h = nrow(temp_image)
   w = ncol(temp_image)

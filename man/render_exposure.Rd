@@ -20,7 +20,7 @@ render_exposure(
 
 \item{gamma_correction}{Default \code{NA}. If \code{TRUE}, treat as sRGB (decode -> scale -> encode).
 If \code{FALSE}, treat as scene-linear/HDR and scale directly. If \code{NA}, auto-detect using
-\code{attr(image, "gamma_correct")}, falling back to a range heuristic (outside 0..1 is linear).}
+\code{attr(image, "gamma_corrected")}, falling back to a range heuristic (outside 0..1 is linear).}
 
 \item{filename}{Default \code{NA}. Output path.}
 

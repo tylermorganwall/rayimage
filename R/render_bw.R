@@ -40,7 +40,7 @@ render_bw = function(
 
   # keep filetype, wrap as rayimg, mark grey
   attr(out, "filetype") = attr(src, "filetype")
-  attr(out, "gamma_correct") = attr(src, "gamma_correct")
+  attr(out, "gamma_corrected") = attr(src, "gamma_corrected")
 
   class(out) = unique(c("rayimg", setdiff(class(out), "rayimg"), "array"))
   out = rayimg_mark_grey(out)
