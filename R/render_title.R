@@ -389,7 +389,7 @@ render_title = function(
 
 #' Add Title Function (deprecated)
 #'
-#' @param ... Arguments to pass to `render_title()` function.
+#' @param ... Arguments to pass to [render_title()].
 #'
 #' @return A 3-layer RGB array of the processed image if `filename = NULL` and `preview = FALSE`.
 #' Otherwise, writes the image to the specified file or displays it if `preview = TRUE`.

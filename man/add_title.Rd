@@ -7,7 +7,7 @@
 add_title(...)
 }
 \arguments{
-\item{...}{Arguments to pass to \code{render_title()} function.}
+\item{...}{Arguments to pass to \code{\link[=render_title]{render_title()}}.}
 }
 \value{
 A 3-layer RGB array of the processed image if \code{filename = NULL} and \code{preview = FALSE}.

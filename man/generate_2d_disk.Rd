@@ -12,7 +12,7 @@ generate_2d_disk(dim = c(11, 11), radius = 1, rescale_unity = FALSE)
 \item{radius}{Default \code{1}. Radius of the disk, compared to the dimensions. Should be less than one.}
 
 \item{rescale_unity}{Default \code{FALSE}. If \code{TRUE}, this will rescale the max value to one. Useful
-if wanting to plot the distribution with \code{plot_image()}.}
+if wanting to plot the distribution with \code{\link[=plot_image]{plot_image()}}.}
 }
 \description{
 Generates a 2D disk with a gradual falloff.

@@ -19,7 +19,7 @@ generate_2d_exponential(
 \item{width}{Default \code{3} (\code{-10} to \code{10}). The range in which to compute the distribution.}
 
 \item{rescale_unity}{Default \code{FALSE}. If \code{TRUE}, this will rescale the max value to one. Useful
-if wanting to plot the distribution with \code{plot_image()}.}
+if wanting to plot the distribution with \code{\link[=plot_image]{plot_image()}}.}
 }
 \description{
 Generates a 2D exponential distribution, with an optional

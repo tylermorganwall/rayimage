@@ -7,7 +7,7 @@
 add_vignette(...)
 }
 \arguments{
-\item{...}{Arguments to pass to \code{render_title()} function.}
+\item{...}{Arguments to pass to \code{\link[=render_vignette]{render_vignette()}}.}
 }
 \value{
 A \code{rayimg} RGBA array.

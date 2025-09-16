@@ -7,7 +7,7 @@
 #'@param dim Default `c(11, 11)`. The dimensions of the matrix.
 #'@param width Default `3` (`-10` to `10`). The range in which to compute the distribution.
 #'@param rescale_unity Default `FALSE`. If `TRUE`, this will rescale the max value to one. Useful
-#'if wanting to plot the distribution with `plot_image()`.
+#'if wanting to plot the distribution with [plot_image()].
 #'@import stats
 #'@export
 #'@examples

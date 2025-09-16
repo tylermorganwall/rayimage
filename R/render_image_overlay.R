@@ -129,7 +129,7 @@ render_image_overlay = function(
 #'
 #'@description Takes an RGB array/filename and adds an image overlay.
 #'
-#'@param ... to pass to `render_image_overlay()` function.
+#'@param ... to pass to [render_image_overlay()].
 
 #'@return A `rayimg` RGBA array.
 #'@export

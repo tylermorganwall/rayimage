@@ -91,7 +91,7 @@ render_vignette = function(
 #'
 #'@description Takes an RGB array/filename and adds a camera vignette effect.
 #'
-#'@param ... Arguments to pass to `render_title()` function.
+#'@param ... Arguments to pass to [render_vignette()].
 
 #'@return A `rayimg` RGBA array.
 #'@import grDevices

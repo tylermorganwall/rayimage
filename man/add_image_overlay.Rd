@@ -7,7 +7,7 @@
 add_image_overlay(...)
 }
 \arguments{
-\item{...}{to pass to \code{render_image_overlay()} function.}
+\item{...}{to pass to \code{\link[=render_image_overlay]{render_image_overlay()}}.}
 }
 \value{
 A \code{rayimg} RGBA array.

@@ -56,7 +56,7 @@ passes in a 2D matrix, that matrix will control the shape of the bokeh.}
 
 \item{progress}{Default \code{TRUE}. Whether to display a progress bar.}
 
-\item{...}{Additional arguments to pass to \code{plot_image()} if \code{preview = TRUE}.}
+\item{...}{Additional arguments to pass to \code{\link[=plot_image]{plot_image()}} if \code{preview = TRUE}.}
 }
 \value{
 A \code{rayimg} RGBA array.

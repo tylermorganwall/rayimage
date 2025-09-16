@@ -91,7 +91,7 @@ volcano |>
 }
 if(run_documentation()){
 # Because this function uses the fast-fourier transform, large kernels will be much faster
-# than the same size kernels in `render_convolution()`
+# than the same size kernels in [render_convolution()]
 render_convolution_fft(dragon, kernel_dim = c(200,200) , preview = TRUE)
 }
 if(run_documentation()){

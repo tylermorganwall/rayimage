@@ -21,7 +21,7 @@
 #'@param aberration Default `0`. Adds chromatic aberration to the image. Maximum of `1`.
 #'@param gamma_correction Default `TRUE`. Controls gamma correction when adding colors. Default exponent of 2.2.
 #'@param progress Default `TRUE`. Whether to display a progress bar.
-#'@param ... Additional arguments to pass to `plot_image()` if `preview = TRUE`.
+#'@param ... Additional arguments to pass to [plot_image()] if `preview = TRUE`.
 #'@return A `rayimg` RGBA array.
 #'@export
 #'@examples

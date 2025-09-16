@@ -19,7 +19,7 @@
 #'@param dim Default `c(11, 11)`. The dimensions of the matrix.
 #'@param radius Default `1`. Radius of the disk, compared to the dimensions. Should be less than one.
 #'@param rescale_unity Default `FALSE`. If `TRUE`, this will rescale the max value to one. Useful
-#'if wanting to plot the distribution with `plot_image()`.
+#'if wanting to plot the distribution with [plot_image()].
 #'@export
 #'@examples
 #'if(run_documentation()){
