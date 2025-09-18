@@ -9,7 +9,7 @@
   preview_n = 10,
   decimals = 3,
   color = TRUE,
-  ansi_preview = TRUE,
+  ansi_preview = FALSE,
   ansi_size = 20,
   ansi_style = c("bg", "block"),
   ansi_replace = TRUE,
@@ -25,7 +25,7 @@
 
 \item{color}{Default \code{TRUE}. Colorize headers and R/G/B/A numeric cells when supported.}
 
-\item{ansi_preview}{Default \code{TRUE}. If \code{TRUE}, show a 24-bit color mosaic preview.}
+\item{ansi_preview}{Default \code{FALSE}. If \code{TRUE}, show a 24-bit color mosaic preview.}
 
 \item{ansi_size}{Default \code{20}. Mosaic size (N -> N×N).}
 

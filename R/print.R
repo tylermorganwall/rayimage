@@ -4,7 +4,7 @@
 #' @param preview_n Default `10`. Max rows/cols to display in numeric preview.
 #' @param decimals Default `3`. Number of decimal places to display in numeric preview.
 #' @param color Default `TRUE`. Colorize headers and R/G/B/A numeric cells when supported.
-#' @param ansi_preview Default `TRUE`. If `TRUE`, show a 24-bit color mosaic preview.
+#' @param ansi_preview Default `FALSE`. If `TRUE`, show a 24-bit color mosaic preview.
 #' @param ansi_size Default `20`. Mosaic size (N -> N×N).
 #' @param ansi_style Default `"bg"`. `"bg"` uses background color blocks, `"block"` uses `█`.
 #' @param ansi_replace Default `TRUE`. Show only mosaic; `FALSE` shows mosaic then numeric preview.
@@ -17,7 +17,7 @@ print.rayimg = function(
   preview_n = 10,
   decimals = 3,
   color = TRUE,
-  ansi_preview = TRUE,
+  ansi_preview = FALSE,
   ansi_size = 20,
   ansi_style = c("bg", "block"),
   ansi_replace = TRUE,
