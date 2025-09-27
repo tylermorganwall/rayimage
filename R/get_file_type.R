@@ -27,6 +27,9 @@ get_file_type = function(file) {
     imagetype = "array"
   } else if (length(dim(file)) == 2) {
     imagetype = "matrix"
+  } else if (length(dim(file)) > 3) {
+    stop("Images can only be paths to image files, matrices, ",
+				 "and arrays with fewer than 3 dimensions")
   } else {
     stop(
       "`",
