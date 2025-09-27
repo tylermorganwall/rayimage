@@ -4,17 +4,7 @@
 \alias{print.rayimg}
 \title{Print method for rayimg}
 \usage{
-\method{print}{rayimg}(
-  x = NULL,
-  preview_n = 10,
-  decimals = 3,
-  color = TRUE,
-  ansi_preview = FALSE,
-  ansi_size = 20,
-  ansi_style = c("bg", "block"),
-  ansi_replace = TRUE,
-  ...
-)
+\method{print}{rayimg}(x = NULL, preview_n = 10, decimals = 3, color = TRUE, ...)
 }
 \arguments{
 \item{x}{Default \code{NULL}. A \code{rayimg} object.}
@@ -23,17 +13,7 @@
 
 \item{decimals}{Default \code{3}. Number of decimal places to display in numeric preview.}
 
-\item{color}{Default \code{TRUE}. Colorize headers and R/G/B/A numeric cells when supported.}
-
-\item{ansi_preview}{Default \code{FALSE}. If \code{TRUE}, show a 24-bit color mosaic preview.}
-
-\item{ansi_size}{Default \code{20}. Mosaic size (N -> N×N).}
-
-\item{ansi_style}{Default \code{"bg"}. \code{"bg"} uses background color blocks, \code{"block"} uses \verb{█}.}
-
-\item{ansi_replace}{Default \code{TRUE}. Show only mosaic; \code{FALSE} shows mosaic then numeric preview.}
-
-\item{...}{Default ``. Ignored.}
+\item{color}{Default \code{TRUE}. Colorize headers and R/G/B/A numeric cells when supported.#' @param ... Default ``. Ignored.}
 }
 \value{
 Invisibly returns \code{x}.
