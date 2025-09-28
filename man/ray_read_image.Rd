@@ -6,7 +6,7 @@
 \usage{
 ray_read_image(
   image,
-  convert_to_array = TRUE,
+  convert_to_array = FALSE,
   preview = FALSE,
   gamma_correct = NA,
   ...

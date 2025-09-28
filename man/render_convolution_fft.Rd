@@ -12,8 +12,7 @@ render_convolution_fft(
   absolute = TRUE,
   pad = 50,
   filename = NULL,
-  preview = FALSE,
-  gamma_correction = FALSE
+  preview = FALSE
 )
 }
 \arguments{
@@ -37,8 +36,6 @@ if user specifies their own kernel.}
 \item{filename}{Default \code{NULL}. The filename of the image to be saved. If this is not given, the image will be plotted instead.}
 
 \item{preview}{Default \code{FALSE}. Whether to plot the convolved image, or just to return the values.}
-
-\item{gamma_correction}{Default \code{FALSE}. Controls gamma correction when adding colors. Default exponent of 2.2.}
 }
 \value{
 A \code{rayimg} RGBA array.

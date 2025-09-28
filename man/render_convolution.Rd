@@ -13,7 +13,6 @@ render_convolution(
   min_value = NULL,
   filename = NULL,
   preview = FALSE,
-  gamma_correction = FALSE,
   progress = FALSE
 )
 }
@@ -39,10 +38,6 @@ for a pixel to have the convolution performed.}
 \item{filename}{Default \code{NULL}. The filename of the image to be saved. If this is not given, the image will be plotted instead.}
 
 \item{preview}{Default \code{TRUE}. Whether to plot the convolved image, or just to return the values.}
-
-\item{gamma_correction}{Default \code{NA}, automatically determined (\code{FALSE} for matrix/array/exr/tiff,
-\code{TRUE} for jpg/png). Whether the image loaded has already had gamma correction applied and
-needs to be linearized. Controls gamma correction when adding colors. Uses exponent of 2.2.}
 
 \item{progress}{Default \code{TRUE}. Whether to display a progress bar.}
 }
