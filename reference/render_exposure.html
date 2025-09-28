@@ -130,12 +130,12 @@ or to <code><a href="ray_write_image.html">ray_write_image()</a></code> (when <c
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">render_exposure</span><span class="op">(</span><span class="va">dragon</span>, exposure <span class="op">=</span> <span class="op">+</span><span class="fl">1</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in render_exposure(dragon, exposure = +1, preview = TRUE):</span> object 'temp_image' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ray_write_image(image, filename):</span> File extension (NA) must be one of `png`, `jpeg`, `jpg`, `exr`, or `tiff`</span>
 <span class="r-in"><span><span class="co"># Force linear/HDR behavior</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">render_exposure</span><span class="op">(</span><span class="va">dragon</span> <span class="op">*</span> <span class="fl">2</span>, exposure <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, gamma_correction <span class="op">=</span> <span class="cn">FALSE</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in render_exposure(dragon * 2, exposure = -1, gamma_correction = FALSE,     preview = TRUE):</span> object 'temp_image' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ray_write_image(image, filename):</span> File extension (NA) must be one of `png`, `jpeg`, `jpg`, `exr`, or `tiff`</span>
 </code></pre></div>
     </div>
   </div>
