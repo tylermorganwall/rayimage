@@ -100,7 +100,7 @@ this is forced to <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments to pass to either <code><a href="https://rdrr.io/pkg/jpeg/man/writeJPEG.html" class="external-link">jpeg::writeJPEG</a></code>, <code><a href="https://rdrr.io/pkg/png/man/writePNG.html" class="external-link">png::writePNG</a></code>, or <code><a href="https://rdrr.io/pkg/tiff/man/writeTIFF.html" class="external-link">tiff::writeTIFF</a></code>.</p></dd>
+<dd><p>Arguments to pass to either <code><a href="https://rdrr.io/pkg/jpeg/man/writeJPEG.html" class="external-link">jpeg::writeJPEG</a></code>, <code><a href="https://rdrr.io/pkg/png/man/writePNG.html" class="external-link">png::writePNG</a></code>, <code><a href="https://rdrr.io/pkg/libopenexr/man/write_exr.html" class="external-link">libopenexr::write_exr</a></code>, or <code><a href="https://rdrr.io/pkg/tiff/man/writeTIFF.html" class="external-link">tiff::writeTIFF</a></code>.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -137,7 +137,6 @@ this is forced to <code>TRUE</code>.</p></dd>
 <span class="r-in"><span><span class="fu"><a href="ray_read_image.html">ray_read_image</a></span><span class="op">(</span><span class="va">tmparr</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The input contains values outside the [0, 1] range - storage of such values is undefined</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>TIFFReadDirectory: Sum of Photometric type-related color channels and ExtraSamples doesn't match SamplesPerPixel. Defining non-color channels as ExtraSamples.</span>
 <span class="r-plt img"><img src="ray_write_image-3.png" alt="" width="700" height="700"></span>
 </code></pre></div>
