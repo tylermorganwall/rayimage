@@ -50,7 +50,7 @@ ray_write_image = function(image, filename, clamp = FALSE, ...) {
       fileext
     ))
   }
-  if (clamp) {
+  if (clamp || fileext %in% c("png", "jpeg", "jpg")) {
     image = render_clamp(image)
   }
   is_matrix = length(dim(image)) == 2
