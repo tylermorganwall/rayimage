@@ -130,120 +130,12 @@ or to <code><a href="ray_write_image.html">ray_write_image()</a></code> (when <c
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">render_exposure</span><span class="op">(</span><span class="va">dragon</span>, exposure <span class="op">=</span> <span class="op">+</span><span class="fl">1</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="render_exposure-1.png" alt="" width="700" height="700"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;rayimg&gt; [200 x 200 x 4] &lt;Red + Green + Blue + Alpha&gt;  filetype: array  Gamma Corrected: TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> showing [1:10, 1:10], all channels plus last row/col</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [Red]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,…] [,200]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [3,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [4,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [5,]  0.000 0.000 0.000 0.000 0.010 0.071 0.080 0.084 0.073 0.067    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6,]  0.000 0.000 0.000 0.000 0.062 0.255 0.271 0.277 0.259 0.260    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [7,]  0.000 0.000 0.000 0.000 0.067 0.178 0.284 0.283 0.292 0.295    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [8,]  0.000 0.000 0.000 0.000 0.087 0.168 0.195 0.275 0.343 0.316    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [9,]  0.000 0.000 0.000 0.000 0.074 0.179 0.188 0.218 0.291 0.306    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [10,]  0.000 0.000 0.000 0.000 0.066 0.166 0.181 0.178 0.199 0.290    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [⋮,]      ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮    ⋮      ⋮</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [200,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [Green]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,…] [,200]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [3,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [4,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [5,]  0.000 0.000 0.000 0.000 0.020 0.068 0.081 0.085 0.077 0.067    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6,]  0.000 0.000 0.000 0.000 0.098 0.279 0.255 0.271 0.254 0.253    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [7,]  0.000 0.000 0.000 0.000 0.110 0.288 0.312 0.285 0.288 0.297    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [8,]  0.000 0.000 0.000 0.000 0.136 0.297 0.315 0.287 0.324 0.309    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [9,]  0.000 0.000 0.000 0.000 0.125 0.308 0.317 0.338 0.320 0.293    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [10,]  0.000 0.000 0.000 0.000 0.106 0.286 0.305 0.306 0.328 0.317    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [⋮,]      ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮    ⋮      ⋮</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [200,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [Blue]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,…] [,200]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [3,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [4,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [5,]  0.000 0.000 0.000 0.000 0.011 0.065 0.080 0.083 0.074 0.065    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6,]  0.000 0.000 0.000 0.000 0.066 0.250 0.245 0.258 0.244 0.243    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [7,]  0.000 0.000 0.000 0.000 0.071 0.180 0.274 0.270 0.275 0.284    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [8,]  0.000 0.000 0.000 0.000 0.086 0.176 0.192 0.246 0.305 0.291    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [9,]  0.000 0.000 0.000 0.000 0.079 0.185 0.196 0.205 0.279 0.279    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [10,]  0.000 0.000 0.000 0.000 0.069 0.196 0.180 0.181 0.197 0.274    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [⋮,]      ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮    ⋮      ⋮</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [200,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [A] No transparency (layer all 1.0)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in render_exposure(dragon, exposure = +1, preview = TRUE):</span> object 'temp_image' not found</span>
 <span class="r-in"><span><span class="co"># Force linear/HDR behavior</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">render_exposure</span><span class="op">(</span><span class="va">dragon</span> <span class="op">*</span> <span class="fl">2</span>, exposure <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, gamma_correction <span class="op">=</span> <span class="cn">FALSE</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="render_exposure-2.png" alt="" width="700" height="700"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;rayimg&gt; [200 x 200 x 4] &lt;Red + Green + Blue + Alpha&gt;  filetype: array  Gamma Corrected: TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> showing [1:10, 1:10], all channels plus last row/col</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [Red]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,…] [,200]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [3,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [4,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [5,]  0.000 0.000 0.000 0.000 0.005 0.039 0.046 0.049 0.041 0.036    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6,]  0.000 0.000 0.000 0.000 0.033 0.177 0.189 0.193 0.180 0.181    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [7,]  0.000 0.000 0.000 0.000 0.036 0.120 0.199 0.198 0.205 0.207    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [8,]  0.000 0.000 0.000 0.000 0.051 0.112 0.132 0.192 0.244 0.223    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [9,]  0.000 0.000 0.000 0.000 0.042 0.120 0.127 0.150 0.204 0.215    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [10,]  0.000 0.000 0.000 0.000 0.035 0.111 0.122 0.119 0.135 0.203    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [⋮,]      ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮    ⋮      ⋮</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [200,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [Green]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,…] [,200]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [3,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [4,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [5,]  0.000 0.000 0.000 0.000 0.010 0.037 0.047 0.050 0.044 0.036    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6,]  0.000 0.000 0.000 0.000 0.060 0.195 0.177 0.189 0.177 0.176    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [7,]  0.000 0.000 0.000 0.000 0.068 0.202 0.220 0.200 0.202 0.209    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [8,]  0.000 0.000 0.000 0.000 0.088 0.208 0.222 0.202 0.229 0.218    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [9,]  0.000 0.000 0.000 0.000 0.080 0.217 0.224 0.240 0.226 0.206    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [10,]  0.000 0.000 0.000 0.000 0.066 0.201 0.214 0.215 0.232 0.223    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [⋮,]      ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮    ⋮      ⋮</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [200,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [Blue]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,…] [,200]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [3,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [4,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [5,]  0.000 0.000 0.000 0.000 0.005 0.035 0.046 0.048 0.041 0.035    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6,]  0.000 0.000 0.000 0.000 0.036 0.174 0.170 0.180 0.169 0.168    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [7,]  0.000 0.000 0.000 0.000 0.039 0.121 0.192 0.188 0.192 0.199    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [8,]  0.000 0.000 0.000 0.000 0.050 0.118 0.130 0.170 0.215 0.204    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [9,]  0.000 0.000 0.000 0.000 0.045 0.125 0.133 0.139 0.195 0.195    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [10,]  0.000 0.000 0.000 0.000 0.038 0.133 0.121 0.122 0.134 0.192    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [⋮,]      ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮    ⋮      ⋮</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [200,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000    …  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [Alpha]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,…] [,200]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1,]  2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000    …  2.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2,]  2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000    …  2.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [3,]  2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000    …  2.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [4,]  2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000    …  2.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [5,]  2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000    …  2.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6,]  2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000    …  2.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [7,]  2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000    …  2.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [8,]  2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000    …  2.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [9,]  2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000    …  2.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [10,]  2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000    …  2.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [⋮,]      ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮     ⋮    ⋮      ⋮</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [200,]  2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000 2.000    …  2.000</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in render_exposure(dragon * 2, exposure = -1, gamma_correction = FALSE,     preview = TRUE):</span> object 'temp_image' not found</span>
 </code></pre></div>
     </div>
   </div>
