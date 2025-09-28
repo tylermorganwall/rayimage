@@ -17,7 +17,6 @@
 #'@param absolute Default `TRUE`. Whether to take the absolute value of the convolution.
 #'@param pad Default `50`. Amount to pad the image to remove edge effects.
 #'@param preview Default `FALSE`. Whether to plot the convolved image, or just to return the values.
-#'@param gamma_correction Default `FALSE`. Controls gamma correction when adding colors. Default exponent of 2.2.
 #'@return A `rayimg` RGBA array.
 #'@export
 #'@examples
@@ -82,8 +81,7 @@ render_convolution_fft = function(
   absolute = TRUE,
   pad = 50,
   filename = NULL,
-  preview = FALSE,
-  gamma_correction = FALSE
+  preview = FALSE
 ) {
   shift_fft = function(fft_mat) {
     nr = dim(fft_mat)[1]
@@ -145,14 +143,17 @@ render_convolution_fft = function(
     )
   }
 
-  if (gamma_correction) {
-    temp_image = temp_image^2.2
-  }
   temp_fft = temp_image
   if (length(dim(temp_image)) == 2) {
     temp_fft = stats::fft(temp_image)
   } else if (length(dim(temp_image)) == 3) {
-    for (i in seq_len(3)) {
+    channels = dim(temp_image)[3]
+    if (channels == 2 || channels == 4) {
+      max_channel = channels - 1
+    } else {
+      max_channel = channels
+    }
+    for (i in seq_len(max_channel)) {
       #No alpha
       temp_fft[,, i] = stats::fft(temp_image[,, i])
     }
@@ -161,7 +162,13 @@ render_convolution_fft = function(
   kernal_fft = stats::fft(kernel)
   vals = Re(temp_fft)
   if (length(dim(temp_fft)) == 3) {
-    for (i in seq_len(3)) {
+    channels = dim(temp_image)[3]
+    if (channels == 2 || channels == 4) {
+      max_channel = channels - 1
+    } else {
+      max_channel = channels
+    }
+    for (i in seq_len(max_channel)) {
       vals[,, i] = shift_fft(
         Re(stats::fft(temp_fft[,, i] * kernal_fft, inverse = TRUE)) /
           length(vals[,, i])
@@ -176,9 +183,6 @@ render_convolution_fft = function(
     vals = abs(vals)
   }
 
-  if (gamma_correction) {
-    vals = vals^(1 / 2.2)
-  }
   if (pad != 0) {
     vals = trim_padding(vals, pad)
   }

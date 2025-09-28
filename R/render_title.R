@@ -99,8 +99,6 @@ render_title = function(
   preview = FALSE
 ) {
   image = ray_read_image(image) #Always output RGBA array
-  #Check if file or image before below:
-  imagetype = get_file_type(image)
 
   temp = tempfile(fileext = ".png")
   ray_write_image(
@@ -241,6 +239,8 @@ render_title = function(
         family = title_font,
         res = 72
       )
+      dev_id = grDevices::dev.cur()
+      on.exit(try(grDevices::dev.off(dev_id), silent = TRUE), add = TRUE)
       grid::grid.newpage()
       plot_image(image, gp = gp_text)
       grid::seekViewport("image")
@@ -353,7 +353,6 @@ render_title = function(
           fontfamily = title_font
         )
       )
-      dev.off()
     }
     if (!is.na(title_position)) {
       warning("Title position is ignored when not using {magick}")

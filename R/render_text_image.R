@@ -121,6 +121,7 @@ render_text_image = function(
   )
   temp_filename = tempfile(fileext = ".png")
   ray_write_image(final_array, temp_filename)
+
   temp_image = png::readPNG(temp_filename)
   image_width = ncol(temp_image)
   image_height = nrow(temp_image)
@@ -146,6 +147,7 @@ render_text_image = function(
         bg = NA
       )
     }
+    dev_id = grDevices::dev.cur()
 
     #First write with no background
     grid::grid.newpage()
@@ -175,12 +177,13 @@ render_text_image = function(
         fontfamily = font
       )
     )
-    dev.off()
+    grDevices::dev.off(which = dev_id)
     temp = png::readPNG(temp_filename)
     side_edges = temp[c(1, nrow(temp)), , 4]
     vert_edges = temp[, c(1, ncol(temp)), 4]
     return(c(any(vert_edges > 0), any(side_edges > 0)))
   }
+
   #First write with no background
   if (check_text_width || check_text_height) {
     test_edge_vec = test_edges(image_width, image_height)
@@ -215,6 +218,7 @@ render_text_image = function(
     }
     image_width = image_width - hori_blank + size
   }
+
   #If no edges, proceed with normal render
   if (length(find.package("ragg", quiet = TRUE)) > 0 && use_ragg) {
     ragg::agg_png(
@@ -236,6 +240,8 @@ render_text_image = function(
       bg = NA
     )
   }
+
+  dev_id = grDevices::dev.cur()
   grid::grid.newpage()
   grid::grid.rect(
     x = 0.5,
@@ -249,6 +255,7 @@ render_text_image = function(
       col = NA
     )
   )
+
   grid::grid.text(
     label = text,
     x = 0.5,
@@ -263,23 +270,9 @@ render_text_image = function(
       fontfamily = font
     )
   )
-  dev.off()
+  grDevices::dev.off(which = dev_id)
 
-  temp = png::readPNG(temp_filename)
+  temp = ray_read_image(temp_filename)
 
-  if (length(dim(temp)) == 3 && dim(temp)[3] == 2) {
-    temparray = array(0, dim = c(nrow(temp), ncol(temp), 3))
-    temparray[,, 1] = temp[,, 1]
-    temparray[,, 2] = temp[,, 1]
-    temparray[,, 3] = temp[,, 1]
-    temp = temparray
-  }
-  if (length(dim(temp)) == 2) {
-    temparray = array(0, dim = c(nrow(temp), ncol(temp), 3))
-    temparray[,, 1] = temp
-    temparray[,, 2] = temp
-    temparray[,, 3] = temp
-    temp = temparray
-  }
   handle_image_output(temp, filename = filename, preview = preview)
 }

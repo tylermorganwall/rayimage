@@ -48,13 +48,19 @@ render_exposure = function(
       out = out * scale
     }
   } else {
+    channels = dim(image)[3]
+    if (channels == 2 || channels == 4) {
+      max_channel = channels - 1
+    } else {
+      max_channel = channels
+    }
     if (do_gamma) {
-      for (ch in 1:3) {
+      for (ch in seq_len(max_channel)) {
         lin = to_linear(out[,, ch])
         out[,, ch] = to_srgb(lin * scale)
       }
     } else {
-      out[,, 1:3] = out[,, 1:3] * scale
+      out[,, seq_len(max_channel)] = out[,, seq_len(max_channel)] * scale
     }
   }
 

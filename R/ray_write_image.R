@@ -5,7 +5,7 @@
 #'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param filename File to write to, with filetype determined by extension. Filetype can be
 #'`PNG`, `JPEG`, `TIFF`, or `EXR`.
-#'@param clamp Default `NA`, automatically determined. Whether to clamp the image to 0-1. If the file extension is `PNG` of `JPEG`,
+#'@param clamp Default `FALSE`, automatically determined. Whether to clamp the image to 0-1. If the file extension is `PNG` of `JPEG`,
 #'this is forced to `TRUE`.
 #'@param ... Arguments to pass to either `jpeg::writeJPEG`, `png::writePNG`, or `tiff::writeTIFF`.
 #'@return A `rayimg` RGBA array.
@@ -36,56 +36,74 @@
 #'ray_read_image(tmparr) |>
 #'   plot_image()
 #'}
-ray_write_image = function(image, filename, clamp = NA, ...) {
+ray_write_image = function(image, filename, clamp = FALSE, ...) {
   image = ray_read_image(image) #Always output RGBA array
   #Check if file or image before below:
-  imagetype = get_file_type(image)
+  # imagetype = attr(image, "")
   #This isn't a check for rayimg type, it's just checking the base R type
   gamma_corrected = attr(image, "gamma_corrected")
 
-  if (!imagetype %in% c("array", "matrix")) {
-    file.copy(image, filename)
+  fileext = tolower(tools::file_ext(filename))
+  if (!fileext %in% c("png", "jpeg", "jpg", "tiff", "exr")) {
+    stop(sprintf(
+      "File extension (%s) must be one of `png`, `jpeg`, `jpg`, `exr`, or `tiff`",
+      fileext
+    ))
+  }
+  if (clamp) {
+    image = render_clamp(image)
+  }
+  is_matrix = length(dim(image)) == 2
+  if (is_matrix) {
+    if (!gamma_corrected) {
+      image = to_srgb(image)
+    }
   } else {
-    fileext = tolower(tools::file_ext(filename))
-    if (!fileext %in% c("png", "jpeg", "jpg", "tiff", "exr")) {
-      stop(sprintf(
-        "File extension (%s) must be one of `png`, `jpeg`, `jpg`, `exr`, or `tiff`",
-        fileext
-      ))
-    }
-    if (is.na(clamp)) {
-      if (fileext %in% c("jpg", "jpeg", "png")) {
-        clamp = TRUE
-      } else {
-        clamp = FALSE
-      }
-    }
-    if (clamp || fileext %in% c("jpg", "jpeg", "png")) {
-      image[image > 1] = 1
-      image[image < 0] = 0
-    }
-    if (fileext %in% c("jpeg", "jpg")) {
-      if (!gamma_corrected) {
-        image[,, 1:3] = to_srgb(image[,, 1:3])
-      }
-      jpeg::writeJPEG(image, target = filename, ...)
-    } else if (fileext == "png") {
-      if (!gamma_corrected) {
-        image[,, 1:3] = to_srgb(image[,, 1:3])
-      }
-      png::writePNG(image, target = filename, ...)
-    } else if (fileext == "exr") {
-      if (length(find.package("libopenexr", quiet = TRUE)) > 0) {
-        libopenexr::write_exr(
-          filename,
-          r = image[,, 1],
-          g = image[,, 2],
-          b = image[,, 3],
-          a = image[,, 4]
-        )
-      }
+    max_dim = dim(image)[3L]
+    has_alpha = max_dim %in% c(2L, 4L)
+    if (has_alpha) {
+      col_dims = seq_len(max_dim - 1L)
+      alpha_channel = image[,, max_dim]
+      alpha_channel[alpha_channel > 1] = 1
+      alpha_channel[alpha_channel < 0] = 0
+      image[,, max_dim] = alpha_channel
     } else {
-      tiff::writeTIFF(image, where = filename, ...)
+      col_dims = seq_len(max_dim)
     }
+    if (!gamma_corrected) {
+      image[,, col_dims] = to_srgb(image[,, col_dims])
+    }
+  }
+  if (fileext %in% c("jpeg", "jpg")) {
+    jpeg::writeJPEG(image, target = filename, ...)
+  } else if (fileext == "png") {
+    png::writePNG(image, target = filename, ...)
+  } else if (fileext == "exr") {
+    if (length(find.package("libopenexr", quiet = TRUE)) > 0) {
+      rgba = array(1, dim = c(dim(image)[1:2], 4))
+      if (is_matrix) {
+        rgba[,, 1:3] = image
+      } else if (dim(image)[3] == 2) {
+        rgba[,, 1] = image[,, 1]
+        rgba[,, 2] = image[,, 1]
+        rgba[,, 3] = image[,, 1]
+        rgba[,, 4] = image[,, 2]
+      } else if (dim(image)[3] == 3) {
+        rgba[,, 1] = image[,, 1]
+        rgba[,, 2] = image[,, 2]
+        rgba[,, 3] = image[,, 3]
+      } else if (dim(image)[3] == 4) {
+        rgba = image
+      }
+      libopenexr::write_exr(
+        filename,
+        r = image[,, 1],
+        g = image[,, 2],
+        b = image[,, 3],
+        a = image[,, 4]
+      )
+    }
+  } else {
+    tiff::writeTIFF(image, where = filename, ...)
   }
 }

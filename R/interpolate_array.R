@@ -21,20 +21,54 @@
 interpolate_array = function(image, x, y) {
   image = ray_read_image(image) #Always output RGBA array
   #Check if file or image before below:
-  imagetype = get_file_type(image)
+  is_matrix = length(dim(image)) == 2
   xy = matrix(c(x, y), nrow = length(x), ncol = 2)
 
-  if (imagetype == "matrix") {
+  if (is_matrix) {
     return(apply(xy, 1, (function(x) rayinterp2(image, x[1], x[2]))))
   }
   #Load and rotate images if image
-  image = ray_read_image(image) #Always output RGBA array
-
   output = list()
-  output$r = apply(xy, 1, (function(x) rayinterp2(image[,, 1], x[1], x[2])))
-  output$g = apply(xy, 1, (function(x) rayinterp2(image[,, 2], x[1], x[2])))
-  output$b = apply(xy, 1, (function(x) rayinterp2(image[,, 3], x[1], x[2])))
-  output$a = apply(xy, 1, (function(x) rayinterp2(image[,, 3], x[1], x[2])))
-
+  if (dim(image)[3] == 2) {
+    output$grey = apply(
+      xy,
+      1,
+      (function(x) rayinterp2(image[,, 1], x[1], x[2]))
+    )
+    output$alpha = apply(
+      xy,
+      1,
+      (function(x) rayinterp2(image[,, 2], x[1], x[2]))
+    )
+  } else if (dim(image)[3] == 3) {
+    output$red = apply(xy, 1, (function(x) rayinterp2(image[,, 1], x[1], x[2])))
+    output$green = apply(
+      xy,
+      1,
+      (function(x) rayinterp2(image[,, 2], x[1], x[2]))
+    )
+    output$blue = apply(
+      xy,
+      1,
+      (function(x) rayinterp2(image[,, 3], x[1], x[2]))
+    )
+  } else if (dim(image)[3] == 4) {
+    output$red = apply(xy, 1, (function(x) rayinterp2(image[,, 1], x[1], x[2])))
+    output$green = apply(
+      xy,
+      1,
+      (function(x) rayinterp2(image[,, 2], x[1], x[2]))
+    )
+    output$blue = apply(
+      xy,
+      1,
+      (function(x) rayinterp2(image[,, 3], x[1], x[2]))
+    )
+    output$alpha = apply(
+      xy,
+      1,
+      (function(x) rayinterp2(image[,, 4], x[1], x[2]))
+    )
+  }
   return(output)
 }

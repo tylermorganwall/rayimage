@@ -4,7 +4,7 @@
 \alias{ray_write_image}
 \title{Write Image}
 \usage{
-ray_write_image(image, filename, clamp = NA, ...)
+ray_write_image(image, filename, clamp = FALSE, ...)
 }
 \arguments{
 \item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
@@ -12,7 +12,7 @@ ray_write_image(image, filename, clamp = NA, ...)
 \item{filename}{File to write to, with filetype determined by extension. Filetype can be
 \code{PNG}, \code{JPEG}, \code{TIFF}, or \code{EXR}.}
 
-\item{clamp}{Default \code{NA}, automatically determined. Whether to clamp the image to 0-1. If the file extension is \code{PNG} of \code{JPEG},
+\item{clamp}{Default \code{FALSE}, automatically determined. Whether to clamp the image to 0-1. If the file extension is \code{PNG} of \code{JPEG},
 this is forced to \code{TRUE}.}
 
 \item{...}{Arguments to pass to either \code{jpeg::writeJPEG}, \code{png::writePNG}, or \code{tiff::writeTIFF}.}

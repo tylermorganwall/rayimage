@@ -26,24 +26,30 @@ render_bw = function(
   stopifnot(length(rgb_coef) == 3 && is.numeric(rgb_coef))
   src = ray_read_image(image)
   d = dim(src)
+  is_array = length(d) == 3
+
+  if (attr(src, "filetype") == "matrix" || (is_array && d[3] == 2)) {
+    return(image)
+  }
+
   # luminance
   lum = rgb_coef[1] *
     src[,, 1] +
     rgb_coef[2] * src[,, 2] +
     rgb_coef[3] * src[,, 3]
 
-  out = array(1, dim = c(d[1], d[2], 4))
-  out[,, 1] = lum
-  out[,, 2] = lum
-  out[,, 3] = lum
-  out[,, 4] = if (d[3] >= 4L) src[,, 4] else 1
+  if (length(dim(src)) == 2) {
+    out = lum
+  } else {
+    out = array(1, dim = c(d[1], d[2], 2))
+    out[,, 1] = lum
+    out[,, 2] = if (d[3] == 4L) src[,, 4] else 1
+  }
 
-  # keep filetype, wrap as rayimg, mark grey
+  out = ray_read_image(out)
+  # keep filetype, wrap as rayimg
   attr(out, "filetype") = attr(src, "filetype")
   attr(out, "gamma_corrected") = attr(src, "gamma_corrected")
-
-  class(out) = unique(c("rayimg", setdiff(class(out), "rayimg"), "array"))
-  out = rayimg_mark_grey(out)
 
   handle_image_output(out, filename = filename, preview = preview)
 }

@@ -19,9 +19,6 @@
 #'@param min_value Default `NULL`. If numeric, specifies he minimum value (for any color channel)
 #'for a pixel to have the convolution performed.
 #'@param preview Default `TRUE`. Whether to plot the convolved image, or just to return the values.
-#'@param gamma_correction Default `NA`, automatically determined (`FALSE` for matrix/array/exr/tiff,
-#' `TRUE` for jpg/png). Whether the image loaded has already had gamma correction applied and
-#' needs to be linearized. Controls gamma correction when adding colors. Uses exponent of 2.2.
 #'@param progress Default `TRUE`. Whether to display a progress bar.
 #'@return A `rayimg` RGBA array.
 #'@export
@@ -87,7 +84,6 @@ render_convolution = function(
   min_value = NULL,
   filename = NULL,
   preview = FALSE,
-  gamma_correction = FALSE,
   progress = FALSE
 ) {
   if (is.character(kernel)) {
@@ -112,7 +108,6 @@ render_convolution = function(
   }
   temp_image = ray_read_image(image, convert_to_array = FALSE)
   imagetype = attr(temp_image, "filetype")
-
   if (any(dim(kernel) > dim(temp_image)[1:2] * 2 + 1)) {
     stop(
       "kernel dimensions: ",
@@ -126,13 +121,13 @@ render_convolution = function(
   }
 
   bloom_matrix = matrix(TRUE, nrow = nrow(temp_image), ncol = ncol(temp_image))
-  if (imagetype != "matrix") {
+  if (length(dim(temp_image)) == 3) {
     if (!is.null(min_value)) {
-      bloom_matrix[
-        temp_image[,, 1] <= min_value &
-          temp_image[,, 2] <= min_value &
-          temp_image[,, 3] <= min_value
-      ] = FALSE
+      bool_value = rep(TRUE, length = length(temp_image[,, 1]))
+      for (i in seq_along(dim(temp_image)[3])) {
+        bool_value = bool_value & temp_image[,, i] <= min_value
+      }
+      bloom_matrix[bool_value] = FALSE
     }
   } else {
     if (!is.null(min_value)) {
@@ -141,7 +136,13 @@ render_convolution = function(
   }
   temp_image_final = temp_image
   if (imagetype != "matrix") {
-    for (i in seq_len(3)) {
+    channels = dim(temp_image)[3]
+    if (channels == 2 || channels == 4) {
+      max_channel = channels - 1
+    } else {
+      max_channel = channels
+    }
+    for (i in seq_len(max_channel)) {
       #Don't convolve alpha channel
       temp_image_final[,, i] = convolution_cpp(
         temp_image[,, i],
@@ -162,9 +163,6 @@ render_convolution = function(
   }
   if (absolute) {
     temp_image_final = abs(temp_image_final)
-  }
-  if (gamma_correction) {
-    temp_image_final^(1 / 2.2)
   }
   handle_image_output(temp_image_final, filename = filename, preview = preview)
 }

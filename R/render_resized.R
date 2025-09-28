@@ -54,7 +54,18 @@ render_resized = function(
   imagetype = attr(temp_image, "filetype")
   img_gamma_correct = attr(temp_image, "gamma_corrected")
   if (img_gamma_correct) {
-    temp_image[,, 1:3] = to_linear(temp_image[,, 1:3])
+    if (length(dim(image)) == 3) {
+      channels = dim(temp_image)[3]
+      if (channels == 2 || channels == 4) {
+        max_channel = channels - 1
+      } else {
+        max_channel = channels
+      }
+      chans = seq_len(max_channel)
+      temp_image[,, chans] = to_linear(temp_image[,, chans])
+    } else {
+      temp_image = to_linear(temp_image)
+    }
   }
 
   if (method %in% c("bi", "bilinear")) {
@@ -62,8 +73,9 @@ render_resized = function(
       dims = dims[1:2] / dim(temp_image)[1:2]
     }
     temp_list = list()
-    if (imagetype != "matrix") {
-      for (i in 1:4) {
+    if (length(dim(image)) == 3) {
+      channels = dim(image)[3]
+      for (i in seq_len(channels)) {
         if (is.null(dims)) {
           temp_list[[i]] = resize_image(temp_image[,, i], mag)
         } else {
@@ -74,12 +86,11 @@ render_resized = function(
       }
       temp_image = array(
         0,
-        dim = c(nrow(temp_list[[1]]), ncol(temp_list[[1]]), 4)
+        dim = c(nrow(temp_list[[1]]), ncol(temp_list[[1]]), channels)
       )
-      temp_image[,, 1] = temp_list[[1]]
-      temp_image[,, 2] = temp_list[[2]]
-      temp_image[,, 3] = temp_list[[3]]
-      temp_image[,, 4] = temp_list[[4]]
+      for (i in seq_len(channels)) {
+        temp_image[,, i] = temp_list[[i]]
+      }
     } else {
       if (is.null(dims)) {
         temp_image = resize_image(t(flipud(temp_image)), mag)
@@ -107,8 +118,8 @@ render_resized = function(
       dims = mag * dim(image)[1:2]
     }
     temp_list = list()
-    if (imagetype != "matrix") {
-      for (i in 1:(dim(image)[3])) {
+    if (length(dim(image)) == 3) {
+      for (i in seq_len(dim(image)[3])) {
         temp_list[[i]] = resize_matrix_stb(
           unclass(temp_image[,, i]),
           dims[1],
@@ -117,14 +128,11 @@ render_resized = function(
         )
       }
       temp_image = array(0, dim = c(dims[1], dims[2], dim(image)[3]))
-      for (i in 1:(dim(image)[3])) {
+      for (i in seq_len(dim(image)[3])) {
         temp_image[,, i] = temp_list[[i]]
       }
     } else {
       bare_matrix = unclass(temp_image)
-      if (inherits(temp_image, "rayimg")) {
-        bare_matrix = bare_matrix[,, 1]
-      }
       temp_image = resize_matrix_stb(
         bare_matrix,
         dims[1],
@@ -139,7 +147,18 @@ render_resized = function(
     gamma_correct = img_gamma_correct
   )
   if (img_gamma_correct) {
-    temp_image[,, 1:3] = to_srgb(temp_image[,, 1:3])
+    if (length(dim(image)) == 3) {
+      channels = dim(temp_image)[3]
+      if (channels == 2 || channels == 4) {
+        max_channel = channels - 1
+      } else {
+        max_channel = channels
+      }
+      chans = seq_len(max_channel)
+      temp_image[,, chans] = to_srgb(temp_image[,, chans])
+    } else {
+      temp_image = to_srgb(temp_image)
+    }
   }
   handle_image_output(temp_image, filename = filename, preview = preview)
 }

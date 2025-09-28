@@ -49,12 +49,29 @@
 #'}
 ray_read_image = function(
   image,
-  convert_to_array = TRUE,
+  convert_to_array = FALSE,
   preview = FALSE,
   gamma_correct = NA,
   ...
 ) {
-  optional_preview = function(image2) {
+  process_image_preview = function(image2) {
+    if (convert_to_array) {
+      image_val = array(1, dim = c(dim(image2)[1:2], 4))
+      if (length(dim(image2)) == 2) {
+        image_val[,, 1:3] = image2
+      } else if (length(dim(image2)) == 3) {
+        if (dim(image2)[3] == 2) {
+          image_val[,, 1:3] = image2[,, 1]
+          image_val[,, 4] = image2[,, 2]
+        } else if (dim(image2)[3] == 3) {
+          image_val[,, 1:3] = image2[,, 1:3]
+        } else if (dim(image2)[3] == 4) {
+          image_val = image2
+        }
+      }
+    } else {
+      image_val = image2
+    }
     if (preview) {
       plot_image(image2)
     }
@@ -73,26 +90,35 @@ ray_read_image = function(
   if (inherits(image, "rayimg")) {
     gamma_correct = attr(image, "gamma_corrected")
     filetype = attr(image, "filetype")
-    return(rayimg(optional_preview(image), filetype, gamma_correct))
+    return(rayimg(process_image_preview(image), filetype, gamma_correct))
   }
   if (imagetype == "array") {
-    return(rayimg(optional_preview(image), imagetype, gamma_correct))
+    return(rayimg(process_image_preview(image), imagetype, gamma_correct))
   } else if (imagetype == "matrix") {
-    return(rayimg(optional_preview(image), imagetype, gamma_correct))
+    if (length(dim(image)) == 3) {
+      #Drop useless dimension of single channel array
+      return(rayimg(
+        process_image_preview(image[,, 1]),
+        imagetype,
+        gamma_correct
+      ))
+    } else {
+      return(rayimg(process_image_preview(image), imagetype, gamma_correct))
+    }
   } else if (imagetype == "png") {
     image = png::readPNG(image, ...)
     return(rayimg(
-      optional_preview(image),
+      process_image_preview(image),
       imagetype,
       gamma_correct
     ))
   } else if (imagetype == "tif") {
     image = tiff::readTIFF(image, ...)
-    return(rayimg(optional_preview(image), imagetype, gamma_correct))
+    return(rayimg(process_image_preview(image), imagetype, gamma_correct))
   } else if (imagetype == "jpg") {
     image = jpeg::readJPEG(image, ...)
     return(rayimg(
-      optional_preview(image),
+      process_image_preview(image),
       imagetype,
       gamma_correct
     ))
@@ -103,7 +129,7 @@ ray_read_image = function(
       image[,, 1] = image_tmp$r
       image[,, 2] = image_tmp$g
       image[,, 3] = image_tmp$b
-      return(rayimg(optional_preview(image), imagetype, gamma_correct))
+      return(rayimg(process_image_preview(image), imagetype, gamma_correct))
     } else {
       stop("The 'libopenexr' package is required for EXR support.")
     }

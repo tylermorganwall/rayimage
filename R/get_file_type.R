@@ -23,6 +23,8 @@ get_file_type = function(file) {
         "` not recognized class (png, tiff, jpeg, exr, array, matrix)."
       )
     }
+  } else if (length(dim(file)) == 3 && dim(file)[3] == 1) {
+    imagetype = "matrix"
   } else if (length(dim(file)) == 3) {
     imagetype = "array"
   } else if (length(dim(file)) == 2) {
