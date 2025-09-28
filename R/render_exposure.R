@@ -68,5 +68,5 @@ render_exposure = function(
     if (!is.null(image_gamma_correct)) image_gamma_correct else FALSE
   }
 
-  handle_image_output(temp_image, filename = filename, preview = preview)
+  handle_image_output(out, filename = filename, preview = preview)
 }
