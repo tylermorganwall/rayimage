@@ -13,7 +13,9 @@
 
 \item{decimals}{Default \code{3}. Number of decimal places to display in numeric preview.}
 
-\item{color}{Default \code{TRUE}. Colorize headers and R/G/B/A numeric cells when supported.#' @param ... Default ``. Ignored.}
+\item{color}{Default \code{TRUE}. Colorize headers and R/G/B/A numeric cells when supported.}
+
+\item{...}{Default ``. Ignored.}
 }
 \value{
 Invisibly returns \code{x}.

@@ -3,7 +3,8 @@
 #' @param x Default `NULL`. A `rayimg` object.
 #' @param preview_n Default `10`. Max rows/cols to display in numeric preview.
 #' @param decimals Default `3`. Number of decimal places to display in numeric preview.
-#' @param color Default `TRUE`. Colorize headers and R/G/B/A numeric cells when supported.#' @param ... Default ``. Ignored.
+#' @param color Default `TRUE`. Colorize headers and R/G/B/A numeric cells when supported.
+#' @param ... Default ``. Ignored.
 #'
 #' @return Invisibly returns `x`.
 #' @export

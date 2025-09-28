@@ -68,12 +68,5 @@ render_exposure = function(
     if (!is.null(image_gamma_correct)) image_gamma_correct else FALSE
   }
 
-  if (preview) {
-    plot_image(out, ...)
-  }
-  if (!is.na(filename)) {
-    ray_write_image(out, filename, ...)
-    return(invisible(out))
-  }
-  return(out)
+  handle_image_output(temp_image, filename = filename, preview = preview)
 }
