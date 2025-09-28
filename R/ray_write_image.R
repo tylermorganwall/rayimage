@@ -7,7 +7,7 @@
 #'`PNG`, `JPEG`, `TIFF`, or `EXR`.
 #'@param clamp Default `FALSE`, automatically determined. Whether to clamp the image to 0-1. If the file extension is `PNG` of `JPEG`,
 #'this is forced to `TRUE`.
-#'@param ... Arguments to pass to either `jpeg::writeJPEG`, `png::writePNG`, or `tiff::writeTIFF`.
+#'@param ... Arguments to pass to either `jpeg::writeJPEG`, `png::writePNG`, `libopenexr::write_exr`, or `tiff::writeTIFF`.
 #'@return A `rayimg` RGBA array.
 #'@import grDevices
 #'@export
@@ -37,9 +37,10 @@
 #'   plot_image()
 #'}
 ray_write_image = function(image, filename, clamp = FALSE, ...) {
+  if (missing(filename)) {
+    stop("`filename` must be specified.")
+  }
   image = ray_read_image(image) #Always output RGBA array
-  #Check if file or image before below:
-  # imagetype = attr(image, "")
   #This isn't a check for rayimg type, it's just checking the base R type
   gamma_corrected = attr(image, "gamma_corrected")
 
@@ -50,7 +51,7 @@ ray_write_image = function(image, filename, clamp = FALSE, ...) {
       fileext
     ))
   }
-  if (clamp || fileext %in% c("png", "jpeg", "jpg")) {
+  if (clamp || fileext %in% c("png", "jpeg", "jpg", "tiff")) {
     image = render_clamp(image)
   }
   is_matrix = length(dim(image)) == 2

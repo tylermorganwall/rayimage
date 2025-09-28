@@ -15,7 +15,7 @@ ray_write_image(image, filename, clamp = FALSE, ...)
 \item{clamp}{Default \code{FALSE}, automatically determined. Whether to clamp the image to 0-1. If the file extension is \code{PNG} of \code{JPEG},
 this is forced to \code{TRUE}.}
 
-\item{...}{Arguments to pass to either \code{jpeg::writeJPEG}, \code{png::writePNG}, or \code{tiff::writeTIFF}.}
+\item{...}{Arguments to pass to either \code{jpeg::writeJPEG}, \code{png::writePNG}, \code{libopenexr::write_exr}, or \code{tiff::writeTIFF}.}
 }
 \value{
 A \code{rayimg} RGBA array.

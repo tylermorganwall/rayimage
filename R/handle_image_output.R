@@ -12,7 +12,7 @@
 #'
 #' @keywords internal
 handle_image_output = function(image, filename = NULL, preview = FALSE) {
-  if (is.null(filename)) {
+  if (is.null(filename) || is.na(filename)) {
     if (!preview) {
       return(image) # Return the image data
     }
