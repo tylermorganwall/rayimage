@@ -6,16 +6,15 @@
 #'    * 2 Layer(s): c("Greyscale", "Alpha")
 #'    * 3 Layer(s): c("Red", "Green", "Blue")
 #'    * 4 Layer(s): c("Red", "Green", "Blue", "Alpha")
-#'  * It tracks whether the image needs to be gamma corrected for display
-#'  *
+#'  * It tracks whether the source data was linearized 
 #'
 #' @param x Default `NULL`. The underlying array/matrix to wrap.
 #' @param filetype Default `NULL`. Original source type to record (e.g., "png").
-#' @param gamma_correct Default `FALSE`. Whether to gamma correct the image.
+#' @param source_linear Default `FALSE`. Whether the original source was linearized.
 #'
 #' @return An object of class `c("rayimg", <original class>)` with `filetype` attribute.
 #' @keywords internal
-rayimg = function(x = NULL, filetype = NULL, gamma_correct = FALSE) {
+rayimg = function(x = NULL, filetype = NULL, source_linear = FALSE) {
   stopifnot(inherits(x, "array"))
   if (is.null(x)) stop("rayimg(): 'x' cannot be NULL.")
   x_new = rayimg_validate_dimensions(x)
@@ -25,7 +24,7 @@ rayimg = function(x = NULL, filetype = NULL, gamma_correct = FALSE) {
     attr(x_new, "channels") = attr(x, "channels")
   }
   attr(x_new, "filetype") = filetype
-  attr(x_new, "gamma_corrected") = gamma_correct
+  attr(x_new, "source_linear") = source_linear
   class(x_new) = c("rayimg", setdiff(class(x), "rayimg"))
   x_new
 }
@@ -122,7 +121,7 @@ rayimg_validate_dimensions = function(x) {
 
   # carry attributes
   attr(y, "filetype") = attr(x, "filetype")
-  attr(y, "gamma_corrected") = attr(x, "gamma_corrected")
+  attr(y, "source_linear") = attr(x, "source_linear")
 
   # channels attribute follows the 3rd subscript if present
   # ch = attr(x, "channels")

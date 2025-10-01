@@ -4,23 +4,12 @@
 \alias{render_exposure}
 \title{Apply exposure compensation (in stops)}
 \usage{
-render_exposure(
-  image,
-  exposure = 0,
-  gamma_correction = NA,
-  filename = NA,
-  preview = FALSE,
-  ...
-)
+render_exposure(image, exposure = 0, filename = NA, preview = FALSE, ...)
 }
 \arguments{
 \item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
 \item{exposure}{Default \code{0}. Exposure compensation in stops; RGB is scaled by \code{2^exposure}.}
-
-\item{gamma_correction}{Default \code{NA}. If \code{TRUE}, treat as sRGB (decode -> scale -> encode).
-If \code{FALSE}, treat as scene-linear/HDR and scale directly. If \code{NA}, auto-detect using
-\code{attr(image, "gamma_corrected")}, falling back to a range heuristic (outside 0..1 is linear).}
 
 \item{filename}{Default \code{NA}. Output path.}
 
@@ -42,6 +31,6 @@ if (run_documentation()) {
 }
 # Force linear/HDR behavior
 if (run_documentation()) {
-  render_exposure(dragon * 2, exposure = -1, gamma_correction = FALSE, preview = TRUE)
+  render_exposure(dragon * 2, exposure = -1, preview = TRUE)
 }
 }

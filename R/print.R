@@ -94,8 +94,8 @@ print.rayimg = function(
     "  ",
     "filetype: ",
     col_cyan(ft),
-    "  Gamma Corrected: ",
-    col_green(as.character(attr(x, "gamma_corrected"))),
+    "  Linear Data: ",
+    col_green(as.character(attr(x, "source_linear"))),
     "\n",
     sep = ""
   )

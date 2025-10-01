@@ -4,7 +4,7 @@
 \alias{ray_write_image}
 \title{Write Image}
 \usage{
-ray_write_image(image, filename, clamp = FALSE, ...)
+ray_write_image(image, filename, clamp = FALSE, write_linear = NA, ...)
 }
 \arguments{
 \item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
@@ -14,6 +14,9 @@ ray_write_image(image, filename, clamp = FALSE, ...)
 
 \item{clamp}{Default \code{FALSE}, automatically determined. Whether to clamp the image to 0-1. If the file extension is \code{PNG} of \code{JPEG},
 this is forced to \code{TRUE}.}
+
+\item{write_linear}{Default \code{NA}, automatically determined. By default, images will be gamma corrected (write_linear = FALSE) for
+all file types except \code{EXR} (which is a linear format), unless otherwise specified.}
 
 \item{...}{Arguments to pass to either \code{jpeg::writeJPEG}, \code{png::writePNG}, \code{libopenexr::write_exr}, or \code{tiff::writeTIFF}.}
 }

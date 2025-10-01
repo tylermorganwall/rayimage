@@ -7,6 +7,8 @@
 #'`PNG`, `JPEG`, `TIFF`, or `EXR`.
 #'@param clamp Default `FALSE`, automatically determined. Whether to clamp the image to 0-1. If the file extension is `PNG` of `JPEG`,
 #'this is forced to `TRUE`.
+#'@param write_linear Default `NA`, automatically determined. By default, images will be gamma corrected (write_linear = FALSE) for
+#' all file types except `EXR` (which is a linear format), unless otherwise specified.
 #'@param ... Arguments to pass to either `jpeg::writeJPEG`, `png::writePNG`, `libopenexr::write_exr`, or `tiff::writeTIFF`.
 #'@return A `rayimg` RGBA array.
 #'@import grDevices
@@ -36,14 +38,13 @@
 #'ray_read_image(tmparr) |>
 #'   plot_image()
 #'}
-ray_write_image = function(image, filename, clamp = FALSE, ...) {
+ray_write_image = function(image, filename, clamp = FALSE, write_linear = NA, ...) {
   if (missing(filename)) {
     stop("`filename` must be specified.")
   }
   image = ray_read_image(image) #Always output RGBA array
-  #This isn't a check for rayimg type, it's just checking the base R type
-  gamma_corrected = attr(image, "gamma_corrected")
-
+	#Image should always be linear by this point
+	
   fileext = tolower(tools::file_ext(filename))
   if (!fileext %in% c("png", "jpeg", "jpg", "tiff", "exr")) {
     stop(sprintf(
@@ -54,9 +55,12 @@ ray_write_image = function(image, filename, clamp = FALSE, ...) {
   if (clamp || fileext %in% c("png", "jpeg", "jpg", "tiff")) {
     image = render_clamp(image)
   }
+  if(is.na(write_linear)) {
+		write_linear = !(fileext %in% c("png", "jpeg", "jpg", "tiff"))
+  }
   is_matrix = length(dim(image)) == 2
   if (is_matrix) {
-    if (!gamma_corrected) {
+    if (!write_linear) {
       image = to_srgb(image)
     }
   } else {
@@ -71,7 +75,7 @@ ray_write_image = function(image, filename, clamp = FALSE, ...) {
     } else {
       col_dims = seq_len(max_dim)
     }
-    if (!gamma_corrected) {
+    if (!write_linear) {
       image[,, col_dims] = to_srgb(image[,, col_dims])
     }
   }
@@ -107,4 +111,4 @@ ray_write_image = function(image, filename, clamp = FALSE, ...) {
   } else {
     tiff::writeTIFF(image, where = filename, ...)
   }
-}
+  }

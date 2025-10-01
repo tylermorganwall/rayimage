@@ -4,14 +4,14 @@
 \alias{rayimg}
 \title{Create a rayimg}
 \usage{
-rayimg(x = NULL, filetype = NULL, gamma_correct = FALSE)
+rayimg(x = NULL, filetype = NULL, source_linear = FALSE)
 }
 \arguments{
 \item{x}{Default \code{NULL}. The underlying array/matrix to wrap.}
 
 \item{filetype}{Default \code{NULL}. Original source type to record (e.g., "png").}
 
-\item{gamma_correct}{Default \code{FALSE}. Whether to gamma correct the image.}
+\item{source_linear}{Default \code{FALSE}. Whether the original source was linearized.}
 }
 \value{
 An object of class \verb{c("rayimg", <original class>)} with \code{filetype} attribute.
@@ -26,8 +26,7 @@ This class will always be:
 \item 3 Layer(s): c("Red", "Green", "Blue")
 \item 4 Layer(s): c("Red", "Green", "Blue", "Alpha")
 }
-\item It tracks whether the image needs to be gamma corrected for display
-\item 
+\item It tracks whether the source data was linearized
 }
 }
 \keyword{internal}

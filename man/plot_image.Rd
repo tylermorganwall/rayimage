@@ -6,20 +6,17 @@
 \usage{
 plot_image(
   image,
-  rotate = 0,
   draw_grid = FALSE,
   ignore_alpha = FALSE,
   asp = 1,
   new_page = TRUE,
   return_grob = FALSE,
   gp = grid::gpar(),
-  gamma_correct = NA
+  show_linear = FALSE
 )
 }
 \arguments{
 \item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
-
-\item{rotate}{Default 0. Rotates the output. Possible values: 0, 90, 180, 270.}
 
 \item{draw_grid}{Default \code{FALSE}. If \code{TRUE}, this will draw a grid in the background to help
 disambiguate the actual image from the device (helpful if the image background is the same as the
@@ -36,8 +33,8 @@ slightly widen the image.}
 
 \item{gp}{A \code{grid::gpar()} object to include for the grid viewport displaying the image.}
 
-\item{gamma_correct}{Default \code{NA}, automatically determined. EXR images are automatically
-gamma corrected (power 1/2.2) unless this is set to \code{FALSE}.}
+\item{show_linear}{Default \code{FALSE}. Most data should be gamma corrected before displaying on a screen.
+Set to \code{TRUE} to turn off this gamma correction.}
 }
 \description{
 Displays the image in the current device.

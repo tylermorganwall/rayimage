@@ -33,10 +33,14 @@ get_file_type = function(file) {
     stop("Images can only be paths to image files, matrices, ",
 				 "and arrays with fewer than 3 dimensions")
   } else {
-    stop(
-      "`",
-      file,
-      "` not recognized class (png, tiff, jpeg, exr, array, matrix)."
-    )
-  }
+	if(is.character(file)) {
+			stop(
+				"`",
+				file,
+				"` not recognized class (png, tiff, jpeg, exr, array, matrix)."
+			)
+		} else {
+	  	stop("input not recognized class (png, tiff, jpeg, exr, array, matrix).")
+		}
+	} 
 }

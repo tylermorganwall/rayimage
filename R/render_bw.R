@@ -49,7 +49,7 @@ render_bw = function(
   out = ray_read_image(out)
   # keep filetype, wrap as rayimg
   attr(out, "filetype") = attr(src, "filetype")
-  attr(out, "gamma_corrected") = attr(src, "gamma_corrected")
+  attr(out, "source_linear") = attr(src, "source_linear")
 
   handle_image_output(out, filename = filename, preview = preview)
 }

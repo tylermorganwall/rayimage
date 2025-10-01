@@ -49,24 +49,10 @@ render_resized = function(
   preview = FALSE,
   method = "tri"
 ) {
-  temp_image = ray_read_image(image) #Always output RGBA array
+  temp_image = ray_read_image(image, ) #Always output RGBA array
   #Check if file or image before below:
   imagetype = attr(temp_image, "filetype")
-  img_gamma_correct = attr(temp_image, "gamma_corrected")
-  if (img_gamma_correct) {
-    if (length(dim(image)) == 3) {
-      channels = dim(temp_image)[3]
-      if (channels == 2 || channels == 4) {
-        max_channel = channels - 1
-      } else {
-        max_channel = channels
-      }
-      chans = seq_len(max_channel)
-      temp_image[,, chans] = to_linear(temp_image[,, chans])
-    } else {
-      temp_image = to_linear(temp_image)
-    }
-  }
+  img_source_linear = attr(temp_image, "source_linear")
 
   if (method %in% c("bi", "bilinear")) {
     if (!is.null(dims)) {
@@ -144,21 +130,7 @@ render_resized = function(
   temp_image = ray_read_image(
     temp_image,
     filetype = imagetype,
-    gamma_correct = img_gamma_correct
+    source_linear = img_source_linear
   )
-  if (img_gamma_correct) {
-    if (length(dim(image)) == 3) {
-      channels = dim(temp_image)[3]
-      if (channels == 2 || channels == 4) {
-        max_channel = channels - 1
-      } else {
-        max_channel = channels
-      }
-      chans = seq_len(max_channel)
-      temp_image[,, chans] = to_srgb(temp_image[,, chans])
-    } else {
-      temp_image = to_srgb(temp_image)
-    }
-  }
   handle_image_output(temp_image, filename = filename, preview = preview)
 }

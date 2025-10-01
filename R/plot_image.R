@@ -3,7 +3,6 @@
 #'@description Displays the image in the current device.
 #'
 #'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
-#'@param rotate Default 0. Rotates the output. Possible values: 0, 90, 180, 270.
 #'@param draw_grid Default `FALSE`. If `TRUE`, this will draw a grid in the background to help
 #'disambiguate the actual image from the device (helpful if the image background is the same as the
 #'device's background).
@@ -13,8 +12,8 @@
 #'@param ignore_alpha Default `FALSE`. Whether to ignoe the alpha channel when plotting.
 #'@param return_grob Default `FALSE`. Whether to return the grob object.
 #'@param gp A `grid::gpar()` object to include for the grid viewport displaying the image.
-#'@param gamma_correct Default `NA`, automatically determined. EXR images are automatically
-#'gamma corrected (power 1/2.2) unless this is set to `FALSE`.
+#'@param show_linear Default `FALSE`. Most data should be gamma corrected before displaying on a screen.
+#' Set to `TRUE` to turn off this gamma correction.
 #'@export
 #'@examples
 #'#if(interactive()){
@@ -29,64 +28,22 @@
 #'#end}
 plot_image = function(
   image,
-  rotate = 0,
   draw_grid = FALSE,
   ignore_alpha = FALSE,
   asp = 1,
   new_page = TRUE,
   return_grob = FALSE,
   gp = grid::gpar(),
-  gamma_correct = NA
+  show_linear = FALSE
 ) {
-  image = ray_read_image(image) #Always output RGBA array
+  image = ray_read_image(image, convert_to_array = TRUE) #Always output RGBA array
   image_type = attr(image, "filetype")
-  rotatef = function(x) t(apply(x, 2, rev))
-  if (!(rotate %in% c(0, 90, 180, 270))) {
-    if (length(rotate) == 1) {
-      warning(paste0(
-        "Rotation value ",
-        rotate,
-        " not in c(0,90,180,270). Ignoring"
-      ))
-    } else {
-      warning(paste0(
-        "Rotation argument `rotate` not in c(0,90,180,270). Ignoring"
-      ))
-    }
-    number_of_rots = 0
-  } else {
-    number_of_rots = rotate / 90
-  }
 
-  if (number_of_rots != 0) {
-    newarray = image
-    channels = dim(image)[3]
-    newarrayt = array(0, dim = c(ncol(image), nrow(image), channels))
-    for (i in seq_len(number_of_rots)) {
-      for (j in seq_len(channels)) {
-        if (i == 2) {
-          newarray[,, j] = rotatef(newarrayt[,, j])
-        } else {
-          newarrayt[,, j] = rotatef(newarray[,, j])
-        }
-      }
-    }
-    if (number_of_rots == 2) {
-      image = newarray
-    } else {
-      image = newarrayt
-    }
-  }
-  if (is.na(gamma_correct)) {
-    if (image_type == "exr") {
-      image[,, 1:3] = to_srgb(image[,, 1:3])
-    }
-  } else {
-    if (gamma_correct) {
-      image[,, 1:3] = to_srgb(image[,, 1:3])
-    }
-  }
-  image = render_clamp(image)
+	if(!show_linear) {
+		image[,, 1:3] = to_srgb(image[,, 1:3])
+	}
+  
+  # image = render_clamp(image)
 
   nr = convert_to_native_raster(image)
 

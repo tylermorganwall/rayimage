@@ -8,7 +8,7 @@ ray_read_image(
   image,
   convert_to_array = FALSE,
   preview = FALSE,
-  gamma_correct = NA,
+  source_linear = NA,
   ...
 )
 }
@@ -20,8 +20,9 @@ ray_read_image(
 \item{preview}{Default \code{FALSE}. If \code{TRUE}, it will display the image in addition
 to returning it.}
 
-\item{gamma_correct}{Default \code{NA}, automatically determined based on the image type.
-Whether to label the image as gamma corrected.}
+\item{source_linear}{Default \code{NA}, automatically determined based on the image type.
+Whether the image source is linear data or sRGB.  \code{FALSE} for matrices, arrays, and \code{EXR} files,
+true for all other formats (\code{jpeg}, \code{png}, and \code{tiff}).}
 
 \item{...}{Arguments to pass to either \code{jpeg::readJPEG}, \code{png::readPNG}, \code{tiff::readTIFF}, or \code{libopenexr::read_exr()}.}
 }

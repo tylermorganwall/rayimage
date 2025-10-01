@@ -93,7 +93,7 @@ render_crop = function(
   # Normalize input and preserve metadata
   temp_image = ray_read_image(image)
   imagetype = attr(temp_image, "filetype")
-  img_gamma_correct = attr(temp_image, "gamma_corrected")
+  img_source_linear = attr(temp_image, "source_linear")
 
   h = nrow(temp_image)
   w = ncol(temp_image)
@@ -164,7 +164,7 @@ render_crop = function(
   temp_image = ray_read_image(
     temp_image,
     filetype = imagetype,
-    gamma_correct = img_gamma_correct
+    source_linear = img_source_linear
   )
   handle_image_output(temp_image, filename = filename, preview = preview)
 }

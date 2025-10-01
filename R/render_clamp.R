@@ -5,6 +5,7 @@
 #'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param min_value Default `0`. Minimum value to clamp the image to.
 #'@param max_value Default `1`. Maximum value to clamp the image to.
+#'@param filename Default `NA`. Filename
 #'@param preview Default `FALSE`. If `TRUE`, it will display the image in addition
 #'to returning it.
 #'@param ... Arguments to pass to either `jpeg::readJPEG`, `png::readPNG`, or `tiff::readTIFF`.
@@ -24,6 +25,7 @@
 #'}
 render_clamp = function(
   image,
+	filename = NA,
   min_value = 0,
   max_value = 1,
   preview = FALSE,
@@ -33,8 +35,6 @@ render_clamp = function(
   #Check if file or image before below:
   image[image < min_value] = min_value
   image[image > max_value] = max_value
-  if (preview) {
-    plot_image(image, ...)
-  }
-  return(image)
+  image = ray_read_image(unclass(image))
+  handle_image_output(image, filename = filename, preview = preview)
 }

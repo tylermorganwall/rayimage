@@ -231,17 +231,15 @@ test_that("render_exposure scales luminance", {
   exposure_args = expand.grid(
     image = seq_along(all_test_images),
     exposure = c(-1, 0, 1),
-    gamma_correction = c(NA, TRUE, FALSE),
     KEEP.OUT.ATTRS = FALSE,
     stringsAsFactors = FALSE
   )
 
   run_tests(
-    function(image, exposure, gamma_correction) {
+    function(image, exposure) {
       img = render_exposure(
         image = all_test_images[[image]],
         exposure = exposure,
-        gamma_correction = gamma_correction,
         preview = FALSE
       )
       plot_image(render_clamp(img))
@@ -460,7 +458,6 @@ test_that("render_bokeh blurs using depth information", {
         bokehlimit = 0.7,
         rotation = if (identical(bokehshape, "hex")) 15 else 0,
         aberration = aberration,
-        gamma_correction = TRUE,
         progress = FALSE
       )
       plot_image(render_clamp(img))
@@ -709,18 +706,18 @@ test_that("ray_read_image ingests various sources", {
   read_args = expand.grid(
     image = image_inputs,
     convert_to_array = list(TRUE, FALSE),
-    gamma_correct = list(NA, TRUE),
+    source_linear = list(NA, FALSE, TRUE),
     KEEP.OUT.ATTRS = FALSE,
     stringsAsFactors = FALSE
   )
 
   run_tests(
-    function(image, convert_to_array, gamma_correct) {
+    function(image, convert_to_array, source_linear) {
       img = ray_read_image(
         image = image,
         convert_to_array = convert_to_array,
         preview = FALSE,
-        gamma_correct = gamma_correct
+        source_linear = source_linear
       )
       plot_image(render_clamp(img))
     },

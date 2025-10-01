@@ -123,8 +123,8 @@ run_tests = function(
         },
         path
       ) |>
-        suppressMessages() |>
-        suppressWarnings() |>
+        # suppressMessages() |>
+        # suppressWarnings() |>
         expect_snapshot_file_info(
           name = test_filename,
           compare = compare_image,

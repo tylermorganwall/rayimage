@@ -55,8 +55,6 @@ render_image_overlay = function(
 
   img_type = attr(image, "filetype")
   over_type = attr(image_overlay, "filetype")
-  img_gamma_correct = isTRUE(attr(image, "gamma_corrected"))
-  overlay_gamma_correct = isTRUE(attr(image_overlay, "gamma_corrected"))
 
   if (!rescale_original) {
     if (!all(dim(image)[1:2] == dim(image_overlay)[1:2])) {
@@ -69,7 +67,7 @@ render_image_overlay = function(
   }
   is_matrix_image = length(dim(image)) == 2
   is_matrix_image_overlay = length(dim(image_overlay)) == 2
-  process_image = function(image_input, gamma_correct) {
+  process_image = function(image_input) {
     is_matrix_image = length(dim(image_input)) == 2
     if (is_matrix_image) {
       image_tmp = array(image_input, dim = c(dim(image_input), 4))
@@ -87,13 +85,10 @@ render_image_overlay = function(
         image_tmp = image_input
       }
     }
-    if (gamma_correct) {
-      image_tmp[,, 1:3] = to_linear(image_tmp[,, 1:3])
-    }
     return(image_tmp)
   }
-  image = process_image(image, img_gamma_correct)
-  image_overlay = process_image(image_overlay, overlay_gamma_correct)
+  image = process_image(image)
+  image_overlay = process_image(image_overlay)
 
   if (!is.na(alpha)) {
     stopifnot(alpha >= 0, alpha <= 1)
@@ -122,24 +117,12 @@ render_image_overlay = function(
     Co_lin[,, 3][m] = 0
   }
 
-  # Output encoding by destination (fallback: mirror base image)
-  out_ext = if (!is.null(filename)) tolower(tools::file_ext(filename)) else NULL
-  write_linear = !is.null(out_ext) && out_ext %in% c("exr", "tiff")
-  write_srgb = !is.null(out_ext) && out_ext %in% c("png", "jpg", "jpeg")
-
-  if (is.null(out_ext)) {
-    # No filename: keep user-visible behavior consistent with base image
-    write_srgb = img_gamma_correct
-    write_linear = !write_srgb
-  }
-
   composite_image = array(1, dim = dim(image))
   composite_image[,, 4] = Ao
-  composite_image[,, 1:3] = if (write_linear) Co_lin else to_srgb(Co_lin)
+  composite_image[,, 1:3] = Co_lin
 
   composite_image = ray_read_image(
-    composite_image,
-    gamma_correct = write_srgb
+    composite_image
   )
   handle_image_output(composite_image, filename = filename, preview = preview)
 }

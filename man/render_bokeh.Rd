@@ -18,7 +18,6 @@ render_bokeh(
   bokehlimit = 0.8,
   rotation = 0,
   aberration = 0,
-  gamma_correction = TRUE,
   progress = interactive(),
   ...
 )
@@ -51,8 +50,6 @@ passes in a 2D matrix, that matrix will control the shape of the bokeh.}
 \item{rotation}{Default \code{0}. Number of degrees to rotate the hexagonal bokeh shape.}
 
 \item{aberration}{Default \code{0}. Adds chromatic aberration to the image. Maximum of \code{1}.}
-
-\item{gamma_correction}{Default \code{TRUE}. Controls gamma correction when adding colors. Default exponent of 2.2.}
 
 \item{progress}{Default \code{TRUE}. Whether to display a progress bar.}
 

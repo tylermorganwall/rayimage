@@ -53,7 +53,7 @@ render_vignette = function(
   preview = FALSE
 ) {
   image = ray_read_image(image)
-  image_gamma_correct = attr(image, "gamma_corrected")
+  image_source_linear = attr(image, "source_linear")
   dimensions = dim(image)
 
   if (!("magick" %in% rownames(utils::installed.packages()))) {

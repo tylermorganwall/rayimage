@@ -1,7 +1,6 @@
 test_that("Checking plot_image", {
   # skip_on_os(c("windows", "linux", "solaris"))
   plt_img_args = expand.grid(
-    rotate = list(0, 90, 180, 270),
     draw_grid = list(FALSE, TRUE),
     asp = list(0.5, 1, 2),
     new_page = list(TRUE, FALSE)
@@ -26,7 +25,7 @@ test_that("Checking plot_image_grid", {
   )
   # plt_img_args = plt_img_args[-6,] #False positive
 
-  warning_rows = c(1, 3, 4, 5, 7, 8)
+  # warning_rows = c(1, 3, 4, 5, 7, 8)
 
   run_tests(
     "plot_image_grid",
@@ -56,17 +55,16 @@ test_that("Checking ray_read/ray_write", {
     image = rayfile_jpg,
     convert_to_array = TRUE
   )
-  expect_true(compare_image(clamped_dragon[,, 1:3], dragon_jpg))
+  expect_true(compare_image(clamped_dragon, dragon_jpg, max_diff = 0.35))
 
   rayfile_tiff = tempfile(fileext = ".tiff")
-  expect_warning(
+  expect_no_error(
     {
       rayimage::ray_write_image(
         filename = rayfile_tiff,
         image = rayimage::dragon
       )
-    },
-    regexp = "undefined"
+    }
   )
   expect_warning(
     {
@@ -74,7 +72,7 @@ test_that("Checking ray_read/ray_write", {
     },
     regex = "Photometric"
   )
-  #expect_true(compare_image(clamped_dragon, dragon_tiff))
+  expect_true(compare_image(clamped_dragon, dragon_tiff))
 })
 
 

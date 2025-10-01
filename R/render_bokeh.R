@@ -19,7 +19,6 @@
 #'@param bokehlimit Default `0.8`. Limit after which the bokeh intensity is increased by `bokehintensity`.
 #'@param rotation Default `0`. Number of degrees to rotate the hexagonal bokeh shape.
 #'@param aberration Default `0`. Adds chromatic aberration to the image. Maximum of `1`.
-#'@param gamma_correction Default `TRUE`. Controls gamma correction when adding colors. Default exponent of 2.2.
 #'@param progress Default `TRUE`. Whether to display a progress bar.
 #'@param ... Additional arguments to pass to [plot_image()] if `preview = TRUE`.
 #'@return A `rayimg` RGBA array.
@@ -81,7 +80,6 @@ render_bokeh = function(
   bokehlimit = 0.8,
   rotation = 0,
   aberration = 0,
-  gamma_correction = TRUE,
   progress = interactive(),
   ...
 ) {
@@ -91,8 +89,6 @@ render_bokeh = function(
 
   depthmap = ray_read_image(depthmap, convert_to_array = FALSE)
   depthtype = attr(depthmap, "filetype")
-
-  image_gamma_correction = attr(temp_image, "gamma_corrected")
 
   if (preview_focus) {
     preview_focus(image, depthmap, focus, imagetype, depthtype)
@@ -118,10 +114,6 @@ render_bokeh = function(
   }
 
   depthmap[is.na(depthmap)] = max(depthmap, na.rm = TRUE) * 2
-
-  if (image_gamma_correction) {
-    temp_image = to_linear(temp_image)
-  }
 
   for (i in 1:3) {
     max_size = min(c(max(dim(depthmap)), 500))
@@ -167,9 +159,6 @@ render_bokeh = function(
       progbar = progress,
       channel = i
     )
-  }
-  if (image_gamma_correction) {
-    temp_image = to_srgb(temp_image)
   }
   handle_image_output(temp_image, filename = filename, preview = preview)
 }
