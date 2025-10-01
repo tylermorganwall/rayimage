@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.19.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.19.1</span>
       </span>
     </div>
 
@@ -78,14 +78,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">render_exposure</span><span class="op">(</span></span>
-<span>  <span class="va">image</span>,</span>
-<span>  exposure <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  gamma_correction <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  preview <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">render_exposure</span><span class="op">(</span><span class="va">image</span>, exposure <span class="op">=</span> <span class="fl">0</span>, filename <span class="op">=</span> <span class="cn">NA</span>, preview <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -98,12 +91,6 @@
 
 <dt id="arg-exposure">exposure<a class="anchor" aria-label="anchor" href="#arg-exposure"></a></dt>
 <dd><p>Default <code>0</code>. Exposure compensation in stops; RGB is scaled by <code>2^exposure</code>.</p></dd>
-
-
-<dt id="arg-gamma-correction">gamma_correction<a class="anchor" aria-label="anchor" href="#arg-gamma-correction"></a></dt>
-<dd><p>Default <code>NA</code>. If <code>TRUE</code>, treat as sRGB (decode -&gt; scale -&gt; encode).
-If <code>FALSE</code>, treat as scene-linear/HDR and scale directly. If <code>NA</code>, auto-detect using
-<code>attr(image, "gamma_corrected")</code>, falling back to a range heuristic (outside 0..1 is linear).</p></dd>
 
 
 <dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
@@ -133,7 +120,7 @@ or to <code><a href="ray_write_image.html">ray_write_image()</a></code> (when <c
 <span class="r-plt img"><img src="render_exposure-1.png" alt="" width="700" height="700"></span>
 <span class="r-in"><span><span class="co"># Force linear/HDR behavior</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">render_exposure</span><span class="op">(</span><span class="va">dragon</span> <span class="op">*</span> <span class="fl">2</span>, exposure <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, gamma_correction <span class="op">=</span> <span class="cn">FALSE</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">render_exposure</span><span class="op">(</span><span class="va">dragon</span> <span class="op">*</span> <span class="fl">2</span>, exposure <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="render_exposure-2.png" alt="" width="700" height="700"></span>
 </code></pre></div>

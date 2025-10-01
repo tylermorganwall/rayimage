@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.19.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.19.1</span>
       </span>
     </div>
 
@@ -78,7 +78,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ray_write_image</span><span class="op">(</span><span class="va">image</span>, <span class="va">filename</span>, clamp <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ray_write_image</span><span class="op">(</span><span class="va">image</span>, <span class="va">filename</span>, clamp <span class="op">=</span> <span class="cn">FALSE</span>, write_linear <span class="op">=</span> <span class="cn">NA</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -97,6 +97,11 @@
 <dt id="arg-clamp">clamp<a class="anchor" aria-label="anchor" href="#arg-clamp"></a></dt>
 <dd><p>Default <code>FALSE</code>, automatically determined. Whether to clamp the image to 0-1. If the file extension is <code>PNG</code> of <code>JPEG</code>,
 this is forced to <code>TRUE</code>.</p></dd>
+
+
+<dt id="arg-write-linear">write_linear<a class="anchor" aria-label="anchor" href="#arg-write-linear"></a></dt>
+<dd><p>Default <code>NA</code>, automatically determined. By default, images will be gamma corrected (write_linear = FALSE) for
+all file types except <code>EXR</code> (which is a linear format), unless otherwise specified.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

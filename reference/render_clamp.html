@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.19.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.19.1</span>
       </span>
     </div>
 
@@ -78,7 +78,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">render_clamp</span><span class="op">(</span><span class="va">image</span>, min_value <span class="op">=</span> <span class="fl">0</span>, max_value <span class="op">=</span> <span class="fl">1</span>, preview <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">render_clamp</span><span class="op">(</span></span>
+<span>  <span class="va">image</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  min_value <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  max_value <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  preview <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -87,6 +94,10 @@
 
 <dl><dt id="arg-image">image<a class="anchor" aria-label="anchor" href="#arg-image"></a></dt>
 <dd><p>3-layer RGB/4-layer RGBA array, <code>rayimg</code> class, or filename of an image.</p></dd>
+
+
+<dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
+<dd><p>Default <code>NA</code>. Filename</p></dd>
 
 
 <dt id="arg-min-value">min_value<a class="anchor" aria-label="anchor" href="#arg-min-value"></a></dt>
@@ -117,7 +128,7 @@ to returning it.</p></dd>
 <span class="r-in"><span><span class="co">#The image of the unchanged image</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.000000 3.162278</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0 1</span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Clamp the maximum and minimum values to one and zero</span></span></span>
 <span class="r-in"><span><span class="fu">render_clamp</span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>

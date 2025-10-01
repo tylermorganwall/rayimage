@@ -6,8 +6,7 @@ A matrix or a 2/3/4 layer array
 3 Layer(s): c("Red", "Green", "Blue")
 4 Layer(s): c("Red", "Green", "Blue", "Alpha")
 
-It tracks whether the image needs to be gamma corrected for display
-
+It tracks whether the source data was linearized
 
 '><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -27,7 +26,7 @@ It tracks whether the image needs to be gamma corrected for display
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.19.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.19.1</span>
       </span>
     </div>
 
@@ -89,12 +88,11 @@ It tracks whether the image needs to be gamma corrected for display
 <li><p>3 Layer(s): c("Red", "Green", "Blue")</p></li>
 <li><p>4 Layer(s): c("Red", "Green", "Blue", "Alpha")</p></li>
 </ul></li>
-<li><p>It tracks whether the image needs to be gamma corrected for display</p></li>
-<li><p></p></li>
+<li><p>It tracks whether the source data was linearized</p></li>
 </ul></div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rayimg</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, filetype <span class="op">=</span> <span class="cn">NULL</span>, gamma_correct <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rayimg</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, filetype <span class="op">=</span> <span class="cn">NULL</span>, source_linear <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -109,8 +107,8 @@ It tracks whether the image needs to be gamma corrected for display
 <dd><p>Default <code>NULL</code>. Original source type to record (e.g., "png").</p></dd>
 
 
-<dt id="arg-gamma-correct">gamma_correct<a class="anchor" aria-label="anchor" href="#arg-gamma-correct"></a></dt>
-<dd><p>Default <code>FALSE</code>. Whether to gamma correct the image.</p></dd>
+<dt id="arg-source-linear">source_linear<a class="anchor" aria-label="anchor" href="#arg-source-linear"></a></dt>
+<dd><p>Default <code>FALSE</code>. Whether the original source was linearized.</p></dd>
 
 </dl></div>
     <div id="value">
