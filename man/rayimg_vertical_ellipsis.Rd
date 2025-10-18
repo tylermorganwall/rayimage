@@ -10,7 +10,7 @@ rayimg_vertical_ellipsis(use_cli = TRUE)
 \item{use_cli}{Default \code{TRUE}. If \code{TRUE}, consult \code{cli::is_utf8_output()} for Unicode support.}
 }
 \value{
-"⋮" if Unicode likely supported, otherwise "...".
+vertical ellipses if supported
 }
 \description{
 Vertical ellipsis symbol

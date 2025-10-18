@@ -1,7 +1,7 @@
 #' Vertical ellipsis symbol
 #'
 #' @param use_cli Default `TRUE`. If `TRUE`, consult `cli::is_utf8_output()` for Unicode support.
-#' @return "⋮" if Unicode likely supported, otherwise "...".
+#' @return vertical ellipses if supported
 #' @keywords internal
 rayimg_vertical_ellipsis = function(use_cli = TRUE) {
   have_cli = use_cli && requireNamespace("cli", quietly = TRUE)
