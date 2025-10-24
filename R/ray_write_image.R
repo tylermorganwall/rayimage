@@ -38,13 +38,19 @@
 #'ray_read_image(tmparr) |>
 #'   plot_image()
 #'}
-ray_write_image = function(image, filename, clamp = FALSE, write_linear = NA, ...) {
+ray_write_image = function(
+  image,
+  filename,
+  clamp = FALSE,
+  write_linear = NA,
+  ...
+) {
   if (missing(filename)) {
     stop("`filename` must be specified.")
   }
   image = ray_read_image(image) #Always output RGBA array
-	#Image should always be linear by this point
-	
+  #Image should always be linear by this point
+
   fileext = tolower(tools::file_ext(filename))
   if (!fileext %in% c("png", "jpeg", "jpg", "tiff", "exr")) {
     stop(sprintf(
@@ -55,8 +61,8 @@ ray_write_image = function(image, filename, clamp = FALSE, write_linear = NA, ..
   if (clamp || fileext %in% c("png", "jpeg", "jpg", "tiff")) {
     image = render_clamp(image)
   }
-  if(is.na(write_linear)) {
-		write_linear = !(fileext %in% c("png", "jpeg", "jpg", "tiff"))
+  if (is.na(write_linear)) {
+    write_linear = !(fileext %in% c("png", "jpeg", "jpg", "tiff"))
   }
   is_matrix = length(dim(image)) == 2
   if (is_matrix) {
@@ -102,13 +108,13 @@ ray_write_image = function(image, filename, clamp = FALSE, write_linear = NA, ..
       }
       libopenexr::write_exr(
         filename,
-        r = image[,, 1],
-        g = image[,, 2],
-        b = image[,, 3],
-        a = image[,, 4]
+        r = rgba[,, 1],
+        g = rgba[,, 2],
+        b = rgba[,, 3],
+        a = rgba[,, 4]
       )
     }
   } else {
     tiff::writeTIFF(image, where = filename, ...)
   }
-  }
+}
