@@ -80,11 +80,11 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">render_convert_colorspace</span><span class="op">(</span></span>
 <span>  <span class="va">image</span>,</span>
-<span>  from_mats <span class="op">=</span> <span class="fu">rayimage</span><span class="fu">::</span><span class="va"><a href="acescg_conversion_matrices.html">acescg_conversion_matrices</a></span>,</span>
-<span>  to_mats <span class="op">=</span> <span class="fu">rayimage</span><span class="fu">::</span><span class="va"><a href="srgb_conversion_matrices.html">srgb_conversion_matrices</a></span>,</span>
+<span>  from_mats <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  to_mats <span class="op">=</span> <span class="va">CS_ACESCG</span>,</span>
 <span>  adapt_white <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  from_white <span class="op">=</span> <span class="st">"D60"</span>,</span>
-<span>  to_white <span class="op">=</span> <span class="st">"D65"</span>,</span>
+<span>  from_white <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  to_white <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  preview <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -95,27 +95,27 @@
 
 
 <dl><dt id="arg-image">image<a class="anchor" aria-label="anchor" href="#arg-image"></a></dt>
-<dd><p>Default <code>NULL</code>. 3-layer RGB/4-layer RGBA array, <code>rayimg</code>, or filename.</p></dd>
+<dd><p>3-layer RGB/4-layer RGBA array, <code>rayimg</code>, or filename.</p></dd>
 
 
 <dt id="arg-from-mats">from_mats<a class="anchor" aria-label="anchor" href="#arg-from-mats"></a></dt>
-<dd><p>Default <code>acescg_conversion_matrices</code>. Source RGB to XYZ.</p></dd>
+<dd><p>Default <code>NA</code>. Source space object; when <code>NA</code>, pulled from <code>attr(src,"colorspace")</code>.</p></dd>
 
 
 <dt id="arg-to-mats">to_mats<a class="anchor" aria-label="anchor" href="#arg-to-mats"></a></dt>
-<dd><p>Default <code>srgb_mats</code>. Target RGB to XYZ.</p></dd>
+<dd><p>Default <code>CS_ACESCG</code>. Target space object.</p></dd>
 
 
 <dt id="arg-adapt-white">adapt_white<a class="anchor" aria-label="anchor" href="#arg-adapt-white"></a></dt>
-<dd><p>Default <code>TRUE</code>. If <code>TRUE</code>, apply Bradford CAT from <code>from_white</code> to <code>to_white</code>.</p></dd>
+<dd><p>Default <code>TRUE</code>. Apply Bradford CAT from <code>from_white</code> to <code>to_white</code>.</p></dd>
 
 
 <dt id="arg-from-white">from_white<a class="anchor" aria-label="anchor" href="#arg-from-white"></a></dt>
-<dd><p>Default <code>"D60"</code>. Source white name or XYZ (Y=1).</p></dd>
+<dd><p>Default <code>NA</code>. Source white (name or XYZ, Y=1). When <code>NA</code>, uses <code>attr(src,"white_current")</code>.</p></dd>
 
 
 <dt id="arg-to-white">to_white<a class="anchor" aria-label="anchor" href="#arg-to-white"></a></dt>
-<dd><p>Default <code>"D65"</code>. Target white name or XYZ (Y=1).</p></dd>
+<dd><p>Default <code>NA</code>. Target white (name or XYZ, Y=1). When <code>NA</code>, uses <code>to_mats$white_xyz</code>.</p></dd>
 
 
 <dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
@@ -128,7 +128,7 @@
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>rayimg</code> RGBA array.</p>
+    <p>A <code>rayimg</code> RGBA array tagged with the <strong>target</strong> space.</p>
     </div>
 
   </div>

@@ -4,7 +4,6 @@
 <url><loc>https://www.rayimage.dev/CONTRIBUTING.html</loc></url>
 <url><loc>https://www.rayimage.dev/authors.html</loc></url>
 <url><loc>https://www.rayimage.dev/index.html</loc></url>
-<url><loc>https://www.rayimage.dev/reference/acescg_conversion_matrices.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/add_image_overlay.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/add_multi_padding.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/add_padding.html</loc></url>
@@ -12,6 +11,7 @@
 <url><loc>https://www.rayimage.dev/reference/add_vignette.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/apply_color_matrix.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/calc_bokeh_size.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/colorspace_descriptors.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/compute_cat_bradford.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/convert_color.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/convert_to_native_raster.html</loc></url>
@@ -62,7 +62,6 @@
 <url><loc>https://www.rayimage.dev/reference/render_white_balance.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/run_documentation.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/save_png.html</loc></url>
-<url><loc>https://www.rayimage.dev/reference/srgb_conversion_matrices.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/sunset_image.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/to_linear.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/to_srgb.html</loc></url>

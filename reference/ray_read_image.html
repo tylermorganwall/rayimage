@@ -83,6 +83,11 @@
 <span>  convert_to_array <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  preview <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  source_linear <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  normalize <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  normalize_to <span class="op">=</span> <span class="va">CS_ACESCG</span>,</span>
+<span>  normalize_adapt_white <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  assume_colorspace <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  assume_white <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -108,6 +113,31 @@ to returning it.</p></dd>
 <dd><p>Default <code>NA</code>, automatically determined based on the image type.
 Whether the image source is linear data or sRGB.  <code>FALSE</code> for matrices, arrays, and <code>EXR</code> files,
 true for all other formats (<code>jpeg</code>, <code>png</code>, and <code>tiff</code>).</p></dd>
+
+
+<dt id="arg-normalize">normalize<a class="anchor" aria-label="anchor" href="#arg-normalize"></a></dt>
+<dd><p>Default <code>TRUE</code>. If <code>TRUE</code>, convert to <code>normalize_to</code> space on read.</p></dd>
+
+
+<dt id="arg-normalize-to">normalize_to<a class="anchor" aria-label="anchor" href="#arg-normalize-to"></a></dt>
+<dd><p>Default <code>CS_ACESCG</code>. Target colorspace when <code>normalize=TRUE</code>.</p></dd>
+
+
+<dt id="arg-normalize-adapt-white">normalize_adapt_white<a class="anchor" aria-label="anchor" href="#arg-normalize-adapt-white"></a></dt>
+<dd><p>Default <code>TRUE</code>. If <code>TRUE</code>, Bradford-adapt source white to target white.</p></dd>
+
+
+<dt id="arg-assume-colorspace">assume_colorspace<a class="anchor" aria-label="anchor" href="#arg-assume-colorspace"></a></dt>
+<dd><p>Default <code>NULL</code>. A colorspace descriptor (e.g., <code>CS_SRGB</code>,
+<code>CS_ACESCG</code>). If given, the loaded image will be <em>tagged</em> with this space
+rather than the default inferred by file type. No pixel conversion is performed
+unless <code>normalize=TRUE</code>.</p></dd>
+
+
+<dt id="arg-assume-white">assume_white<a class="anchor" aria-label="anchor" href="#arg-assume-white"></a></dt>
+<dd><p>Default <code>NULL</code>. Scene/display white for the loaded image.
+Either a named white (<code>"D60","D65","D50","D55","D75","E"</code>) or XYZ with Y=1.
+If <code>NULL</code>, uses <code>assume_colorspace$white_xyz</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
