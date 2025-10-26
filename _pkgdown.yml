@@ -16,6 +16,10 @@ reference:
       - starts_with("plot")
       - starts_with("ray_write")
       - starts_with("ray_read")
+  - title: "Colorspace Helpers"
+    desc: "Utilities for colorspace conversion."
+    contents:
+      - ends_with("conversion_matrices")
   - title: "Calculating Font Info"
     desc: "Functions for extracting size information about strings"
     contents:
@@ -28,6 +32,7 @@ reference:
     desc: "Example data/depth map."
     contents:
       - starts_with("dragon")
+      - starts_with("sunset")
   - title: "S3 Methods"
     desc: "rayimg class functions"
     contents:
