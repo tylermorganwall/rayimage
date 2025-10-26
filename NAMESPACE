@@ -2,6 +2,11 @@
 
 S3method("[",rayimg)
 S3method(print,rayimg)
+export(CS_ACESCG)
+export(CS_ADOBE)
+export(CS_BT2020)
+export(CS_P3D65)
+export(CS_SRGB)
 export(add_image_overlay)
 export(add_title)
 export(add_vignette)

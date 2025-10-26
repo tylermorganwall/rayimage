@@ -6,34 +6,34 @@
 \usage{
 render_convert_colorspace(
   image,
-  from_mats = rayimage::acescg_conversion_matrices,
-  to_mats = rayimage::srgb_conversion_matrices,
+  from_mats = NA,
+  to_mats = CS_ACESCG,
   adapt_white = TRUE,
-  from_white = "D60",
-  to_white = "D65",
+  from_white = NA,
+  to_white = NA,
   filename = NULL,
   preview = FALSE
 )
 }
 \arguments{
-\item{image}{Default \code{NULL}. 3-layer RGB/4-layer RGBA array, \code{rayimg}, or filename.}
+\item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg}, or filename.}
 
-\item{from_mats}{Default \code{acescg_conversion_matrices}. Source RGB to XYZ.}
+\item{from_mats}{Default \code{NA}. Source space object; when \code{NA}, pulled from \code{attr(src,"colorspace")}.}
 
-\item{to_mats}{Default \code{srgb_mats}. Target RGB to XYZ.}
+\item{to_mats}{Default \code{CS_ACESCG}. Target space object.}
 
-\item{adapt_white}{Default \code{TRUE}. If \code{TRUE}, apply Bradford CAT from \code{from_white} to \code{to_white}.}
+\item{adapt_white}{Default \code{TRUE}. Apply Bradford CAT from \code{from_white} to \code{to_white}.}
 
-\item{from_white}{Default \code{"D60"}. Source white name or XYZ (Y=1).}
+\item{from_white}{Default \code{NA}. Source white (name or XYZ, Y=1). When \code{NA}, uses \code{attr(src,"white_current")}.}
 
-\item{to_white}{Default \code{"D65"}. Target white name or XYZ (Y=1).}
+\item{to_white}{Default \code{NA}. Target white (name or XYZ, Y=1). When \code{NA}, uses \code{to_mats$white_xyz}.}
 
 \item{filename}{Default \code{NULL}. Output path.}
 
 \item{preview}{Default \code{FALSE}. If \code{TRUE}, display the image.}
 }
 \value{
-A \code{rayimg} RGBA array.
+A \code{rayimg} RGBA array tagged with the \strong{target} space.
 }
 \description{
 Convert between two RGB spaces via XYZ, with optional white adaptation.

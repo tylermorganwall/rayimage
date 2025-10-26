@@ -9,6 +9,11 @@ ray_read_image(
   convert_to_array = FALSE,
   preview = FALSE,
   source_linear = NA,
+  normalize = TRUE,
+  normalize_to = CS_ACESCG,
+  normalize_adapt_white = TRUE,
+  assume_colorspace = NULL,
+  assume_white = NULL,
   ...
 )
 }
@@ -23,6 +28,21 @@ to returning it.}
 \item{source_linear}{Default \code{NA}, automatically determined based on the image type.
 Whether the image source is linear data or sRGB.  \code{FALSE} for matrices, arrays, and \code{EXR} files,
 true for all other formats (\code{jpeg}, \code{png}, and \code{tiff}).}
+
+\item{normalize}{Default \code{TRUE}. If \code{TRUE}, convert to \code{normalize_to} space on read.}
+
+\item{normalize_to}{Default \code{CS_ACESCG}. Target colorspace when \code{normalize=TRUE}.}
+
+\item{normalize_adapt_white}{Default \code{TRUE}. If \code{TRUE}, Bradford-adapt source white to target white.}
+
+\item{assume_colorspace}{Default \code{NULL}. A colorspace descriptor (e.g., \code{CS_SRGB},
+\code{CS_ACESCG}). If given, the loaded image will be \emph{tagged} with this space
+rather than the default inferred by file type. No pixel conversion is performed
+unless \code{normalize=TRUE}.}
+
+\item{assume_white}{Default \code{NULL}. Scene/display white for the loaded image.
+Either a named white (\verb{"D60","D65","D50","D55","D75","E"}) or XYZ with Y=1.
+If \code{NULL}, uses \code{assume_colorspace$white_xyz}.}
 
 \item{...}{Arguments to pass to either \code{jpeg::readJPEG}, \code{png::readPNG}, \code{tiff::readTIFF}, or \code{libopenexr::read_exr()}.}
 }

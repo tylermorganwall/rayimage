@@ -80,7 +80,7 @@ render_white_balance = function(
 	out = apply_color_matrix(xyz, colorspace_conversion_matrices$xyz_to_rgb)
 
 	# preserve alpha
-	if (ncol(matrix(0, nrow = 1, ncol = dim(src)[3])) == 4L) {
+	if (dim(src)[3] == 4L) {
 		out[,, 4] = src[,, 4]
 	}
 

@@ -49,33 +49,6 @@ rayimg = function(
 	x_new
 }
 
-
-#' @title Build RGB-to-XYZ matrices from primaries + white
-#' @param primaries Default `list(r=c(0.713,0.293), g=c(0.165,0.830), b=c(0.128,0.044))`. xy chromaticities (AP1).
-#' @param white_xy Default `c(0.32168,0.33767)`. White xy (D60).
-#' @return List with 3x3 numeric matrices: `rgb_to_xyz`, `xyz_to_rgb`.
-#' @keywords internal
-make_rgb_xyz_matrices = function(
-	primaries = list(
-		r = c(0.713, 0.293),
-		g = c(0.165, 0.830),
-		b = c(0.128, 0.044)
-	),
-	white_xy = c(0.32168, 0.33767) # D60
-) {
-	xy_to_XYZ = function(xy) c(xy[1] / xy[2], 1, (1 - xy[1] - xy[2]) / xy[2])
-	Xr = xy_to_XYZ(primaries$r)
-	Xg = xy_to_XYZ(primaries$g)
-	Xb = xy_to_XYZ(primaries$b)
-	M = cbind(Xr, Xg, Xb)
-	W = xy_to_XYZ(white_xy)
-	S = solve(M, W)
-	rgb_to_xyz = M %*% diag(S)
-	xyz_to_rgb = solve(rgb_to_xyz)
-	list(rgb_to_xyz = rgb_to_xyz, xyz_to_rgb = xyz_to_rgb)
-}
-
-
 rayimg_channels_from_count = function(n) {
 	switch(
 		as.character(n),
@@ -214,48 +187,3 @@ rayimg = function(
 	}
 	y
 }
-
-#' @title Build a colorspace descriptor
-#' @param name Default `"ACEScg"`.
-#' @param primaries Default AP1.
-#' @param white_xy Default D60.
-#' @return list(name, rgb_to_xyz, xyz_to_rgb, white_xyz, white_name)
-#' @keywords internal
-make_colorspace = function(
-	name = "ACEScg",
-	primaries = list(
-		r = c(0.713, 0.293),
-		g = c(0.165, 0.830),
-		b = c(0.128, 0.044)
-	),
-	white_xy = c(0.32168, 0.33767), # D60
-	white_name = "D60"
-) {
-	mats = make_rgb_xyz_matrices(primaries = primaries, white_xy = white_xy)
-	xy_to_XYZ = function(xy) c(xy[1] / xy[2], 1, (1 - xy[1] - xy[2]) / xy[2])
-	list(
-		name = name,
-		rgb_to_xyz = mats$rgb_to_xyz,
-		xyz_to_rgb = mats$xyz_to_rgb,
-		white_xyz = xy_to_XYZ(white_xy),
-		white_name = white_name
-	)
-}
-
-# Prebuilt spaces
-CS_ACESCG = make_colorspace(
-	name = "ACEScg",
-	primaries = list(
-		r = c(0.713, 0.293),
-		g = c(0.165, 0.830),
-		b = c(0.128, 0.044)
-	),
-	white_xy = c(0.32168, 0.33767),
-	white_name = "D60"
-)
-CS_SRGB = make_colorspace(
-	name = "sRGB",
-	primaries = list(r = c(0.64, 0.33), g = c(0.30, 0.60), b = c(0.15, 0.06)),
-	white_xy = c(0.3127, 0.3290),
-	white_name = "D65"
-)

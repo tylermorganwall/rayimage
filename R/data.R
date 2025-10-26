@@ -17,13 +17,3 @@
 #' with 400 rows and 400 columns.
 #' @author Tyler Morgan-Wall
 "sunset_image"
-
-#' ACEScg conversion matrices
-#'
-#' @format Length-2 list of 3x3 matrices
-"acescg_conversion_matrices"
-
-#' sRGB conversion matrices
-#'
-#' @format Length-2 list of 3x3 matrices
-"srgb_conversion_matrices"
