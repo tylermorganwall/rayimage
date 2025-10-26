@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.19.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.20.0</span>
       </span>
     </div>
 
@@ -92,6 +92,14 @@
         </td>
         <td><p>Clamp Image</p></td>
       </tr><tr><td>
+          <p><code><a href="render_color_correction.html">render_color_correction()</a></code> </p>
+        </td>
+        <td><p>Render Color Correction Matrix (3x3, linear RGB)</p></td>
+      </tr><tr><td>
+          <p><code><a href="render_convert_colorspace.html">render_convert_colorspace()</a></code> </p>
+        </td>
+        <td><p>Render Convert Colorspace</p></td>
+      </tr><tr><td>
           <p><code><a href="render_convolution.html">render_convolution()</a></code> </p>
         </td>
         <td><p>Render Convolution</p></td>
@@ -128,9 +136,17 @@
         </td>
         <td><p>Render a Title on an Image</p></td>
       </tr><tr><td>
+          <p><code><a href="render_tonemap.html">render_tonemap()</a></code> </p>
+        </td>
+        <td><p>Render Tonemap</p></td>
+      </tr><tr><td>
           <p><code><a href="render_vignette.html">render_vignette()</a></code> </p>
         </td>
         <td><p>Add Vignette Effect</p></td>
+      </tr><tr><td>
+          <p><code><a href="render_white_balance.html">render_white_balance()</a></code> </p>
+        </td>
+        <td><p>Render White Balance (Bradford CAT)</p></td>
       </tr><tr><td>
           <p><code><a href="interpolate_array.html">interpolate_array()</a></code> </p>
         </td>
@@ -155,6 +171,18 @@
           <p><code><a href="ray_read_image.html">ray_read_image()</a></code> </p>
         </td>
         <td><p>Read Image</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="colorspace-helpers">Colorspace Helpers <a href="#colorspace-helpers" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>Utilities for colorspace conversion.</p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="acescg_conversion_matrices.html">acescg_conversion_matrices</a></code> </p>
+        </td>
+        <td><p>ACEScg conversion matrices</p></td>
+      </tr><tr><td>
+          <p><code><a href="srgb_conversion_matrices.html">srgb_conversion_matrices</a></code> </p>
+        </td>
+        <td><p>sRGB conversion matrices</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="calculating-font-info">Calculating Font Info <a href="#calculating-font-info" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p><p>Functions for extracting size information about strings</p>
@@ -191,6 +219,10 @@
           <p><code><a href="dragondepth.html">dragondepth</a></code> </p>
         </td>
         <td><p>Dragon Depthmap</p></td>
+      </tr><tr><td>
+          <p><code><a href="sunset_image.html">sunset_image</a></code> </p>
+        </td>
+        <td><p>Sunset Image</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="s-methods">S3 Methods <a href="#s-methods" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p><p>rayimg class functions</p>
@@ -199,10 +231,6 @@
           <p><code><a href="print.rayimg.html">print(<i>&lt;rayimg&gt;</i>)</a></code> </p>
         </td>
         <td><p>Print method for rayimg</p></td>
-      </tr><tr><td>
-          <p><code><a href="sub-.rayimg.html">`[`(<i>&lt;rayimg&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Subset a rayimg without losing attributes</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="deprecated-functions">Deprecated Functions <a href="#deprecated-functions" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p><p>Use the render_* versions instead.</p>
