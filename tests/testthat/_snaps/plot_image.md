@@ -1,6 +1,7 @@
 # checking print functions
 
     <rayimg> [87 x 61] <Greyscale>  filetype: matrix  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10] plus last row/col
     [Greyscale]
                [,1]    [,2]    [,3]    [,4]    [,5]    [,6]    [,7]    [,8]    [,9]   [,10] [,...]   [,61]
@@ -20,6 +21,7 @@
 ---
 
     <rayimg> [200 x 200 x 4] <Red + Green + Blue + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10], all channels plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -70,6 +72,7 @@
 ---
 
     <rayimg> [200 x 200] <Red>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10] plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -89,6 +92,7 @@
 ---
 
     <rayimg> [200 x 200] <Green>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10] plus last row/col
     [Green]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -108,6 +112,7 @@
 ---
 
     <rayimg> [200 x 200] <Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10] plus last row/col
     [Blue]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -127,6 +132,7 @@
 ---
 
     <rayimg> [200 x 200] <Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10] plus last row/col
     [Alpha]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -146,6 +152,7 @@
 ---
 
     <rayimg> [200 x 200 x 2] <Red + Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10], all channels plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -180,6 +187,7 @@
 ---
 
     <rayimg> [200 x 200 x 3] <Red + Green + Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10], all channels plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -229,6 +237,7 @@
 ---
 
     <rayimg> [200 x 200 x 2] <Red + Green>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10], all channels plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -263,6 +272,7 @@
 ---
 
     <rayimg> [200 x 200 x 2] <Red + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10], all channels plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -283,6 +293,7 @@
 ---
 
     <rayimg> [10 x 200 x 4] <Red + Green + Blue + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10], all channels plus last row/col
     [Red]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -327,6 +338,7 @@
 ---
 
     <rayimg> [10 x 200] <Red>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10] plus last row/col
     [Red]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -344,6 +356,7 @@
 ---
 
     <rayimg> [10 x 200] <Green>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10] plus last row/col
     [Green]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -361,6 +374,7 @@
 ---
 
     <rayimg> [10 x 200] <Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10] plus last row/col
     [Blue]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -378,6 +392,7 @@
 ---
 
     <rayimg> [10 x 200] <Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10] plus last row/col
     [Alpha]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -395,6 +410,7 @@
 ---
 
     <rayimg> [10 x 200 x 2] <Red + Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10], all channels plus last row/col
     [Red]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -425,6 +441,7 @@
 ---
 
     <rayimg> [10 x 200 x 3] <Red + Green + Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10], all channels plus last row/col
     [Red]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -468,6 +485,7 @@
 ---
 
     <rayimg> [10 x 200 x 2] <Red + Green>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10], all channels plus last row/col
     [Red]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -498,6 +516,7 @@
 ---
 
     <rayimg> [10 x 200 x 2] <Red + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10], all channels plus last row/col
     [Red]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,...] [,200]
@@ -516,6 +535,7 @@
 ---
 
     <rayimg> [200 x 10 x 4] <Red + Green + Blue + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10], all channels plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
@@ -566,6 +586,7 @@
 ---
 
     <rayimg> [200 x 10] <Red>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10] plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
@@ -585,6 +606,7 @@
 ---
 
     <rayimg> [200 x 10] <Green>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10] plus last row/col
     [Green]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
@@ -604,6 +626,7 @@
 ---
 
     <rayimg> [200 x 10] <Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10] plus last row/col
     [Blue]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
@@ -623,6 +646,7 @@
 ---
 
     <rayimg> [200 x 10] <Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10] plus last row/col
     [Alpha]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
@@ -642,6 +666,7 @@
 ---
 
     <rayimg> [200 x 10 x 2] <Red + Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10], all channels plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
@@ -676,6 +701,7 @@
 ---
 
     <rayimg> [200 x 10 x 3] <Red + Green + Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10], all channels plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
@@ -725,6 +751,7 @@
 ---
 
     <rayimg> [200 x 10 x 2] <Red + Green>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10], all channels plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
@@ -759,6 +786,7 @@
 ---
 
     <rayimg> [200 x 10 x 2] <Red + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:10], all channels plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
@@ -779,6 +807,7 @@
 ---
 
     <rayimg> [10 x 10 x 4] <Red + Green + Blue + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
      [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -822,6 +851,7 @@
 ---
 
     <rayimg> [10 x 10] <Red>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
      [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -838,6 +868,7 @@
 ---
 
     <rayimg> [10 x 10] <Green>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Green]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
      [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -854,6 +885,7 @@
 ---
 
     <rayimg> [10 x 10] <Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Blue]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
      [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -870,6 +902,7 @@
 ---
 
     <rayimg> [10 x 10] <Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Alpha]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
      [1,]  1.000 1.000 1.000 1.000 1.000 1.000 1.000 1.000 1.000 1.000
@@ -886,6 +919,7 @@
 ---
 
     <rayimg> [10 x 10 x 2] <Red + Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
      [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -915,6 +949,7 @@
 ---
 
     <rayimg> [10 x 10 x 3] <Red + Green + Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
      [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -957,6 +992,7 @@
 ---
 
     <rayimg> [10 x 10 x 2] <Red + Green>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
      [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -986,6 +1022,7 @@
 ---
 
     <rayimg> [10 x 10 x 2] <Red + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
             [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
      [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1003,6 +1040,7 @@
 ---
 
     <rayimg> [200 x 9 x 4] <Red + Green + Blue + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:9], all channels plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
@@ -1053,6 +1091,7 @@
 ---
 
     <rayimg> [200 x 9] <Red>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:9] plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
@@ -1072,6 +1111,7 @@
 ---
 
     <rayimg> [200 x 9] <Green>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:9] plus last row/col
     [Green]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
@@ -1091,6 +1131,7 @@
 ---
 
     <rayimg> [200 x 9] <Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:9] plus last row/col
     [Blue]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
@@ -1110,6 +1151,7 @@
 ---
 
     <rayimg> [200 x 9] <Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:9] plus last row/col
     [Alpha]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
@@ -1129,6 +1171,7 @@
 ---
 
     <rayimg> [200 x 9 x 2] <Red + Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:9], all channels plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
@@ -1163,6 +1206,7 @@
 ---
 
     <rayimg> [200 x 9 x 3] <Red + Green + Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:9], all channels plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
@@ -1212,6 +1256,7 @@
 ---
 
     <rayimg> [200 x 9 x 2] <Red + Green>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:9], all channels plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
@@ -1246,6 +1291,7 @@
 ---
 
     <rayimg> [200 x 9 x 2] <Red + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     showing [1:10, 1:9], all channels plus last row/col
     [Red]
              [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
@@ -1266,6 +1312,7 @@
 ---
 
     <rayimg> [9 x 9 x 4] <Red + Green + Blue + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1306,6 +1353,7 @@
 ---
 
     <rayimg> [9 x 9] <Red>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1321,6 +1369,7 @@
 ---
 
     <rayimg> [9 x 9] <Green>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Green]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1336,6 +1385,7 @@
 ---
 
     <rayimg> [9 x 9] <Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Blue]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1351,6 +1401,7 @@
 ---
 
     <rayimg> [9 x 9] <Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Alpha]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
     [1,]  1.000 1.000 1.000 1.000 1.000 1.000 1.000 1.000 1.000
@@ -1366,6 +1417,7 @@
 ---
 
     <rayimg> [9 x 9 x 2] <Red + Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1393,6 +1445,7 @@
 ---
 
     <rayimg> [9 x 9 x 3] <Red + Green + Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1432,6 +1485,7 @@
 ---
 
     <rayimg> [9 x 9 x 2] <Red + Green>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1459,6 +1513,7 @@
 ---
 
     <rayimg> [9 x 9 x 2] <Red + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1475,6 +1530,7 @@
 ---
 
     <rayimg> [1 x 10 x 4] <Red + Green + Blue + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1491,6 +1547,7 @@
 ---
 
     <rayimg> [1 x 10] <Red>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1498,6 +1555,7 @@
 ---
 
     <rayimg> [1 x 10] <Green>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Green]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1505,6 +1563,7 @@
 ---
 
     <rayimg> [1 x 10] <Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Blue]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1512,6 +1571,7 @@
 ---
 
     <rayimg> [1 x 10] <Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Alpha]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  1.000 1.000 1.000 1.000 1.000 1.000 1.000 1.000 1.000 1.000
@@ -1519,6 +1579,7 @@
 ---
 
     <rayimg> [1 x 10 x 2] <Red + Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1530,6 +1591,7 @@
 ---
 
     <rayimg> [1 x 10 x 3] <Red + Green + Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1545,6 +1607,7 @@
 ---
 
     <rayimg> [1 x 10 x 2] <Red + Green>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1556,6 +1619,7 @@
 ---
 
     <rayimg> [1 x 10 x 2] <Red + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1564,6 +1628,7 @@
 ---
 
     <rayimg> [1 x 10 x 3] <Red + Green + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1576,6 +1641,7 @@
 ---
 
     <rayimg> [1 x 10 x 3] <Alpha + Blue + Red>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Blue]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1587,6 +1653,7 @@
 ---
 
     <rayimg> [2 x 2] <Red>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]
     [1,]  0.000 0.000
@@ -1595,6 +1662,7 @@
 ---
 
     <rayimg> [1 x 10 x 4] <Red + Green + Blue + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1614,6 +1682,7 @@
 ---
 
     <rayimg> [2 x 10 x 4] <Red + Green + Blue + Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1637,6 +1706,7 @@
 ---
 
     <rayimg> [2 x 10] <Red>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Red]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1645,6 +1715,7 @@
 ---
 
     <rayimg> [2 x 10] <Green>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Green]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1653,6 +1724,7 @@
 ---
 
     <rayimg> [2 x 10] <Blue>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Blue]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -1661,6 +1733,7 @@
 ---
 
     <rayimg> [2 x 10] <Alpha>  filetype: array  Linear Data: TRUE
+      Working colorspace: ACEScg (white D60)  White XYZ: [0.95265, 1.00000, 1.00883]
     [Alpha]
            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
     [1,]  0.500 0.500 0.500 0.500 0.500 0.500 0.500 0.500 0.500 0.500

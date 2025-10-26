@@ -2,146 +2,260 @@
 #'
 #' This class will always be:
 #'  * A matrix or a 2/3/4 layer array
-#'    * 1 Layer(s): c("Greyscale")
-#'    * 2 Layer(s): c("Greyscale", "Alpha")
-#'    * 3 Layer(s): c("Red", "Green", "Blue")
-#'    * 4 Layer(s): c("Red", "Green", "Blue", "Alpha")
-#'  * It tracks whether the source data was linearized 
+#'  * It tracks whether the source data was linearized
+#'  * It carries working colorspace/white
 #'
 #' @param x Default `NULL`. The underlying array/matrix to wrap.
 #' @param filetype Default `NULL`. Original source type to record (e.g., "png").
 #' @param source_linear Default `FALSE`. Whether the original source was linearized.
+#' @param colorspace Default `CS_ACESCG`. Working space descriptor (see `make_colorspace()`).
+#' @param white_current Default `colorspace$white_xyz`. Current assumed scene/display white (XYZ, Y=1).
 #'
-#' @return An object of class `c("rayimg", <original class>)` with `filetype` attribute.
+#' @return An object of class `c("rayimg", <original class>)` with attributes.
 #' @keywords internal
-rayimg = function(x = NULL, filetype = NULL, source_linear = FALSE) {
-  stopifnot(inherits(x, "array"))
-  if (is.null(x)) stop("rayimg(): 'x' cannot be NULL.")
-  x_new = rayimg_validate_dimensions(x)
-  if (is.null(attr(x, "channels"))) {
-    attr(x_new, "channels") = rayimg_detect_channels(x)
-  } else {
-    attr(x_new, "channels") = attr(x, "channels")
-  }
-  attr(x_new, "filetype") = filetype
-  attr(x_new, "source_linear") = source_linear
-  class(x_new) = c("rayimg", setdiff(class(x), "rayimg"))
-  x_new
+rayimg = function(
+	x = NULL,
+	filetype = NULL,
+	source_linear = FALSE,
+	colorspace = CS_ACESCG,
+	white_current = colorspace$white_xyz
+) {
+	if (is.null(x)) {
+		stop("rayimg(): 'x' cannot be NULL.")
+	}
+	stopifnot(is.array(x))
+
+	x_new = rayimg_validate_dimensions(x)
+
+	# channels attribute
+	if (is.null(attr(x, "channels"))) {
+		attr(x_new, "channels") = rayimg_detect_channels(x_new)
+	} else {
+		attr(x_new, "channels") = attr(x, "channels")
+	}
+
+	# required attrs
+	attr(x_new, "filetype") = filetype
+	attr(x_new, "source_linear") = source_linear
+
+	# new attrs for color mgmt
+	stopifnot(
+		is.list(colorspace),
+		all(c("rgb_to_xyz", "xyz_to_rgb", "white_xyz") %in% names(colorspace))
+	)
+	attr(x_new, "colorspace") = colorspace
+	attr(x_new, "white_current") = white_current
+	class(x_new) = c("rayimg", setdiff(class(x), "rayimg"))
+	x_new
 }
 
+
+#' @title Build RGB-to-XYZ matrices from primaries + white
+#' @param primaries Default `list(r=c(0.713,0.293), g=c(0.165,0.830), b=c(0.128,0.044))`. xy chromaticities (AP1).
+#' @param white_xy Default `c(0.32168,0.33767)`. White xy (D60).
+#' @return List with 3x3 numeric matrices: `rgb_to_xyz`, `xyz_to_rgb`.
+#' @keywords internal
+make_rgb_xyz_matrices = function(
+	primaries = list(
+		r = c(0.713, 0.293),
+		g = c(0.165, 0.830),
+		b = c(0.128, 0.044)
+	),
+	white_xy = c(0.32168, 0.33767) # D60
+) {
+	xy_to_XYZ = function(xy) c(xy[1] / xy[2], 1, (1 - xy[1] - xy[2]) / xy[2])
+	Xr = xy_to_XYZ(primaries$r)
+	Xg = xy_to_XYZ(primaries$g)
+	Xb = xy_to_XYZ(primaries$b)
+	M = cbind(Xr, Xg, Xb)
+	W = xy_to_XYZ(white_xy)
+	S = solve(M, W)
+	rgb_to_xyz = M %*% diag(S)
+	xyz_to_rgb = solve(rgb_to_xyz)
+	list(rgb_to_xyz = rgb_to_xyz, xyz_to_rgb = xyz_to_rgb)
+}
+
+
 rayimg_channels_from_count = function(n) {
-  switch(
-    as.character(n),
-    "1" = c("Greyscale"),
-    "2" = c("Greyscale", "Alpha"),
-    "3" = c("Red", "Green", "Blue"),
-    "4" = c("Red", "Green", "Blue", "Alpha"),
-    stop("This should never be hit.")
-  )
+	switch(
+		as.character(n),
+		"1" = c("Greyscale"),
+		"2" = c("Greyscale", "Alpha"),
+		"3" = c("Red", "Green", "Blue"),
+		"4" = c("Red", "Green", "Blue", "Alpha"),
+		stop("This should never be hit.")
+	)
 }
 
 rayimg_detect_channels = function(x) {
-  d = dim(x)
-  if (length(d) < 3L) {
-    return("Greyscale")
-  }
-  rayimg_channels_from_count(d[3])
+	d = dim(x)
+	if (length(d) < 3L) {
+		return("Greyscale")
+	}
+	rayimg_channels_from_count(d[3])
 }
 
 #Always return a multidimensional (d[3] = 2,3,4) array, or a matrix.
 rayimg_validate_dimensions = function(x) {
-  valid = FALSE
-  d = dim(x)
-  stopifnot(!is.null(d))
-  stopifnot(length(d) == 2 || length(d) == 3)
-  stopifnot(d[1] > 0 && d[2] > 0)
-  if (length(d) == 3) {
-    if (d[3] == 1) {
-      x = x[,, 1] #Drop extra
-    } else {
-      stopifnot(d[3] %in% c(2, 3, 4))
-    }
-  }
-  return(x)
+	d = dim(x)
+	stopifnot(!is.null(d), length(d) %in% c(2, 3), d[1] > 0, d[2] > 0)
+	if (length(d) == 3) {
+		if (d[3] == 1) {
+			x = x[,, 1] # drop extra
+		} else {
+			stopifnot(d[3] %in% c(2, 3, 4))
+		}
+	}
+	x
 }
 
 
-#' Subset a rayimg without losing attributes
+#' Create a rayimg
 #'
-#' @param x Default `NULL`. A `rayimg` object.
-#' @param ... Default ``. Standard subsetting indices.
-#' @param drop Default `TRUE`. Whether to drop dimensions (as in base `[`).
+#' @param x Default `NULL`. Underlying array/matrix to wrap.
+#' @param filetype Default `NULL`. Original source type (e.g., "png").
+#' @param source_linear Default `FALSE`. Whether the original source was linearized.
+#' @param colorspace Default `CS_ACESCG`. Working space descriptor.
+#' @param white_current Default `colorspace$white_xyz`. Current white (XYZ, Y=1).
 #'
-#' @return A subset of `x`. Preserves the `filetype` attribute. Preserves the
-#'   `rayimg` class if the result still has dimensions (array/matrix).
+#' @return `rayimg`
+#' @keywords internal
+rayimg = function(
+	x = NULL,
+	filetype = NULL,
+	source_linear = FALSE,
+	colorspace = CS_ACESCG,
+	white_current = colorspace$white_xyz
+) {
+	if (is.null(x)) {
+		stop("rayimg(): 'x' cannot be NULL.")
+	}
+	stopifnot(is.array(x))
+
+	x_new = rayimg_validate_dimensions(x)
+
+	if (is.null(attr(x, "channels"))) {
+		attr(x_new, "channels") = rayimg_detect_channels(x_new)
+	} else {
+		attr(x_new, "channels") = attr(x, "channels")
+	}
+
+	attr(x_new, "filetype") = filetype
+	attr(x_new, "source_linear") = source_linear
+
+	stopifnot(
+		is.list(colorspace),
+		all(c("rgb_to_xyz", "xyz_to_rgb", "white_xyz") %in% names(colorspace))
+	)
+	attr(x_new, "colorspace") = colorspace
+	attr(x_new, "white_current") = white_current
+	class(x_new) = c("rayimg", setdiff(class(x), "rayimg"))
+	x_new
+}
+
 #' @export
 `[.rayimg` = function(x, ..., drop = TRUE) {
-  ch = rayimg_detect_channels(x)
-  caller_env = parent.frame() # capture before NextMethod()
-  mc = match.call(expand.dots = FALSE)
-  dots_expr = as.list(mc$`...`)
-  nd = length(dim(x))
+	ch = rayimg_detect_channels(x)
+	caller_env = parent.frame()
+	mc = match.call(expand.dots = FALSE)
+	dots_expr = as.list(mc$`...`)
+	nd = length(dim(x))
 
-  # pad missing subscripts to nd
-  if (length(dots_expr) < nd) {
-    dots_expr = c(dots_expr, rep(list(quote(expr = )), nd - length(dots_expr)))
-  }
+	if (length(dots_expr) < nd) {
+		dots_expr = c(dots_expr, rep(list(quote(expr = )), nd - length(dots_expr)))
+	}
+	idx = lapply(dots_expr, function(z) {
+		if (identical(z, quote(expr = ))) TRUE else eval(z, envir = caller_env)
+	})
 
-  # evaluate indices in caller env; TRUE means "take all" on that dim
-  idx = lapply(dots_expr, function(z) {
-    if (identical(z, quote(expr = ))) TRUE else eval(z, envir = caller_env)
-  })
+	if (nd >= 3L) {
+		if (!isTRUE(idx[[3L]]) && length(idx[[3L]]) > 4L) {
+			stop("A rayimg can only have four or fewer channels selected at once.")
+		}
+		if (!isTRUE(idx[[3L]]) && any(idx[[3L]] > 4L)) {
+			stop("rayimg: channel index > 4.")
+		}
+	}
 
-  # channel count checks only if there is a 3rd dim
-  if (nd >= 3L) {
-    if (!isTRUE(idx[[3L]]) && length(idx[[3L]]) > 4L) {
-      stop("A rayimg can only have four or fewer channels selected at once.")
-    }
-    if (!isTRUE(idx[[3L]]) && any(idx[[3L]] > 4L)) {
-      stop(
-        "rayimg objects only have a maximum of 4 channels (RGBA): you passed ",
-        max(idx[[3L]])
-      )
-    }
-  }
+	y = NextMethod("[", drop = FALSE)
 
-  # perform actual subset without dropping to preserve dims 1 & 2
-  y = NextMethod("[", drop = FALSE)
+	if (drop) {
+		d = dim(y)
+		dn = dimnames(y)
+		drop_idx = which(d == 1L & seq_along(d) >= 3L)
+		if (length(drop_idx)) {
+			keep = setdiff(seq_along(d), drop_idx)
+			y = array(y, dim = d[keep], dimnames = dn[keep])
+		}
+	}
 
-  # selectively drop only dims >= 3 that are length 1
-  if (drop) {
-    d = dim(y)
-    dn = dimnames(y)
-    drop_idx = which(d == 1L & seq_along(d) >= 3L)
-    if (length(drop_idx)) {
-      keep = setdiff(seq_along(d), drop_idx)
-      y = array(y, dim = d[keep], dimnames = dn[keep])
-    }
-  }
+	# carry attrs
+	attr(y, "filetype") = attr(x, "filetype")
+	attr(y, "source_linear") = attr(x, "source_linear")
+	attr(y, "colorspace") = attr(x, "colorspace")
+	attr(y, "white_current") = attr(x, "white_current")
 
-  # carry attributes
-  attr(y, "filetype") = attr(x, "filetype")
-  attr(y, "source_linear") = attr(x, "source_linear")
+	if (!is.null(ch)) {
+		if (nd >= 3L) {
+			ch_idx = idx[[3L]]
+			if (isTRUE(ch_idx)) {
+				ch_idx = seq_along(ch)
+			}
+			attr(y, "channels") = ch[ch_idx]
+		} else {
+			attr(y, "channels") = ch[seq_len(min(1L, length(ch)))]
+		}
+	} else {
+		attr(y, "channels") = rayimg_detect_channels(y)
+	}
 
-  # channels attribute follows the 3rd subscript if present
-  # ch = attr(x, "channels")
-  if (!is.null(ch)) {
-    if (nd >= 3L) {
-      ch_idx = idx[[3L]]
-      if (isTRUE(ch_idx)) ch_idx = seq_along(ch)
-      attr(y, "channels") = ch[ch_idx]
-    } else {
-      # 2D input: keep existing single-channel label if any
-      attr(y, "channels") = ch[seq_len(min(1L, length(ch)))]
-    }
-  } else {
-    attr(y, "channels") = rayimg_detect_channels(y)
-  }
-
-  # keep class if still has dims
-  if (!is.null(dim(y))) {
-    class(y) = unique(c("rayimg", setdiff(class(y), "rayimg")))
-  }
-
-  y
+	if (!is.null(dim(y))) {
+		class(y) = unique(c("rayimg", setdiff(class(y), "rayimg")))
+	}
+	y
 }
+
+#' @title Build a colorspace descriptor
+#' @param name Default `"ACEScg"`.
+#' @param primaries Default AP1.
+#' @param white_xy Default D60.
+#' @return list(name, rgb_to_xyz, xyz_to_rgb, white_xyz, white_name)
+#' @keywords internal
+make_colorspace = function(
+	name = "ACEScg",
+	primaries = list(
+		r = c(0.713, 0.293),
+		g = c(0.165, 0.830),
+		b = c(0.128, 0.044)
+	),
+	white_xy = c(0.32168, 0.33767), # D60
+	white_name = "D60"
+) {
+	mats = make_rgb_xyz_matrices(primaries = primaries, white_xy = white_xy)
+	xy_to_XYZ = function(xy) c(xy[1] / xy[2], 1, (1 - xy[1] - xy[2]) / xy[2])
+	list(
+		name = name,
+		rgb_to_xyz = mats$rgb_to_xyz,
+		xyz_to_rgb = mats$xyz_to_rgb,
+		white_xyz = xy_to_XYZ(white_xy),
+		white_name = white_name
+	)
+}
+
+# Prebuilt spaces
+CS_ACESCG = make_colorspace(
+	name = "ACEScg",
+	primaries = list(
+		r = c(0.713, 0.293),
+		g = c(0.165, 0.830),
+		b = c(0.128, 0.044)
+	),
+	white_xy = c(0.32168, 0.33767),
+	white_name = "D60"
+)
+CS_SRGB = make_colorspace(
+	name = "sRGB",
+	primaries = list(r = c(0.64, 0.33), g = c(0.30, 0.60), b = c(0.15, 0.06)),
+	white_xy = c(0.3127, 0.3290),
+	white_name = "D65"
+)

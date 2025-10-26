@@ -1,12 +1,12 @@
 Package: rayimage
 Type: Package
 Title: Image Processing for Simulated Cameras
-Version: 0.19.2
+Version: 0.20.0
 Authors@R: c(person("Tyler", "Morgan-Wall", email = "tylermw@gmail.com", 
     role = c("aut", "cph", "cre"), comment = c(ORCID = "0000-0002-3131-3814")),
     person("Sean", "Barrett", role = c("ctb", "cph")))
 Maintainer: Tyler Morgan-Wall <tylermw@gmail.com>
-Description: Uses convolution-based techniques to generate simulated camera bokeh, depth of field, and other camera effects, using an image and an optional depth map. Accepts both filename inputs and in-memory array representations of images and matrices. Includes functions to perform 2D convolutions, reorient and resize images/matrices, add image and text overlays, adjust exposure, generate camera vignette effects, and add titles to images. 
+Description: Uses convolution-based techniques to generate simulated camera bokeh, depth of field, and other camera effects, using an image and an optional depth map. Accepts both filename inputs and in-memory array representations of images and matrices. Includes functions to perform 2D convolutions, color correction, colorspace conversion, image/matrix reoriention and resizing, image and text overlays, exposure adjustment, camera vignette effects, and image titles. 
 License: GPL-3
 LazyData: true
 Depends: R (>= 4.1.0)

@@ -27,65 +27,88 @@
 #'plot_image(dragon[1:100,,], asp = 1/2)
 #'#end}
 plot_image = function(
-  image,
-  draw_grid = FALSE,
-  ignore_alpha = FALSE,
-  asp = 1,
-  new_page = TRUE,
-  return_grob = FALSE,
-  gp = grid::gpar(),
-  show_linear = FALSE
+	image,
+	draw_grid = FALSE,
+	ignore_alpha = FALSE,
+	asp = 1,
+	new_page = TRUE,
+	return_grob = FALSE,
+	gp = grid::gpar(),
+	show_linear = FALSE
 ) {
-  image = ray_read_image(image, convert_to_array = TRUE) #Always output RGBA array
-  image_type = attr(image, "filetype")
+	img = ray_read_image(image, convert_to_array = TRUE) # rayimg RGBA
+	cs_from = attr(img, "colorspace")
+	white_curr = attr(img, "white_current")
 
-	if(!show_linear) {
-		image[,, 1:3] = to_srgb(image[,, 1:3])
+	display = img
+
+	if (!show_linear) {
+		# Convert primaries/white to sRGB/D65 if needed (linear)
+		if (
+			!is.null(cs_from) &&
+				(!identical(cs_from$name, "sRGB") ||
+					any(abs(white_curr - CS_SRGB$white_xyz) > 1e-8))
+		) {
+			xyz = apply_color_matrix(display, cs_from$rgb_to_xyz)
+			if (any(abs(white_curr - CS_SRGB$white_xyz) > 1e-8)) {
+				CAT = compute_cat_bradford(white_curr, CS_SRGB$white_xyz)
+				xyz = apply_color_matrix(xyz, CAT)
+			}
+			display = apply_color_matrix(xyz, CS_SRGB$xyz_to_rgb)
+			display[,, 1:3][display[,, 1:3] < 0] = 0
+		}
+		# Apply sRGB OETF to RGB only
+		display[,, 1:3] = to_srgb(display[,, 1:3])
 	}
-  
-  # image = render_clamp(image)
 
-  nr = convert_to_native_raster(image)
+	display = render_clamp(display)
 
-  if (new_page) {
-    grid::grid.newpage()
-  }
+	#clamp alpha
+	alpha_channel = unclass(render_clamp(
+		display[,, 4],
+		min_value = 0,
+		max_value = 1
+	))
+	display[,, 4] = alpha_channel
 
-  image_dim = dim(image)
+	nr = convert_to_native_raster(display)
 
-  # Draw a grid to differentiate image from background
-  if (draw_grid) {
-    draw_grid_fxn = function() {
-      grid::pushViewport(
-        grid::viewport(
-          layout = grid::grid.layout(
-            1,
-            1,
-            widths = grid::unit(image_dim[1], "pt"),
-            heights = grid::unit(image_dim[2], "pt")
-          ),
-          gp = gp
-        )
-      )
-      # Define grid density and angle
-      grid_density = 0.01 # Adjust this value for tighter or looser grid
-      for (i in seq(-2, 2, by = grid_density)) {
-        grid::grid.lines(
-          x = c(0, 1),
-          y = c(i, i + 1),
-          default.units = "npc",
-          gp = grid::gpar(col = "grey")
-        )
-        grid::grid.lines(
-          x = c(0, 1),
-          y = c(i, i - 1),
-          default.units = "npc",
-          gp = grid::gpar(col = "grey")
-        )
-      }
-      grid::popViewport()
-    }
-    draw_grid_fxn()
-  }
-  return(plot_asp_native_raster(nr, asp = asp, return_grob = return_grob))
+	if (new_page) {
+		grid::grid.newpage()
+	}
+	image_dim = dim(display)
+
+	if (draw_grid) {
+		draw_grid_fxn = function() {
+			grid::pushViewport(
+				grid::viewport(
+					layout = grid::grid.layout(
+						1,
+						1,
+						widths = grid::unit(image_dim[1], "pt"),
+						heights = grid::unit(image_dim[2], "pt")
+					),
+					gp = gp
+				)
+			)
+			grid_density = 0.01
+			for (i in seq(-2, 2, by = grid_density)) {
+				grid::grid.lines(
+					x = c(0, 1),
+					y = c(i, i + 1),
+					default.units = "npc",
+					gp = grid::gpar(col = "grey")
+				)
+				grid::grid.lines(
+					x = c(0, 1),
+					y = c(i, i - 1),
+					default.units = "npc",
+					gp = grid::gpar(col = "grey")
+				)
+			}
+			grid::popViewport()
+		}
+		draw_grid_fxn()
+	}
+	return(plot_asp_native_raster(nr, asp = asp, return_grob = return_grob))
 }

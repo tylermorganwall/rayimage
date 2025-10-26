@@ -4,29 +4,44 @@
 \alias{rayimg}
 \title{Create a rayimg}
 \usage{
-rayimg(x = NULL, filetype = NULL, source_linear = FALSE)
+rayimg(
+  x = NULL,
+  filetype = NULL,
+  source_linear = FALSE,
+  colorspace = CS_ACESCG,
+  white_current = colorspace$white_xyz
+)
+
+rayimg(
+  x = NULL,
+  filetype = NULL,
+  source_linear = FALSE,
+  colorspace = CS_ACESCG,
+  white_current = colorspace$white_xyz
+)
 }
 \arguments{
-\item{x}{Default \code{NULL}. The underlying array/matrix to wrap.}
+\item{x}{Default \code{NULL}. Underlying array/matrix to wrap.}
 
-\item{filetype}{Default \code{NULL}. Original source type to record (e.g., "png").}
+\item{filetype}{Default \code{NULL}. Original source type (e.g., "png").}
 
 \item{source_linear}{Default \code{FALSE}. Whether the original source was linearized.}
+
+\item{colorspace}{Default \code{CS_ACESCG}. Working space descriptor.}
+
+\item{white_current}{Default \code{colorspace$white_xyz}. Current white (XYZ, Y=1).}
 }
 \value{
-An object of class \verb{c("rayimg", <original class>)} with \code{filetype} attribute.
+An object of class \verb{c("rayimg", <original class>)} with attributes.
+
+\code{rayimg}
 }
 \description{
 This class will always be:
 \itemize{
 \item A matrix or a 2/3/4 layer array
-\itemize{
-\item 1 Layer(s): c("Greyscale")
-\item 2 Layer(s): c("Greyscale", "Alpha")
-\item 3 Layer(s): c("Red", "Green", "Blue")
-\item 4 Layer(s): c("Red", "Green", "Blue", "Alpha")
-}
 \item It tracks whether the source data was linearized
+\item It carries working colorspace/white
 }
 }
 \keyword{internal}

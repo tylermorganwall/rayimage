@@ -1,5 +1,7 @@
 #' Print method for rayimg
 #'
+#' Displays the working colorspace metadata alongside a numeric preview.
+#'
 #' @param x Default `NULL`. A `rayimg` object.
 #' @param preview_n Default `10`. Max rows/cols to display in numeric preview.
 #' @param decimals Default `3`. Number of decimal places to display in numeric preview.
@@ -96,6 +98,49 @@ print.rayimg = function(
     col_cyan(ft),
     "  Linear Data: ",
     col_green(as.character(attr(x, "source_linear"))),
+    "\n",
+    sep = ""
+  )
+  cs_attr = attr(x, "colorspace")
+  white_attr = attr(x, "white_current")
+
+  describe_colorspace = function(cs) {
+    if (!is.list(cs)) return("unknown")
+    nm = cs$name
+    if (is.null(nm) || length(nm) != 1L) nm = "unknown"
+    desc = as.character(nm)
+    wn = cs$white_name
+    if (!is.null(wn) && length(wn) == 1L) {
+      desc = paste0(desc, " (white ", wn, ")")
+    }
+    desc
+  }
+  describe_white = function(white_vec) {
+    if (
+      is.numeric(white_vec) &&
+        length(white_vec) == 3L &&
+        all(is.finite(white_vec))
+    ) {
+      paste0(
+        "[",
+        paste(formatC(as.numeric(white_vec), format = "f", digits = 5), collapse = ", "),
+        "]"
+      )
+    } else {
+      "unknown"
+    }
+  }
+  cs_desc = describe_colorspace(cs_attr)
+  white_desc = describe_white(white_attr)
+  white_col = if (identical(white_desc, "unknown")) col_silver else col_blue
+
+  cat(
+    "  ",
+    col_silver("Working colorspace: "),
+    col_blue(cs_desc),
+    "  ",
+    col_silver("White XYZ: "),
+    white_col(white_desc),
     "\n",
     sep = ""
   )

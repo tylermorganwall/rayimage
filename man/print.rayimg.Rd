@@ -21,5 +21,5 @@
 Invisibly returns \code{x}.
 }
 \description{
-Print method for rayimg
+Displays the working colorspace metadata alongside a numeric preview.
 }

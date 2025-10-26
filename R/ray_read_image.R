@@ -49,102 +49,126 @@
 #'   plot_image()
 #'}
 ray_read_image = function(
-  image,
-  convert_to_array = FALSE,
-  preview = FALSE,
-  source_linear = NA,
-  ...
+	image,
+	convert_to_array = FALSE,
+	preview = FALSE,
+	source_linear = NA,
+	...
 ) {
-  decode_if_needed = function(img, linear_flag) {
-    if (isTRUE(linear_flag)) {
-      return(list(image = img, source_linear = TRUE))
-    }
-    if (length(dim(img)) == 3) {
-      channels = dim(img)[3]
-      if (channels >= 3) {
-        img[,, 1:3] = to_linear(img[,, 1:3])
-      } else {
-        img = to_linear(img)
-      }
-    } else {
-      img = to_linear(img)
-    }
-    list(image = img, source_linear = TRUE)
-  }
+	decode_if_needed = function(img, linear_flag) {
+		if (isTRUE(linear_flag)) {
+			return(list(image = img, source_linear = TRUE))
+		}
+		# Not linear → decode RGB via sRGB EOTF
+		if (length(dim(img)) == 3) {
+			channels = dim(img)[3]
+			if (channels >= 3) {
+				img[,, 1:3] = to_linear(img[,, 1:3])
+			} else {
+				img = to_linear(img)
+			}
+		} else {
+			img = to_linear(img)
+		}
+		list(image = img, source_linear = TRUE)
+	}
 
-  process_image_preview = function(image2) {
-    if (convert_to_array) {
-      image_val = array(1, dim = c(dim(image2)[1:2], 4))
-      if (length(dim(image2)) == 2) {
-        image_val[,, 1:3] = image2
-      } else if (length(dim(image2)) == 3) {
-        if (dim(image2)[3] == 2) {
-          image_val[,, 1:3] = image2[,, 1]
-          image_val[,, 4] = image2[,, 2]
-        } else if (dim(image2)[3] == 3) {
-          image_val[,, 1:3] = image2[,, 1:3]
-        } else if (dim(image2)[3] == 4) {
-          image_val = image2
-        }
-      }
-    } else {
-      image_val = image2
-    }
-    if (preview) {
-      plot_image(image_val)
-    }
-    return(image_val)
-  }
+	process_image_preview = function(image2) {
+		if (convert_to_array) {
+			image_val = array(1, dim = c(dim(image2)[1:2], 4))
+			if (length(dim(image2)) == 2) {
+				image_val[,, 1:3] = image2
+			} else if (length(dim(image2)) == 3) {
+				if (dim(image2)[3] == 2) {
+					image_val[,, 1:3] = image2[,, 1]
+					image_val[,, 4] = image2[,, 2]
+				} else if (dim(image2)[3] == 3) {
+					image_val[,, 1:3] = image2[,, 1:3]
+				} else if (dim(image2)[3] == 4) {
+					image_val = image2
+				}
+			}
+		} else {
+			image_val = image2
+		}
+		if (preview) {
+			plot_image(image_val)
+		}
+		image_val
+	}
 
-  # Return immediately if already loaded
-  imagetype = get_file_type(image)
-  if (is.na(source_linear)) {
-    if (imagetype %in% c("png", "jpg", "tif")) {
-      source_linear = FALSE
-    } else {
-      source_linear = TRUE
-    }
-  }
-  finalize_image = function(img, img_type, linear_flag) {
-    decoded = decode_if_needed(img, linear_flag)
-    rayimg(process_image_preview(decoded$image), img_type, decoded$source_linear)
-  }
+	imagetype = get_file_type(image)
+	if (is.na(source_linear)) {
+		# LDR files are non-linear; arrays/matrices/EXR are linear
+		source_linear = !(imagetype %in% c("png", "jpg", "tif"))
+	}
 
-  if (inherits(image, "rayimg")) {
-    source_linear = attr(image, "source_linear")
-    filetype = attr(image, "filetype")
-    return(finalize_image(image, filetype, source_linear))
-  }
-  if (imagetype == "array") {
-    return(finalize_image(image, imagetype, source_linear))
-  } else if (imagetype == "matrix") {
-    if (length(dim(image)) == 3) {
-      #Drop dimension of single channel array
-      return(finalize_image(image[,, 1], imagetype, source_linear))
-    } else {
-      return(finalize_image(image, imagetype, source_linear))
-    }
-  } else if (imagetype == "png") {
-    image = png::readPNG(image, ...)
-    return(finalize_image(image, imagetype, source_linear))
-  } else if (imagetype == "tif") {
-    image = tiff::readTIFF(image, ...)
-    return(finalize_image(image, imagetype, source_linear))
-  } else if (imagetype == "jpg") {
-    image = jpeg::readJPEG(image, ...)
-    return(finalize_image(image, imagetype, source_linear))
-  } else if (imagetype == "exr") {
-    if (length(find.package("libopenexr", quiet = TRUE)) > 0) {
-      image_tmp = libopenexr::read_exr(image)
-      image = array(1, dim = c(image_tmp$height, image_tmp$width, 4))
-      image[,, 1] = image_tmp$r
-      image[,, 2] = image_tmp$g
-      image[,, 3] = image_tmp$b
-      return(rayimg(process_image_preview(image), imagetype, source_linear))
-    } else {
-      stop("The 'libopenexr' package is required for EXR support.")
-    }
-  } else {
-    stop("This error should never be reached--please report a bug.")
-  }
+	finalize_image = function(img, img_type, linear_flag, assumed_cs) {
+		decoded = decode_if_needed(img, linear_flag)
+		# Choose default colorspace by source type
+		cs = switch(
+			img_type,
+			png = CS_SRGB,
+			jpg = CS_SRGB,
+			tif = CS_SRGB,
+			exr = CS_ACESCG,
+			array = assumed_cs,
+			matrix = assumed_cs,
+			CS_ACESCG
+		)
+		rayimg(
+			process_image_preview(decoded$image),
+			filetype = img_type,
+			source_linear = decoded$source_linear,
+			colorspace = cs,
+			white_current = cs$white_xyz
+		)
+	}
+
+	if (inherits(image, "rayimg")) {
+		# normalize to rayimg with current attrs
+		return(rayimg(
+			process_image_preview(image),
+			filetype = attr(image, "filetype"),
+			source_linear = attr(image, "source_linear"),
+			colorspace = attr(image, "colorspace"),
+			white_current = attr(image, "white_current")
+		))
+	}
+	if (imagetype == "array") {
+		return(finalize_image(image, imagetype, source_linear, CS_ACESCG))
+	} else if (imagetype == "matrix") {
+		if (length(dim(image)) == 3) {
+			return(finalize_image(image[,, 1], imagetype, source_linear, CS_ACESCG))
+		}
+		return(finalize_image(image, imagetype, source_linear, CS_ACESCG))
+	} else if (imagetype == "png") {
+		image = png::readPNG(image, ...)
+		return(finalize_image(image, imagetype, source_linear, CS_SRGB))
+	} else if (imagetype == "tif") {
+		image = tiff::readTIFF(image, ...)
+		return(finalize_image(image, imagetype, source_linear, CS_SRGB))
+	} else if (imagetype == "jpg") {
+		image = jpeg::readJPEG(image, ...)
+		return(finalize_image(image, imagetype, source_linear, CS_SRGB))
+	} else if (imagetype == "exr") {
+		if (length(find.package("libopenexr", quiet = TRUE)) > 0) {
+			tmp = libopenexr::read_exr(image)
+			image = array(1, dim = c(tmp$height, tmp$width, 4))
+			image[,, 1] = tmp$r
+			image[,, 2] = tmp$g
+			image[,, 3] = tmp$b
+			return(rayimg(
+				process_image_preview(image),
+				filetype = imagetype,
+				source_linear = TRUE,
+				colorspace = CS_ACESCG,
+				white_current = CS_ACESCG$white_xyz
+			))
+		} else {
+			stop("The 'libopenexr' package is required for EXR support.")
+		}
+	} else {
+		stop("This error should never be reached--please report a bug.")
+	}
 }

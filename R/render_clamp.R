@@ -1,10 +1,10 @@
 #'@title Clamp Image
 #'
-#'@description Clamps an image to a user-specified range
+#'@description Clamps an image to a user-specified range, ignoring the alpha channel.
 #'
 #'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
-#'@param min_value Default `0`. Minimum value to clamp the image to.
-#'@param max_value Default `1`. Maximum value to clamp the image to.
+#'@param min_value Default `0`. Minimum value to clamp the RGB channels in the image to.
+#'@param max_value Default `1`. Maximum value to clamp the RGB channels in the image to.
 #'@param filename Default `NA`. Filename
 #'@param preview Default `FALSE`. If `TRUE`, it will display the image in addition
 #'to returning it.
@@ -25,16 +25,44 @@
 #'}
 render_clamp = function(
   image,
-	filename = NA,
   min_value = 0,
   max_value = 1,
+  filename = NA,
   preview = FALSE,
   ...
 ) {
   image = ray_read_image(image) #Always output RGBA array
-  #Check if file or image before below:
-  image[image < min_value] = min_value
-  image[image > max_value] = max_value
-  image = ray_read_image(unclass(image))
-  handle_image_output(image, filename = filename, preview = preview)
+  d = dim(image)
+  alpha_idx = NA
+  if (length(d) == 3) {
+    if (d[3] == 4) {
+      alpha_idx = 4
+    }
+    if (d[3] == 2) {
+      alpha_idx = 2
+    }
+  }
+  array_image = unclass(image)
+  if (length(d) == 2) {
+    array_image[image < min_value] = min_value
+    array_image[image > max_value] = max_value
+    array_image = array(array_image, dim = d)
+  } else {
+    if (is.na(alpha_idx)) {
+      num_chans = 1:3
+    } else {
+      num_chans = seq_len(alpha_idx - 1)
+    }
+    array_image = unclass(image)
+    for (chan in num_chans) {
+      tmp_chan = array_image[,, chan]
+      mat_d = dim(tmp_chan)
+      tmp_chan[array_image[,, chan] < min_value] = min_value
+      tmp_chan[array_image[,, chan] > max_value] = max_value
+      array_image[,, chan] = array(tmp_chan, dim = mat_d)
+    }
+  }
+  new_image = ray_read_image(array_image)
+  attributes(new_image) = attributes(image)
+  handle_image_output(new_image, filename = filename, preview = preview)
 }

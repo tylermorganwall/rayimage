@@ -6,9 +6,9 @@
 \usage{
 render_clamp(
   image,
-  filename = NA,
   min_value = 0,
   max_value = 1,
+  filename = NA,
   preview = FALSE,
   ...
 )
@@ -16,11 +16,11 @@ render_clamp(
 \arguments{
 \item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
+\item{min_value}{Default \code{0}. Minimum value to clamp the RGB channels in the image to.}
+
+\item{max_value}{Default \code{1}. Maximum value to clamp the RGB channels in the image to.}
+
 \item{filename}{Default \code{NA}. Filename}
-
-\item{min_value}{Default \code{0}. Minimum value to clamp the image to.}
-
-\item{max_value}{Default \code{1}. Maximum value to clamp the image to.}
 
 \item{preview}{Default \code{FALSE}. If \code{TRUE}, it will display the image in addition
 to returning it.}
@@ -31,7 +31,7 @@ to returning it.}
 A \code{rayimg} RGBA array.
 }
 \description{
-Clamps an image to a user-specified range
+Clamps an image to a user-specified range, ignoring the alpha channel.
 }
 \examples{
 if(run_documentation()){
