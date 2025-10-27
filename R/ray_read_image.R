@@ -9,7 +9,9 @@
 #' @param source_linear Default `NA`, automatically determined based on the image type.
 #' Whether the image source is linear data or sRGB.  `FALSE` for matrices, arrays, and `EXR` files,
 #' true for all other formats (`jpeg`, `png`, and `tiff`).
-#' @param normalize Default `TRUE`. If `TRUE`, convert to `normalize_to` space on read.
+#' @param normalize Default `TRUE`. If `TRUE`, convert to `normalize_to` space on read. Note that
+#' rayimg inputs will keep their colorspace and ignore this option--use `render_convert_colorspace()`
+#' to change an existing rayimg to a new colorspace.
 #' @param normalize_to Default `CS_ACESCG`. Target colorspace when `normalize=TRUE`.
 #' @param normalize_adapt_white Default `TRUE`. If `TRUE`, Bradford-adapt source white to target white.
 #' @param assume_colorspace Default `NULL`. A colorspace descriptor (e.g., `CS_SRGB`,
@@ -227,18 +229,7 @@ ray_read_image = function(
 			colorspace = cs_assigned,
 			white_current = wc_assigned
 		)
-
-		# optionally normalize (convert) after re-tagging
-		if (normalize) {
-			ri = render_convert_colorspace(
-				ri,
-				from_mats = NA, # pull from ri attrs
-				to_mats = normalize_to,
-				adapt_white = normalize_adapt_white,
-				from_white = NA, # pull from ri attrs
-				to_white = normalize_to$white_xyz
-			)
-		}
+		#Do not normalize rayimg
 		return(ri)
 	}
 	if (imagetype == "array") {

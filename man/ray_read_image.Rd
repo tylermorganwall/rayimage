@@ -29,7 +29,9 @@ to returning it.}
 Whether the image source is linear data or sRGB.  \code{FALSE} for matrices, arrays, and \code{EXR} files,
 true for all other formats (\code{jpeg}, \code{png}, and \code{tiff}).}
 
-\item{normalize}{Default \code{TRUE}. If \code{TRUE}, convert to \code{normalize_to} space on read.}
+\item{normalize}{Default \code{TRUE}. If \code{TRUE}, convert to \code{normalize_to} space on read. Note that
+rayimg inputs will keep their colorspace and ignore this option--use \code{render_convert_colorspace()}
+to change an existing rayimg to a new colorspace.}
 
 \item{normalize_to}{Default \code{CS_ACESCG}. Target colorspace when \code{normalize=TRUE}.}
 

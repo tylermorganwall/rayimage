@@ -11,6 +11,48 @@
 #' @param preview  Default `FALSE`. If `TRUE`, display the image.
 #' @return A `rayimg` RGBA array tagged with the **target** space.
 #' @export
+#' @examples
+#' if (run_documentation()) {
+#' # Read photo, convert to ACEScg with CAT (scene)
+#' 	photo = ray_read_image(sunset_image, normalize = FALSE)
+#' 	photo_aces = render_convert_colorspace(
+#' 		photo,
+#' 		to_mats = CS_ACESCG,
+#' 		adapt_white = TRUE
+#' 	)
+#' 	tmp_txt = tempfile(fileext = ".png")
+#' 	render_text_image(
+#' 		"Sunset",
+#' 		size = 60,
+#' 		filename = tmp_txt,
+#' 		color = "#c300ffff",
+#' 		background_alpha = 0
+#' 	)
+#' 	# Read logo (display-referred), convert primaries only (no CAT)
+#' 	logo = ray_read_image(tmp_txt, normalize = FALSE) # sRGB/D65
+#' 	logo_aces = render_convert_colorspace(
+#' 		logo,
+#' 		to_mats = CS_ACESCG,
+#' 		adapt_white = FALSE
+#' 	)
+#'
+#' 	# Composite in ACEScg, then display (plot_image converts to sRGB/D65 + OETF)
+#' 	# Here, we also turn overlay conversion in [render_image_overlay()] off,
+#'  # to show what happens when you don't account for the colorspace difference.
+#'  # By default [render_image_overlay()] will do this for you.
+#' 	comp1 = render_image_overlay(
+#' 		photo_aces,
+#' 		logo_aces,
+#' 		convert_overlay_colorspace = FALSE
+#' 	)
+#' 	comp2 = render_image_overlay(
+#' 		photo_aces,
+#' 		logo,
+#' 		convert_overlay_colorspace = FALSE
+#' 	)
+#'   #Note the color differences, which arise from the mismatched colorspace on the right.
+#' 	 plot_image_grid(list(comp1, comp2), dim = c(1, 2))
+#' }
 render_convert_colorspace = function(
 	image,
 	from_mats = NA,
@@ -31,7 +73,7 @@ render_convert_colorspace = function(
 			preview = preview
 		))
 	}
-	src = ray_read_image(image, convert_to_array = TRUE, normalize = FALSE)
+	src = ray_read_image(image)
 
 	auto_from = is.atomic(from_mats) &&
 		length(from_mats) == 1L &&
@@ -106,5 +148,6 @@ render_convert_colorspace = function(
 		colorspace = to_mats,
 		white_current = white_tag
 	)
+
 	handle_image_output(out, filename = filename, preview = preview)
 }

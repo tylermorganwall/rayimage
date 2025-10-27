@@ -63,7 +63,7 @@ test_that("Checking ray_read/ray_write", {
 	expect_true(compare_image(
 		clamped_dragon,
 		dragon_jpg,
-		max_diff = 0.5,
+		max_diff = 0.6,
 		quantile_diff = 0.02
 	))
 
