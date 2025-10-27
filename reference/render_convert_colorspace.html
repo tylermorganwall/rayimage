@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.20.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.20.1</span>
       </span>
     </div>
 
@@ -131,6 +131,52 @@
     <p>A <code>rayimg</code> RGBA array tagged with the <strong>target</strong> space.</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># Read photo, convert to ACEScg with CAT (scene)</span></span></span>
+<span class="r-in"><span>  <span class="va">photo</span> <span class="op">=</span> <span class="fu"><a href="ray_read_image.html">ray_read_image</a></span><span class="op">(</span><span class="va">sunset_image</span>, normalize <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">photo_aces</span> <span class="op">=</span> <span class="fu">render_convert_colorspace</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">photo</span>,</span></span>
+<span class="r-in"><span>    to_mats <span class="op">=</span> <span class="va">CS_ACESCG</span>,</span></span>
+<span class="r-in"><span>    adapt_white <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp_txt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".png"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="render_text_image.html">render_text_image</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"Sunset"</span>,</span></span>
+<span class="r-in"><span>    size <span class="op">=</span> <span class="fl">60</span>,</span></span>
+<span class="r-in"><span>    filename <span class="op">=</span> <span class="va">tmp_txt</span>,</span></span>
+<span class="r-in"><span>    color <span class="op">=</span> <span class="st">"#c300ffff"</span>,</span></span>
+<span class="r-in"><span>    background_alpha <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co"># Read logo (display-referred), convert primaries only (no CAT)</span></span></span>
+<span class="r-in"><span>  <span class="va">logo</span> <span class="op">=</span> <span class="fu"><a href="ray_read_image.html">ray_read_image</a></span><span class="op">(</span><span class="va">tmp_txt</span>, normalize <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># sRGB/D65</span></span></span>
+<span class="r-in"><span>  <span class="va">logo_aces</span> <span class="op">=</span> <span class="fu">render_convert_colorspace</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">logo</span>,</span></span>
+<span class="r-in"><span>    to_mats <span class="op">=</span> <span class="va">CS_ACESCG</span>,</span></span>
+<span class="r-in"><span>    adapt_white <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Composite in ACEScg, then display (plot_image converts to sRGB/D65 + OETF)</span></span></span>
+<span class="r-in"><span>  <span class="co"># Here, we also turn overlay conversion in [render_image_overlay()] off,</span></span></span>
+<span class="r-in"><span> <span class="co"># to show what happens when you don't account for the colorspace difference.</span></span></span>
+<span class="r-in"><span> <span class="co"># By default [render_image_overlay()] will do this for you.</span></span></span>
+<span class="r-in"><span>  <span class="va">comp1</span> <span class="op">=</span> <span class="fu"><a href="render_image_overlay.html">render_image_overlay</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">photo_aces</span>,</span></span>
+<span class="r-in"><span>    <span class="va">logo_aces</span>,</span></span>
+<span class="r-in"><span>    convert_overlay_colorspace <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">comp2</span> <span class="op">=</span> <span class="fu"><a href="render_image_overlay.html">render_image_overlay</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">photo_aces</span>,</span></span>
+<span class="r-in"><span>    <span class="va">logo</span>,</span></span>
+<span class="r-in"><span>    convert_overlay_colorspace <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co">#Note the color differences, which arise from the mismatched colorspace on the right.</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="plot_image_grid.html">plot_image_grid</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">comp1</span>, <span class="va">comp2</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-plt img"><img src="render_convert_colorspace-1.png" alt="" width="700" height="700"></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

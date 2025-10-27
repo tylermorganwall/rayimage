@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.20.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.20.1</span>
       </span>
     </div>
 
@@ -116,7 +116,9 @@ true for all other formats (<code>jpeg</code>, <code>png</code>, and <code>tiff<
 
 
 <dt id="arg-normalize">normalize<a class="anchor" aria-label="anchor" href="#arg-normalize"></a></dt>
-<dd><p>Default <code>TRUE</code>. If <code>TRUE</code>, convert to <code>normalize_to</code> space on read.</p></dd>
+<dd><p>Default <code>TRUE</code>. If <code>TRUE</code>, convert to <code>normalize_to</code> space on read. Note that
+rayimg inputs will keep their colorspace and ignore this option–use <code><a href="render_convert_colorspace.html">render_convert_colorspace()</a></code>
+to change an existing rayimg to a new colorspace.</p></dd>
 
 
 <dt id="arg-normalize-to">normalize_to<a class="anchor" aria-label="anchor" href="#arg-normalize-to"></a></dt>
