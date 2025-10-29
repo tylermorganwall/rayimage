@@ -42,6 +42,16 @@ plot_image = function(
 
 	display = img
 
+	display = render_clamp(display)
+
+	#clamp alpha
+	alpha_channel = unclass(render_clamp(
+		display[,, 4],
+		min_value = 0,
+		max_value = 1
+	))
+	display[,, 4] = alpha_channel
+
 	if (!show_linear) {
 		# Convert primaries/white to sRGB/D65 if needed (linear)
 		if (
@@ -60,16 +70,6 @@ plot_image = function(
 		# Apply sRGB OETF to RGB only
 		display[,, 1:3] = to_srgb(display[,, 1:3])
 	}
-
-	display = render_clamp(display)
-
-	#clamp alpha
-	alpha_channel = unclass(render_clamp(
-		display[,, 4],
-		min_value = 0,
-		max_value = 1
-	))
-	display[,, 4] = alpha_channel
 
 	nr = convert_to_native_raster(display)
 
