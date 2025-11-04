@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.21.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.22.0</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
 <span>  <span class="va">image</span>,</span>
 <span>  vignette <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  color <span class="op">=</span> <span class="st">"#000000"</span>,</span>
-<span>  radius <span class="op">=</span> <span class="fl">1.3</span>,</span>
+<span>  radius <span class="op">=</span> <span class="fl">1.1</span>,</span>
 <span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  preview <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -97,7 +97,7 @@
 
 
 <dt id="arg-vignette">vignette<a class="anchor" aria-label="anchor" href="#arg-vignette"></a></dt>
-<dd><p>Default <code>0.5</code>. A camera vignetting effect will be added to the image.
+<dd><p>Default <code>1</code>. A camera vignetting effect will be added to the image.
 <code>1</code> is the darkest vignetting, while <code>0</code> is no vignetting. If vignette is a length-2 vector, the second entry will
 control the blurriness of the vignette effect (<code>1</code> is the default, e.g. <code>2</code> would double the blurriness but would take
 much longer to compute).</p></dd>
@@ -108,7 +108,7 @@ much longer to compute).</p></dd>
 
 
 <dt id="arg-radius">radius<a class="anchor" aria-label="anchor" href="#arg-radius"></a></dt>
-<dd><p>Default <code>1.3</code>. Multiplier for the size of the vignette. If <code>1</code>, the vignette touches
+<dd><p>Default <code>1.1</code>. Multiplier for the size of the vignette. If <code>1</code>, the vignette touches
 the edge of the image.</p></dd>
 
 
@@ -136,18 +136,18 @@ to returning it.</p></dd>
 <span class="r-plt img"><img src="render_vignette-1.png" alt="" width="700" height="700"></span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Add a vignette effect:</span></span></span>
-<span class="r-in"><span><span class="fu">render_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">render_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">1</span>, radius<span class="op">=</span><span class="fl">1.1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="render_vignette-2.png" alt="" width="700" height="700"></span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
-<span class="r-in"><span><span class="co">#Darken the vignette effect:</span></span></span>
-<span class="r-in"><span><span class="fu">render_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">#Lighten the vignette effect:</span></span></span>
+<span class="r-in"><span><span class="fu">render_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="render_vignette-3.png" alt="" width="700" height="700"></span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Change the radius:</span></span></span>
 <span class="r-in"><span><span class="fu">render_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">1</span>, radius<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">render_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">1</span>, radius<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">render_vignette</span><span class="op">(</span><span class="va">dragon</span>, preview <span class="op">=</span> <span class="cn">TRUE</span>, vignette <span class="op">=</span> <span class="fl">0.1</span>, radius<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="render_vignette-4.png" alt="" width="700" height="700"></span>
 <span class="r-plt img"><img src="render_vignette-5.png" alt="" width="700" height="700"></span>

@@ -22,7 +22,7 @@ It carries working colorspace/white
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.21.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.22.0</span>
       </span>
     </div>
 
@@ -91,14 +91,6 @@ It carries working colorspace/white
 <span>  source_linear <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  colorspace <span class="op">=</span> <span class="va">CS_ACESCG</span>,</span>
 <span>  white_current <span class="op">=</span> <span class="va">colorspace</span><span class="op">$</span><span class="va">white_xyz</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">rayimg</span><span class="op">(</span></span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  filetype <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  source_linear <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  colorspace <span class="op">=</span> <span class="va">CS_ACESCG</span>,</span>
-<span>  white_current <span class="op">=</span> <span class="va">colorspace</span><span class="op">$</span><span class="va">white_xyz</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -107,11 +99,11 @@ It carries working colorspace/white
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>Default <code>NULL</code>. Underlying array/matrix to wrap.</p></dd>
+<dd><p>Default <code>NULL</code>. The underlying array/matrix to wrap.</p></dd>
 
 
 <dt id="arg-filetype">filetype<a class="anchor" aria-label="anchor" href="#arg-filetype"></a></dt>
-<dd><p>Default <code>NULL</code>. Original source type (e.g., "png").</p></dd>
+<dd><p>Default <code>NULL</code>. Original source type to record (e.g., "png").</p></dd>
 
 
 <dt id="arg-source-linear">source_linear<a class="anchor" aria-label="anchor" href="#arg-source-linear"></a></dt>
@@ -119,17 +111,16 @@ It carries working colorspace/white
 
 
 <dt id="arg-colorspace">colorspace<a class="anchor" aria-label="anchor" href="#arg-colorspace"></a></dt>
-<dd><p>Default <code>CS_ACESCG</code>. Working space descriptor.</p></dd>
+<dd><p>Default <code>CS_ACESCG</code>. Working space descriptor (see <code><a href="make_colorspace.html">make_colorspace()</a></code>).</p></dd>
 
 
 <dt id="arg-white-current">white_current<a class="anchor" aria-label="anchor" href="#arg-white-current"></a></dt>
-<dd><p>Default <code>colorspace$white_xyz</code>. Current white (XYZ, Y=1).</p></dd>
+<dd><p>Default <code>colorspace$white_xyz</code>. Current assumed scene/display white (XYZ, Y=1).</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>c("rayimg", &lt;original class&gt;)</code> with attributes.</p>
-<p><code>rayimg</code></p>
     </div>
 
   </div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.21.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.22.0</span>
       </span>
     </div>
 
@@ -69,7 +69,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Apply a 3x3 color transform to an image</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tylermorganwall/rayimage/blob/master/R/render_white_balance.R" class="external-link"><code>R/render_white_balance.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tylermorganwall/rayimage/blob/master/R/colorspace_helpers.R" class="external-link"><code>R/colorspace_helpers.R</code></a></small>
     <div class="hidden name"><code>apply_color_matrix.Rd</code></div>
     </div>
 
@@ -86,16 +86,16 @@
 
 
 <dl><dt id="arg-img">img<a class="anchor" aria-label="anchor" href="#arg-img"></a></dt>
-<dd><p>3/4-channel array (RGB/A). 2D (grey) or 2-channel (grey+alpha) are passed through.</p></dd>
+<dd><p>3/4-channel array (RGB/A). 2D (grey) or 2-channel (grey+alpha) pass through.</p></dd>
 
 
 <dt id="arg-m">M<a class="anchor" aria-label="anchor" href="#arg-m"></a></dt>
-<dd><p>3x3 matrix applied to RGB in linear.</p></dd>
+<dd><p>3x3 matrix.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Array with transformed RGB; alpha preserved; greyscale inputs unchanged.</p>
+    <p>Array with transformed RGB; alpha preserved.</p>
     </div>
 
   </div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.21.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.22.0</span>
       </span>
     </div>
 
@@ -69,7 +69,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Bradford CAT matrix from source to target white</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tylermorganwall/rayimage/blob/master/R/render_white_balance.R" class="external-link"><code>R/render_white_balance.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tylermorganwall/rayimage/blob/master/R/colorspace_helpers.R" class="external-link"><code>R/colorspace_helpers.R</code></a></small>
     <div class="hidden name"><code>compute_cat_bradford.Rd</code></div>
     </div>
 
@@ -90,15 +90,15 @@
 
 
 <dl><dt id="arg-source-xyz">source_xyz<a class="anchor" aria-label="anchor" href="#arg-source-xyz"></a></dt>
-<dd><p>Default <code>c(0.95264,1,1.00827)</code> (D60). Source XYZ white, Y=1.</p></dd>
+<dd><p>Default <code>c(0.95264,1,1.00827)</code>. Source XYZ white, Y=1.</p></dd>
 
 
 <dt id="arg-target-xyz">target_xyz<a class="anchor" aria-label="anchor" href="#arg-target-xyz"></a></dt>
-<dd><p>Default <code>c(0.95047,1,1.08883)</code> (D65). Target XYZ white, Y=1.</p></dd>
+<dd><p>Default <code>c(0.95047,1,1.08883)</code>. Target XYZ white, Y=1.</p></dd>
 
 
 <dt id="arg-eps">eps<a class="anchor" aria-label="anchor" href="#arg-eps"></a></dt>
-<dd><p>Default <code>1e-8</code>. Small epsilon to avoid division by tiny LMS.</p></dd>
+<dd><p>Default <code>1e-8</code>. Small epsilon.</p></dd>
 
 </dl></div>
     <div id="value">

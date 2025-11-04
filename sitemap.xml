@@ -10,6 +10,7 @@
 <url><loc>https://www.rayimage.dev/reference/add_title.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/add_vignette.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/apply_color_matrix.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/array_rgb_to_hex_colmajor.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/calc_bokeh_size.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/colorspace_descriptors.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/compute_cat_bradford.html</loc></url>
@@ -25,6 +26,7 @@
 <url><loc>https://www.rayimage.dev/reference/generate_2d_gaussian.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/get_file_type.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/get_string_dimensions.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/get_whitepoint_xyz.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/handle_image_output.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/index.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/interpolate_array.html</loc></url>
@@ -52,17 +54,18 @@
 <url><loc>https://www.rayimage.dev/reference/render_convolution_fft.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_crop.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_exposure.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_gamma_linear.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_image_overlay.html</loc></url>
-<url><loc>https://www.rayimage.dev/reference/render_linear.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_reorient.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_resized.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_text_image.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_title.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_to_display.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_tonemap.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_vignette.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_white_balance.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/rgb_to_hex.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/run_documentation.html</loc></url>
-<url><loc>https://www.rayimage.dev/reference/save_png.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/sunset_image.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/to_linear.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/to_srgb.html</loc></url>

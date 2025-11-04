@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.21.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.22.0</span>
       </span>
     </div>
 
@@ -115,8 +115,8 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># We will start with an image that's too warm--we want to correct it to</span></span></span>
 <span class="r-in"><span><span class="co"># match the color of the second as closely as possible.</span></span></span>
-<span class="r-in"><span><span class="va">dragon_D50</span> <span class="op">=</span> <span class="fu"><a href="render_white_balance.html">render_white_balance</a></span><span class="op">(</span><span class="va">dragon</span>, target_white <span class="op">=</span> <span class="st">"D50"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">dragon_D75</span> <span class="op">=</span> <span class="fu"><a href="render_white_balance.html">render_white_balance</a></span><span class="op">(</span><span class="va">dragon</span>, target_white <span class="op">=</span> <span class="st">"D75"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dragon_D50</span> <span class="op">=</span> <span class="fu"><a href="render_white_balance.html">render_white_balance</a></span><span class="op">(</span><span class="va">dragon</span>, target_white <span class="op">=</span> <span class="st">"D50"</span>, bake <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dragon_D75</span> <span class="op">=</span> <span class="fu"><a href="render_white_balance.html">render_white_balance</a></span><span class="op">(</span><span class="va">dragon</span>, target_white <span class="op">=</span> <span class="st">"D75"</span>, bake <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">dragon_D50</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="render_color_correction-1.png" alt="" width="700" height="700"></span>
 <span class="r-in"><span><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">dragon_D75</span><span class="op">)</span></span></span>
