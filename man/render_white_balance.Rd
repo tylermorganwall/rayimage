@@ -8,6 +8,7 @@ render_white_balance(
   image,
   reference_white = NA,
   target_white = "D60",
+  bake = FALSE,
   filename = NULL,
   preview = FALSE
 )
@@ -15,40 +16,44 @@ render_white_balance(
 \arguments{
 \item{image}{Default \code{NULL}. 3-layer RGB/4-layer RGBA array, \code{rayimg}, or filename.}
 
-\item{reference_white}{Default \code{NA}, automatically pulled from image if available. Source white (Y=1 XYZ or named: "D60","D65","D50","E"...).}
+\item{reference_white}{Default \code{NA}. Source white (XYZ Y=1 or named); when \code{NA}, uses \code{attr(img, "white_current")}.}
 
-\item{target_white}{Default \code{"D60"}. Target white (same format as \code{reference_white}).}
+\item{target_white}{Default \code{"D60"}. Target white (XYZ Y=1 or named).}
+
+\item{bake}{Default \code{FALSE}. If \code{TRUE}, this will bake the color change into the image, and return the
+old tag. This can be used for stylistic adjustments.}
 
 \item{filename}{Default \code{NULL}. Output path.}
 
 \item{preview}{Default \code{FALSE}. If \code{TRUE}, display the image.}
 }
-\value{
-A \code{rayimg} RGBA array.
-}
 \description{
-Chromatic-adapt an image from \code{reference_white} to \code{target_white} in the working space.
+Chromatic-adapt an image from \code{reference_white} to \code{target_white} \strong{in its working RGB space}.
+
+When \code{bake = FALSE} (the default), this should not result in any visible changes to the image when
+plotted in rayimage via \code{\link[=plot_image]{plot_image()}}, as that function then corrects the white balance for
+display. Set
 }
 \examples{
 # Not specifying a target white balance returns an unchanged image
 render_white_balance(dragon, preview = TRUE)
 
 # Default white "D60", converting to D50 produces a warmer image
-render_white_balance(dragon, preview = TRUE, target_white = "D50")
+render_white_balance(dragon, preview = TRUE, target_white = "D50", bake = TRUE)
 
 # Default white "D60", converting to "D75" produces a cooler image
-render_white_balance(dragon, preview = TRUE, target_white = "D75")
+render_white_balance(dragon, preview = TRUE, target_white = "D75", bake = TRUE)
 
 # Set reference white to colder "D75", converting to "D50" produces a very warm image
 render_white_balance(dragon, preview = TRUE,
-                     reference_white= "D75", target_white = "D50")
+                     reference_white= "D75", target_white = "D50", bake = TRUE)
 
 # With a real, non-rendered image:
 render_white_balance(sunset_image, preview=TRUE)
 
 # Cooler
-render_white_balance(sunset_image, preview=TRUE, target_white = "D75")
+render_white_balance(sunset_image, preview=TRUE, target_white = "D75", bake = TRUE)
 
 # Warmer
-render_white_balance(sunset_image, preview=TRUE, target_white = "D50")
+render_white_balance(sunset_image, preview=TRUE, target_white = "D50", bake = TRUE)
 }

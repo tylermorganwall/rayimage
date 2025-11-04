@@ -1,5 +1,5 @@
 #' @title Render Convert Colorspace
-#' @description Convert between two RGB spaces via XYZ, with optional white adaptation.
+#' @description Convert between two RGB spaces via XYZ, with optional white adaptation. Operates on **linear** RGB.
 #'
 #' @param image 3-layer RGB/4-layer RGBA array, `rayimg`, or filename.
 #' @param from_mats Default `NA`. Source space object; when `NA`, pulled from `attr(src,"colorspace")`.
@@ -63,90 +63,68 @@ render_convert_colorspace = function(
 	filename = NULL,
 	preview = FALSE
 ) {
-	#Avoid infinite recursion since it's in ray_read_image, set normalize = FALSE
 	og_src = ray_read_image(image, normalize = FALSE)
 	d = dim(og_src)
 	if (length(d) != 3L || d[3] < 3L) {
-		return(handle_image_output(
-			og_src,
-			filename = filename,
-			preview = preview
-		))
+		return(handle_image_output(og_src, filename = filename, preview = preview))
 	}
-	src = ray_read_image(image)
+	src = ray_read_image(image, normalize = FALSE)
 
-	auto_from = is.atomic(from_mats) &&
-		length(from_mats) == 1L &&
-		is.na(from_mats)
-	if (auto_from) {
+	if (is.atomic(from_mats) && length(from_mats) == 1L && is.na(from_mats)) {
 		from_mats = attr(src, "colorspace")
 	}
+	stopifnot(is.list(from_mats), is.list(to_mats))
 
-	auto_fw = is.atomic(from_white) &&
-		length(from_white) == 1L &&
-		is.na(from_white)
-	if (auto_fw) {
+	if (is.atomic(from_white) && length(from_white) == 1L && is.na(from_white)) {
 		from_white = attr(src, "white_current")
 	}
-
-	auto_tw = is.atomic(to_white) &&
-		length(to_white) == 1L &&
-		is.na(to_white)
-	if (auto_tw) {
+	if (is.atomic(to_white) && length(to_white) == 1L && is.na(to_white)) {
 		to_white = to_mats$white_xyz
 	}
 
-	get_whitepoint_xyz = function(white_point) {
-		std = list(
-			"D65" = c(0.95047, 1, 1.08883),
-			"D60" = c(0.95264, 1, 1.00827),
-			"D55" = c(0.95560, 1, 0.92149),
-			"D50" = c(0.96422, 1, 0.82521),
-			"D75" = c(0.94972, 1, 1.22638),
-			"E" = c(1, 1, 1)
+	src_wp = get_whitepoint_xyz(from_white)
+	dst_wp = get_whitepoint_xyz(to_white)
+
+	# Idempotence: same primaries, no CAT, and equal whites
+	same_mats = isTRUE(all.equal(from_mats$rgb_to_xyz, to_mats$rgb_to_xyz)) &&
+		isTRUE(all.equal(from_mats$xyz_to_rgb, to_mats$xyz_to_rgb))
+	same_white = isTRUE(all.equal(src_wp$value, dst_wp$value))
+	if (same_mats && (!adapt_white || same_white)) {
+		return(handle_image_output(src, filename = filename, preview = preview))
+	}
+
+	# Assert linear data
+	if (!isTRUE(attr(src, "source_linear"))) {
+		warning(
+			"render_convert_colorspace(): input is not linear; convert with render_gamma_linear(..., TRUE) first."
 		)
-		if (is.character(white_point) && length(white_point) == 1) {
-			wp = std[[toupper(white_point)]]
-			if (is.null(wp)) {
-				stop("Unknown white: ", white_point)
-			}
-			return(wp)
-		}
-		stopifnot(is.numeric(white_point), length(white_point) == 3)
-		white_point / white_point[2]
 	}
 
 	# RGB(from) -> XYZ
 	xyz = apply_color_matrix(src, from_mats$rgb_to_xyz)
 
 	# Optional CAT in XYZ
-	if (adapt_white) {
-		CAT = compute_cat_bradford(
-			get_whitepoint_xyz(from_white),
-			get_whitepoint_xyz(to_white)
-		)
+	if (adapt_white && !isTRUE(all.equal(src_wp$value, dst_wp$value))) {
+		CAT = compute_cat_bradford(src_wp$value, dst_wp$value)
 		xyz = apply_color_matrix(xyz, CAT)
 	}
 
 	# XYZ -> RGB(to)
 	out = apply_color_matrix(xyz, to_mats$xyz_to_rgb)
 	if (d[3] == 4L) {
-		#Don't need to worry about d[3] == 2 here, already exited
 		out[,, 4] = src[,, 4]
 	} # preserve alpha
 
 	# Tag with the target space
-	white_tag = if (adapt_white) {
-		get_whitepoint_xyz(to_white)
-	} else {
-		get_whitepoint_xyz(from_white)
-	}
+	white_tag = if (adapt_white) dst_wp else src_wp
+	to_mats$white_name = white_tag$white_name
+
 	out = rayimg(
 		out,
 		filetype = attr(src, "filetype"),
 		source_linear = TRUE,
 		colorspace = to_mats,
-		white_current = white_tag
+		white_current = white_tag$value
 	)
 
 	handle_image_output(out, filename = filename, preview = preview)

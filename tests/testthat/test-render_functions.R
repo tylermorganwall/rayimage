@@ -650,7 +650,7 @@ test_that("render_title supports magick backend", {
 	)
 })
 
-# render_vignette  ----------------------------------------------
+# Test render vignette  ----------------------------------------------
 
 test_that("render_vignette adds vignette effect", {
 	skip_if_not_installed("magick")

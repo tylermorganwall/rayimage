@@ -82,50 +82,6 @@ rayimg_validate_dimensions = function(x) {
 	x
 }
 
-
-#' Create a rayimg
-#'
-#' @param x Default `NULL`. Underlying array/matrix to wrap.
-#' @param filetype Default `NULL`. Original source type (e.g., "png").
-#' @param source_linear Default `FALSE`. Whether the original source was linearized.
-#' @param colorspace Default `CS_ACESCG`. Working space descriptor.
-#' @param white_current Default `colorspace$white_xyz`. Current white (XYZ, Y=1).
-#'
-#' @return `rayimg`
-#' @keywords internal
-rayimg = function(
-	x = NULL,
-	filetype = NULL,
-	source_linear = FALSE,
-	colorspace = CS_ACESCG,
-	white_current = colorspace$white_xyz
-) {
-	if (is.null(x)) {
-		stop("rayimg(): 'x' cannot be NULL.")
-	}
-	stopifnot(is.array(x))
-
-	x_new = rayimg_validate_dimensions(x)
-
-	if (is.null(attr(x, "channels"))) {
-		attr(x_new, "channels") = rayimg_detect_channels(x_new)
-	} else {
-		attr(x_new, "channels") = attr(x, "channels")
-	}
-
-	attr(x_new, "filetype") = filetype
-	attr(x_new, "source_linear") = source_linear
-
-	stopifnot(
-		is.list(colorspace),
-		all(c("rgb_to_xyz", "xyz_to_rgb", "white_xyz") %in% names(colorspace))
-	)
-	attr(x_new, "colorspace") = colorspace
-	attr(x_new, "white_current") = white_current
-	class(x_new) = c("rayimg", setdiff(class(x), "rayimg"))
-	x_new
-}
-
 #' @export
 `[.rayimg` = function(x, ..., drop = TRUE) {
 	ch = rayimg_detect_channels(x)

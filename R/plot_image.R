@@ -43,6 +43,7 @@ plot_image = function(
 	display = img
 
 	display = render_clamp(display)
+	display[is.na(display)] = 0
 
 	#clamp alpha
 	alpha_channel = unclass(render_clamp(

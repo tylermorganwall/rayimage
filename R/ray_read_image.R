@@ -9,7 +9,7 @@
 #' @param source_linear Default `NA`, automatically determined based on the image type.
 #' Whether the image source is linear data or sRGB.  `FALSE` for matrices, arrays, and `EXR` files,
 #' true for all other formats (`jpeg`, `png`, and `tiff`).
-#' @param normalize Default `TRUE`. If `TRUE`, convert to `normalize_to` space on read. Note that
+#' @param normalize Default `FALSE`. If `TRUE`, convert to `normalize_to` space on read. Note that
 #' rayimg inputs will keep their colorspace and ignore this option--use `render_convert_colorspace()`
 #' to change an existing rayimg to a new colorspace.
 #' @param normalize_to Default `CS_ACESCG`. Target colorspace when `normalize=TRUE`.
@@ -66,7 +66,7 @@ ray_read_image = function(
 	convert_to_array = FALSE,
 	preview = FALSE,
 	source_linear = NA,
-	normalize = TRUE,
+	normalize = FALSE,
 	normalize_to = CS_ACESCG,
 	normalize_adapt_white = TRUE,
 	assume_colorspace = NULL,
@@ -77,9 +77,11 @@ ray_read_image = function(
 		if (isTRUE(linear_flag)) {
 			return(list(image = img, source_linear = TRUE))
 		}
+		#Strip out NAs
+		img[is.na(img)] = 0
+
 		if (length(dim(img)) == 3) {
-			channels = dim(img)[3]
-			if (channels >= 3) {
+			if (dim(img)[3] >= 3) {
 				img[,, 1:3] = to_linear(img[,, 1:3])
 			} else {
 				img = to_linear(img)
@@ -89,28 +91,15 @@ ray_read_image = function(
 		}
 		list(image = img, source_linear = TRUE)
 	}
+
 	get_wp = function(white_point) {
-		std = list(
-			"D65" = c(0.95047, 1, 1.08883),
-			"D60" = c(0.95264, 1, 1.00827),
-			"D55" = c(0.95560, 1, 0.92149),
-			"D50" = c(0.96422, 1, 0.82521),
-			"D75" = c(0.94972, 1, 1.22638),
-			"E" = c(1, 1, 1)
-		)
-		if (is.null(white_point)) {
+		wp = get_whitepoint_xyz(white_point)
+		if (is.null(wp)) {
 			return(NULL)
 		}
-		if (is.character(white_point) && length(white_point) == 1) {
-			wp = std[[toupper(white_point)]]
-			if (is.null(wp)) {
-				stop("Unknown white: ", white_point)
-			}
-			return(wp)
-		}
-		stopifnot(is.numeric(white_point), length(white_point) == 3)
-		white_point / white_point[2]
+		wp$value
 	}
+
 	process_image_preview = function(image2) {
 		if (convert_to_array) {
 			image_val = array(1, dim = c(dim(image2)[1:2], 4))
@@ -137,14 +126,11 @@ ray_read_image = function(
 
 	imagetype = get_file_type(image)
 	if (is.na(source_linear)) {
-		# LDR files are non-linear; arrays/matrices/EXR are linear
 		source_linear = !(imagetype %in% c("png", "jpg", "tif"))
 	}
 
 	finalize_image = function(img, img_type, linear_flag, default_cs) {
 		decoded = decode_if_needed(img, linear_flag)
-
-		# Decide the assigned/assumed source space (no conversion yet)
 		cs = if (!is.null(assume_colorspace)) {
 			assume_colorspace
 		} else {
@@ -159,11 +145,7 @@ ray_read_image = function(
 				CS_ACESCG
 			)
 		}
-		wc = get_wp(assume_white)
-		if (is.null(wc)) {
-			wc = cs$white_xyz
-		}
-
+		wc = get_wp(if (!is.null(assume_white)) assume_white else cs$white_xyz)
 		ri = rayimg(
 			process_image_preview(decoded$image),
 			filetype = img_type,
@@ -171,15 +153,13 @@ ray_read_image = function(
 			colorspace = cs,
 			white_current = wc
 		)
-
-		# Optional normalization (actual conversion) after tagging
 		if (normalize) {
 			ri = render_convert_colorspace(
 				ri,
-				from_mats = NA, # from attrs
+				from_mats = NA,
 				to_mats = normalize_to,
 				adapt_white = normalize_adapt_white,
-				from_white = NA, # from attrs
+				from_white = NA,
 				to_white = normalize_to$white_xyz
 			)
 		}
@@ -187,29 +167,6 @@ ray_read_image = function(
 	}
 
 	if (inherits(image, "rayimg")) {
-		get_wp = function(white_point) {
-			std = list(
-				"D65" = c(0.95047, 1, 1.08883),
-				"D60" = c(0.95264, 1, 1.00827),
-				"D55" = c(0.95560, 1, 0.92149),
-				"D50" = c(0.96422, 1, 0.82521),
-				"D75" = c(0.94972, 1, 1.22638),
-				"E" = c(1, 1, 1)
-			)
-			if (is.null(white_point)) {
-				return(NULL)
-			}
-			if (is.character(white_point) && length(white_point) == 1) {
-				wp = std[[toupper(white_point)]]
-				if (is.null(wp)) {
-					stop("Unknown white: ", white_point)
-				}
-				return(wp)
-			}
-			stopifnot(is.numeric(white_point), length(white_point) == 3)
-			white_point / white_point[2]
-		}
-
 		cs_assigned = if (!is.null(assume_colorspace)) {
 			assume_colorspace
 		} else {
@@ -220,8 +177,6 @@ ray_read_image = function(
 		} else {
 			attr(image, "white_current")
 		}
-
-		# re-tag without changing pixels
 		ri = rayimg(
 			process_image_preview(image),
 			filetype = attr(image, "filetype"),
@@ -229,9 +184,9 @@ ray_read_image = function(
 			colorspace = cs_assigned,
 			white_current = wc_assigned
 		)
-		#Do not normalize rayimg
-		return(ri)
+		return(ri) # no normalization on rayimg here
 	}
+
 	if (imagetype == "array") {
 		return(finalize_image(image, imagetype, source_linear, CS_ACESCG))
 	} else if (imagetype == "matrix") {
@@ -274,6 +229,6 @@ ray_read_image = function(
 			stop("The 'libopenexr' package is required for EXR support.")
 		}
 	} else {
-		stop("This error should never be reached--please report a bug.")
+		stop("Unsupported/unknown input type.")
 	}
 }

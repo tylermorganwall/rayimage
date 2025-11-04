@@ -11,30 +11,20 @@ rayimg(
   colorspace = CS_ACESCG,
   white_current = colorspace$white_xyz
 )
-
-rayimg(
-  x = NULL,
-  filetype = NULL,
-  source_linear = FALSE,
-  colorspace = CS_ACESCG,
-  white_current = colorspace$white_xyz
-)
 }
 \arguments{
-\item{x}{Default \code{NULL}. Underlying array/matrix to wrap.}
+\item{x}{Default \code{NULL}. The underlying array/matrix to wrap.}
 
-\item{filetype}{Default \code{NULL}. Original source type (e.g., "png").}
+\item{filetype}{Default \code{NULL}. Original source type to record (e.g., "png").}
 
 \item{source_linear}{Default \code{FALSE}. Whether the original source was linearized.}
 
-\item{colorspace}{Default \code{CS_ACESCG}. Working space descriptor.}
+\item{colorspace}{Default \code{CS_ACESCG}. Working space descriptor (see \code{make_colorspace()}).}
 
-\item{white_current}{Default \code{colorspace$white_xyz}. Current white (XYZ, Y=1).}
+\item{white_current}{Default \code{colorspace$white_xyz}. Current assumed scene/display white (XYZ, Y=1).}
 }
 \value{
 An object of class \verb{c("rayimg", <original class>)} with attributes.
-
-\code{rayimg}
 }
 \description{
 This class will always be:

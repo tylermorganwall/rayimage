@@ -11,8 +11,8 @@
 #' @examples
 #' # We will start with an image that's too warm--we want to correct it to
 #' # match the color of the second as closely as possible.
-#' dragon_D50 = render_white_balance(dragon, target_white = "D50")
-#' dragon_D75 = render_white_balance(dragon, target_white = "D75")
+#' dragon_D50 = render_white_balance(dragon, target_white = "D50", bake = TRUE)
+#' dragon_D75 = render_white_balance(dragon, target_white = "D75", bake = TRUE)
 #' plot_image(dragon_D50)
 #' plot_image(dragon_D75)
 #'
@@ -60,18 +60,19 @@ render_color_correction = function(
 	preview = FALSE
 ) {
 	stopifnot(is.matrix(matrix), all(dim(matrix) == c(3, 3)), is.numeric(matrix))
-	src = ray_read_image(image, convert_to_array = TRUE)
+	src = ray_read_image(image, convert_to_array = TRUE, normalize = FALSE)
+	if (!isTRUE(attr(src, "source_linear"))) {
+		warning(
+			"render_color_correction(): input is not linear; convert with render_gamma_linear(..., TRUE) first."
+		)
+	}
 	d = dim(src)
-	if (length(d) != 3) {
+	if (length(d) != 3L) {
 		return(src)
 	}
-
 	out = apply_color_matrix(src, matrix)
-	# clamp negatives softly to zero (keep linear non-negative)
 	out[,, 1:3][out[,, 1:3] < 0] = 0
-
-	# keep attrs
-	out = ray_read_image(out)
+	out = ray_read_image(out, normalize = FALSE)
 	attr(out, "filetype") = attr(src, "filetype")
 	attr(out, "source_linear") = attr(src, "source_linear")
 	handle_image_output(out, filename = filename, preview = preview)

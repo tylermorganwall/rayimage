@@ -29,8 +29,8 @@ Apply a technical/look 3x3 matrix to an image
 \examples{
 # We will start with an image that's too warm--we want to correct it to
 # match the color of the second as closely as possible.
-dragon_D50 = render_white_balance(dragon, target_white = "D50")
-dragon_D75 = render_white_balance(dragon, target_white = "D75")
+dragon_D50 = render_white_balance(dragon, target_white = "D50", bake = TRUE)
+dragon_D75 = render_white_balance(dragon, target_white = "D75", bake = TRUE)
 plot_image(dragon_D50)
 plot_image(dragon_D75)
 

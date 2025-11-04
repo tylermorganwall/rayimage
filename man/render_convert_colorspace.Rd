@@ -36,7 +36,7 @@ render_convert_colorspace(
 A \code{rayimg} RGBA array tagged with the \strong{target} space.
 }
 \description{
-Convert between two RGB spaces via XYZ, with optional white adaptation.
+Convert between two RGB spaces via XYZ, with optional white adaptation. Operates on \strong{linear} RGB.
 }
 \examples{
 if (run_documentation()) {
