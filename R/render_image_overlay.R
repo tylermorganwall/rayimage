@@ -99,11 +99,13 @@ render_image_overlay = function(
 
 	# Load as rayimg (RGBA + attrs)
 	image = ray_read_image(image, convert_to_array = TRUE)
+	image_colorspace = attr(image, "colorspace")
+	image_whitepoint = attr(image, "white_current")
 	image_overlay = ray_read_image(image_overlay, convert_to_array = TRUE)
 	if (convert_overlay_colorspace) {
 		image_overlay = render_convert_colorspace(
 			image_overlay,
-			to_mats = attr(image, "colorspace")
+			to_mats = image_colorspace
 		)
 	}
 
@@ -176,7 +178,10 @@ render_image_overlay = function(
 	composite_image[,, 1:3] = Co_lin
 
 	composite_image = ray_read_image(
-		composite_image
+		composite_image,
+		assume_colorspace = image_colorspace,
+		assume_white = image_whitepoint,
+		source_linear = TRUE
 	)
 	handle_image_output(composite_image, filename = filename, preview = preview)
 }

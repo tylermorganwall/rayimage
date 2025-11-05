@@ -42,95 +42,99 @@
 #'  plot_image()
 #'}
 render_resized = function(
-  image,
-  mag = 1,
-  dims = NULL,
-  filename = NULL,
-  preview = FALSE,
-  method = "tri"
+	image,
+	mag = 1,
+	dims = NULL,
+	filename = NULL,
+	preview = FALSE,
+	method = "tri"
 ) {
-  temp_image = ray_read_image(image, ) #Always output RGBA array
-  #Check if file or image before below:
-  imagetype = attr(temp_image, "filetype")
-  img_source_linear = attr(temp_image, "source_linear")
+	temp_image = ray_read_image(image)
+	#Check if file or image before below:
+	imagetype = attr(temp_image, "filetype")
+	img_source_linear = attr(temp_image, "source_linear")
+	colorspace = attr(temp_image, "colorspace")
+	white_current = attr(temp_image, "white_current")
 
-  if (method %in% c("bi", "bilinear")) {
-    if (!is.null(dims)) {
-      dims = dims[1:2] / dim(temp_image)[1:2]
-    }
-    temp_list = list()
-    if (length(dim(image)) == 3) {
-      channels = dim(image)[3]
-      for (i in seq_len(channels)) {
-        if (is.null(dims)) {
-          temp_list[[i]] = resize_image(temp_image[,, i], mag)
-        } else {
-          x1 = seq(1, nrow(temp_image), length.out = nrow(temp_image) * dims[1])
-          y1 = seq(1, ncol(temp_image), length.out = ncol(temp_image) * dims[2])
-          temp_list[[i]] = resize_image_xy(temp_image[,, i], x1, y1)
-        }
-      }
-      temp_image = array(
-        0,
-        dim = c(nrow(temp_list[[1]]), ncol(temp_list[[1]]), channels)
-      )
-      for (i in seq_len(channels)) {
-        temp_image[,, i] = temp_list[[i]]
-      }
-    } else {
-      if (is.null(dims)) {
-        temp_image = resize_image(t(flipud(temp_image)), mag)
-      } else {
-        x1 = seq(1, nrow(temp_image), length.out = nrow(temp_image) * dims[1])
-        y1 = seq(1, ncol(temp_image), length.out = ncol(temp_image) * dims[2])
-        temp_image = resize_image_xy(t(flipud(temp_image)), x1, y1)
-      }
-    }
-  } else {
-    method = tolower(method)
-    method = switch(
-      method,
-      "default" = 0,
-      "box" = 1,
-      "triangle" = 2,
-      "tri" = 3,
-      "trilinear" = 3,
-      "cubic" = 3,
-      "catmull" = 4,
-      "mitchell" = 5,
-      3
-    )
-    if (is.null(dims)) {
-      dims = mag * dim(image)[1:2]
-    }
-    temp_list = list()
-    if (length(dim(image)) == 3) {
-      for (i in seq_len(dim(image)[3])) {
-        temp_list[[i]] = resize_matrix_stb(
-          unclass(temp_image[,, i]),
-          dims[1],
-          dims[2],
-          method
-        )
-      }
-      temp_image = array(0, dim = c(dims[1], dims[2], dim(image)[3]))
-      for (i in seq_len(dim(image)[3])) {
-        temp_image[,, i] = temp_list[[i]]
-      }
-    } else {
-      bare_matrix = unclass(temp_image)
-      temp_image = resize_matrix_stb(
-        bare_matrix,
-        dims[1],
-        dims[2],
-        method
-      )
-    }
-  }
-  temp_image = ray_read_image(
-    temp_image,
-    filetype = imagetype,
-    source_linear = img_source_linear
-  )
-  handle_image_output(temp_image, filename = filename, preview = preview)
+	if (method %in% c("bi", "bilinear")) {
+		if (!is.null(dims)) {
+			dims = dims[1:2] / dim(temp_image)[1:2]
+		}
+		temp_list = list()
+		if (length(dim(image)) == 3) {
+			channels = dim(image)[3]
+			for (i in seq_len(channels)) {
+				if (is.null(dims)) {
+					temp_list[[i]] = resize_image(temp_image[,, i], mag)
+				} else {
+					x1 = seq(1, nrow(temp_image), length.out = nrow(temp_image) * dims[1])
+					y1 = seq(1, ncol(temp_image), length.out = ncol(temp_image) * dims[2])
+					temp_list[[i]] = resize_image_xy(temp_image[,, i], x1, y1)
+				}
+			}
+			temp_image = array(
+				0,
+				dim = c(nrow(temp_list[[1]]), ncol(temp_list[[1]]), channels)
+			)
+			for (i in seq_len(channels)) {
+				temp_image[,, i] = temp_list[[i]]
+			}
+		} else {
+			if (is.null(dims)) {
+				temp_image = resize_image(t(flipud(temp_image)), mag)
+			} else {
+				x1 = seq(1, nrow(temp_image), length.out = nrow(temp_image) * dims[1])
+				y1 = seq(1, ncol(temp_image), length.out = ncol(temp_image) * dims[2])
+				temp_image = resize_image_xy(t(flipud(temp_image)), x1, y1)
+			}
+		}
+	} else {
+		method = tolower(method)
+		method = switch(
+			method,
+			"default" = 0,
+			"box" = 1,
+			"triangle" = 2,
+			"tri" = 3,
+			"trilinear" = 3,
+			"cubic" = 3,
+			"catmull" = 4,
+			"mitchell" = 5,
+			3
+		)
+		if (is.null(dims)) {
+			dims = mag * dim(image)[1:2]
+		}
+		temp_list = list()
+		if (length(dim(image)) == 3) {
+			for (i in seq_len(dim(image)[3])) {
+				temp_list[[i]] = resize_matrix_stb(
+					unclass(temp_image[,, i]),
+					dims[1],
+					dims[2],
+					method
+				)
+			}
+			temp_image = array(0, dim = c(dims[1], dims[2], dim(image)[3]))
+			for (i in seq_len(dim(image)[3])) {
+				temp_image[,, i] = temp_list[[i]]
+			}
+		} else {
+			bare_matrix = unclass(temp_image)
+			temp_image = resize_matrix_stb(
+				bare_matrix,
+				dims[1],
+				dims[2],
+				method
+			)
+		}
+	}
+	temp_image = ray_read_image(
+		temp_image,
+		filetype = imagetype,
+		source_linear = img_source_linear,
+		assume_colorspace = colorspace,
+		assume_white = white_current
+	)
+	handle_image_output(temp_image, filename = filename, preview = preview)
 }
