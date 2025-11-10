@@ -12,6 +12,7 @@
 #'@param ignore_alpha Default `FALSE`. Whether to ignoe the alpha channel when plotting.
 #'@param return_grob Default `FALSE`. Whether to return the grob object.
 #'@param gp A `grid::gpar()` object to include for the grid viewport displaying the image.
+#'@param angle Default `0`. Counter-clockwise rotation (in degrees) applied before plotting.
 #'@param show_linear Default `FALSE`. Most data should be gamma corrected before displaying on a screen.
 #' Set to `TRUE` to turn off this gamma correction.
 #'@export
@@ -34,6 +35,7 @@ plot_image = function(
 	new_page = TRUE,
 	return_grob = FALSE,
 	gp = grid::gpar(),
+	angle = 0,
 	show_linear = FALSE
 ) {
 	img = ray_read_image(image, convert_to_array = TRUE) # rayimg RGBA
@@ -70,6 +72,10 @@ plot_image = function(
 		}
 		# Apply sRGB OETF to RGB only
 		display[,, 1:3] = to_srgb(display[,, 1:3])
+	}
+
+	if (!isTRUE(all.equal(angle %% 360, 0))) {
+		display = rotate_image_array(display, angle)
 	}
 
 	nr = convert_to_native_raster(display)
@@ -111,5 +117,9 @@ plot_image = function(
 		}
 		draw_grid_fxn()
 	}
-	return(plot_asp_native_raster(nr, asp = asp, return_grob = return_grob))
+	return(plot_asp_native_raster(
+		nr,
+		asp = asp,
+		return_grob = return_grob
+	))
 }

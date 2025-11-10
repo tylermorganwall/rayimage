@@ -61,8 +61,8 @@ render_resized = function(
 			dims = dims[1:2] / dim(temp_image)[1:2]
 		}
 		temp_list = list()
-		if (length(dim(image)) == 3) {
-			channels = dim(image)[3]
+		if (length(dim(temp_image)) == 3) {
+			channels = dim(temp_image)[3]
 			for (i in seq_len(channels)) {
 				if (is.null(dims)) {
 					temp_list[[i]] = resize_image(temp_image[,, i], mag)
@@ -103,11 +103,11 @@ render_resized = function(
 			3
 		)
 		if (is.null(dims)) {
-			dims = mag * dim(image)[1:2]
+			dims = mag * dim(temp_image)[1:2]
 		}
 		temp_list = list()
-		if (length(dim(image)) == 3) {
-			for (i in seq_len(dim(image)[3])) {
+		if (length(dim(temp_image)) == 3) {
+			for (i in seq_len(dim(temp_image)[3])) {
 				temp_list[[i]] = resize_matrix_stb(
 					unclass(temp_image[,, i]),
 					dims[1],
@@ -115,8 +115,8 @@ render_resized = function(
 					method
 				)
 			}
-			temp_image = array(0, dim = c(dims[1], dims[2], dim(image)[3]))
-			for (i in seq_len(dim(image)[3])) {
+			temp_image = array(0, dim = c(dims[1], dims[2], dim(temp_image)[3]))
+			for (i in seq_len(dim(temp_image)[3])) {
 				temp_image[,, i] = temp_list[[i]]
 			}
 		} else {

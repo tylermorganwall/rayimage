@@ -11,6 +11,7 @@ render_convolution(
   kernel_extent = 3,
   absolute = TRUE,
   min_value = NULL,
+  include_alpha = FALSE,
   filename = NULL,
   preview = FALSE,
   progress = FALSE
@@ -34,6 +35,8 @@ if user specifies their own kernel.}
 
 \item{min_value}{Default \code{NULL}. If numeric, specifies he minimum value (for any color channel)
 for a pixel to have the convolution performed.}
+
+\item{include_alpha}{Default \code{FALSE}. Whether to include the alpha channel in the convolution.}
 
 \item{filename}{Default \code{NULL}. The filename of the image to be saved. If this is not given, the image will be plotted instead.}
 

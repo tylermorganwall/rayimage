@@ -16,6 +16,7 @@
 #'@param kernel_extent Default `3`. Extent over which to calculate the kernel.
 #'@param absolute Default `TRUE`. Whether to take the absolute value of the convolution.
 #'@param pad Default `50`. Amount to pad the image to remove edge effects.
+#'@param include_alpha Default `FALSE`. Whether to include the alpha channel in the convolution.
 #'@param preview Default `FALSE`. Whether to plot the convolved image, or just to return the values.
 #'@return A `rayimg` RGBA array.
 #'@export
@@ -80,6 +81,7 @@ render_convolution_fft = function(
   kernel_extent = 3,
   absolute = TRUE,
   pad = 50,
+  include_alpha = FALSE,
   filename = NULL,
   preview = FALSE
 ) {
@@ -107,9 +109,10 @@ render_convolution_fft = function(
     rbind(cbind(fftcorn_se, fftcorn_sw), cbind(fftcorn_ne, fftcorn_nw))
   }
   temp_image = ray_read_image(image, convert_to_array = FALSE)
-  image = ray_read_image(image) #Always output RGBA array
+  colorspace = attr(temp_image, "colorspace")
+  whitepoint = attr(temp_image, "white_current")
+
   #Check if file or image before below:
-  #
   if (is.character(kernel)) {
     if (kernel == "gaussian") {
       kernel = generate_2d_gaussian(1, 1, kernel_dim, kernel_extent)
@@ -148,13 +151,12 @@ render_convolution_fft = function(
     temp_fft = stats::fft(temp_image)
   } else if (length(dim(temp_image)) == 3) {
     channels = dim(temp_image)[3]
-    if (channels == 2 || channels == 4) {
+    if (!include_alpha && (channels == 2 || channels == 4)) {
       max_channel = channels - 1
     } else {
       max_channel = channels
     }
     for (i in seq_len(max_channel)) {
-      #No alpha
       temp_fft[,, i] = stats::fft(temp_image[,, i])
     }
   }
@@ -163,7 +165,7 @@ render_convolution_fft = function(
   vals = Re(temp_fft)
   if (length(dim(temp_fft)) == 3) {
     channels = dim(temp_image)[3]
-    if (channels == 2 || channels == 4) {
+    if (!include_alpha && (channels == 2 || channels == 4)) {
       max_channel = channels - 1
     } else {
       max_channel = channels
@@ -186,5 +188,11 @@ render_convolution_fft = function(
   if (pad != 0) {
     vals = trim_padding(vals, pad)
   }
-  handle_image_output(vals, filename = filename, preview = preview)
+  final_image = ray_read_image(
+    vals,
+    assume_colorspace = colorspace,
+    assume_white = whitepoint,
+    source_linear = TRUE
+  )
+  handle_image_output(final_image, filename = filename, preview = preview)
 }

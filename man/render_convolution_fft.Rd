@@ -11,6 +11,7 @@ render_convolution_fft(
   kernel_extent = 3,
   absolute = TRUE,
   pad = 50,
+  include_alpha = FALSE,
   filename = NULL,
   preview = FALSE
 )
@@ -32,6 +33,8 @@ if user specifies their own kernel.}
 \item{absolute}{Default \code{TRUE}. Whether to take the absolute value of the convolution.}
 
 \item{pad}{Default \code{50}. Amount to pad the image to remove edge effects.}
+
+\item{include_alpha}{Default \code{FALSE}. Whether to include the alpha channel in the convolution.}
 
 \item{filename}{Default \code{NULL}. The filename of the image to be saved. If this is not given, the image will be plotted instead.}
 

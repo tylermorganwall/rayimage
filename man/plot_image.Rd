@@ -12,6 +12,7 @@ plot_image(
   new_page = TRUE,
   return_grob = FALSE,
   gp = grid::gpar(),
+  angle = 0,
   show_linear = FALSE
 )
 }
@@ -32,6 +33,8 @@ slightly widen the image.}
 \item{return_grob}{Default \code{FALSE}. Whether to return the grob object.}
 
 \item{gp}{A \code{grid::gpar()} object to include for the grid viewport displaying the image.}
+
+\item{angle}{Default \code{0}. Counter-clockwise rotation (in degrees) applied before plotting.}
 
 \item{show_linear}{Default \code{FALSE}. Most data should be gamma corrected before displaying on a screen.
 Set to \code{TRUE} to turn off this gamma correction.}

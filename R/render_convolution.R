@@ -18,6 +18,7 @@
 #'@param absolute Default `TRUE`. Whether to take the absolute value of the convolution.
 #'@param min_value Default `NULL`. If numeric, specifies he minimum value (for any color channel)
 #'for a pixel to have the convolution performed.
+#'@param include_alpha Default `FALSE`. Whether to include the alpha channel in the convolution.
 #'@param preview Default `TRUE`. Whether to plot the convolved image, or just to return the values.
 #'@param progress Default `TRUE`. Whether to display a progress bar.
 #'@return A `rayimg` RGBA array.
@@ -82,6 +83,7 @@ render_convolution = function(
   kernel_extent = 3,
   absolute = TRUE,
   min_value = NULL,
+  include_alpha = FALSE,
   filename = NULL,
   preview = FALSE,
   progress = FALSE
@@ -107,6 +109,8 @@ render_convolution = function(
     }
   }
   temp_image = ray_read_image(image, convert_to_array = FALSE)
+  colorspace = attr(temp_image, "colorspace")
+  whitepoint = attr(temp_image, "white_current")
   imagetype = attr(temp_image, "filetype")
   if (any(dim(kernel) > dim(temp_image)[1:2] * 2 + 1)) {
     stop(
@@ -137,13 +141,12 @@ render_convolution = function(
   temp_image_final = temp_image
   if (imagetype != "matrix") {
     channels = dim(temp_image)[3]
-    if (channels == 2 || channels == 4) {
+    if (!include_alpha && (channels == 2 || channels == 4)) {
       max_channel = channels - 1
     } else {
       max_channel = channels
     }
     for (i in seq_len(max_channel)) {
-      #Don't convolve alpha channel
       temp_image_final[,, i] = convolution_cpp(
         temp_image[,, i],
         kernel = kernel,
@@ -164,5 +167,11 @@ render_convolution = function(
   if (absolute) {
     temp_image_final = abs(temp_image_final)
   }
-  handle_image_output(temp_image_final, filename = filename, preview = preview)
+  final_image = ray_read_image(
+    temp_image_final,
+    assume_colorspace = colorspace,
+    assume_white = whitepoint,
+    source_linear = TRUE
+  )
+  handle_image_output(final_image, filename = filename, preview = preview)
 }

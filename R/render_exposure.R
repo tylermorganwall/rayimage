@@ -19,29 +19,29 @@
 #'   render_exposure(dragon * 2, exposure = -1, preview = TRUE)
 #' }
 render_exposure = function(
-  image,
-  exposure = 0,
-  filename = NA,
-  preview = FALSE,
-  ...
+	image,
+	exposure = 0,
+	filename = NA,
+	preview = FALSE,
+	...
 ) {
-  img = ray_read_image(image)
+	img = ray_read_image(image)
 	#This should always be linear from here down
-  scale = 2^exposure
+	scale = 2^exposure
 
-  out = img
-  if (length(dim(out)) == 2) {
+	out = img
+	if (length(dim(out)) == 2) {
 		out = out * scale
-  } else {
-    channels = dim(image)[3]
-    if (channels == 2 || channels == 4) {
-      max_channel = channels - 1
-    } else {
-      max_channel = channels
-    }
+	} else {
+		channels = dim(out)[3]
+		if (channels == 2 || channels == 4) {
+			max_channel = channels - 1
+		} else {
+			max_channel = channels
+		}
 		out[,, seq_len(max_channel)] = out[,, seq_len(max_channel)] * scale
-  }
+	}
 
 	out = ray_read_image(out)
-  handle_image_output(out, filename = filename, preview = preview)
+	handle_image_output(out, filename = filename, preview = preview)
 }

@@ -9,7 +9,8 @@ plot_asp_native_raster(
   asp = 1,
   show = FALSE,
   return_grob = FALSE,
-  gp = grid::gpar()
+  gp = grid::gpar(),
+  angle = 0
 )
 }
 \description{
