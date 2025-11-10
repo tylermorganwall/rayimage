@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.22.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.22.2</span>
       </span>
     </div>
 
@@ -86,6 +86,7 @@
 <span>  new_page <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  return_grob <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  gp <span class="op">=</span> <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  angle <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  show_linear <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -125,6 +126,10 @@ slightly widen the image.</p></dd>
 <dd><p>A <code><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">grid::gpar()</a></code> object to include for the grid viewport displaying the image.</p></dd>
 
 
+<dt id="arg-angle">angle<a class="anchor" aria-label="anchor" href="#arg-angle"></a></dt>
+<dd><p>Default <code>0</code>. Counter-clockwise rotation (in degrees) applied before plotting.</p></dd>
+
+
 <dt id="arg-show-linear">show_linear<a class="anchor" aria-label="anchor" href="#arg-show-linear"></a></dt>
 <dd><p>Default <code>FALSE</code>. Most data should be gamma corrected before displaying on a screen.
 Set to <code>TRUE</code> to turn off this gamma correction.</p></dd>
@@ -161,7 +166,7 @@ Set to <code>TRUE</code> to turn off this gamma correction.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
       </footer></div>
