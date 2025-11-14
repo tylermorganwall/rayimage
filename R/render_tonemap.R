@@ -43,6 +43,11 @@ render_tonemap = function(
 ) {
 	method = match.arg(method)
 	src = ray_read_image(image, convert_to_array = TRUE)
+	imagetype = attr(src, "filetype")
+	img_source_linear = attr(src, "source_linear")
+	colorspace = attr(src, "colorspace")
+	white_current = attr(src, "white_current")
+
 	colorspace_luminance_row = attr(src, "colorspace")$rgb_to_xyz[2, ]
 	d = dim(src)
 	if (length(d) != 3) {
@@ -112,7 +117,12 @@ render_tonemap = function(
 	out = src
 	out[,, 1:3] = rgb
 
-	out = ray_read_image(out)
-	attributes(out) = attributes(src)
+	out = ray_read_image(
+		out,
+		filetype = imagetype,
+		source_linear = img_source_linear,
+		assume_colorspace = colorspace,
+		assume_white = white_current
+	)
 	handle_image_output(out, filename = filename, preview = preview)
 }

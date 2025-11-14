@@ -34,29 +34,40 @@
 #'  plot_image()
 #'}
 render_reorient = function(
-  image,
-  flipx = FALSE,
-  flipy = FALSE,
-  transpose = FALSE,
-  filename = NULL,
-  preview = FALSE
+	image,
+	flipx = FALSE,
+	flipy = FALSE,
+	transpose = FALSE,
+	filename = NULL,
+	preview = FALSE
 ) {
-  #Check if file or image before below:
-  temp_image = ray_read_image(image, convert_to_array = FALSE)
-  imagetype = attr(temp_image, "filetype")
+	#Check if file or image before below:
+	temp_image = ray_read_image(image, convert_to_array = FALSE)
+	imagetype = attr(temp_image, "filetype")
+	img_source_linear = attr(temp_image, "source_linear")
+	colorspace = attr(temp_image, "colorspace")
+	white_current = attr(temp_image, "white_current")
 
-  if (flipx) {
-    temp_image = fliplr(temp_image)
-  }
-  if (flipy) {
-    temp_image = flipud(temp_image)
-  }
-  if (transpose) {
-    if (imagetype == "matrix") {
-      temp_image = t(temp_image)
-    } else {
-      temp_image = aperm(temp_image, c(2, 1, 3))
-    }
-  }
-  handle_image_output(temp_image, filename = filename, preview = preview)
+	if (flipx) {
+		temp_image = fliplr(temp_image)
+	}
+	if (flipy) {
+		temp_image = flipud(temp_image)
+	}
+	if (transpose) {
+		if (imagetype == "matrix") {
+			temp_image = t(temp_image)
+		} else {
+			temp_image = aperm(temp_image, c(2, 1, 3))
+		}
+	}
+	temp_image = ray_read_image(
+		temp_image,
+		filetype = imagetype,
+		source_linear = img_source_linear,
+		assume_colorspace = colorspace,
+		assume_white = white_current
+	)
+
+	handle_image_output(temp_image, filename = filename, preview = preview)
 }

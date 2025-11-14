@@ -57,114 +57,128 @@
 #'  plot_image()
 #'}
 render_crop = function(
-  image = NULL,
-  width_limits = NULL,
-  height_limits = NULL,
-  center = NULL,
-  filename = NULL,
-  preview = FALSE
+	image = NULL,
+	width_limits = NULL,
+	height_limits = NULL,
+	center = NULL,
+	filename = NULL,
+	preview = FALSE
 ) {
-  if (is.null(image)) {
-    stop("`image` must be provided.", call. = FALSE)
-  }
+	if (is.null(image)) {
+		stop("`image` must be provided.", call. = FALSE)
+	}
 
-  use_limits = !is.null(width_limits) || !is.null(height_limits)
-  use_center = !is.null(center)
+	use_limits = !is.null(width_limits) || !is.null(height_limits)
+	use_center = !is.null(center)
 
-  if (use_limits && use_center) {
-    stop(
-      "Provide either `width_limits`/`height_limits` OR `center`, not both.",
-      call. = FALSE
-    )
-  }
-  if (!use_limits && !use_center) {
-    stop(
-      "You must provide `width_limits`/`height_limits`, or `center`.",
-      call. = FALSE
-    )
-  }
+	if (use_limits && use_center) {
+		stop(
+			"Provide either `width_limits`/`height_limits` OR `center`, not both.",
+			call. = FALSE
+		)
+	}
+	if (!use_limits && !use_center) {
+		stop(
+			"You must provide `width_limits`/`height_limits`, or `center`.",
+			call. = FALSE
+		)
+	}
 
-  if (!is.null(filename)) {
-    if (tools::file_ext(filename) != "png") {
-      filename = paste0(filename, ".png")
-    }
-  }
+	if (!is.null(filename)) {
+		if (tools::file_ext(filename) != "png") {
+			filename = paste0(filename, ".png")
+		}
+	}
 
-  # Normalize input and preserve metadata
-  temp_image = ray_read_image(image)
-  imagetype = attr(temp_image, "filetype")
-  img_source_linear = attr(temp_image, "source_linear")
+	# Normalize input and preserve metadata
+	temp_image = ray_read_image(image)
+	imagetype = attr(temp_image, "filetype")
+	img_source_linear = attr(temp_image, "source_linear")
+	colorspace = attr(temp_image, "colorspace")
+	white_current = attr(temp_image, "white_current")
 
-  h = nrow(temp_image)
-  w = ncol(temp_image)
+	h = nrow(temp_image)
+	w = ncol(temp_image)
 
-  to_px_range = function(lims, len) {
-    if (length(lims) != 2 || !is.numeric(lims)) {
-      stop("Limits must be length-2 numeric.", call. = FALSE)
-    }
-    a = lims[1]
-    b = lims[2]
-    if (all(a >= 0, a <= 1, b >= 0, b <= 1)) {
-      start = floor(min(a, b) * len) + 1L
-      end = ceiling(max(a, b) * len)
-    } else {
-      start = floor(min(a, b))
-      end = ceiling(max(a, b))
-    }
-    start = max(1L, start)
-    end = min(len, end)
-    if (end < start) {
-      stop(
-        "Computed limits are empty after clamping; check your inputs.",
-        call. = FALSE
-      )
-    }
-    c(start, end)
-  }
+	to_px_range = function(lims, len) {
+		if (length(lims) != 2 || !is.numeric(lims)) {
+			stop("Limits must be length-2 numeric.", call. = FALSE)
+		}
+		a = lims[1]
+		b = lims[2]
+		if (all(a >= 0, a <= 1, b >= 0, b <= 1)) {
+			start = floor(min(a, b) * len) + 1L
+			end = ceiling(max(a, b) * len)
+		} else {
+			start = floor(min(a, b))
+			end = ceiling(max(a, b))
+		}
+		start = max(1L, start)
+		end = min(len, end)
+		if (end < start) {
+			stop(
+				"Computed limits are empty after clamping; check your inputs.",
+				call. = FALSE
+			)
+		}
+		c(start, end)
+	}
 
-  if (use_limits) {
-    if (is.null(width_limits)) width_limits = c(0, 1)
-    if (is.null(height_limits)) height_limits = c(0, 1)
+	if (use_limits) {
+		if (is.null(width_limits)) {
+			width_limits = c(0, 1)
+		}
+		if (is.null(height_limits)) {
+			height_limits = c(0, 1)
+		}
 
-    x_rng = to_px_range(width_limits, w)
-    y_rng = to_px_range(height_limits, h)
+		x_rng = to_px_range(width_limits, w)
+		y_rng = to_px_range(height_limits, h)
 
-    x_start = x_rng[1]
-    x_end = x_rng[2]
-    y_start = y_rng[1]
-    y_end = y_rng[2]
-  } else {
-    if (length(center) != 2 || !is.numeric(center)) {
-      stop(
-        "`center` must be a length-2 numeric vector (height, width).",
-        call. = FALSE
-      )
-    }
-    box_h = center[1]
-    box_w = center[2]
-    box_h = if (box_h > 0 && box_h <= 1) round(max(1, box_h * h)) else
-      round(box_h)
-    box_w = if (box_w > 0 && box_w <= 1) round(max(1, box_w * w)) else
-      round(box_w)
-    box_h = min(max(1L, box_h), h)
-    box_w = min(max(1L, box_w), w)
+		x_start = x_rng[1]
+		x_end = x_rng[2]
+		y_start = y_rng[1]
+		y_end = y_rng[2]
+	} else {
+		if (length(center) != 2 || !is.numeric(center)) {
+			stop(
+				"`center` must be a length-2 numeric vector (height, width).",
+				call. = FALSE
+			)
+		}
+		box_h = center[1]
+		box_w = center[2]
+		box_h = if (box_h > 0 && box_h <= 1) {
+			round(max(1, box_h * h))
+		} else {
+			round(box_h)
+		}
+		box_w = if (box_w > 0 && box_w <= 1) {
+			round(max(1, box_w * w))
+		} else {
+			round(box_w)
+		}
+		box_h = min(max(1L, box_h), h)
+		box_w = min(max(1L, box_w), w)
 
-    y_start = floor((h - box_h) / 2) + 1L
-    y_end = y_start + box_h - 1L
-    x_start = floor((w - box_w) / 2) + 1L
-    x_end = x_start + box_w - 1L
-  }
+		y_start = floor((h - box_h) / 2) + 1L
+		y_end = y_start + box_h - 1L
+		x_start = floor((w - box_w) / 2) + 1L
+		x_end = x_start + box_w - 1L
+	}
 
-  if (imagetype != "matrix") {
-    temp_image = temp_image[y_start:y_end, x_start:x_end, , drop = FALSE]
-  } else {
-    temp_image = temp_image[y_start:y_end, x_start:x_end, drop = FALSE]
-  }
+	if (imagetype != "matrix") {
+		temp_image = temp_image[y_start:y_end, x_start:x_end, , drop = FALSE]
+	} else {
+		temp_image = temp_image[y_start:y_end, x_start:x_end, drop = FALSE]
+	}
 
-  temp_image = ray_read_image(
-    temp_image,
-    filetype = imagetype,
-    source_linear = img_source_linear
-  )
-  handle_image_output(temp_image, filename = filename, preview = preview)
+	temp_image = ray_read_image(
+		temp_image,
+		filetype = imagetype,
+		source_linear = img_source_linear,
+		assume_colorspace = colorspace,
+		assume_white = white_current
+	)
+	handle_image_output(temp_image, filename = filename, preview = preview)
 }
