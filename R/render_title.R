@@ -221,6 +221,7 @@ render_title = function(
 				gravity = title_position
 			) |>
 			magick::image_write(path = temp, format = "png")
+		new_image = render_image_overlay(image, temp)
 	} else {
 		draw_title_card = function(
 			image,
@@ -232,12 +233,14 @@ render_title = function(
 			bg_alpha = 0.65,
 			title_just = c("left", "top")
 		) {
-			grDevices::png(
+			png_device = linear_png_device()
+			png_device(
 				temp,
 				width = ncol(image),
 				height = nrow(image),
 				pointsize = 12,
 				family = title_font,
+				units = "px",
 				res = 72
 			)
 			dev_id = grDevices::dev.cur()
@@ -381,9 +384,8 @@ render_title = function(
 			bg_alpha = title_bar_alpha,
 			title_just = title_just
 		)
+		new_image = ray_read_image(temp)
 	}
-	temp_text = ray_read_image(temp)
-	new_image = render_image_overlay(image, temp_text)
 	handle_image_output(new_image, filename = filename, preview = preview)
 }
 

@@ -127,26 +127,17 @@ render_text_image = function(
   image_height = nrow(temp_image)
 
   test_edges = function(image_width, image_height) {
-    if (length(find.package("ragg", quiet = TRUE)) > 0 && use_ragg) {
-      ragg::agg_png(
-        temp_filename,
-        width = image_width,
-        height = image_height,
-        units = "px",
-        res = 72,
-        background = NA
-      )
-    } else {
-      grDevices::png(
-        temp_filename,
-        width = image_width,
-        height = image_height,
-        pointsize = size,
-        family = font,
-        res = 72,
-        bg = NA
-      )
-    }
+    png_device = linear_png_device(use_ragg = use_ragg)
+    png_device(
+      temp_filename,
+      width = image_width,
+      height = image_height,
+      units = "px",
+      pointsize = size,
+      family = font,
+      res = 72,
+      bg = NA
+    )
     dev_id = grDevices::dev.cur()
 
     #First write with no background
@@ -220,26 +211,17 @@ render_text_image = function(
   }
 
   #If no edges, proceed with normal render
-  if (length(find.package("ragg", quiet = TRUE)) > 0 && use_ragg) {
-    ragg::agg_png(
-      temp_filename,
-      width = image_width,
-      height = image_height,
-      units = "px",
-      res = 72,
-      background = NA
-    )
-  } else {
-    grDevices::png(
-      temp_filename,
-      width = image_width,
-      height = image_height,
-      pointsize = size,
-      family = font,
-      res = 72,
-      bg = NA
-    )
-  }
+  png_device = linear_png_device(use_ragg = use_ragg)
+  png_device(
+    temp_filename,
+    width = image_width,
+    height = image_height,
+    units = "px",
+    pointsize = size,
+    family = font,
+    res = 72,
+    bg = NA
+  )
 
   dev_id = grDevices::dev.cur()
   grid::grid.newpage()
