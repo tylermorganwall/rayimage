@@ -60,6 +60,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// load_image_stb
+Rcpp::NumericVector load_image_stb(const std::string& filename, int& width, int& height, int& channels, int desired_channels);
+RcppExport SEXP _rayimage_load_image_stb(SEXP filenameSEXP, SEXP widthSEXP, SEXP heightSEXP, SEXP channelsSEXP, SEXP desired_channelsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const std::string& >::type filename(filenameSEXP);
+    Rcpp::traits::input_parameter< int& >::type width(widthSEXP);
+    Rcpp::traits::input_parameter< int& >::type height(heightSEXP);
+    Rcpp::traits::input_parameter< int& >::type channels(channelsSEXP);
+    Rcpp::traits::input_parameter< int >::type desired_channels(desired_channelsSEXP);
+    rcpp_result_gen = Rcpp::wrap(load_image_stb(filename, width, height, channels, desired_channels));
+    return rcpp_result_gen;
+END_RCPP
+}
 // subsample
 arma::mat subsample(arma::mat& circle, int size);
 RcppExport SEXP _rayimage_subsample(SEXP circleSEXP, SEXP sizeSEXP) {
@@ -244,6 +259,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rayimage_encode_native_image_rcpp_1", (DL_FUNC) &_rayimage_encode_native_image_rcpp_1, 1},
     {"_rayimage_encode_native_image_rcpp_3", (DL_FUNC) &_rayimage_encode_native_image_rcpp_3, 3},
     {"_rayimage_encode_native_image_rcpp_4", (DL_FUNC) &_rayimage_encode_native_image_rcpp_4, 4},
+    {"_rayimage_load_image_stb", (DL_FUNC) &_rayimage_load_image_stb, 5},
     {"_rayimage_subsample", (DL_FUNC) &_rayimage_subsample, 2},
     {"_rayimage_rayinterp2", (DL_FUNC) &_rayimage_rayinterp2, 3},
     {"_rayimage_resize_image", (DL_FUNC) &_rayimage_resize_image, 2},

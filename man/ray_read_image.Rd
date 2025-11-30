@@ -20,14 +20,15 @@ ray_read_image(
 \arguments{
 \item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
-\item{convert_to_array}{Default \code{TRUE}. Whether to convert 2D B&W images/matrices to RGBA arrays.}
+\item{convert_to_array}{Default \code{FALSE}. Whether to convert 2D B&W images/matrices to RGBA arrays.}
 
 \item{preview}{Default \code{FALSE}. If \code{TRUE}, it will display the image in addition
 to returning it.}
 
 \item{source_linear}{Default \code{NA}, automatically determined based on the image type.
-Whether the image source is linear data or sRGB.  \code{FALSE} for matrices, arrays, and \code{EXR} files,
-true for all other formats (\code{jpeg}, \code{png}, and \code{tiff}).}
+Whether the image source is linear data or sRGB. \code{TRUE} for matrices, arrays, and
+floating-point HDR formats (\code{EXR}, \code{HDR}); \code{FALSE} for all other file-based formats
+(e.g., \code{jpeg}, \code{png}, \code{tiff}, \code{tga}, \code{bmp}, \code{psd}, \code{gif}, \code{pic}, \code{pnm}).}
 
 \item{normalize}{Default \code{FALSE}. If \code{TRUE}, convert to \code{normalize_to} space on read. Note that
 rayimg inputs will keep their colorspace and ignore this option--use \code{render_convert_colorspace()}
@@ -46,13 +47,15 @@ unless \code{normalize=TRUE}.}
 Either a named white (\verb{"D60","D65","D50","D55","D75","E"}) or XYZ with Y=1.
 If \code{NULL}, uses \code{assume_colorspace$white_xyz}.}
 
-\item{...}{Arguments to pass to either \code{jpeg::readJPEG}, \code{png::readPNG}, \code{tiff::readTIFF}, or \code{libopenexr::read_exr()}.}
+\item{...}{Arguments to pass to \code{jpeg::readJPEG}, \code{png::readPNG}, \code{tiff::readTIFF},
+or \code{libopenexr::read_exr()} for supported formats.}
 }
 \value{
 A \code{rayimg} RGBA array.
 }
 \description{
-Reads an image from a file/array/matrix. From files, supports \code{JPEG}, \code{PNG}, \code{TIFF}, and \code{EXR} images.
+Reads an image from a file/array/matrix. From files, supports
+\code{JPEG}, \code{PNG}, \code{TIFF}, \code{TGA}, \code{BMP}, \code{PSD}, \code{GIF}, \code{HDR}, \code{PIC}, \code{PNM}, and \code{EXR} images.
 }
 \examples{
 if(run_documentation()){

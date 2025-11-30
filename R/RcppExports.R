@@ -17,6 +17,10 @@ encode_native_image_rcpp_4 <- function(r_image, g_image, b_image, a_image) {
     .Call(`_rayimage_encode_native_image_rcpp_4`, r_image, g_image, b_image, a_image)
 }
 
+load_image_stb <- function(filename, width, height, channels, desired_channels) {
+    .Call(`_rayimage_load_image_stb`, filename, width, height, channels, desired_channels)
+}
+
 subsample <- function(circle, size) {
     .Call(`_rayimage_subsample`, circle, size)
 }
