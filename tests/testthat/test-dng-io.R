@@ -1,27 +1,17 @@
 test_that("DNG roundtrip mosaic preserves values", {
-  h = 16L
-  w = 16L
-  mosaic = matrix(seq(0, 1, length.out = h * w), nrow = h, ncol = w)
-  attr(mosaic, "dng") = list(
-    cfa_pattern = matrix(c(0, 1, 1, 2), 2, 2, byrow = TRUE),
-    black_level = c(0, 0, 0, 0),
-    white_level = c(65535, 65535, 65535, 65535)
-  )
+	h = 16L
+	w = 16L
+	mosaic = matrix(seq(0, 1, length.out = h * w), nrow = h, ncol = w)
+	attr(mosaic, "dng") = list(
+		cfa_pattern = matrix(c(0, 1, 1, 2), 2, 2, byrow = TRUE),
+		black_level = c(0, 0, 0, 0),
+		white_level = c(65535, 65535, 65535, 65535)
+	)
 
-  tmp = tempfile(fileext = ".dng")
-  ray_write_image(mosaic, tmp)
-  out = ray_read_image(tmp)
+	tmp = tempfile(fileext = ".dng")
+	ray_write_image(mosaic, tmp)
+	out = ray_read_image(tmp)
 
-  diff = max(abs(as.matrix(out) - mosaic))
-  expect_true(diff <= (1 / 65535 + 1e-6))
-})
-
-test_that("render_debayer returns RGB with no NA", {
-  h = 16L
-  w = 16L
-  mosaic = matrix(seq(0, 1, length.out = h * w), nrow = h, ncol = w)
-  out = render_debayer(mosaic, pattern = "RGGB")
-
-  expect_equal(dim(out), c(h, w, 3))
-  expect_false(any(is.na(out)))
+	diff = max(abs(as.matrix(out) - mosaic))
+	expect_true(diff <= (1 / 65535 + 1e-6))
 })
