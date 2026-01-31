@@ -16,11 +16,11 @@ render_vibrance(
 \item{image}{Image filename, 3-layer RGB array, 4-layer RGBA array, or matrix. If a filename,
 it will be read via \code{ray_read_image()}.}
 
-\item{vibrance}{Default \code{0}. Numeric scalar in \verb{[-1,1]} (values are clamped). Positive values
+\item{vibrance}{Default \code{0}. Numeric scalar in -1..1 (values are clamped). Positive values
 increase vibrance primarily in low-saturation regions; negative values decrease vibrance primarily
 in high-saturation regions.}
 
-\item{protect_luminance}{Default \code{0.25}. Numeric scalar in \verb{[0,1]}. Reduces the vibrance effect
+\item{protect_luminance}{Default \code{0.25}. Numeric scalar in 0..1. Reduces the vibrance effect
 in deep shadows and bright highlights to avoid harsh color shifts. Set to \code{0} to disable.}
 
 \item{filename}{Default \code{NULL}. If not \code{NULL}, the processed image will be written to this file.}

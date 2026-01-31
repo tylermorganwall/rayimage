@@ -60,7 +60,7 @@ A \code{rayimg} RGBA array.
 \description{
 Reads an image from a file/array/matrix. From files, supports
 \code{JPEG}, \code{PNG}, \code{TIFF}, \code{TGA}, \code{BMP}, \code{PSD}, \code{GIF}, \code{HDR}, \code{PIC}, \code{PNM}, \code{EXR},
-and \code{DNG} images. DNG reads return raw/mosaic data (debayer separately).
+and \code{DNG} images.
 }
 \examples{
 if(run_documentation()){
