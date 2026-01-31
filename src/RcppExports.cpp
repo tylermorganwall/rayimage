@@ -60,6 +60,71 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// read_dng_cpp
+Rcpp::List read_dng_cpp(const std::string& filename, bool normalize, std::string pick);
+RcppExport SEXP _rayimage_read_dng_cpp(SEXP filenameSEXP, SEXP normalizeSEXP, SEXP pickSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const std::string& >::type filename(filenameSEXP);
+    Rcpp::traits::input_parameter< bool >::type normalize(normalizeSEXP);
+    Rcpp::traits::input_parameter< std::string >::type pick(pickSEXP);
+    rcpp_result_gen = Rcpp::wrap(read_dng_cpp(filename, normalize, pick));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dng_apply_active_area_cpp
+Rcpp::NumericVector dng_apply_active_area_cpp(Rcpp::NumericVector pixels, Rcpp::IntegerVector active_area);
+RcppExport SEXP _rayimage_dng_apply_active_area_cpp(SEXP pixelsSEXP, SEXP active_areaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type pixels(pixelsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type active_area(active_areaSEXP);
+    rcpp_result_gen = Rcpp::wrap(dng_apply_active_area_cpp(pixels, active_area));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dng_exposure_normalize_cpp
+Rcpp::NumericVector dng_exposure_normalize_cpp(Rcpp::NumericVector pixels, double iso, double exposure_time);
+RcppExport SEXP _rayimage_dng_exposure_normalize_cpp(SEXP pixelsSEXP, SEXP isoSEXP, SEXP exposure_timeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type pixels(pixelsSEXP);
+    Rcpp::traits::input_parameter< double >::type iso(isoSEXP);
+    Rcpp::traits::input_parameter< double >::type exposure_time(exposure_timeSEXP);
+    rcpp_result_gen = Rcpp::wrap(dng_exposure_normalize_cpp(pixels, iso, exposure_time));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dng_undo_baseline_exposure_cpp
+Rcpp::NumericVector dng_undo_baseline_exposure_cpp(Rcpp::NumericVector pixels, double baseline_exposure);
+RcppExport SEXP _rayimage_dng_undo_baseline_exposure_cpp(SEXP pixelsSEXP, SEXP baseline_exposureSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type pixels(pixelsSEXP);
+    Rcpp::traits::input_parameter< double >::type baseline_exposure(baseline_exposureSEXP);
+    rcpp_result_gen = Rcpp::wrap(dng_undo_baseline_exposure_cpp(pixels, baseline_exposure));
+    return rcpp_result_gen;
+END_RCPP
+}
+// write_dng_cpp
+bool write_dng_cpp(const std::string& filename, SEXP pixels, Rcpp::List meta, int bitdepth, bool compress);
+RcppExport SEXP _rayimage_write_dng_cpp(SEXP filenameSEXP, SEXP pixelsSEXP, SEXP metaSEXP, SEXP bitdepthSEXP, SEXP compressSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const std::string& >::type filename(filenameSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type pixels(pixelsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type meta(metaSEXP);
+    Rcpp::traits::input_parameter< int >::type bitdepth(bitdepthSEXP);
+    Rcpp::traits::input_parameter< bool >::type compress(compressSEXP);
+    rcpp_result_gen = Rcpp::wrap(write_dng_cpp(filename, pixels, meta, bitdepth, compress));
+    return rcpp_result_gen;
+END_RCPP
+}
 // load_image_stb
 Rcpp::NumericVector load_image_stb(const std::string& filename, int& width, int& height, int& channels, int desired_channels);
 RcppExport SEXP _rayimage_load_image_stb(SEXP filenameSEXP, SEXP widthSEXP, SEXP heightSEXP, SEXP channelsSEXP, SEXP desired_channelsSEXP) {
@@ -259,6 +324,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rayimage_encode_native_image_rcpp_1", (DL_FUNC) &_rayimage_encode_native_image_rcpp_1, 1},
     {"_rayimage_encode_native_image_rcpp_3", (DL_FUNC) &_rayimage_encode_native_image_rcpp_3, 3},
     {"_rayimage_encode_native_image_rcpp_4", (DL_FUNC) &_rayimage_encode_native_image_rcpp_4, 4},
+    {"_rayimage_read_dng_cpp", (DL_FUNC) &_rayimage_read_dng_cpp, 3},
+    {"_rayimage_dng_apply_active_area_cpp", (DL_FUNC) &_rayimage_dng_apply_active_area_cpp, 2},
+    {"_rayimage_dng_exposure_normalize_cpp", (DL_FUNC) &_rayimage_dng_exposure_normalize_cpp, 3},
+    {"_rayimage_dng_undo_baseline_exposure_cpp", (DL_FUNC) &_rayimage_dng_undo_baseline_exposure_cpp, 2},
+    {"_rayimage_write_dng_cpp", (DL_FUNC) &_rayimage_write_dng_cpp, 5},
     {"_rayimage_load_image_stb", (DL_FUNC) &_rayimage_load_image_stb, 5},
     {"_rayimage_subsample", (DL_FUNC) &_rayimage_subsample, 2},
     {"_rayimage_rayinterp2", (DL_FUNC) &_rayimage_rayinterp2, 3},

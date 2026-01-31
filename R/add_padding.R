@@ -2,20 +2,51 @@
 #'
 #'@description Adds padding to the matrix
 #'
-#'@param input A two-dimensional matrix.
+#'@param input A two-dimensional matrix or a 3D array (including `rayimg`).
 #'@return Matrix with edges padded
 #'@keywords internal
 add_padding = function(input) {
-  temp = matrix(0, nrow = nrow(input) + 2, ncol = ncol(input) + 2)
-  temp[2:(nrow(temp) - 1), 2:(ncol(temp) - 1)] = input
-  temp[2:(nrow(temp) - 1), 1] = input[, 1]
-  temp[1, 2:(ncol(temp) - 1)] = input[1, ]
-  temp[2:(nrow(temp) - 1), ncol(temp)] = input[, ncol(input)]
-  temp[nrow(temp), 2:(ncol(temp) - 1)] = input[nrow(input), ]
-  temp[1, 1] = temp[1, 2]
-  temp[1, ncol(temp)] = temp[1, ncol(temp) - 1]
-  temp[nrow(temp), 1] = temp[nrow(temp) - 1, 2]
-  temp[nrow(temp), ncol(temp)] = temp[nrow(temp) - 1, ncol(temp)]
+  is_rayimg = inherits(input, "rayimg")
+  input_array = if (is_rayimg) {
+    unclass(input)
+  } else {
+    input
+  }
+
+  if (length(dim(input_array)) == 2) {
+    temp = matrix(0, nrow = nrow(input_array) + 2, ncol = ncol(input_array) + 2)
+    temp[2:(nrow(temp) - 1), 2:(ncol(temp) - 1)] = input_array
+    temp[2:(nrow(temp) - 1), 1] = input_array[, 1]
+    temp[1, 2:(ncol(temp) - 1)] = input_array[1, ]
+    temp[2:(nrow(temp) - 1), ncol(temp)] = input_array[, ncol(input_array)]
+    temp[nrow(temp), 2:(ncol(temp) - 1)] = input_array[nrow(input_array), ]
+    temp[1, 1] = temp[1, 2]
+    temp[1, ncol(temp)] = temp[1, ncol(temp) - 1]
+    temp[nrow(temp), 1] = temp[nrow(temp) - 1, 2]
+    temp[nrow(temp), ncol(temp)] = temp[nrow(temp) - 1, ncol(temp)]
+  } else {
+    d = dim(input_array)
+    temp = array(0, dim = c(d[1] + 2, d[2] + 2, d[3]))
+    temp[2:(d[1] + 1), 2:(d[2] + 1), ] = input_array
+    temp[2:(d[1] + 1), 1, ] = input_array[, 1, ]
+    temp[1, 2:(d[2] + 1), ] = input_array[1, , ]
+    temp[2:(d[1] + 1), d[2] + 2, ] = input_array[, d[2], ]
+    temp[d[1] + 2, 2:(d[2] + 1), ] = input_array[d[1], , ]
+    temp[1, 1, ] = temp[1, 2, ]
+    temp[1, d[2] + 2, ] = temp[1, d[2] + 1, ]
+    temp[d[1] + 2, 1, ] = temp[d[1] + 1, 2, ]
+    temp[d[1] + 2, d[2] + 2, ] = temp[d[1] + 1, d[2] + 2, ]
+  }
+
+  if (is_rayimg) {
+    temp = rayimg(
+      temp,
+      filetype = attr(input, "filetype"),
+      source_linear = attr(input, "source_linear"),
+      colorspace = attr(input, "colorspace"),
+      white_current = attr(input, "white_current")
+    )
+  }
   temp
 }
 
@@ -23,7 +54,7 @@ add_padding = function(input) {
 #'
 #'@description Adds multiple levels padding to the matrix
 #'
-#'@param input A two-dimensional matrix.
+#'@param input A two-dimensional matrix or a 3D array (including `rayimg`).
 #'@param pad Number of padding entries
 #'@return Matrix with edges padded
 #'@keywords internal
@@ -77,6 +108,8 @@ trim_padding = function(input, pad = 1) {
     return(input[
       (1 + pad):(nrow(input) - pad),
       (1 + pad):(ncol(input) - pad),
+      ,
+      drop = FALSE
     ])
   }
 }

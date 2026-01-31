@@ -7,7 +7,7 @@
 add_padding(input)
 }
 \arguments{
-\item{input}{A two-dimensional matrix.}
+\item{input}{A two-dimensional matrix or a 3D array (including \code{rayimg}).}
 }
 \value{
 Matrix with edges padded

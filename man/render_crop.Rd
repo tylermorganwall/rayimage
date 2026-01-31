@@ -17,15 +17,15 @@ render_crop(
 \item{image}{Default \code{NULL}. 3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
 \item{width_limits}{Default \code{NULL}. Length-2 numeric \verb{(xmin, xmax)} along the width (x/columns).
-Values in \verb{[0,1]} are treated as fractions of image width; otherwise they are pixel indices.
+Values in 0..1 are treated as fractions of image width; otherwise they are pixel indices.
 Mutually exclusive with \code{center}. If provided alone, \code{height_limits} defaults to full height.}
 
 \item{height_limits}{Default \code{NULL}. Length-2 numeric \verb{(ymin, ymax)} along the height (y/rows).
-Values in \verb{[0,1]} are treated as fractions of image height; otherwise they are pixel indices.
+Values in 0..1 are treated as fractions of image height; otherwise they are pixel indices.
 Mutually exclusive with \code{center}. If provided alone, \code{width_limits} defaults to full width.}
 
 \item{center}{Default \code{NULL}. Length-2 numeric \verb{(height, width)} for a center-crop.
-Values in \verb{(0,1]} are treated as fractions of \verb{(image height, image width)}; otherwise pixels.
+Values in (0,1] are treated as fractions of \verb{(image height, image width)}; otherwise pixels.
 Mutually exclusive with \code{width_limits}/\code{height_limits}.}
 
 \item{filename}{Default \code{NULL}. The filename of the image to be saved. If this is not given, the image will be plotted instead.}

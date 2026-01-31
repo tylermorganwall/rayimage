@@ -4,11 +4,11 @@
 #'
 #'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param filename File to write to, with filetype determined by extension. Filetype can be
-#'`PNG`, `JPEG`, `TIFF`, or `EXR`.
+#'`PNG`, `JPEG`, `TIFF`, `EXR`, or `DNG`.
 #'@param clamp Default `FALSE`, automatically determined. Whether to clamp the image to 0-1. If the file extension is `PNG` of `JPEG`,
 #'this is forced to `TRUE`.
 #'@param write_linear Default `NA`, automatically determined. By default, images will be gamma corrected (write_linear = FALSE) for
-#' all file types except `EXR` (which is a linear format), unless otherwise specified.
+#' all file types except `EXR` and `DNG` (which are linear formats), unless otherwise specified.
 #'@param ... Arguments to pass to either `jpeg::writeJPEG`, `png::writePNG`, `libopenexr::write_exr`, or `tiff::writeTIFF`.
 #'@return A `rayimg` RGBA array.
 #'@import grDevices
@@ -50,11 +50,20 @@ ray_write_image = function(
 	}
 	image = ray_read_image(image) # rayimg RGBA, linear RGB
 	fileext = tolower(tools::file_ext(filename))
-	if (!fileext %in% c("png", "jpeg", "jpg", "tiff", "exr")) {
+	if (!fileext %in% c("png", "jpeg", "jpg", "tiff", "exr", "dng")) {
 		stop(sprintf(
-			"File extension (%s) must be one of `png`, `jpeg`, `jpg`, `exr`, or `tiff`",
+			"File extension (%s) must be one of `png`, `jpeg`, `jpg`, `exr`, `tiff`, or `dng`",
 			fileext
 		))
+	}
+
+	if (fileext == "dng") {
+		meta = attr(image, "dng")
+		if (is.null(meta)) {
+			meta = list()
+		}
+		write_dng_cpp(filename, image, meta = meta)
+		return(invisible(image))
 	}
 
 	# Auto conversion to sRGB/D65 primaries for LDR outputs

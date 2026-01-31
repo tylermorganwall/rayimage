@@ -50,13 +50,23 @@ render_resized = function(
 	method = "tri"
 ) {
 	temp_image = ray_read_image(image)
+	orig_dims = dim(temp_image)[1:2]
+	downscale = if (!is.null(dims)) {
+		any(dims[1:2] < orig_dims)
+	} else {
+		isTRUE(mag < 1)
+	}
+	use_bilinear = method %in% c("bi", "bilinear") && !downscale
+	if (!use_bilinear && method %in% c("bi", "bilinear")) {
+		method = "box"
+	}
 	#Check if file or image before below:
 	imagetype = attr(temp_image, "filetype")
 	img_source_linear = attr(temp_image, "source_linear")
 	colorspace = attr(temp_image, "colorspace")
 	white_current = attr(temp_image, "white_current")
 
-	if (method %in% c("bi", "bilinear")) {
+	if (use_bilinear) {
 		if (!is.null(dims)) {
 			dims = dims[1:2] / dim(temp_image)[1:2]
 		}

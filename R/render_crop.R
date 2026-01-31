@@ -5,13 +5,13 @@
 #'
 #'@param image Default `NULL`. 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param width_limits Default `NULL`. Length-2 numeric `(xmin, xmax)` along the width (x/columns).
-#' Values in `[0,1]` are treated as fractions of image width; otherwise they are pixel indices.
+#' Values in 0..1 are treated as fractions of image width; otherwise they are pixel indices.
 #' Mutually exclusive with `center`. If provided alone, `height_limits` defaults to full height.
 #'@param height_limits Default `NULL`. Length-2 numeric `(ymin, ymax)` along the height (y/rows).
-#' Values in `[0,1]` are treated as fractions of image height; otherwise they are pixel indices.
+#' Values in 0..1 are treated as fractions of image height; otherwise they are pixel indices.
 #' Mutually exclusive with `center`. If provided alone, `width_limits` defaults to full width.
 #'@param center Default `NULL`. Length-2 numeric `(height, width)` for a center-crop.
-#' Values in `(0,1]` are treated as fractions of `(image height, image width)`; otherwise pixels.
+#' Values in (0,1] are treated as fractions of `(image height, image width)`; otherwise pixels.
 #' Mutually exclusive with `width_limits`/`height_limits`.
 #'@param filename Default `NULL`. The filename of the image to be saved. If this is not given, the image will be plotted instead.
 #'@param preview Default `FALSE`. Whether to plot the cropped image, or just to return the values.

@@ -10,6 +10,7 @@ ray_read_image(
   preview = FALSE,
   source_linear = NA,
   normalize = FALSE,
+  dng_normalize = FALSE,
   normalize_to = CS_ACESCG,
   normalize_adapt_white = TRUE,
   assume_colorspace = NULL,
@@ -27,12 +28,15 @@ to returning it.}
 
 \item{source_linear}{Default \code{NA}, automatically determined based on the image type.
 Whether the image source is linear data or sRGB. \code{TRUE} for matrices, arrays, and
-floating-point HDR formats (\code{EXR}, \code{HDR}); \code{FALSE} for all other file-based formats
+floating-point HDR formats (\code{EXR}, \code{HDR}), and \code{DNG}; \code{FALSE} for all other file-based formats
 (e.g., \code{jpeg}, \code{png}, \code{tiff}, \code{tga}, \code{bmp}, \code{psd}, \code{gif}, \code{pic}, \code{pnm}).}
 
 \item{normalize}{Default \code{FALSE}. If \code{TRUE}, convert to \code{normalize_to} space on read. Note that
 rayimg inputs will keep their colorspace and ignore this option--use \code{render_convert_colorspace()}
 to change an existing rayimg to a new colorspace.}
+
+\item{dng_normalize}{Default \code{FALSE}. If \code{TRUE}, DNG data is normalized to 0..1,
+using black/white levels; if \code{FALSE}, raw values are returned.}
 
 \item{normalize_to}{Default \code{CS_ACESCG}. Target colorspace when \code{normalize=TRUE}.}
 
@@ -55,7 +59,8 @@ A \code{rayimg} RGBA array.
 }
 \description{
 Reads an image from a file/array/matrix. From files, supports
-\code{JPEG}, \code{PNG}, \code{TIFF}, \code{TGA}, \code{BMP}, \code{PSD}, \code{GIF}, \code{HDR}, \code{PIC}, \code{PNM}, and \code{EXR} images.
+\code{JPEG}, \code{PNG}, \code{TIFF}, \code{TGA}, \code{BMP}, \code{PSD}, \code{GIF}, \code{HDR}, \code{PIC}, \code{PNM}, \code{EXR},
+and \code{DNG} images. DNG reads return raw/mosaic data (debayer separately).
 }
 \examples{
 if(run_documentation()){

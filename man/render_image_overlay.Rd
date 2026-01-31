@@ -10,6 +10,9 @@ render_image_overlay(
   rescale_original = FALSE,
   convert_overlay_colorspace = TRUE,
   alpha = NA,
+  overlay_coords = NULL,
+  overlay_dims = NULL,
+  overlay_anchor = "nw",
   filename = NULL,
   preview = FALSE
 )
@@ -29,6 +32,15 @@ to match the underlying image.}
 \item{alpha}{Default \code{NA}, using overlay's alpha channel. Otherwise, this sets the alpha transparency
 by multiplying the existing alpha channel by this value (between 0 and 1).}
 
+\item{overlay_coords}{Default \code{NULL}. Pixel coordinate \code{c(x, y)} at which to anchor the overlay.
+\code{x} increases from left to right and \code{y} from top to bottom, starting at 1.}
+
+\item{overlay_dims}{Default \code{NULL}. Dimensions for the overlay in pixels. If provided, the overlay is
+resized with \code{render_resized()} before compositing.}
+
+\item{overlay_anchor}{Default \code{"nw"}. Which corner of the overlay is placed at \code{overlay_coords}.
+Options: \code{"nw"}, \code{"ne"}, \code{"sw"}, \code{"se"}. The overlay is cropped to the image bounds if necessary.}
+
 \item{filename}{Default \code{NULL}. File to save the image to. If \code{NULL} and \code{preview = FALSE},
 returns an RGB array.}
 
@@ -39,7 +51,8 @@ to returning it.}
 A \code{rayimg} RGBA array.
 }
 \description{
-Takes an RGB array/filename and adds an image overlay.
+Takes an RGB array/filename and adds an image overlay. Can optionally resize and
+position the overlay at a specific pixel location.
 }
 \examples{
 if(run_documentation()){

@@ -7,7 +7,7 @@
 add_multi_padding(input, pad = 1)
 }
 \arguments{
-\item{input}{A two-dimensional matrix.}
+\item{input}{A two-dimensional matrix or a 3D array (including \code{rayimg}).}
 
 \item{pad}{Number of padding entries}
 }

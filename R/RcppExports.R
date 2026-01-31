@@ -17,6 +17,26 @@ encode_native_image_rcpp_4 <- function(r_image, g_image, b_image, a_image) {
     .Call(`_rayimage_encode_native_image_rcpp_4`, r_image, g_image, b_image, a_image)
 }
 
+read_dng_cpp <- function(filename, normalize = TRUE, pick = "largest") {
+    .Call(`_rayimage_read_dng_cpp`, filename, normalize, pick)
+}
+
+dng_apply_active_area_cpp <- function(pixels, active_area) {
+    .Call(`_rayimage_dng_apply_active_area_cpp`, pixels, active_area)
+}
+
+dng_exposure_normalize_cpp <- function(pixels, iso, exposure_time) {
+    .Call(`_rayimage_dng_exposure_normalize_cpp`, pixels, iso, exposure_time)
+}
+
+dng_undo_baseline_exposure_cpp <- function(pixels, baseline_exposure) {
+    .Call(`_rayimage_dng_undo_baseline_exposure_cpp`, pixels, baseline_exposure)
+}
+
+write_dng_cpp <- function(filename, pixels, meta, bitdepth = 16L, compress = TRUE) {
+    .Call(`_rayimage_write_dng_cpp`, filename, pixels, meta, bitdepth, compress)
+}
+
 load_image_stb <- function(filename, width, height, channels, desired_channels) {
     .Call(`_rayimage_load_image_stb`, filename, width, height, channels, desired_channels)
 }

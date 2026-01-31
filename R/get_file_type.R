@@ -19,6 +19,8 @@ get_file_type = function(file) {
       imagetype = "exr"
     } else if (ext == "hdr") {
       imagetype = "hdr"
+    } else if (ext == "dng") {
+      imagetype = "dng"
     } else if (ext == "tga") {
       imagetype = "tga"
     } else if (ext == "bmp") {
@@ -35,7 +37,7 @@ get_file_type = function(file) {
       stop(
         "`",
         file,
-        "` not recognized class (png, tiff, jpeg, exr, hdr, tga, bmp, psd, gif, pic, pnm, array, matrix)."
+        "` not recognized class (png, tiff, jpeg, exr, hdr, dng, tga, bmp, psd, gif, pic, pnm, array, matrix)."
       )
     }
   } else if (length(dim(file)) == 3 && dim(file)[3] == 1) {
@@ -54,11 +56,11 @@ get_file_type = function(file) {
       stop(
         "`",
         file,
-        "` not recognized class (png, tiff, jpeg, exr, hdr, tga, bmp, psd, gif, pic, pnm, array, matrix)."
+        "` not recognized class (png, tiff, jpeg, exr, hdr, dng, tga, bmp, psd, gif, pic, pnm, array, matrix)."
       )
     } else {
       stop(
-        "input not recognized class (png, tiff, jpeg, exr, hdr, tga, bmp, psd, gif, pic, pnm, array, matrix)."
+        "input not recognized class (png, tiff, jpeg, exr, hdr, dng, tga, bmp, psd, gif, pic, pnm, array, matrix)."
       )
     }
   }

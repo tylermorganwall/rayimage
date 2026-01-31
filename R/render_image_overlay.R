@@ -1,16 +1,23 @@
 #'@title Add Overlay
 #'
-#'@description Takes an RGB array/filename and adds an image overlay.
+#'@description Takes an RGB array/filename and adds an image overlay. Can optionally resize and
+#'position the overlay at a specific pixel location.
 #'
 #'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param image_overlay Default `NULL`. 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'This image will be resized to the dimension of the image if it does not match exactly.
 #'@param rescale_original Default `FALSE`. If `TRUE`, function will resize the original image to match
 #'the overlay.
-#'@param alpha Default `NA`, using overlay's alpha channel. Otherwise, this sets the alpha transparency
-#'by multiplying the existing alpha channel by this value (between 0 and 1).
 #'@param convert_overlay_colorspace Default `TRUE`. Whether to convert the overlay's colorspace
 #'to match the underlying image.
+#'@param alpha Default `NA`, using overlay's alpha channel. Otherwise, this sets the alpha transparency
+#'by multiplying the existing alpha channel by this value (between 0 and 1).
+#'@param overlay_coords Default `NULL`. Pixel coordinate `c(x, y)` at which to anchor the overlay.
+#'`x` increases from left to right and `y` from top to bottom, starting at 1.
+#'@param overlay_dims Default `NULL`. Dimensions for the overlay in pixels. If provided, the overlay is
+#'resized with `render_resized()` before compositing.
+#'@param overlay_anchor Default `"nw"`. Which corner of the overlay is placed at `overlay_coords`.
+#'Options: `"nw"`, `"ne"`, `"sw"`, `"se"`. The overlay is cropped to the image bounds if necessary.
 #'@param filename Default `NULL`. File to save the image to. If `NULL` and `preview = FALSE`,
 #'returns an RGB array.
 #'@param preview Default `FALSE`. If `TRUE`, it will display the image in addition
@@ -90,6 +97,9 @@ render_image_overlay = function(
 	rescale_original = FALSE,
 	convert_overlay_colorspace = TRUE,
 	alpha = NA,
+	overlay_coords = NULL,
+	overlay_dims = NULL,
+	overlay_anchor = "nw",
 	filename = NULL,
 	preview = FALSE
 ) {
@@ -112,13 +122,25 @@ render_image_overlay = function(
 	img_type = attr(image, "filetype")
 	over_type = attr(image_overlay, "filetype")
 
-	if (!rescale_original) {
+	if (!is.null(overlay_dims)) {
+		stopifnot(length(overlay_dims) >= 2)
+		overlay_dims = as.integer(round(overlay_dims[1:2]))
+		stopifnot(all(overlay_dims > 0))
+		image_overlay = render_resized(image_overlay, dims = overlay_dims)
+	}
+	placement_mode = !is.null(overlay_coords) || !is.null(overlay_dims)
+	if (rescale_original) {
+		target_dims = if (is.null(overlay_dims)) {
+			dim(image_overlay)[1:2]
+		} else {
+			overlay_dims
+		}
+		if (!all(dim(image)[1:2] == target_dims)) {
+			image = render_resized(image, dims = target_dims)
+		}
+	} else if (!placement_mode) {
 		if (!all(dim(image)[1:2] == dim(image_overlay)[1:2])) {
 			image_overlay = render_resized(image_overlay, dims = dim(image))
-		}
-	} else {
-		if (!all(dim(image)[1:2] == dim(image_overlay)[1:2])) {
-			image = render_resized(image, dims = dim(image_overlay))
 		}
 	}
 	is_matrix_image = length(dim(image)) == 2
@@ -153,6 +175,46 @@ render_image_overlay = function(
 
 	Cb = image[,, 1:3]
 	Ab = image[,, 4]
+
+	# Place overlay on a blank canvas at the requested location, cropping to bounds
+	valid_anchors = c("nw", "ne", "sw", "se")
+	overlay_anchor = tolower(overlay_anchor)
+	if (!(overlay_anchor %in% valid_anchors)) {
+		stop("`overlay_anchor` must be one of: ", paste(valid_anchors, collapse = ", "))
+	}
+	if (is.null(overlay_coords)) {
+		overlay_coords = c(1, 1)
+	}
+	stopifnot(length(overlay_coords) >= 2)
+	if (any(!is.finite(overlay_coords))) {
+		stop("`overlay_coords` must be finite.")
+	}
+	overlay_coords = as.integer(round(overlay_coords[1:2]))
+	overlay_size = dim(image_overlay)[1:2]
+	start_row = overlay_coords[2]
+	start_col = overlay_coords[1]
+	if (overlay_anchor %in% c("sw", "se")) {
+		start_row = overlay_coords[2] - overlay_size[1] + 1
+	}
+	if (overlay_anchor %in% c("ne", "se")) {
+		start_col = overlay_coords[1] - overlay_size[2] + 1
+	}
+	end_row = start_row + overlay_size[1] - 1
+	end_col = start_col + overlay_size[2] - 1
+	target_rows = seq(start_row, end_row)
+	target_cols = seq(start_col, end_col)
+	rows_in_bounds = target_rows >= 1 & target_rows <= dim(image)[1]
+	cols_in_bounds = target_cols >= 1 & target_cols <= dim(image)[2]
+	overlay_canvas = array(0, dim = dim(image))
+	if (any(rows_in_bounds) && any(cols_in_bounds)) {
+		dest_rows = target_rows[rows_in_bounds]
+		dest_cols = target_cols[cols_in_bounds]
+		src_rows = which(rows_in_bounds)
+		src_cols = which(cols_in_bounds)
+		overlay_canvas[dest_rows, dest_cols, ] = image_overlay[src_rows, src_cols, ]
+	}
+	image_overlay = overlay_canvas
+
 	Cf = image_overlay[,, 1:3]
 	Af = image_overlay[,, 4]
 
