@@ -345,8 +345,6 @@ bool IsDNGFromMemory(const char* mem, unsigned int size, std::string* msg);
 #endif
 
 #ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Weverything"
 #endif
 
 //#define TINY_DNG_LOADER_DEBUG
@@ -402,27 +400,16 @@ bool IsDNGFromMemory(const char* mem, unsigned int size, std::string* msg);
 
 
 #ifdef __clang__
-#pragma clang diagnostic pop
 #endif
 
 #ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Weverything"
 #endif
 
 #ifdef __GNUC__
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wall"
-#pragma GCC diagnostic ignored "-Wsign-compare"
-#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 #endif
 
 
 #ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4100)
-#pragma warning(disable : 4334)
-#pragma warning(disable : 4244)
 #endif
 
 #ifdef TINY_DNG_LOADER_ENABLE_ZIP
@@ -439,51 +426,27 @@ bool IsDNGFromMemory(const char* mem, unsigned int size, std::string* msg);
 #endif
 
 #ifdef __clang__
-#pragma clang diagnostic pop
 #endif
 
 #ifdef __GNUC__
-#pragma GCC diagnostic pop
 #endif
 
 
 #ifdef _MSC_VER
-#pragma warning(pop)
 #endif
 
 namespace tinydng {
 
 #ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wc++11-extensions"
-#pragma clang diagnostic ignored "-Wold-style-cast"
-#pragma clang diagnostic ignored "-Wconversion"
-#pragma clang diagnostic ignored "-Wunused-parameter"
-#pragma clang diagnostic ignored "-Wcast-align"
-#pragma clang diagnostic ignored "-Wconditional-uninitialized"
-#pragma clang diagnostic ignored "-Wunused-function"
-#pragma clang diagnostic ignored "-Wpadded"
-#pragma clang diagnostic ignored "-Wmissing-prototypes"
-#pragma clang diagnostic ignored "-Wreserved-id-macro"
-#pragma clang diagnostic ignored "-Wdisabled-macro-expansion"
-#pragma clang diagnostic ignored "-Wdouble-promotion"
-#pragma clang diagnostic ignored "-Wimplicit-fallthrough"
 #if __has_warning("-Wcomma")
-#pragma clang diagnostic ignored "-Wcomma"
 #endif
 #if __has_warning("-Wcast-qual")
-#pragma clang diagnostic ignored "-Wcast-qual"
 #endif
 #if __has_warning("-Wzero-as-null-pointer-constant")
-#pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
 #endif
 #endif
 
 #ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4100)
-#pragma warning(disable : 4334)
-#pragma warning(disable : 4244)
 #endif
 
 namespace {
@@ -1951,17 +1914,13 @@ int lj92_encode(uint16_t* image, int width, int height, int bitdepth,
 }  // namespace
 
 #ifdef __clang__
-#pragma clang diagnostic pop
 #endif
 
 #ifdef _MSC_VER
-#pragma warning(pop)
 #endif
 
 #ifdef __clang__
-#pragma clang diagnostic push
 #if __has_warning("-Wzero-as-null-pointer-constant")
-#pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
 #endif
 #endif
 
@@ -4724,8 +4683,6 @@ static bool IsBigEndian() {
 // Brief: LZW encoder/decoder in C++11 with varying length dictionary codes.
 //
 #ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wpadded"
 #endif
 namespace lzw {
 
@@ -5134,7 +5091,6 @@ static int easyDecode(const unsigned char* compressed,
 
 // =============================================================================
 #ifdef __clang__
-#pragma clang diagnostic pop
 #endif
 
 }  // namespace lzw
@@ -6306,7 +6262,6 @@ bool IsDNG(const char* filename, std::string* msg) {
 }
 
 #ifdef __clang__
-#pragma clang diagnostic pop
 #endif
 
 }  // namespace tinydng

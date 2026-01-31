@@ -357,8 +357,6 @@ namespace tinydngwriter {
 namespace detail {
 
 #ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Weverything"
 #endif
 
 // Begin liblj92, Lossless JPEG decode/encoder ------------------------------
@@ -908,15 +906,12 @@ int lj92_encode(uint16_t *image, int width, int height, int bitdepth,
 // End liblj92 ---------------------------------------------------------
 
 #ifdef __clang__
-#pragma clang diagnostic pop
 #endif
 
 }  // namespace detail
 
 #ifdef __clang__
-#pragma clang diagnostic push
 #if __has_warning("-Wzero-as-null-pointer-constant")
-#pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
 #endif
 #endif
 
@@ -2575,7 +2570,6 @@ bool DNGWriter::WriteToFile(const char *filename, std::string *err) const {
 }
 
 #ifdef __clang__
-#pragma clang diagnostic pop
 #endif
 
 }  // namespace tinydngwriter
