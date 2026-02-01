@@ -59,10 +59,12 @@
 <url><loc>https://www.rayimage.dev/reference/render_image_overlay.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_reorient.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_resized.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_stack.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_text_image.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_title.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_to_display.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_tonemap.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_vibrance.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_vignette.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_white_balance.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/rgb_to_hex.html</loc></url>

@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.23.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.24.0</span>
       </span>
     </div>
 
@@ -100,19 +100,19 @@
 
 <dt id="arg-width-limits">width_limits<a class="anchor" aria-label="anchor" href="#arg-width-limits"></a></dt>
 <dd><p>Default <code>NULL</code>. Length-2 numeric <code>(xmin, xmax)</code> along the width (x/columns).
-Values in <code>[0,1]</code> are treated as fractions of image width; otherwise they are pixel indices.
+Values in 0..1 are treated as fractions of image width; otherwise they are pixel indices.
 Mutually exclusive with <code>center</code>. If provided alone, <code>height_limits</code> defaults to full height.</p></dd>
 
 
 <dt id="arg-height-limits">height_limits<a class="anchor" aria-label="anchor" href="#arg-height-limits"></a></dt>
 <dd><p>Default <code>NULL</code>. Length-2 numeric <code>(ymin, ymax)</code> along the height (y/rows).
-Values in <code>[0,1]</code> are treated as fractions of image height; otherwise they are pixel indices.
+Values in 0..1 are treated as fractions of image height; otherwise they are pixel indices.
 Mutually exclusive with <code>center</code>. If provided alone, <code>width_limits</code> defaults to full width.</p></dd>
 
 
 <dt id="arg-center">center<a class="anchor" aria-label="anchor" href="#arg-center"></a></dt>
 <dd><p>Default <code>NULL</code>. Length-2 numeric <code>(height, width)</code> for a center-crop.
-Values in <code>(0,1]</code> are treated as fractions of <code>(image height, image width)</code>; otherwise pixels.
+Values in (0,1] are treated as fractions of <code>(image height, image width)</code>; otherwise pixels.
 Mutually exclusive with <code>width_limits</code>/<code>height_limits</code>.</p></dd>
 
 
