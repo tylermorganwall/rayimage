@@ -255,8 +255,14 @@ render_title = function(
 			image_width = diff(vp$xscale)
 			image_height = abs(diff(vp$yscale))
 
-			# Available width for text
-			available_width = image_width - padding_x * 2
+			# Available width for text depends on horizontal justification.
+			# For left/right aligned text, `padding_x` is only applied on one side.
+			available_width = if (identical(title_just[1], "center")) {
+				image_width - padding_x * 2
+			} else {
+				image_width - padding_x
+			}
+			available_width = max(0, available_width)
 
 			# Wrap text into lines based on available width
 			wrap_text = function(text, available_width) {
