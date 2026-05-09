@@ -3,6 +3,7 @@
 A matrix or a 2/3/4 layer array
 It tracks whether the source data was linearized
 It carries working colorspace/white
+It carries informational exposure/ISO metadata
 
 "><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -22,7 +23,7 @@ It carries working colorspace/white
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.24.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.25.0</span>
       </span>
     </div>
 
@@ -82,6 +83,7 @@ It carries working colorspace/white
     <p>This class will always be:</p><ul><li><p>A matrix or a 2/3/4 layer array</p></li>
 <li><p>It tracks whether the source data was linearized</p></li>
 <li><p>It carries working colorspace/white</p></li>
+<li><p>It carries informational exposure/ISO metadata</p></li>
 </ul></div>
 
     <div id="ref-usage">
@@ -90,7 +92,9 @@ It carries working colorspace/white
 <span>  filetype <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  source_linear <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  colorspace <span class="op">=</span> <span class="va">CS_ACESCG</span>,</span>
-<span>  white_current <span class="op">=</span> <span class="va">colorspace</span><span class="op">$</span><span class="va">white_xyz</span></span>
+<span>  white_current <span class="op">=</span> <span class="va">colorspace</span><span class="op">$</span><span class="va">white_xyz</span>,</span>
+<span>  exposure <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"exposure"</span>, exact <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  iso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"iso"</span>, exact <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -116,6 +120,14 @@ It carries working colorspace/white
 
 <dt id="arg-white-current">white_current<a class="anchor" aria-label="anchor" href="#arg-white-current"></a></dt>
 <dd><p>Default <code>colorspace$white_xyz</code>. Current assumed scene/display white (XYZ, Y=1).</p></dd>
+
+
+<dt id="arg-exposure">exposure<a class="anchor" aria-label="anchor" href="#arg-exposure"></a></dt>
+<dd><p>Default <code>0</code>. Informational exposure compensation in stops.</p></dd>
+
+
+<dt id="arg-iso">iso<a class="anchor" aria-label="anchor" href="#arg-iso"></a></dt>
+<dd><p>Default <code>100</code>. Informational ISO value.</p></dd>
 
 </dl></div>
     <div id="value">
