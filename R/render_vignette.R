@@ -52,7 +52,7 @@ render_vignette = function(
 	filename = NULL,
 	preview = FALSE
 ) {
-	image = ray_read_image(image)
+	image = ray_read_image(image, reset_camera_settings = TRUE)
 	dimensions = dim(image)
 
 	if (!("magick" %in% rownames(utils::installed.packages()))) {

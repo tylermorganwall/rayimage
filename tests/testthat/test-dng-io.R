@@ -10,7 +10,7 @@ test_that("DNG roundtrip mosaic preserves values", {
 
 	tmp = tempfile(fileext = ".dng")
 	ray_write_image(mosaic, tmp)
-	out = ray_read_image(tmp)
+	out = ray_read_image(tmp, dng_normalize = TRUE)
 
 	diff = max(abs(as.matrix(out) - mosaic))
 	expect_true(diff <= (1 / 65535 + 1e-6))

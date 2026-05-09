@@ -44,7 +44,9 @@ add_padding = function(input) {
       filetype = attr(input, "filetype"),
       source_linear = attr(input, "source_linear"),
       colorspace = attr(input, "colorspace"),
-      white_current = attr(input, "white_current")
+      white_current = attr(input, "white_current"),
+      exposure = attr(input, "exposure", exact = TRUE),
+      iso = attr(input, "iso", exact = TRUE)
     )
   }
   temp

@@ -31,7 +31,7 @@ render_clamp = function(
 	preview = FALSE,
 	...
 ) {
-	image = ray_read_image(image) #Always output RGBA array
+	image = ray_read_image(image, reset_camera_settings = TRUE) #Always output RGBA array
 	imagetype = attr(image, "filetype")
 	img_source_linear = attr(image, "source_linear")
 	colorspace = attr(image, "colorspace")

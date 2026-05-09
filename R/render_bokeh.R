@@ -83,11 +83,15 @@ render_bokeh = function(
 	progress = interactive(),
 	...
 ) {
-	temp_image = ray_read_image(image) #Always output RGBA array
+	temp_image = ray_read_image(image, reset_camera_settings = TRUE) #Always output RGBA array
 	#Check if file or image before below:
 	imagetype = attr(temp_image, "filetype")
 
-	depthmap = ray_read_image(depthmap, convert_to_array = FALSE)
+	depthmap = ray_read_image(
+		depthmap,
+		convert_to_array = FALSE,
+		reset_camera_settings = TRUE
+	)
 	depthtype = attr(depthmap, "filetype")
 
 	if (preview_focus) {

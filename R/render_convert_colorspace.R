@@ -124,7 +124,9 @@ render_convert_colorspace = function(
 		filetype = attr(src, "filetype"),
 		source_linear = TRUE,
 		colorspace = to_mats,
-		white_current = white_tag$value
+		white_current = white_tag$value,
+		exposure = attr(src, "exposure", exact = TRUE),
+		iso = attr(src, "iso", exact = TRUE)
 	)
 
 	handle_image_output(out, filename = filename, preview = preview)

@@ -39,10 +39,10 @@ plot_image = function(
 	show_linear = FALSE
 ) {
 	img = ray_read_image(image, convert_to_array = TRUE) # rayimg RGBA
-	cs_from = attr(img, "colorspace")
-	white_curr = attr(img, "white_current")
 
 	display = img
+	cs_from = attr(display, "colorspace")
+	white_curr = attr(display, "white_current")
 
 	display = render_clamp(display)
 	display[is.na(display)] = 0

@@ -108,7 +108,11 @@ render_convolution_fft = function(
     fftcorn_se = fft_mat[nr_mid2:nr, nc_mid2:nc]
     rbind(cbind(fftcorn_se, fftcorn_sw), cbind(fftcorn_ne, fftcorn_nw))
   }
-  temp_image = ray_read_image(image, convert_to_array = FALSE)
+  temp_image = ray_read_image(
+    image,
+    convert_to_array = FALSE,
+    reset_camera_settings = TRUE
+  )
   colorspace = attr(temp_image, "colorspace")
   whitepoint = attr(temp_image, "white_current")
 

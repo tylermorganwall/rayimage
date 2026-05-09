@@ -26,6 +26,9 @@
 #' @param assume_white Default `NULL`. Scene/display white for the loaded image.
 #'   Either a named white (`"D60","D65","D50","D55","D75","E"`) or XYZ with Y=1.
 #'   If `NULL`, uses `assume_colorspace$white_xyz`.
+#' @param reset_camera_settings Default `FALSE`. If `TRUE`, reset informational
+#'   exposure/ISO metadata to neutral values (`exposure = 0`, `iso = 100`) when
+#'   wrapping an existing `rayimg` or attributed array.
 #'
 #'@param ... Arguments to pass to `jpeg::readJPEG`, `png::readPNG`, `tiff::readTIFF`,
 #'or `libopenexr::read_exr()` for supported formats.
@@ -78,6 +81,7 @@ ray_read_image = function(
 	normalize_adapt_white = TRUE,
 	assume_colorspace = NULL,
 	assume_white = NULL,
+	reset_camera_settings = FALSE,
 	...
 ) {
 	decode_if_needed = function(img, linear_flag) {
@@ -172,7 +176,9 @@ ray_read_image = function(
 			filetype = img_type,
 			source_linear = decoded$source_linear,
 			colorspace = cs,
-			white_current = wc
+			white_current = wc,
+			exposure = if (reset_camera_settings) 0 else attr(img, "exposure", exact = TRUE),
+			iso = if (reset_camera_settings) 100 else attr(img, "iso", exact = TRUE)
 		)
 		if (normalize) {
 			ri = render_convert_colorspace(
@@ -203,7 +209,9 @@ ray_read_image = function(
 			filetype = attr(image, "filetype"),
 			source_linear = attr(image, "source_linear"),
 			colorspace = cs_assigned,
-			white_current = wc_assigned
+			white_current = wc_assigned,
+			exposure = if (reset_camera_settings) 0 else attr(image, "exposure", exact = TRUE),
+			iso = if (reset_camera_settings) 100 else attr(image, "iso", exact = TRUE)
 		)
 		return(ri) # no normalization on rayimg here
 	}

@@ -110,7 +110,9 @@ render_white_balance = function(
 		filetype = attr(src, "filetype"),
 		source_linear = attr(src, "source_linear"),
 		colorspace = cs, # primaries unchanged
-		white_current = src_wp$value # Keep the original tag to bake in the new color
+		white_current = src_wp$value, # Keep the original tag to bake in the new color
+		exposure = attr(src, "exposure", exact = TRUE),
+		iso = attr(src, "iso", exact = TRUE)
 	)
 	handle_image_output(out, filename = filename, preview = preview)
 }

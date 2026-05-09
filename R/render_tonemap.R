@@ -42,7 +42,11 @@ render_tonemap = function(
 	preview = FALSE
 ) {
 	method = match.arg(method)
-	src = ray_read_image(image, convert_to_array = TRUE)
+	src = ray_read_image(
+		image,
+		convert_to_array = TRUE,
+		reset_camera_settings = TRUE
+	)
 	imagetype = attr(src, "filetype")
 	img_source_linear = attr(src, "source_linear")
 	colorspace = attr(src, "colorspace")

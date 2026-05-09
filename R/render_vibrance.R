@@ -46,7 +46,7 @@ render_vibrance = function(
 
 	vibrance = max(min(vibrance, 1), -1)
 
-	temp_image = ray_read_image(image) # returns RGBA array in rayimage
+	temp_image = ray_read_image(image, reset_camera_settings = TRUE) # returns RGBA array in rayimage
 
 	nr = dim(temp_image)[1]
 	nc = dim(temp_image)[2]

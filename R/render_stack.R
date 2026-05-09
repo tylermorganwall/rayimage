@@ -90,7 +90,11 @@ render_stack = function(
 	}
 
 	images = lapply(input_list, function(img) {
-		ray_read_image(img, convert_to_array = TRUE)
+		ray_read_image(
+			img,
+			convert_to_array = TRUE,
+			reset_camera_settings = TRUE
+		)
 	})
 
 	base_image = images[[1]]

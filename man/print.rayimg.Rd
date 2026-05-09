@@ -21,5 +21,5 @@
 Invisibly returns \code{x}.
 }
 \description{
-Displays the working colorspace metadata alongside a numeric preview.
+Displays the working colorspace and non-neutral camera metadata alongside a numeric preview.
 }

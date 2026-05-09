@@ -9,7 +9,9 @@ rayimg(
   filetype = NULL,
   source_linear = FALSE,
   colorspace = CS_ACESCG,
-  white_current = colorspace$white_xyz
+  white_current = colorspace$white_xyz,
+  exposure = attr(x, "exposure", exact = TRUE),
+  iso = attr(x, "iso", exact = TRUE)
 )
 }
 \arguments{
@@ -22,6 +24,10 @@ rayimg(
 \item{colorspace}{Default \code{CS_ACESCG}. Working space descriptor (see \code{make_colorspace()}).}
 
 \item{white_current}{Default \code{colorspace$white_xyz}. Current assumed scene/display white (XYZ, Y=1).}
+
+\item{exposure}{Default \code{0}. Informational exposure compensation in stops.}
+
+\item{iso}{Default \code{100}. Informational ISO value.}
 }
 \value{
 An object of class \verb{c("rayimg", <original class>)} with attributes.
@@ -32,6 +38,7 @@ This class will always be:
 \item A matrix or a 2/3/4 layer array
 \item It tracks whether the source data was linearized
 \item It carries working colorspace/white
+\item It carries informational exposure/ISO metadata
 }
 }
 \keyword{internal}

@@ -12,7 +12,11 @@ render_to_display = function(
 	encode = TRUE,
 	adapt_white = TRUE
 ) {
-	img = ray_read_image(image, normalize = FALSE)
+	img = ray_read_image(
+		image,
+		normalize = FALSE,
+		reset_camera_settings = TRUE
+	)
 	# Ensure linear before color conversion
 	if (!isTRUE(attr(img, "source_linear"))) {
 		img = render_gamma_linear(img, srgb_to_linear = TRUE)

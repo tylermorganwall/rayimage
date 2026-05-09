@@ -2,14 +2,37 @@
 % Please edit documentation in R/render_exposure.R
 \name{render_exposure}
 \alias{render_exposure}
-\title{Apply exposure compensation (in stops)}
+\title{Apply exposure compensation and ISO gain}
 \usage{
-render_exposure(image, exposure = 0, filename = NA, preview = FALSE, ...)
+render_exposure(
+  image,
+  exposure = 0,
+  iso = NA,
+  auto = FALSE,
+  percentile = 0.99,
+  verbose = FALSE,
+  filename = NA,
+  preview = FALSE,
+  ...
+)
 }
 \arguments{
 \item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, or filename of an image.}
 
-\item{exposure}{Default \code{0}. Exposure compensation in stops; RGB is scaled by \code{2^exposure}.}
+\item{exposure}{Default \code{0}. Exposure compensation in stops; applied directly to RGB values.}
+
+\item{iso}{Default \code{NA}. ISO gain to apply directly to RGB values. \code{NA} applies no ISO gain
+and preserves the current informational ISO metadata.}
+
+\item{auto}{Default \code{FALSE}. If \code{TRUE}, automatically add the exposure needed to
+place a luminance percentile at 1.0 for LDR display/output. \code{exposure}
+is then treated as an additional compensation value.}
+
+\item{percentile}{Default \code{0.99}. Luminance percentile used when \code{auto = TRUE}.
+Must be greater than 0 and less than or equal to 1. Use \code{1} for max luminance.}
+
+\item{verbose}{Default \code{FALSE}. If \code{TRUE} and \code{auto = TRUE}, print the
+automatically computed exposure adjustment.}
 
 \item{filename}{Default \code{NA}. Output path.}
 
@@ -22,10 +45,10 @@ or to \code{\link[=ray_write_image]{ray_write_image()}} (when \code{filename} is
 A \code{rayimg} RGBA array.
 }
 \description{
-Apply exposure compensation (in stops)
+Apply exposure compensation and ISO gain
 }
 \examples{
-# LDR/sRGB (auto): decodes to linear, applies EV, re-encodes
+# LDR/sRGB (auto): decodes to linear, applies EV, records camera metadata
 if (run_documentation()) {
   render_exposure(dragon, exposure = +1, preview = TRUE)
 }

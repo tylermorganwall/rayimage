@@ -4,12 +4,15 @@
 #'  * A matrix or a 2/3/4 layer array
 #'  * It tracks whether the source data was linearized
 #'  * It carries working colorspace/white
+#'  * It carries informational exposure/ISO metadata
 #'
 #' @param x Default `NULL`. The underlying array/matrix to wrap.
 #' @param filetype Default `NULL`. Original source type to record (e.g., "png").
 #' @param source_linear Default `FALSE`. Whether the original source was linearized.
 #' @param colorspace Default `CS_ACESCG`. Working space descriptor (see `make_colorspace()`).
 #' @param white_current Default `colorspace$white_xyz`. Current assumed scene/display white (XYZ, Y=1).
+#' @param exposure Default `0`. Informational exposure compensation in stops.
+#' @param iso Default `100`. Informational ISO value.
 #'
 #' @return An object of class `c("rayimg", <original class>)` with attributes.
 #' @keywords internal
@@ -18,7 +21,9 @@ rayimg = function(
 	filetype = NULL,
 	source_linear = FALSE,
 	colorspace = CS_ACESCG,
-	white_current = colorspace$white_xyz
+	white_current = colorspace$white_xyz,
+	exposure = attr(x, "exposure", exact = TRUE),
+	iso = attr(x, "iso", exact = TRUE)
 ) {
 	if (is.null(x)) {
 		stop("rayimg(): 'x' cannot be NULL.")
@@ -37,6 +42,8 @@ rayimg = function(
 	# required attrs
 	attr(x_new, "filetype") = filetype
 	attr(x_new, "source_linear") = source_linear
+	attr(x_new, "exposure") = rayimg_exposure_value(exposure)
+	attr(x_new, "iso") = rayimg_iso_value(iso)
 
 	# new attrs for color mgmt
 	stopifnot(
@@ -45,8 +52,42 @@ rayimg = function(
 	)
 	attr(x_new, "colorspace") = colorspace
 	attr(x_new, "white_current") = white_current
+	if (!is.null(attr(x, "dng", exact = TRUE))) {
+		attr(x_new, "dng") = attr(x, "dng", exact = TRUE)
+	}
 	class(x_new) = c("rayimg", setdiff(class(x), "rayimg"))
 	x_new
+}
+
+rayimg_exposure_value = function(exposure) {
+	if (is.null(exposure) || length(exposure) == 0L) {
+		return(0)
+	}
+	if (
+		!is.numeric(exposure) ||
+			length(exposure) != 1L ||
+			is.na(exposure) ||
+			!is.finite(exposure)
+	) {
+		stop("rayimg(): 'exposure' must be a finite numeric value.")
+	}
+	as.numeric(exposure)
+}
+
+rayimg_iso_value = function(iso) {
+	if (is.null(iso) || length(iso) == 0L) {
+		return(100)
+	}
+	if (
+		!is.numeric(iso) ||
+			length(iso) != 1L ||
+			is.na(iso) ||
+			!is.finite(iso) ||
+			iso <= 0
+	) {
+		stop("rayimg(): 'iso' must be a positive finite numeric value.")
+	}
+	as.numeric(iso)
 }
 
 rayimg_channels_from_count = function(n) {
@@ -121,8 +162,13 @@ rayimg_validate_dimensions = function(x) {
 	# carry attrs
 	attr(y, "filetype") = attr(x, "filetype")
 	attr(y, "source_linear") = attr(x, "source_linear")
+	attr(y, "exposure") = attr(x, "exposure")
+	attr(y, "iso") = attr(x, "iso")
 	attr(y, "colorspace") = attr(x, "colorspace")
 	attr(y, "white_current") = attr(x, "white_current")
+	if (!is.null(attr(x, "dng", exact = TRUE))) {
+		attr(y, "dng") = attr(x, "dng", exact = TRUE)
+	}
 
 	if (!is.null(ch)) {
 		if (nd >= 3L) {

@@ -99,7 +99,11 @@ render_title = function(
 	preview = FALSE
 ) {
 	#Always output RGBA array, need to ensure alpha is preserved
-	image = ray_read_image(image, convert_to_array = TRUE)
+	image = ray_read_image(
+		image,
+		convert_to_array = TRUE,
+		reset_camera_settings = TRUE
+	)
 
 	temp = tempfile(fileext = ".png")
 	ray_write_image(

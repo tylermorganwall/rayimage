@@ -108,7 +108,11 @@ render_convolution = function(
       kernel = newkernel
     }
   }
-  temp_image = ray_read_image(image, convert_to_array = FALSE)
+  temp_image = ray_read_image(
+    image,
+    convert_to_array = FALSE,
+    reset_camera_settings = TRUE
+  )
   colorspace = attr(temp_image, "colorspace")
   whitepoint = attr(temp_image, "white_current")
   imagetype = attr(temp_image, "filetype")

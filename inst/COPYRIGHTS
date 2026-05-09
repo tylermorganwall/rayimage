@@ -1,0 +1,23 @@
+Third-party header-only code bundled with rayimage
+
+The following files are included under inst/include and retain their original
+copyright and license notices in the file headers.
+
+tinydng
+Files:
+  inst/include/tinydng/tiny_dng_loader.h
+  inst/include/tinydng/tiny_dng_writer.h
+Copyright:
+  Copyright (c) 2016 - Present, Syoyo Fujita and many contributors.
+  Copyright (c) 2016 - 2020 Syoyo Fujita.
+License:
+  MIT license. See the notices in the corresponding headers.
+
+stb_image_resize
+File:
+  inst/include/stb_image_resize.h
+Copyright:
+  Copyright (c) 2017 Sean Barrett
+License:
+  Dual-licensed under the MIT license or public domain alternative as stated
+  in the header.

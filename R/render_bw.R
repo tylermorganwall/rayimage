@@ -24,7 +24,7 @@ render_bw = function(
 	preview = FALSE
 ) {
 	stopifnot(length(rgb_coef) == 3 && is.numeric(rgb_coef))
-	src = ray_read_image(image)
+	src = ray_read_image(image, reset_camera_settings = TRUE)
 	imagetype = attr(src, "filetype")
 	img_source_linear = attr(src, "source_linear")
 	colorspace = attr(src, "colorspace")
@@ -34,7 +34,7 @@ render_bw = function(
 	is_array = length(d) == 3
 
 	if (attr(src, "filetype") == "matrix" || (is_array && d[3] == 2)) {
-		return(image)
+		return(handle_image_output(src, filename = filename, preview = preview))
 	}
 
 	# luminance

@@ -254,7 +254,7 @@ render_text_image = function(
   )
   grDevices::dev.off(which = dev_id)
 
-  temp = ray_read_image(temp_filename)
+  temp = ray_read_image(temp_filename, reset_camera_settings = TRUE)
 
   handle_image_output(temp, filename = filename, preview = preview)
 }

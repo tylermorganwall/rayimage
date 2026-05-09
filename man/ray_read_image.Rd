@@ -15,6 +15,7 @@ ray_read_image(
   normalize_adapt_white = TRUE,
   assume_colorspace = NULL,
   assume_white = NULL,
+  reset_camera_settings = FALSE,
   ...
 )
 }
@@ -50,6 +51,10 @@ unless \code{normalize=TRUE}.}
 \item{assume_white}{Default \code{NULL}. Scene/display white for the loaded image.
 Either a named white (\verb{"D60","D65","D50","D55","D75","E"}) or XYZ with Y=1.
 If \code{NULL}, uses \code{assume_colorspace$white_xyz}.}
+
+\item{reset_camera_settings}{Default \code{FALSE}. If \code{TRUE}, reset informational
+exposure/ISO metadata to neutral values (\code{exposure = 0}, \code{iso = 100}) when
+wrapping an existing \code{rayimg} or attributed array.}
 
 \item{...}{Arguments to pass to \code{jpeg::readJPEG}, \code{png::readPNG}, \code{tiff::readTIFF},
 or \code{libopenexr::read_exr()} for supported formats.}

@@ -108,10 +108,18 @@ render_image_overlay = function(
 	}
 
 	# Load as rayimg (RGBA + attrs)
-	image = ray_read_image(image, convert_to_array = TRUE)
+	image = ray_read_image(
+		image,
+		convert_to_array = TRUE,
+		reset_camera_settings = TRUE
+	)
 	image_colorspace = attr(image, "colorspace")
 	image_whitepoint = attr(image, "white_current")
-	image_overlay = ray_read_image(image_overlay, convert_to_array = TRUE)
+	image_overlay = ray_read_image(
+		image_overlay,
+		convert_to_array = TRUE,
+		reset_camera_settings = TRUE
+	)
 	if (convert_overlay_colorspace) {
 		image_overlay = render_convert_colorspace(
 			image_overlay,

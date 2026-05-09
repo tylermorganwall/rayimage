@@ -60,7 +60,12 @@ render_color_correction = function(
 	preview = FALSE
 ) {
 	stopifnot(is.matrix(matrix), all(dim(matrix) == c(3, 3)), is.numeric(matrix))
-	src = ray_read_image(image, convert_to_array = TRUE, normalize = FALSE)
+	src = ray_read_image(
+		image,
+		convert_to_array = TRUE,
+		normalize = FALSE,
+		reset_camera_settings = TRUE
+	)
 	imagetype = attr(src, "filetype")
 	img_source_linear = attr(src, "source_linear")
 	colorspace = attr(src, "colorspace")

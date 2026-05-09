@@ -1,6 +1,6 @@
 #' Print method for rayimg
 #'
-#' Displays the working colorspace metadata alongside a numeric preview.
+#' Displays the working colorspace and non-neutral camera metadata alongside a numeric preview.
 #'
 #' @param x Default `NULL`. A `rayimg` object.
 #' @param preview_n Default `10`. Max rows/cols to display in numeric preview.
@@ -21,6 +21,8 @@ print.rayimg = function(
   if (is.null(ft)) ft = "unknown"
   d = dim(x)
   image_type = attr(x, "filetype")
+  exposure_attr = rayimg_exposure_value(attr(x, "exposure", exact = TRUE))
+  iso_attr = rayimg_iso_value(attr(x, "iso", exact = TRUE))
 
   opt_override = getOption("rayimage.color", NA)
   want_color = isTRUE(color) && !isFALSE(opt_override)
@@ -40,6 +42,23 @@ print.rayimg = function(
   col_red = function(z) if (can_color) cli::col_red(z) else z
   col_green = function(z) if (can_color) cli::col_green(z) else z
   col_blue = function(z) if (can_color) cli::col_blue(z) else z
+
+  print_camera_settings = function() {
+    if (isTRUE(all.equal(exposure_attr, 0)) && isTRUE(all.equal(iso_attr, 100))) {
+      return(invisible(NULL))
+    }
+    cat(
+      "  ",
+      col_silver("Exposure: "),
+      col_cyan(sprintf("%+.3g EV", exposure_attr)),
+      "  ",
+      col_silver("ISO: "),
+      col_cyan(format(iso_attr, trim = TRUE, scientific = FALSE)),
+      "\n",
+      sep = ""
+    )
+    invisible(NULL)
+  }
 
   hell = if (
     requireNamespace("cli", quietly = TRUE) &&
@@ -65,6 +84,7 @@ print.rayimg = function(
       "\n",
       sep = ""
     )
+    print_camera_settings()
     y_plain = formatC(as.numeric(x), format = "f", digits = decimals)
     print(y_plain, quote = FALSE, right = TRUE)
     return(invisible(x))
@@ -144,6 +164,7 @@ print.rayimg = function(
     "\n",
     sep = ""
   )
+  print_camera_settings()
 
   # Numeric preview
   rmax = min(h, preview_n)

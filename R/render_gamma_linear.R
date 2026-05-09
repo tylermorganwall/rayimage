@@ -140,6 +140,8 @@ render_gamma_linear = function(color, srgb_to_linear = TRUE, as_hex = FALSE) {
 			stop("render_gamma_linear(): unsupported rayimg shape for hex.")
 		}
 		attr(out, "source_linear") = srgb_to_linear
+		attr(out, "exposure") = 0
+		attr(out, "iso") = 100
 		return(out)
 	}
 
