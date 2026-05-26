@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.25.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.25.1</span>
       </span>
     </div>
 
@@ -101,7 +101,7 @@
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p><strong>rayimage</strong> is an open source R package for image manipulation and simulated camera effects. <strong>rayfocus</strong> uses convolution-based techniques to generate simulated camera bokeh, depth of field, and other camera effects, using an image and an optional depth map. It includes functions to perform 2D convolutions, add image overlays, generate camera vignette effects, and add titles to images.</p>
+<p><strong>rayimage</strong> is an open source R package for image manipulation and simulated camera effects. <strong>rayimage</strong> uses convolution-based techniques to generate simulated camera bokeh, depth of field, and other camera effects, using an image and an optional depth map. It includes functions to perform 2D convolutions, add image overlays, generate camera vignette effects, and add titles to images.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -225,7 +225,7 @@
 <code class="sourceCode R"><span><span class="co">#Plot an emoji with the agg device and increase resolution.</span></span>
 <span><span class="fu"><a href="reference/render_text_image.html">render_text_image</a></span><span class="op">(</span><span class="st">"😀🚀"</span>, size <span class="op">=</span> <span class="fl">500</span>, background_alpha <span class="op">=</span> <span class="fl">0</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/emoji-2.png"><!-- --></p>
-<p>We can also resize images and matrices with <code>render_resize()</code>. We can do this before adding text to make the resulting text smoother.</p>
+<p>We can also resize images and matrices with <code><a href="reference/render_resized.html">render_resized()</a></code>. We can do this before adding text to make the resulting text smoother.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Double the input size to make the resulting text smoother.</span></span>
 <span><span class="va">image3</span> <span class="op">=</span> <span class="va">dragon</span> <span class="op">|&gt;</span></span>
