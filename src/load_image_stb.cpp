@@ -1,7 +1,6 @@
 #include <vector>
 #include <memory>
 #include <string>
-#include <algorithm>
 #include "Rcpp.h"
 #include <filesystem>
 
@@ -13,13 +12,6 @@
 
 namespace fs = std::filesystem;
 
-std::string StandardizeFilename(const std::string& filename) {
-  std::string result = filename;
-  std::transform(result.begin(), result.end(), result.begin(),
-                 [](unsigned char c) { return std::tolower(c); });
-  return result;
-}
-
 // [[Rcpp::export]]
 Rcpp::NumericVector load_image_stb(const std::string& filename,
                                    int& width,
@@ -28,10 +20,11 @@ Rcpp::NumericVector load_image_stb(const std::string& filename,
                                    int desired_channels) {
   width = height = channels = 0;
 
-  std::string standardizedFilename = StandardizeFilename(filename);
-  fs::path filepath(standardizedFilename);
+  const fs::path filepath(filename);
+  const std::string filepath_string = filepath.string();
 
-  float* data = stbi_loadf(filename.c_str(), &width, &height, &channels, desired_channels);
+  float* data = stbi_loadf(filepath_string.c_str(), &width, &height, &channels,
+                           desired_channels);
   if (!data) {
     throw std::runtime_error(
         "Loading of '" + filename + "' (float) failed: " +

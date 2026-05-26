@@ -20,7 +20,7 @@ coverage](https://codecov.io/gh/tylermorganwall/rayimage/graph/badge.svg)](https
 ## Overview
 
 **rayimage** is an open source R package for image manipulation and
-simulated camera effects. **rayfocus** uses convolution-based techniques
+simulated camera effects. **rayimage** uses convolution-based techniques
 to generate simulated camera bokeh, depth of field, and other camera
 effects, using an image and an optional depth map. It includes functions
 to perform 2D convolutions, add image overlays, generate camera vignette
@@ -219,7 +219,7 @@ render_text_image("😀🚀", size = 500, background_alpha = 0, preview = TRUE)
 
 ![](man/figures/emoji-2.png)<!-- -->
 
-We can also resize images and matrices with `render_resize()`. We can do
+We can also resize images and matrices with `render_resized()`. We can do
 this before adding text to make the resulting text smoother.
 
 ``` r

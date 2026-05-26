@@ -33,7 +33,7 @@ if user specifies their own kernel.}
 
 \item{absolute}{Default \code{TRUE}. Whether to take the absolute value of the convolution.}
 
-\item{min_value}{Default \code{NULL}. If numeric, specifies he minimum value (for any color channel)
+\item{min_value}{Default \code{NULL}. If numeric, specifies the minimum value (for any color channel)
 for a pixel to have the convolution performed.}
 
 \item{include_alpha}{Default \code{FALSE}. Whether to include the alpha channel in the convolution.}
@@ -48,7 +48,7 @@ for a pixel to have the convolution performed.}
 A \code{rayimg} RGBA array.
 }
 \description{
-Takes an image and applys a convolution operation to it, using
+Takes an image and applies a convolution operation to it, using
 a user-supplied or built-in kernel. Edges are calculated by limiting the size
 of the kernel to only that overlapping the actual image (renormalizing the
 kernel for the edges).
@@ -67,7 +67,7 @@ if(run_documentation()){
 render_convolution(dragon, kernel = 2, kernel_dim=21,kernel_extent=6, preview = TRUE)
 }
 if(run_documentation()){
-#Perform edge detection using a edge detection kernel
+#Perform edge detection using an edge detection kernel
 edge = matrix(c(-1,-1,-1,-1,8,-1,-1,-1,-1),3,3)
 render_convolution(render_bw(dragon), kernel = edge, preview = TRUE, absolute=FALSE)
 }

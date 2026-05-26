@@ -1,6 +1,6 @@
 #'@title Render Boolean Distance
 #'
-#'@description Takes an matrix (or  and returns the nearest distance to each TRUE.
+#'@description Takes a logical matrix and returns the nearest distance to each TRUE value.
 #'
 #'@param boolean Logical matrix (or matrix of 1s and 0s), where distance will be measured to the `TRUE` values.
 #'@param rescale Default `FALSE`. Rescales the calculated distance to a range of 0-1.

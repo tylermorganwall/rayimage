@@ -26,7 +26,7 @@ All methods operate on \strong{linear RGB} and return \strong{display-referred l
 \item{exposure_bias}{Default \code{2}. Only for \code{"uncharted"}.
 Scalar applied to the linear RGB channels \strong{before} the Uncharted/Hable curve
 (i.e., a pre-curve exposure gain). Values >1 brighten; <1 darken.
-\code{exposure_bias=2} is about +1 stop; \code{0.5} is about −1 stop.}
+\code{exposure_bias=2} is about +1 stop; \code{0.5} is about -1 stop.}
 
 \item{W}{Default \code{11.2}. White (linear scene value) that maps to 1.0 \strong{after}
 the Uncharted/Hable/Reinhard curve. Acts like a “white point” for the shoulder: larger values

@@ -15,7 +15,7 @@
 #' between `0` (fully transparent) and `1` (fully opaque).
 #' @param use_ragg Default `TRUE`. Whether to use the `ragg` package as the graphics device. Required for emojis.
 #' @param width Default `NA`. User-defined textbox width.
-#' @param height Default `NA`. User-defined textbox width.
+#' @param height Default `NA`. User-defined textbox height.
 #' @param check_text_width Default `TRUE`. Whether to manually adjust the bounding
 #' box of the resulting image to ensure the string bbox is wide enough for the text.
 #' Not all systems provide accurate font sizes: this ensures the string is not cut off

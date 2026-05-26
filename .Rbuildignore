@@ -8,6 +8,7 @@
 ^README_files$
 ^\.travis\.yml$
 ^build_gh_pages_rayimage\.R$
+^tools/build-cran\.R$
 ^man/figures$
 ^README\.md$
 ^README\.Rmd$
@@ -17,5 +18,7 @@
 ^.*\.DS_Store$
 ^compile_commands\.json$
 ^\.cache$
-^tests/*$
+^tests/testthat/Rplots\.pdf$
+^tests/testthat/testthat-problems\.rds$
+^tests/testthat/.*\.Rout(\.fail)?$
 ^\.vscode$

@@ -46,7 +46,7 @@ between \code{0} (fully transparent) and \code{1} (fully opaque).}
 
 \item{width}{Default \code{NA}. User-defined textbox width.}
 
-\item{height}{Default \code{NA}. User-defined textbox width.}
+\item{height}{Default \code{NA}. User-defined textbox height.}
 
 \item{filename}{Default \code{NULL}. String specifying the file path to save the resulting image.
 If \code{NULL} and \code{preview = FALSE}, the function returns the processed RGB array.}

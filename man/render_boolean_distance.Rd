@@ -16,7 +16,7 @@ Useful for visualizing the distance matrix.}
 Matrix of distance values.
 }
 \description{
-Takes an matrix (or  and returns the nearest distance to each TRUE.
+Takes a logical matrix and returns the nearest distance to each TRUE value.
 }
 \examples{
 if(run_documentation()){

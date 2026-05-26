@@ -13,11 +13,12 @@ Copyright:
 License:
   MIT license. See the notices in the corresponding headers.
 
-stb_image_resize
-File:
+stb
+Author:
+  Sean Barrett and contributors.
+Files:
   inst/include/stb_image_resize.h
-Copyright:
-  Copyright (c) 2017 Sean Barrett
+  src/ext/stb_image.h
 License:
-  Dual-licensed under the MIT license or public domain alternative as stated
-  in the header.
+  Public domain. The bundled headers retain the upstream notices and also state
+  the public domain terms.

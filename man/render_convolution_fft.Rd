@@ -44,8 +44,8 @@ if user specifies their own kernel.}
 A \code{rayimg} RGBA array.
 }
 \description{
-Takes an image and applys a convolution operation to it, using
-a user-supplied or built-in kernel. This function uses a fast-fourier transform and
+Takes an image and applies a convolution operation to it, using
+a user-supplied or built-in kernel. This function uses a fast Fourier transform and
 does the convolution in the frequency domain, so it should be faster for much larger kernels.
 }
 \examples{
@@ -90,7 +90,7 @@ volcano |>
  image()
 }
 if(run_documentation()){
-# Because this function uses the fast-fourier transform, large kernels will be much faster
+# Because this function uses the fast Fourier transform, large kernels will be much faster
 # than the same size kernels in [render_convolution()]
 render_convolution_fft(dragon, kernel_dim = c(200,200) , preview = TRUE)
 }

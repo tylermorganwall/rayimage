@@ -2,14 +2,14 @@
 % Please edit documentation in R/convert_to_native_raster.R
 \name{convert_to_native_raster}
 \alias{convert_to_native_raster}
-\title{Plot Image}
+\title{Convert to Native Raster}
 \usage{
 convert_to_native_raster(input)
 }
 \arguments{
-\item{input}{Array to get converted to a native raster}
+\item{input}{Matrix or image array to convert to a native raster.}
 }
 \description{
-Displays the image in the current device.
+Converts a matrix or image array to a native raster.
 }
 \keyword{internal}

@@ -12,7 +12,7 @@
 #' @param exposure_bias Default `2`. Only for `"uncharted"`.
 #' Scalar applied to the linear RGB channels **before** the Uncharted/Hable curve
 #' (i.e., a pre-curve exposure gain). Values >1 brighten; <1 darken.
-#' `exposure_bias=2` is about +1 stop; `0.5` is about −1 stop.
+#' `exposure_bias=2` is about +1 stop; `0.5` is about -1 stop.
 #' @param W Default `11.2`. White (linear scene value) that maps to 1.0 **after**
 #' the Uncharted/Hable/Reinhard curve. Acts like a “white point” for the shoulder: larger values
 #' preserve more highlight detail (later roll-off), smaller values roll off earlier and harder.
@@ -34,99 +34,99 @@
 #' # Plot Hejl-Burgess-Dawson tonemapped image, exposure adjusted
 #' render_tonemap(dragon, method = "hbd",preview = TRUE)
 render_tonemap = function(
-	image,
-	method = c("raw", "reinhard", "uncharted", "hbd"),
-	exposure_bias = 2.0,
-	W = 11.2,
-	filename = NULL,
-	preview = FALSE
+  image,
+  method = c("raw", "reinhard", "uncharted", "hbd"),
+  exposure_bias = 2.0,
+  W = 11.2,
+  filename = NULL,
+  preview = FALSE
 ) {
-	method = match.arg(method)
-	src = ray_read_image(
-		image,
-		convert_to_array = TRUE,
-		reset_camera_settings = TRUE
-	)
-	imagetype = attr(src, "filetype")
-	img_source_linear = attr(src, "source_linear")
-	colorspace = attr(src, "colorspace")
-	white_current = attr(src, "white_current")
+  method = match.arg(method)
+  src = ray_read_image(
+    image,
+    convert_to_array = TRUE,
+    reset_camera_settings = TRUE
+  )
+  imagetype = attr(src, "filetype")
+  img_source_linear = attr(src, "source_linear")
+  colorspace = attr(src, "colorspace")
+  white_current = attr(src, "white_current")
 
-	colorspace_luminance_row = attr(src, "colorspace")$rgb_to_xyz[2, ]
-	d = dim(src)
-	if (length(d) != 3) {
-		return(src)
-	}
+  colorspace_luminance_row = attr(src, "colorspace")$rgb_to_xyz[2, ]
+  d = dim(src)
+  if (length(d) != 3) {
+    return(src)
+  }
 
-	rgb = src[,, 1:3]
+  rgb = src[,, 1:3]
 
-	if (method == "reinhard") {
-		eps = 1e-6
-		lw = colorspace_luminance_row
+  if (method == "reinhard") {
+    eps = 1e-6
+    lw = colorspace_luminance_row
 
-		L = lw[1] * rgb[,, 1] + lw[2] * rgb[,, 2] + lw[3] * rgb[,, 3]
+    L = lw[1] * rgb[,, 1] + lw[2] * rgb[,, 2] + lw[3] * rgb[,, 3]
 
-		a = 0.18
-		L_log_avg = exp(mean(log(pmax(L, eps))))
+    a = 0.18
+    L_log_avg = exp(mean(log(pmax(L, eps))))
 
-		Lm = (a / L_log_avg) * L
-		Lwhite = W #White point
-		Ld = (Lm * (1 + (Lm / (Lwhite * Lwhite)))) / (1 + Lm)
+    Lm = (a / L_log_avg) * L
+    Lwhite = W #White point
+    Ld = (Lm * (1 + (Lm / (Lwhite * Lwhite)))) / (1 + Lm)
 
-		scale = Ld / pmax(L, eps)
+    scale = Ld / pmax(L, eps)
 
-		rgb[,, 1] = rgb[,, 1] * scale
-		rgb[,, 2] = rgb[,, 2] * scale
-		rgb[,, 3] = rgb[,, 3] * scale
-	} else if (method == "uncharted") {
-		A = 0.15
-		B = 0.50
-		C = 0.10
-		D = 0.20
-		E = 0.02
-		F = 0.30
-		eps = 1e-6
+    rgb[,, 1] = rgb[,, 1] * scale
+    rgb[,, 2] = rgb[,, 2] * scale
+    rgb[,, 3] = rgb[,, 3] * scale
+  } else if (method == "uncharted") {
+    A = 0.15
+    B = 0.50
+    C = 0.10
+    D = 0.20
+    E = 0.02
+    F = 0.30
+    eps = 1e-6
 
-		lw = colorspace_luminance_row
-		L = lw[1] * rgb[,, 1] + lw[2] * rgb[,, 2] + lw[3] * rgb[,, 3]
+    lw = colorspace_luminance_row
+    L = lw[1] * rgb[,, 1] + lw[2] * rgb[,, 2] + lw[3] * rgb[,, 3]
 
-		# Key normalization
-		a = 0.18
-		L_log_avg = exp(mean(log(pmax(L, eps))))
-		pre_key = a / L_log_avg
+    # Key normalization
+    a = 0.18
+    L_log_avg = exp(mean(log(pmax(L, eps))))
+    pre_key = a / L_log_avg
 
-		hable = function(x) {
-			((x * (A * x + C * B) + D * E) / (x * (A * x + B) + D * F) - E / F)
-		}
+    hable = function(x) {
+      ((x * (A * x + C * B) + D * E) / (x * (A * x + B) + D * F) - E / F)
+    }
 
-		e = exposure_bias
-		whiteScale = 1 / hable(e * W)
+    e = exposure_bias
+    whiteScale = 1 / hable(e * W)
 
-		Lm = e * pre_key * L
-		Ld = hable(Lm) * whiteScale
-		scale = Ld / pmax(L, eps)
+    Lm = e * pre_key * L
+    Ld = hable(Lm) * whiteScale
+    scale = Ld / pmax(L, eps)
 
-		rgb[,, 1] = rgb[,, 1] * scale
-		rgb[,, 2] = rgb[,, 2] * scale
-		rgb[,, 3] = rgb[,, 3] * scale
-	} else if (method == "hbd") {
-		for (k in 1:3) {
-			x = pmax(rgb[,, k] - 0.004, 0)
-			rgb[,, k] = (x * (6.2 * x + 0.5)) / (x * (6.2 * x + 1.7) + 0.06)
-		}
-	} else {
-		# Nothing
-	}
+    rgb[,, 1] = rgb[,, 1] * scale
+    rgb[,, 2] = rgb[,, 2] * scale
+    rgb[,, 3] = rgb[,, 3] * scale
+  } else if (method == "hbd") {
+    for (k in 1:3) {
+      x = pmax(rgb[,, k] - 0.004, 0)
+      rgb[,, k] = (x * (6.2 * x + 0.5)) / (x * (6.2 * x + 1.7) + 0.06)
+    }
+  } else {
+    # Nothing
+  }
 
-	out = src
-	out[,, 1:3] = rgb
+  out = src
+  out[,, 1:3] = rgb
 
-	out = ray_read_image(
-		out,
-		filetype = imagetype,
-		source_linear = img_source_linear,
-		assume_colorspace = colorspace,
-		assume_white = white_current
-	)
-	handle_image_output(out, filename = filename, preview = preview)
+  out = ray_read_image(
+    out,
+    filetype = imagetype,
+    source_linear = img_source_linear,
+    assume_colorspace = colorspace,
+    assume_white = white_current
+  )
+  handle_image_output(out, filename = filename, preview = preview)
 }

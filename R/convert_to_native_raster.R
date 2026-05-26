@@ -1,9 +1,9 @@
-#'@title Plot Image
+#' @title Convert to Native Raster
 #'
-#'@description Displays the image in the current device.
+#' @description Converts a matrix or image array to a native raster.
 #'
-#'@param input Array to get converted to a native raster
-#'@keywords internal
+#' @param input Matrix or image array to convert to a native raster.
+#' @keywords internal
 convert_to_native_raster = function(input) {
   ncol = ncol(input)
   nrow = nrow(input)
