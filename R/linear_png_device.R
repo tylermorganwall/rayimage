@@ -11,19 +11,19 @@
 #'
 #' @keywords internal
 linear_png_device = function(use_ragg = TRUE) {
-	png_device = grDevices::png
-	if (use_ragg && requireNamespace("ragg", quietly = TRUE)) {
-		png_device = function(...) {
-			args = list(...)
-			args$family = NULL
-			do.call(ragg::agg_png, args)
-		}
-	} else if (isTRUE(capabilities("cairo"))) {
-		png_device = function(...) grDevices::png(..., type = "cairo")
-	} else {
-		warning(
-			"No cairo device available: Install the {ragg} package to ensure correct treatment of gamma when adding text to images."
-		)
-	}
-	return(png_device)
+  png_device = grDevices::png
+  if (use_ragg && requireNamespace("ragg", quietly = TRUE)) {
+    png_device = function(...) {
+      args = list(...)
+      args$family = NULL
+      do.call(ragg::agg_png, args)
+    }
+  } else if (isTRUE(capabilities("cairo"))) {
+    png_device = function(...) grDevices::png(..., type = "cairo")
+  } else {
+    warning(
+      "No cairo device available: Install the {ragg} package to ensure correct treatment of gamma when adding text to images."
+    )
+  }
+  return(png_device)
 }

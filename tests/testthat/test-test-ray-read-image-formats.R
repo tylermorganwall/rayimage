@@ -18,7 +18,7 @@ test_that("common 8-bit formats via magick can be read and plotted", {
     expect_s3_class(ri, "rayimg")
 
     out = tempfile(fileext = ".png")
-    grDevices::png(out, width = 16, height = 16)
+    grDevices::png(out, width = 200, height = 200, units = "px")
     expect_silent(plot_image(ri))
     grDevices::dev.off()
     expect_true(file.exists(out))
@@ -59,7 +59,7 @@ test_that("Radiance HDR files can be read and plotted", {
   expect_s3_class(ri, "rayimg")
 
   out = tempfile(fileext = ".png")
-  grDevices::png(out, width = 16, height = 16)
+  grDevices::png(out, width = 200, height = 200, units = "px")
   expect_silent(plot_image(ri))
   grDevices::dev.off()
   expect_true(file.exists(out))
@@ -89,7 +89,7 @@ test_that("EXR files can be read and plotted", {
   expect_s3_class(ri, "rayimg")
 
   out = tempfile(fileext = ".png")
-  grDevices::png(out, width = 16, height = 16)
+  grDevices::png(out, width = 200, height = 200, units = "px")
   expect_silent(plot_image(ri))
   grDevices::dev.off()
   expect_true(file.exists(out))
@@ -114,7 +114,7 @@ test_that("Softimage PIC files can be read and plotted (when supported)", {
   expect_s3_class(ri, "rayimg")
 
   out = tempfile(fileext = ".png")
-  grDevices::png(out, width = 16, height = 16)
+  grDevices::png(out, width = 200, height = 200, units = "px")
   expect_silent(plot_image(ri))
   grDevices::dev.off()
   expect_true(file.exists(out))
