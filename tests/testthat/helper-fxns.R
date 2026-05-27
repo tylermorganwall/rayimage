@@ -12,6 +12,7 @@ save_test_png = function(code, path) {
 
   on.exit(
     {
+      try(grid::upViewport(0), silent = TRUE)
       devs = grDevices::dev.list()
       if (!is.null(devs) && dev_id %in% devs) {
         grDevices::dev.off(dev_id)

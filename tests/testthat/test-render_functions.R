@@ -626,6 +626,58 @@ test_that("render_title overlays text using grid", {
   )
 })
 
+test_that("render_title repeatedly closes off-screen devices cleanly", {
+  img = dragon[1:64, 1:64, ]
+
+  render_once = function() {
+    path = tempfile(fileext = ".png")
+    grDevices::png(filename = path, width = 500, height = 400)
+    dev_id = grDevices::dev.cur()
+
+    on.exit(
+      {
+        try(grid::upViewport(0), silent = TRUE)
+        devs = grDevices::dev.list()
+        if (!is.null(devs) && dev_id %in% devs) {
+          grDevices::dev.off(dev_id)
+        }
+        unlink(path)
+      },
+      add = TRUE
+    )
+
+    out = render_title(
+      image = img,
+      title_text = "Dragon",
+      title_size = 24,
+      title_offset = c(12, 12),
+      title_lineheight = 1.2,
+      title_color = "white",
+      title_bar_color = NA,
+      title_bar_alpha = 0.6,
+      title_bar_width = NULL,
+      title_just = "left",
+      use_magick = FALSE,
+      preview = FALSE
+    )
+
+    plot_image(out)
+
+    try(grid::upViewport(0), silent = TRUE)
+    devs = grDevices::dev.list()
+    if (!is.null(devs) && dev_id %in% devs) {
+      grDevices::dev.off(dev_id)
+    }
+    unlink(path)
+  }
+
+  for (i in seq_len(25)) {
+    render_once()
+  }
+
+  expect_true(TRUE)
+})
+
 test_that("render_title supports magick backend", {
   skip_if_not_installed("magick")
 

@@ -38,52 +38,17 @@ plot_image = function(
   angle = 0,
   show_linear = FALSE
 ) {
-  img = ray_read_image(image, convert_to_array = TRUE) # rayimg RGBA
-
-  display = img
-  cs_from = attr(display, "colorspace")
-  white_curr = attr(display, "white_current")
-
-  display = render_clamp(display)
-  display[is.na(display)] = 0
-
-  #clamp alpha
-  alpha_channel = unclass(render_clamp(
-    display[,, 4],
-    min_value = 0,
-    max_value = 1
-  ))
-  display[,, 4] = alpha_channel
-
-  if (!show_linear) {
-    # Convert primaries/white to sRGB/D65 if needed (linear)
-    if (
-      !is.null(cs_from) &&
-        (!identical(cs_from$name, "sRGB") ||
-          any(abs(white_curr - CS_SRGB$white_xyz) > 1e-8))
-    ) {
-      xyz = apply_color_matrix(display, cs_from$rgb_to_xyz)
-      if (any(abs(white_curr - CS_SRGB$white_xyz) > 1e-8)) {
-        CAT = compute_cat_bradford(white_curr, CS_SRGB$white_xyz)
-        xyz = apply_color_matrix(xyz, CAT)
-      }
-      display = apply_color_matrix(xyz, CS_SRGB$xyz_to_rgb)
-      display[,, 1:3][display[,, 1:3] < 0] = 0
-    }
-    # Apply sRGB OETF to RGB only
-    display[,, 1:3] = to_srgb(display[,, 1:3])
-  }
-
-  if (!isTRUE(all.equal(angle %% 360, 0))) {
-    display = rotate_image_array(display, angle)
-  }
-
-  nr = convert_to_native_raster(display)
+  prepared = prepare_native_raster(
+    image,
+    angle = angle,
+    show_linear = show_linear
+  )
+  nr = prepared$native_raster
 
   if (new_page) {
     grid::grid.newpage()
   }
-  image_dim = dim(display)
+  image_dim = prepared$display_dim
 
   if (draw_grid) {
     draw_grid_fxn = function() {
@@ -120,6 +85,7 @@ plot_image = function(
   return(plot_asp_native_raster(
     nr,
     asp = asp,
-    return_grob = return_grob
+    return_grob = return_grob,
+    gp = gp
   ))
 }

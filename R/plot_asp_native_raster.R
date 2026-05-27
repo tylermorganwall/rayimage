@@ -40,8 +40,7 @@ plot_asp_native_raster = function(
     name = "grid_asp_container",
     clip = clip_setting
   )
-  grid::pushViewport(top.vp)
-  grid::pushViewport(grid::viewport(
+  image_vp = grid::viewport(
     name = "image",
     layout.pos.col = 1,
     layout.pos.row = 1,
@@ -49,7 +48,7 @@ plot_asp_native_raster = function(
     yscale = c(image_height, 0),
     gp = gp,
     clip = clip_setting
-  )) # yscale reversed for top-left origin
+  )
 
   image_grob = grid::rasterGrob(
     nr,
@@ -81,10 +80,33 @@ plot_asp_native_raster = function(
     )
   }
 
-  if (!return_grob) {
-    grid::grid.draw(image_grob)
-    return(invisible())
-  } else {
-    return(image_grob)
+  if (return_grob) {
+    image_tree = grid::gTree(
+      children = grid::gList(image_grob),
+      vp = image_vp
+    )
+    return(grid::gTree(
+      children = grid::gList(image_tree),
+      vp = top.vp
+    ))
   }
+
+  pushed = 0L
+  grid::pushViewport(top.vp)
+  pushed = pushed + 1L
+
+  grid::pushViewport(image_vp)
+  pushed = pushed + 1L
+
+  on.exit(
+    {
+      if (pushed > 0L) {
+        try(grid::popViewport(pushed), silent = TRUE)
+      }
+    },
+    add = TRUE
+  )
+
+  grid::grid.draw(image_grob)
+  invisible()
 }
