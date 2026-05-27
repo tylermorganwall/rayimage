@@ -9,8 +9,18 @@ snapshot_variant = function() {
 save_test_png = function(code, path) {
   grDevices::png(filename = path, width = 500, height = 400)
   dev_id = grDevices::dev.cur()
+
+  on.exit(
+    {
+      devs = grDevices::dev.list()
+      if (!is.null(devs) && dev_id %in% devs) {
+        grDevices::dev.off(dev_id)
+      }
+    },
+    add = TRUE
+  )
+
   code()
-  on.exit(dev.off(dev_id), add = TRUE)
   path
 }
 

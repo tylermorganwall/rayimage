@@ -25,6 +25,15 @@ dragon_small = dragon[1:64, 1:64, ]
 dragondepth_small = dragondepth[1:64, 1:64]
 volcano_small = volcano[seq_len(60), seq_len(60)]
 
+test_that("ragg is available as an imported dependency", {
+  expect_true(requireNamespace("ragg", quietly = FALSE))
+})
+
+test_that("linear_png_device uses imported ragg device by default", {
+  png_device = rayimage:::linear_png_device()
+  expect_true(is.function(png_device))
+})
+
 overlay_gradient = array(1, dim = c(64, 64, 4))
 overlay_gradient[,, 1] = matrix(
   seq(0, 1, length.out = 64),

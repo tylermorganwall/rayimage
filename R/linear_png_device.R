@@ -1,29 +1,34 @@
 #' @title Select PNG Device
 #'
 #' @description Internal helper to pick the best available PNG graphics
-#' device. Prefers `ragg::agg_png()` when available, then falls back to a
-#' Cairo-backed `grDevices::png()` device, and finally to the base PNG
-#' device.
+#' device. Uses `ragg::agg_png()` by default, then falls back to a
+#' Cairo-backed `grDevices::png()` device when `use_ragg = FALSE`, and
+#' finally to the base PNG device.
 #'
-#' @param use_ragg Logical. If `TRUE` (default) and the `ragg` package is
-#' available, return `ragg::agg_png()`. Set to `FALSE` to skip `ragg` even if
-#' installed.
+#' @param use_ragg Default `TRUE`. If `TRUE`, return `ragg::agg_png()`.
+#' Set to `FALSE` to skip `ragg`.
 #'
 #' @keywords internal
+#' @importFrom ragg agg_png
 linear_png_device = function(use_ragg = TRUE) {
-  png_device = grDevices::png
-  if (use_ragg && requireNamespace("ragg", quietly = TRUE)) {
-    png_device = function(...) {
+  if (isTRUE(use_ragg)) {
+    return(function(...) {
       args = list(...)
       args$family = NULL
-      do.call(ragg::agg_png, args)
-    }
-  } else if (isTRUE(capabilities("cairo"))) {
-    png_device = function(...) grDevices::png(..., type = "cairo")
-  } else {
-    warning(
-      "No cairo device available: Install the {ragg} package to ensure correct treatment of gamma when adding text to images."
-    )
+      do.call(agg_png, args)
+    })
   }
-  return(png_device)
+
+  if (isTRUE(capabilities("cairo"))) {
+    return(function(...) {
+      grDevices::png(..., type = "cairo")
+    })
+  }
+
+  warning(
+    "No cairo device available: install the {ragg} package to ensure correct treatment of gamma when adding text to images.",
+    call. = FALSE
+  )
+
+  grDevices::png
 }

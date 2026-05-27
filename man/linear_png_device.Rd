@@ -7,14 +7,13 @@
 linear_png_device(use_ragg = TRUE)
 }
 \arguments{
-\item{use_ragg}{Logical. If \code{TRUE} (default) and the \code{ragg} package is
-available, return \code{ragg::agg_png()}. Set to \code{FALSE} to skip \code{ragg} even if
-installed.}
+\item{use_ragg}{Default \code{TRUE}. If \code{TRUE}, return \code{ragg::agg_png()}.
+Set to \code{FALSE} to skip \code{ragg}.}
 }
 \description{
 Internal helper to pick the best available PNG graphics
-device. Prefers \code{ragg::agg_png()} when available, then falls back to a
-Cairo-backed \code{grDevices::png()} device, and finally to the base PNG
-device.
+device. Uses \code{ragg::agg_png()} by default, then falls back to a
+Cairo-backed \code{grDevices::png()} device when \code{use_ragg = FALSE}, and
+finally to the base PNG device.
 }
 \keyword{internal}
