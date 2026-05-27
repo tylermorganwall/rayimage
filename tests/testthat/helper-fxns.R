@@ -32,33 +32,49 @@ compare_image = function(
   cdf_diff = 0.1,
   max_diff = 0.3
 ) {
-  image1 = ray_read_image(path1)
-  image2 = ray_read_image(path2)
-  all_dim_same = all(dim(image1) == dim(image2))
+  image1 = unclass(ray_read_image(path1, convert_to_array = TRUE))
+  image2 = unclass(ray_read_image(path2, convert_to_array = TRUE))
+
+  dim1 = dim(image1)
+  dim2 = dim(image2)
+
+  attributes(image1) = list(dim = dim1)
+  attributes(image2) = list(dim = dim2)
+
+  if (!identical(dim1, dim2)) {
+    warning(
+      sprintf(
+        "Dim not the same: %s vs %s",
+        paste0(dim1, collapse = "x"),
+        paste0(dim2, collapse = "x")
+      ),
+      call. = FALSE
+    )
+    return(FALSE)
+  }
 
   diffs = abs(image2 - image1)
   #Ignore small differences
   mostly_identical = sum(diffs > cdf_diff) < length(diffs) * quantile_diff
   diffs_are_minor = max(diffs) < max_diff
   if (!mostly_identical) {
-    warning(sprintf(
-      "Number greater than CDF diff: %i vs %i/%i",
-      sum(diffs > cdf_diff),
-      length(diffs) * quantile_diff,
-      length(diffs)
-    ))
+    warning(
+      sprintf(
+        "Number greater than CDF diff: %i vs %i/%i",
+        sum(diffs > cdf_diff),
+        length(diffs) * quantile_diff,
+        length(diffs)
+      ),
+      call. = FALSE
+    )
   }
   if (!diffs_are_minor) {
-    warning(sprintf("Max diff: %f vs %f", max(diffs), max_diff))
+    warning(
+      sprintf("Max diff: %f vs %f", max(diffs), max_diff),
+      call. = FALSE
+    )
   }
-  if (!all_dim_same) {
-    warning(sprintf(
-      "Dim not the same: %s vs %s",
-      paste0(dim(image1), collapse = "x"),
-      paste0(dim(image2), collapse = "x")
-    ))
-  }
-  return(mostly_identical && diffs_are_minor && all_dim_same)
+  return(mostly_identical && diffs_are_minor)
 }
 
 expect_snapshot_file_info = function(path, name, compare, variant, args, i) {
@@ -146,21 +162,22 @@ run_tests = function(
         expect_no_error_info(args = args, i = i)
     } else {
       path = tempfile(fileext = ".png")
-      save_test_png(
-        function() {
-          do.call(func, args = args)
-        },
-        path
-      ) |>
-        suppressMessages() |>
-        suppressWarnings() |>
-        expect_snapshot_file_info(
-          name = test_filename,
-          compare = compare_image,
-          variant = variant,
-          args = args,
-          i = i
+      path = suppressWarnings(suppressMessages(
+        save_test_png(
+          function() {
+            do.call(func, args = args)
+          },
+          path
         )
+      ))
+      expect_snapshot_file_info(
+        path = path,
+        name = test_filename,
+        compare = compare_image,
+        variant = variant,
+        args = args,
+        i = i
+      )
     }
   }
 }
