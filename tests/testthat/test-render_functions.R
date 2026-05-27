@@ -1,5 +1,4 @@
 #Test with all types: Grey, Grey + A, RGB, RGBA
-testthat::skip_on_cran()
 
 # Fixtures shared across render function tests
 dragon_small = render_resized(dragon, dims = c(64, 64))

@@ -20,3 +20,7 @@ elevatr package). I recommend using the reprex package.  Be sure to include your
 2. Fork the repo and make your changes.
 3. Ensure the package passes an R CMD CHECK with no warnings or errors, preferably with `rhub::check_for_cran()`. If making changes
 to the compiled code, please also use `rhub::check_on_solaris()`, `rhub::check_on_macos()`, and `rhub::check_on_windows()` (or upload the source packages to Win-Builder).
+
+## Visual Snapshot Tests
+
+Visual snapshot tests are local-only. Run them explicitly with `Rscript tools/test-snapshots.R`.

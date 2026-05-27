@@ -6,6 +6,19 @@ snapshot_variant = function() {
   "Darwin"
 }
 
+snapshot_tests_enabled = function() {
+  identical(Sys.getenv("RAYIMAGE_RUN_SNAPSHOT_TESTS"), "true")
+}
+
+skip_unless_snapshot_tests_enabled = function() {
+  if (snapshot_tests_enabled()) {
+    return(invisible())
+  }
+  testthat::skip(
+    "Visual snapshot tests are local-only. Set RAYIMAGE_RUN_SNAPSHOT_TESTS=true to run them."
+  )
+}
+
 save_test_png = function(code, path) {
   grDevices::png(filename = path, width = 500, height = 400)
   dev_id = grDevices::dev.cur()
@@ -161,6 +174,7 @@ run_tests = function(
       do.call(func, args = args) |>
         expect_no_error_info(args = args, i = i)
     } else {
+      skip_unless_snapshot_tests_enabled()
       path = tempfile(fileext = ".png")
       path = suppressWarnings(suppressMessages(
         save_test_png(

@@ -1,5 +1,3 @@
-testthat::skip_on_cran()
-
 test_that("Checking plot_image", {
   # skip_on_os(c("windows", "linux", "solaris"))
   plt_img_args = expand.grid(

@@ -43,6 +43,8 @@ jobs:
     if: ${{ needs.setup.outputs.containers != '[]' }}
     runs-on: ubuntu-latest
     name: ${{ matrix.config.label }}
+    env:
+      RAYIMAGE_RUN_SNAPSHOT_TESTS: "false"
     strategy:
       fail-fast: false
       matrix:
@@ -70,6 +72,8 @@ jobs:
     if: ${{ needs.setup.outputs.platforms != '[]' }}
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.label }}
+    env:
+      RAYIMAGE_RUN_SNAPSHOT_TESTS: "false"
     strategy:
       fail-fast: false
       matrix:
