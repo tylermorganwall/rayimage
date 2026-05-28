@@ -43,7 +43,7 @@ Set to \code{TRUE} to turn off this gamma correction.}
 Displays the image in the current device.
 }
 \examples{
-#if(interactive()){
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 #Plot the dragon array
 plot_image(dragon)
 #Make pixels twice as wide as tall
@@ -52,5 +52,5 @@ plot_image(dragon, asp = 2)
 plot_image(dragon[1:100,,])
 #Make pixels twice as tall as wide
 plot_image(dragon[1:100,,], asp = 1/2)
-#end}
+\dontshow{\}) # examplesIf}
 }

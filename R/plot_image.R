@@ -16,8 +16,7 @@
 #'@param show_linear Default `FALSE`. Most data should be gamma corrected before displaying on a screen.
 #' Set to `TRUE` to turn off this gamma correction.
 #'@export
-#'@examples
-#'#if(interactive()){
+#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #'#Plot the dragon array
 #'plot_image(dragon)
 #'#Make pixels twice as wide as tall
@@ -26,7 +25,6 @@
 #'plot_image(dragon[1:100,,])
 #'#Make pixels twice as tall as wide
 #'plot_image(dragon[1:100,,], asp = 1/2)
-#'#end}
 plot_image = function(
   image,
   draw_grid = FALSE,
