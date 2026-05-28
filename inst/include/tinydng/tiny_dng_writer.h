@@ -628,13 +628,11 @@ void createEncodeTable(lje *self) {
   memset(huffbits, 0, sizeof(self->huffbits));
   memset(self->huffsym, 0, sizeof(self->huffsym));
   i = 0;
-  int hv = 0;
   int rv = 0;
   int vl = 0;  // i
   // int hcode;
   int bitsused = 1;
   int sym = 0;
-  // printf("%04x:%x:%d:%x\n",i,huffvals[hv],bitsused,1<<(maxbits-bitsused));
   while (i < 1 << maxbits) {
     if (bitsused > maxbits) {
       break;  // Done. Should never get here!
@@ -647,8 +645,6 @@ void createEncodeTable(lje *self) {
     if (rv == 1 << (maxbits - bitsused)) {
       rv = 0;
       vl++;
-      hv++;
-      // printf("%04x:%x:%d:%x\n",i,huffvals[hv],bitsused,1<<(maxbits-bitsused));
       continue;
     }
     huffbits[sym] = bitsused;
@@ -748,7 +744,9 @@ void writeBody(lje *self) {
   int row = 0;
   int Px = 0;
   int32_t diff = 0;
+#ifdef DEBUG
   int bitcount = 0;
+#endif
   uint8_t *out = self->encoded;
   int w = self->encodedWritten;
   uint8_t next = 0;
@@ -775,7 +773,9 @@ void writeBody(lje *self) {
     int huffcode = self->huffsym[ssss];
     int huffenc = self->huffenc[huffcode];
     int huffbits = self->huffbits[huffcode];
+#ifdef DEBUG
     bitcount += huffbits + ssss;
+#endif
 
     int vt = ssss > 0 ? (1 << (ssss - 1)) : 0;
     // printf("%d %d %d %d\n",rows[1][col],Px,diff,Px+diff);
