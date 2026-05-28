@@ -536,6 +536,7 @@ typedef uint32_t u32;
 //#define LJ92_DEBUG
 
 #define LJ92_MAX_COMPONENTS (16)
+#define LJ92_SSSS_HIST_SIZE (17)
 
 typedef struct _ljp {
   u8* data;
@@ -551,7 +552,7 @@ typedef struct _ljp {
   int skiplen;     // Skip this many values after each row
   u16* linearize;  // Linearization table
   int linlen;
-  int sssshist[16];
+  int sssshist[LJ92_SSSS_HIST_SIZE];
 
 // Huffman table - only one supported, and probably needed
 #ifdef SLOW_HUFF
@@ -579,14 +580,18 @@ typedef struct _ljp {
 
 inline static bool read_two_ljpeg_bytes(const ljp* self, int ix, int* next,
                                         int* errcode) {
-  if ((ix < 0) || (ix >= self->datalen) || ((self->datalen - ix) < 2)) {
+  if (!self || !self->data || !next || ix < 0 || self->datalen < 2 ||
+      ix > self->datalen - 2) {
     if (errcode) {
       (*errcode) = LJ92_ERROR_CORRUPT;
     }
     return false;
   }
 
-  (*next) = int(self->data[ix]) | (int(self->data[ix + 1]) << 8);
+  const unsigned int one = static_cast<unsigned char>(self->data[ix]);
+  const unsigned int two = static_cast<unsigned char>(self->data[ix + 1]);
+
+  (*next) = static_cast<int>(one | (two << 8));
   return true;
 }
 
@@ -890,10 +895,15 @@ static int receive(ljp* self, int ssss) {
 }
 
 static int extend(ljp* self, int v, int t) {
+  (void)self;
+
+  if (t <= 0) {
+    return v;
+  }
+
   int vt = 1 << (t - 1);
   if (v < vt) {
-    vt = (-1 << t) + 1;
-    v = v + vt;
+    v -= (1 << t) - 1;
   }
   return v;
 }
@@ -954,6 +964,12 @@ inline static int nextdiff(ljp* self, int component_idx, int Px, int *errcode) {
   u16 ssssused = self->hufflut[component_idx][index];
   int usedbits = ssssused & 0xFF;
   int t = ssssused >> 8;
+  if (t >= LJ92_SSSS_HIST_SIZE) {
+    if (errcode) {
+      (*errcode) = LJ92_ERROR_CORRUPT;
+    }
+    return 0;
+  }
   self->sssshist[t]++;
   cnt -= usedbits;
   int keepbitsmask = (1 << cnt) - 1;
@@ -975,10 +991,11 @@ inline static int nextdiff(ljp* self, int component_idx, int Px, int *errcode) {
   }
   cnt -= t;
   int diff = b >> cnt;
-  int vt = 1 << (t - 1);
-  if (diff < vt) {
-    vt = (-1 << t) + 1;
-    diff += vt;
+  if (t > 0) {
+    int vt = 1 << (t - 1);
+    if (diff < vt) {
+      diff -= (1 << t) - 1;
+    }
   }
   keepbitsmask = (1 << cnt) - 1;
   self->b = b & keepbitsmask;
