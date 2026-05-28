@@ -145,14 +145,10 @@ or to <code><a href="ray_write_image.html">ray_write_image()</a></code> (when <c
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># LDR/sRGB (auto): decodes to linear, applies EV, records camera metadata</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">render_exposure</span><span class="op">(</span><span class="va">dragon</span>, exposure <span class="op">=</span> <span class="op">+</span><span class="fl">1</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="render_exposure-1.png" alt="" width="700" height="700"></span>
 <span class="r-in"><span><span class="co"># Force linear/HDR behavior</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">render_exposure</span><span class="op">(</span><span class="va">dragon</span> <span class="op">*</span> <span class="fl">2</span>, exposure <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="render_exposure-2.png" alt="" width="700" height="700"></span>
 </code></pre></div>
     </div>

@@ -130,19 +130,16 @@ and to convert between RGB spaces. Each descriptor is a named list with:</p><ul>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="co"># Tag a raw array as sRGB, then convert to ACEScg:</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span>  <span class="co"># Tag a raw array as sRGB, then convert to ACEScg:</span></span></span>
 <span class="r-in"><span>  <span class="va">arr</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">64</span><span class="op">*</span><span class="fl">64</span><span class="op">*</span><span class="fl">4</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">64</span>, <span class="fl">64</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">ri</span>  <span class="op">=</span> <span class="fu"><a href="ray_read_image.html">ray_read_image</a></span><span class="op">(</span><span class="va">arr</span>, assume_colorspace <span class="op">=</span> <span class="va">CS_SRGB</span>, assume_white <span class="op">=</span> <span class="va">CS_SRGB</span><span class="op">$</span><span class="va">white_xyz</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">riA</span> <span class="op">=</span> <span class="fu"><a href="render_convert_colorspace.html">render_convert_colorspace</a></span><span class="op">(</span><span class="va">ri</span>, to_mats <span class="op">=</span> <span class="va">CS_ACESCG</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">riA</span><span class="op">)</span> <span class="co"># display-converted to sRGB automatically</span></span></span>
+<span class="r-plt img"><img src="colorspace_descriptors-1.png" alt="" width="700" height="700"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Convert an sRGB JPEG to ACEScg on ingest:</span></span></span>
 <span class="r-in"><span>  <span class="co"># img = ray_read_image("photo.jpg", normalize = FALSE)</span></span></span>
 <span class="r-in"><span>  <span class="co"># img_aces = render_convert_colorspace(img, to_mats = CS_ACESCG)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="colorspace_descriptors-1.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>

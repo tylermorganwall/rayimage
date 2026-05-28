@@ -154,12 +154,9 @@ to returning it.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
-<span class="r-in"><span><span class="co">#Plot the dragon</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#Plot the dragon</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="render_image_overlay-1.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co">#Add an overlay of a red semi-transparent circle:</span></span></span>
 <span class="r-in"><span><span class="va">circlemat</span> <span class="op">=</span> <span class="fu"><a href="generate_2d_disk.html">generate_2d_disk</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">dragon</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">circlemat</span> <span class="op">=</span> <span class="va">circlemat</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">circlemat</span><span class="op">)</span></span></span>
@@ -173,9 +170,7 @@ to returning it.</p></dd>
 <span class="r-in"><span><span class="va">dragon_clipped</span><span class="op">[</span><span class="va">dragon_clipped</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span><span class="fu">render_image_overlay</span><span class="op">(</span><span class="va">dragon_clipped</span>, image_overlay <span class="op">=</span> <span class="va">rgba_array</span>,</span></span>
 <span class="r-in"><span>                 alpha<span class="op">=</span><span class="fl">0.5</span>, preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="render_image_overlay-2.png" alt="" width="700" height="700"></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="run_documentation.html">run_documentation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="co"># Read photo, convert to ACEScg with CAT (scene)</span></span></span>
 <span class="r-in"><span>  <span class="va">photo</span> <span class="op">=</span> <span class="fu"><a href="ray_read_image.html">ray_read_image</a></span><span class="op">(</span><span class="va">sunset_image</span>, normalize <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">photo_aces</span> <span class="op">=</span> <span class="fu"><a href="render_convert_colorspace.html">render_convert_colorspace</a></span><span class="op">(</span></span></span>
@@ -210,6 +205,7 @@ to returning it.</p></dd>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>   <span class="fu"><a href="render_title.html">render_title</a></span><span class="op">(</span>title_text <span class="op">=</span> <span class="st">"#c300ff: Match"</span>,</span></span>
 <span class="r-in"><span>                title_color <span class="op">=</span> <span class="st">"white"</span>, title_color <span class="op">=</span> <span class="st">"#c300ff"</span>, title_bar_alpha<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in render_title(render_image_overlay(photo_aces, logo_aces, convert_overlay_colorspace = FALSE),     title_text = "#c300ff: Match", title_color = "white", title_color = "#c300ff",     title_bar_alpha = 1):</span> formal argument "title_color" matched by multiple actual arguments</span>
 <span class="r-in"><span>  <span class="va">comp2</span> <span class="op">=</span> <span class="fu">render_image_overlay</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="va">photo_aces</span>,</span></span>
 <span class="r-in"><span>    <span class="va">logo</span>,</span></span>
@@ -217,10 +213,10 @@ to returning it.</p></dd>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>   <span class="fu"><a href="render_title.html">render_title</a></span><span class="op">(</span>title_text <span class="op">=</span> <span class="st">"#c300ff: Incorrect"</span>,</span></span>
 <span class="r-in"><span>               title_color <span class="op">=</span> <span class="st">"white"</span>, title_color <span class="op">=</span> <span class="st">"#c300ff"</span>, title_bar_alpha<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in render_title(render_image_overlay(photo_aces, logo, convert_overlay_colorspace = FALSE),     title_text = "#c300ff: Incorrect", title_color = "white",     title_color = "#c300ff", title_bar_alpha = 1):</span> formal argument "title_color" matched by multiple actual arguments</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="plot_image_grid.html">plot_image_grid</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">comp1</span>, <span class="va">comp2</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in render_title(render_image_overlay(photo_aces, logo_aces, convert_overlay_colorspace = FALSE),     title_text = "#c300ff: Match", title_color = "white", title_color = "#c300ff",     title_bar_alpha = 1):</span> formal argument "title_color" matched by multiple actual arguments</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'comp1' not found</span>
 </code></pre></div>
     </div>
   </div>
