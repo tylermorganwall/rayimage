@@ -577,6 +577,19 @@ typedef struct _ljp {
   u16* outrow[2];
 } ljp;
 
+inline static bool read_two_ljpeg_bytes(const ljp* self, int ix, int* next,
+                                        int* errcode) {
+  if ((ix < 0) || (ix >= self->datalen) || ((self->datalen - ix) < 2)) {
+    if (errcode) {
+      (*errcode) = LJ92_ERROR_CORRUPT;
+    }
+    return false;
+  }
+
+  (*next) = int(self->data[ix]) | (int(self->data[ix + 1]) << 8);
+  return true;
+}
+
 static int find(ljp* self) {
   int ix = self->ix;
   u8* data = self->data;
@@ -911,7 +924,9 @@ inline static int nextdiff(ljp* self, int component_idx, int Px, int *errcode) {
   int ix = self->ix;
   int next;
   while (cnt < huffbits) {
-    next = *(u16*)&self->data[ix];
+    if (!read_two_ljpeg_bytes(self, ix, &next, errcode)) {
+      return 0;
+    }
     int one = next & 0xFF;
     int two = next >> 8;
     b = (b << 16) | (one << 8) | two;
@@ -944,7 +959,9 @@ inline static int nextdiff(ljp* self, int component_idx, int Px, int *errcode) {
   int keepbitsmask = (1 << cnt) - 1;
   b &= keepbitsmask;
   while (cnt < t) {
-    next = *(u16*)&self->data[ix];
+    if (!read_two_ljpeg_bytes(self, ix, &next, errcode)) {
+      return 0;
+    }
     int one = next & 0xFF;
     int two = next >> 8;
     b = (b << 16) | (one << 8) | two;
@@ -5201,11 +5218,12 @@ bool LoadDNGFromMemory(const char* mem, unsigned int size,
 
   bool is_dng_big_endian = false;
 
-  const unsigned short magic = *(reinterpret_cast<const unsigned short*>(mem));
+  const unsigned char magic0 = static_cast<unsigned char>(mem[0]);
+  const unsigned char magic1 = static_cast<unsigned char>(mem[1]);
 
-  if (magic == 0x4949) {
+  if ((magic0 == 0x49) && (magic1 == 0x49)) {
     // might be TIFF(DNG).
-  } else if (magic == 0x4d4d) {
+  } else if ((magic0 == 0x4d) && (magic1 == 0x4d)) {
     // might be TIFF(DNG, bigendian).
     is_dng_big_endian = true;
     TINY_DNG_DPRINTF("DNG is big endian\n");
@@ -6185,11 +6203,12 @@ bool IsDNGFromMemory(const char* mem, unsigned int size, std::string* msg) {
     return false;
   }
 
-  const unsigned short magic = *(reinterpret_cast<const unsigned short*>(mem));
+  const unsigned char magic0 = static_cast<unsigned char>(mem[0]);
+  const unsigned char magic1 = static_cast<unsigned char>(mem[1]);
 
-  if (magic == 0x4949) {
+  if ((magic0 == 0x49) && (magic1 == 0x49)) {
     // might be TIFF(DNG).
-  } else if (magic == 0x4d4d) {
+  } else if ((magic0 == 0x4d) && (magic1 == 0x4d)) {
     // might be TIFF(DNG, bigendian).
     if (msg) {
       (*msg) = "DNG is big endian";
