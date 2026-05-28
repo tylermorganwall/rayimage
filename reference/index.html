@@ -72,8 +72,52 @@
     </div>
 
     <table class="ref-index"><colgroup><col class="alias"><col class="title"></colgroup><tbody><tr><th colspan="2">
-          <h2 id="render-image-transformations">Render Image Transformations <a href="#render-image-transformations" class="anchor" aria-hidden="true"></a></h2>
-          <p class="section-desc"></p><p>Functions for transforming/creating images.</p>
+          <h2 id="colorspace-transformations">Colorspace Transformations <a href="#colorspace-transformations" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>Functions for converting and adjusting image color spaces.</p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="render_color_correction.html">render_color_correction()</a></code> </p>
+        </td>
+        <td><p>Render Color Correction Matrix (3x3, linear RGB)</p></td>
+      </tr><tr><td>
+          <p><code><a href="render_convert_colorspace.html">render_convert_colorspace()</a></code> </p>
+        </td>
+        <td><p>Render Convert Colorspace</p></td>
+      </tr><tr><td>
+          <p><code><a href="render_gamma_linear.html">render_gamma_linear()</a></code> </p>
+        </td>
+        <td><p>Render Gamma/Linear</p></td>
+      </tr><tr><td>
+          <p><code><a href="render_to_display.html">render_to_display()</a></code> </p>
+        </td>
+        <td><p>Render To Display</p></td>
+      </tr><tr><td>
+          <p><code><a href="render_white_balance.html">render_white_balance()</a></code> </p>
+        </td>
+        <td><p>Render White Balance (Bradford CAT)</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="whole-image-size-transformations">Whole Image Size Transformations <a href="#whole-image-size-transformations" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>Functions for cropping, resizing, rotating, and resampling images.</p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="render_crop.html">render_crop()</a></code> </p>
+        </td>
+        <td><p>Crop Image</p></td>
+      </tr><tr><td>
+          <p><code><a href="render_reorient.html">render_reorient()</a></code> </p>
+        </td>
+        <td><p>Reorient Image</p></td>
+      </tr><tr><td>
+          <p><code><a href="render_resized.html">render_resized()</a></code> </p>
+        </td>
+        <td><p>Resize Image</p></td>
+      </tr><tr><td>
+          <p><code><a href="interpolate_array.html">interpolate_array()</a></code> </p>
+        </td>
+        <td><p>Matrix/Array Interpolation</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="pixel-level-transformations">Pixel-Level Transformations <a href="#pixel-level-transformations" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>Functions for per-pixel and neighborhood-based image effects.</p>
         </th>
       </tr></tbody><tbody><tr><td>
           <p><code><a href="render_bokeh.html">render_bokeh()</a></code> </p>
@@ -92,14 +136,6 @@
         </td>
         <td><p>Clamp Image</p></td>
       </tr><tr><td>
-          <p><code><a href="render_color_correction.html">render_color_correction()</a></code> </p>
-        </td>
-        <td><p>Render Color Correction Matrix (3x3, linear RGB)</p></td>
-      </tr><tr><td>
-          <p><code><a href="render_convert_colorspace.html">render_convert_colorspace()</a></code> </p>
-        </td>
-        <td><p>Render Convert Colorspace</p></td>
-      </tr><tr><td>
           <p><code><a href="render_convolution.html">render_convolution()</a></code> </p>
         </td>
         <td><p>Render Convolution</p></td>
@@ -108,45 +144,9 @@
         </td>
         <td><p>Render Convolution FFT</p></td>
       </tr><tr><td>
-          <p><code><a href="render_crop.html">render_crop()</a></code> </p>
-        </td>
-        <td><p>Crop Image</p></td>
-      </tr><tr><td>
           <p><code><a href="render_exposure.html">render_exposure()</a></code> </p>
         </td>
         <td><p>Apply exposure compensation and ISO gain</p></td>
-      </tr><tr><td>
-          <p><code><a href="render_gamma_linear.html">render_gamma_linear()</a></code> </p>
-        </td>
-        <td><p>Render Gamma/Linear</p></td>
-      </tr><tr><td>
-          <p><code><a href="render_image_overlay.html">render_image_overlay()</a></code> </p>
-        </td>
-        <td><p>Add Overlay</p></td>
-      </tr><tr><td>
-          <p><code><a href="render_reorient.html">render_reorient()</a></code> </p>
-        </td>
-        <td><p>Reorient Image</p></td>
-      </tr><tr><td>
-          <p><code><a href="render_resized.html">render_resized()</a></code> </p>
-        </td>
-        <td><p>Resize Image</p></td>
-      </tr><tr><td>
-          <p><code><a href="render_stack.html">render_stack()</a></code> </p>
-        </td>
-        <td><p>Stack Images</p></td>
-      </tr><tr><td>
-          <p><code><a href="render_text_image.html">render_text_image()</a></code> </p>
-        </td>
-        <td><p>Generate Text Image</p></td>
-      </tr><tr><td>
-          <p><code><a href="render_title.html">render_title()</a></code> </p>
-        </td>
-        <td><p>Render a Title on an Image</p></td>
-      </tr><tr><td>
-          <p><code><a href="render_to_display.html">render_to_display()</a></code> </p>
-        </td>
-        <td><p>Render To Display</p></td>
       </tr><tr><td>
           <p><code><a href="render_tonemap.html">render_tonemap()</a></code> </p>
         </td>
@@ -159,14 +159,26 @@
           <p><code><a href="render_vignette.html">render_vignette()</a></code> </p>
         </td>
         <td><p>Add Vignette Effect</p></td>
-      </tr><tr><td>
-          <p><code><a href="render_white_balance.html">render_white_balance()</a></code> </p>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="image-combining-transformations">Image Combining Transformations <a href="#image-combining-transformations" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>Functions for compositing, stacking, and adding image/text overlays.</p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="render_image_overlay.html">render_image_overlay()</a></code> </p>
         </td>
-        <td><p>Render White Balance (Bradford CAT)</p></td>
+        <td><p>Add Overlay</p></td>
       </tr><tr><td>
-          <p><code><a href="interpolate_array.html">interpolate_array()</a></code> </p>
+          <p><code><a href="render_stack.html">render_stack()</a></code> </p>
         </td>
-        <td><p>Matrix/Array Interpolation</p></td>
+        <td><p>Stack Images</p></td>
+      </tr><tr><td>
+          <p><code><a href="render_text_image.html">render_text_image()</a></code> </p>
+        </td>
+        <td><p>Generate Text Image</p></td>
+      </tr><tr><td>
+          <p><code><a href="render_title.html">render_title()</a></code> </p>
+        </td>
+        <td><p>Render a Title on an Image</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="plotting-and-saving-images">Plotting and Saving Images <a href="#plotting-and-saving-images" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p><p>Functions for displaying/saving images</p>
