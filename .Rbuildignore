@@ -21,4 +21,8 @@
 ^tests/testthat/Rplots\.pdf$
 ^tests/testthat/testthat-problems\.rds$
 ^tests/testthat/.*\.Rout(\.fail)?$
+^tests/testthat/_snaps($|/)
+^tests/testthat/test-plot_image\.R$
+^tests/testthat/test-render_functions\.R$
+^tools/test-snapshots\.R$
 ^\.vscode$

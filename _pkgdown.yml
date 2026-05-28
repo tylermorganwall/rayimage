@@ -5,11 +5,41 @@ articles: []
 url: https://www.rayimage.dev
 
 reference:
-  - title: "Render Image Transformations"
-    desc: "Functions for transforming/creating images."
+  - title: "Colorspace Transformations"
+    desc: "Functions for converting and adjusting image color spaces."
     contents:
-      - starts_with("render")
-      - starts_with("interpolate")
+      - render_color_correction
+      - render_convert_colorspace
+      - render_gamma_linear
+      - render_to_display
+      - render_white_balance
+  - title: "Whole Image Size Transformations"
+    desc: "Functions for cropping, resizing, rotating, and resampling images."
+    contents:
+      - render_crop
+      - render_reorient
+      - render_resized
+      - interpolate_array
+  - title: "Pixel-Level Transformations"
+    desc: "Functions for per-pixel and neighborhood-based image effects."
+    contents:
+      - render_bokeh
+      - render_boolean_distance
+      - render_bw
+      - render_clamp
+      - render_convolution
+      - render_convolution_fft
+      - render_exposure
+      - render_tonemap
+      - render_vibrance
+      - render_vignette
+  - title: "Image Combining Transformations"
+    desc: "Functions for compositing, stacking, and adding image/text overlays."
+    contents:
+      - render_image_overlay
+      - render_stack
+      - render_text_image
+      - render_title
   - title: "Plotting and Saving Images"
     desc: "Functions for displaying/saving images"
     contents:
