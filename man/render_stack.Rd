@@ -41,12 +41,10 @@ A \code{rayimg} RGBA array.
 Stacks a list of images vertically or horizontally into a single image.
 }
 \examples{
-if(run_documentation()){
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 render_stack(list(dragon, 1 - dragon), stack = "h") |>
  plot_image()
-}
-if(run_documentation()){
 render_stack(list(dragon, render_bw(dragon)), stack = "v") |>
  plot_image()
-}
+\dontshow{\}) # examplesIf}
 }

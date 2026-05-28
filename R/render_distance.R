@@ -7,16 +7,12 @@
 #'Useful for visualizing the distance matrix.
 #'@return Matrix of distance values.
 #'@export
-#'@examples
-#'if(run_documentation()){
+#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #'#Measure distance to
 #'plot_image(render_boolean_distance(t(volcano) > 150))
 #'plot_image(render_boolean_distance(t(volcano) < 150))
-#'}
-#'if(run_documentation()){
 #'#If we want to rescale this to zero to one (to visualize like an image), set rescale=TRUE
 #'plot_image(render_boolean_distance(t(volcano) > 150,rescale=TRUE))
-#'}
 render_boolean_distance = function(boolean, rescale = FALSE) {
   if (any(is.na(boolean))) {
     stop("`boolean` must not have any NA values")

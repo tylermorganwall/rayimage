@@ -26,12 +26,9 @@
 #'@return A `rayimg` RGBA array.
 #'@import grDevices
 #'@export
-#'@examples
-#'if(run_documentation()){
+#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #'#Plot the dragon
 #'plot_image(dragon)
-#'}
-#'if(run_documentation()){
 #'#Add an overlay of a red semi-transparent circle:
 #'circlemat = generate_2d_disk(min(dim(dragon)[1:2]))
 #'circlemat = circlemat/max(circlemat)
@@ -45,8 +42,6 @@
 #'dragon_clipped[dragon_clipped > 1] = 1
 #'render_image_overlay(dragon_clipped, image_overlay = rgba_array,
 #'                  alpha=0.5, preview = TRUE)
-#'}
-#' if (run_documentation()) {
 #' 	# Read photo, convert to ACEScg with CAT (scene)
 #' 	photo = ray_read_image(sunset_image, normalize = FALSE)
 #' 	photo_aces = render_convert_colorspace(
@@ -90,170 +85,172 @@
 #'                title_color = "white", title_color = "#c300ff", title_bar_alpha=1)
 #'
 #' 	plot_image_grid(list(comp1, comp2), dim = c(1, 2))
-#' }
 render_image_overlay = function(
-	image,
-	image_overlay = NULL,
-	rescale_original = FALSE,
-	convert_overlay_colorspace = TRUE,
-	alpha = NA,
-	overlay_coords = NULL,
-	overlay_dims = NULL,
-	overlay_anchor = "nw",
-	filename = NULL,
-	preview = FALSE
+  image,
+  image_overlay = NULL,
+  rescale_original = FALSE,
+  convert_overlay_colorspace = TRUE,
+  alpha = NA,
+  overlay_coords = NULL,
+  overlay_dims = NULL,
+  overlay_anchor = "nw",
+  filename = NULL,
+  preview = FALSE
 ) {
-	if (is.null(image_overlay)) {
-		stop("Need to pass in image to image_overlay argument.")
-	}
+  if (is.null(image_overlay)) {
+    stop("Need to pass in image to image_overlay argument.")
+  }
 
-	# Load as rayimg (RGBA + attrs)
-	image = ray_read_image(
-		image,
-		convert_to_array = TRUE,
-		reset_camera_settings = TRUE
-	)
-	image_colorspace = attr(image, "colorspace")
-	image_whitepoint = attr(image, "white_current")
-	image_overlay = ray_read_image(
-		image_overlay,
-		convert_to_array = TRUE,
-		reset_camera_settings = TRUE
-	)
-	if (convert_overlay_colorspace) {
-		image_overlay = render_convert_colorspace(
-			image_overlay,
-			to_mats = image_colorspace
-		)
-	}
+  # Load as rayimg (RGBA + attrs)
+  image = ray_read_image(
+    image,
+    convert_to_array = TRUE,
+    reset_camera_settings = TRUE
+  )
+  image_colorspace = attr(image, "colorspace")
+  image_whitepoint = attr(image, "white_current")
+  image_overlay = ray_read_image(
+    image_overlay,
+    convert_to_array = TRUE,
+    reset_camera_settings = TRUE
+  )
+  if (convert_overlay_colorspace) {
+    image_overlay = render_convert_colorspace(
+      image_overlay,
+      to_mats = image_colorspace
+    )
+  }
 
-	img_type = attr(image, "filetype")
-	over_type = attr(image_overlay, "filetype")
+  img_type = attr(image, "filetype")
+  over_type = attr(image_overlay, "filetype")
 
-	if (!is.null(overlay_dims)) {
-		stopifnot(length(overlay_dims) >= 2)
-		overlay_dims = as.integer(round(overlay_dims[1:2]))
-		stopifnot(all(overlay_dims > 0))
-		image_overlay = render_resized(image_overlay, dims = overlay_dims)
-	}
-	placement_mode = !is.null(overlay_coords) || !is.null(overlay_dims)
-	if (rescale_original) {
-		target_dims = if (is.null(overlay_dims)) {
-			dim(image_overlay)[1:2]
-		} else {
-			overlay_dims
-		}
-		if (!all(dim(image)[1:2] == target_dims)) {
-			image = render_resized(image, dims = target_dims)
-		}
-	} else if (!placement_mode) {
-		if (!all(dim(image)[1:2] == dim(image_overlay)[1:2])) {
-			image_overlay = render_resized(image_overlay, dims = dim(image))
-		}
-	}
-	is_matrix_image = length(dim(image)) == 2
-	is_matrix_image_overlay = length(dim(image_overlay)) == 2
-	process_image = function(image_input) {
-		is_matrix_image = length(dim(image_input)) == 2
-		if (is_matrix_image) {
-			image_tmp = array(image_input, dim = c(dim(image_input), 4))
-			image_tmp[,, 4] = 1
-		} else {
-			if (dim(image_input)[3] == 2) {
-				#Greyscale with alpha
-				image_tmp = array(image_input[,, 1], dim = c(dim(image_input)[1:2], 4))
-				image_tmp[,, 4] = image_input[,, 2]
-			} else if (dim(image_input)[3] == 3) {
-				#RGB
-				image_tmp = array(1, dim = c(dim(image_input)[1:2], 4))
-				image_tmp[,, 4] = 1
-			} else {
-				image_tmp = image_input
-			}
-		}
-		return(image_tmp)
-	}
-	image = process_image(image)
-	image_overlay = process_image(image_overlay)
+  if (!is.null(overlay_dims)) {
+    stopifnot(length(overlay_dims) >= 2)
+    overlay_dims = as.integer(round(overlay_dims[1:2]))
+    stopifnot(all(overlay_dims > 0))
+    image_overlay = render_resized(image_overlay, dims = overlay_dims)
+  }
+  placement_mode = !is.null(overlay_coords) || !is.null(overlay_dims)
+  if (rescale_original) {
+    target_dims = if (is.null(overlay_dims)) {
+      dim(image_overlay)[1:2]
+    } else {
+      overlay_dims
+    }
+    if (!all(dim(image)[1:2] == target_dims)) {
+      image = render_resized(image, dims = target_dims)
+    }
+  } else if (!placement_mode) {
+    if (!all(dim(image)[1:2] == dim(image_overlay)[1:2])) {
+      image_overlay = render_resized(image_overlay, dims = dim(image))
+    }
+  }
+  is_matrix_image = length(dim(image)) == 2
+  is_matrix_image_overlay = length(dim(image_overlay)) == 2
+  process_image = function(image_input) {
+    is_matrix_image = length(dim(image_input)) == 2
+    if (is_matrix_image) {
+      image_tmp = array(image_input, dim = c(dim(image_input), 4))
+      image_tmp[,, 4] = 1
+    } else {
+      if (dim(image_input)[3] == 2) {
+        #Greyscale with alpha
+        image_tmp = array(image_input[,, 1], dim = c(dim(image_input)[1:2], 4))
+        image_tmp[,, 4] = image_input[,, 2]
+      } else if (dim(image_input)[3] == 3) {
+        #RGB
+        image_tmp = array(1, dim = c(dim(image_input)[1:2], 4))
+        image_tmp[,, 4] = 1
+      } else {
+        image_tmp = image_input
+      }
+    }
+    return(image_tmp)
+  }
+  image = process_image(image)
+  image_overlay = process_image(image_overlay)
 
-	if (!is.na(alpha)) {
-		stopifnot(alpha >= 0, alpha <= 1)
-		image_overlay[,, 4] = image_overlay[,, 4] * alpha
-	}
+  if (!is.na(alpha)) {
+    stopifnot(alpha >= 0, alpha <= 1)
+    image_overlay[,, 4] = image_overlay[,, 4] * alpha
+  }
 
-	Cb = image[,, 1:3]
-	Ab = image[,, 4]
+  Cb = image[,, 1:3]
+  Ab = image[,, 4]
 
-	# Place overlay on a blank canvas at the requested location, cropping to bounds
-	valid_anchors = c("nw", "ne", "sw", "se")
-	overlay_anchor = tolower(overlay_anchor)
-	if (!(overlay_anchor %in% valid_anchors)) {
-		stop("`overlay_anchor` must be one of: ", paste(valid_anchors, collapse = ", "))
-	}
-	if (is.null(overlay_coords)) {
-		overlay_coords = c(1, 1)
-	}
-	stopifnot(length(overlay_coords) >= 2)
-	if (any(!is.finite(overlay_coords))) {
-		stop("`overlay_coords` must be finite.")
-	}
-	overlay_coords = as.integer(round(overlay_coords[1:2]))
-	overlay_size = dim(image_overlay)[1:2]
-	start_row = overlay_coords[2]
-	start_col = overlay_coords[1]
-	if (overlay_anchor %in% c("sw", "se")) {
-		start_row = overlay_coords[2] - overlay_size[1] + 1
-	}
-	if (overlay_anchor %in% c("ne", "se")) {
-		start_col = overlay_coords[1] - overlay_size[2] + 1
-	}
-	end_row = start_row + overlay_size[1] - 1
-	end_col = start_col + overlay_size[2] - 1
-	target_rows = seq(start_row, end_row)
-	target_cols = seq(start_col, end_col)
-	rows_in_bounds = target_rows >= 1 & target_rows <= dim(image)[1]
-	cols_in_bounds = target_cols >= 1 & target_cols <= dim(image)[2]
-	overlay_canvas = array(0, dim = dim(image))
-	if (any(rows_in_bounds) && any(cols_in_bounds)) {
-		dest_rows = target_rows[rows_in_bounds]
-		dest_cols = target_cols[cols_in_bounds]
-		src_rows = which(rows_in_bounds)
-		src_cols = which(cols_in_bounds)
-		overlay_canvas[dest_rows, dest_cols, ] = image_overlay[src_rows, src_cols, ]
-	}
-	image_overlay = overlay_canvas
+  # Place overlay on a blank canvas at the requested location, cropping to bounds
+  valid_anchors = c("nw", "ne", "sw", "se")
+  overlay_anchor = tolower(overlay_anchor)
+  if (!(overlay_anchor %in% valid_anchors)) {
+    stop(
+      "`overlay_anchor` must be one of: ",
+      paste(valid_anchors, collapse = ", ")
+    )
+  }
+  if (is.null(overlay_coords)) {
+    overlay_coords = c(1, 1)
+  }
+  stopifnot(length(overlay_coords) >= 2)
+  if (any(!is.finite(overlay_coords))) {
+    stop("`overlay_coords` must be finite.")
+  }
+  overlay_coords = as.integer(round(overlay_coords[1:2]))
+  overlay_size = dim(image_overlay)[1:2]
+  start_row = overlay_coords[2]
+  start_col = overlay_coords[1]
+  if (overlay_anchor %in% c("sw", "se")) {
+    start_row = overlay_coords[2] - overlay_size[1] + 1
+  }
+  if (overlay_anchor %in% c("ne", "se")) {
+    start_col = overlay_coords[1] - overlay_size[2] + 1
+  }
+  end_row = start_row + overlay_size[1] - 1
+  end_col = start_col + overlay_size[2] - 1
+  target_rows = seq(start_row, end_row)
+  target_cols = seq(start_col, end_col)
+  rows_in_bounds = target_rows >= 1 & target_rows <= dim(image)[1]
+  cols_in_bounds = target_cols >= 1 & target_cols <= dim(image)[2]
+  overlay_canvas = array(0, dim = dim(image))
+  if (any(rows_in_bounds) && any(cols_in_bounds)) {
+    dest_rows = target_rows[rows_in_bounds]
+    dest_cols = target_cols[cols_in_bounds]
+    src_rows = which(rows_in_bounds)
+    src_cols = which(cols_in_bounds)
+    overlay_canvas[dest_rows, dest_cols, ] = image_overlay[src_rows, src_cols, ]
+  }
+  image_overlay = overlay_canvas
 
-	Cf = image_overlay[,, 1:3]
-	Af = image_overlay[,, 4]
+  Cf = image_overlay[,, 1:3]
+  Af = image_overlay[,, 4]
 
-	Af3 = array(Af, dim = c(dim(Af), 3))
-	Ab3 = array(Ab, dim = c(dim(Ab), 3))
+  Af3 = array(Af, dim = c(dim(Af), 3))
+  Ab3 = array(Ab, dim = c(dim(Ab), 3))
 
-	Ao = pmin(pmax(Af + Ab * (1 - Af), 0), 1)
-	num = Cf * Af3 + Cb * Ab3 * array(1 - Af, dim = c(dim(Af), 3))
+  Ao = pmin(pmax(Af + Ab * (1 - Af), 0), 1)
+  num = Cf * Af3 + Cb * Ab3 * array(1 - Af, dim = c(dim(Af), 3))
 
-	eps = 1e-8
-	Co_lin = num / array(pmax(Ao, eps), dim = c(dim(Ao), 3))
+  eps = 1e-8
+  Co_lin = num / array(pmax(Ao, eps), dim = c(dim(Ao), 3))
 
-	# ensure fully transparent pixels are black
-	if (any(Ao <= eps)) {
-		m = Ao <= eps
-		Co_lin[,, 1][m] = 0
-		Co_lin[,, 2][m] = 0
-		Co_lin[,, 3][m] = 0
-	}
+  # ensure fully transparent pixels are black
+  if (any(Ao <= eps)) {
+    m = Ao <= eps
+    Co_lin[,, 1][m] = 0
+    Co_lin[,, 2][m] = 0
+    Co_lin[,, 3][m] = 0
+  }
 
-	composite_image = array(1, dim = dim(image))
-	composite_image[,, 4] = Ao
-	composite_image[,, 1:3] = Co_lin
+  composite_image = array(1, dim = dim(image))
+  composite_image[,, 4] = Ao
+  composite_image[,, 1:3] = Co_lin
 
-	composite_image = ray_read_image(
-		composite_image,
-		assume_colorspace = image_colorspace,
-		assume_white = image_whitepoint,
-		source_linear = TRUE
-	)
-	handle_image_output(composite_image, filename = filename, preview = preview)
+  composite_image = ray_read_image(
+    composite_image,
+    assume_colorspace = image_colorspace,
+    assume_white = image_whitepoint,
+    source_linear = TRUE
+  )
+  handle_image_output(composite_image, filename = filename, preview = preview)
 }
 
 
@@ -265,12 +262,9 @@ render_image_overlay = function(
 
 #'@return A `rayimg` RGBA array.
 #'@export
-#'@examples
-#'if(run_documentation()){
+#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #'#Plot the dragon
 #'plot_image(dragon)
-#'}
-#'if(run_documentation()){
 #'#Add an overlay of a red semi-transparent circle:
 #'circlemat = generate_2d_disk(min(dim(dragon)[1:2]))
 #'circlemat = circlemat/max(circlemat)
@@ -284,8 +278,7 @@ render_image_overlay = function(
 #'dragon_clipped[dragon_clipped > 1] = 1
 #'add_image_overlay(dragon_clipped, image_overlay = rgba_array,
 #'                  alpha=0.5, preview = TRUE)
-#'}
 add_image_overlay = function(...) {
-	message("add_image_overlay() deprecated--use render_image_overlay() instead.")
-	render_image_overlay(...)
+  message("add_image_overlay() deprecated--use render_image_overlay() instead.")
+  render_image_overlay(...)
 }

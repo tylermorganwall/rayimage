@@ -36,8 +36,8 @@ it boosts muted colors more than already-saturated colors, and reduces saturatio
 in already-saturated regions when negative. Works on HDR arrays as well (values can exceed 1).
 }
 \examples{
-if(run_documentation()){
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
   dragon |>
     render_vibrance(vibrance = 0.4, preview = TRUE)
-}
+\dontshow{\}) # examplesIf}
 }

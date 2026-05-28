@@ -39,7 +39,7 @@ A \code{rayimg} RGBA array tagged with the \strong{target} space.
 Convert between two RGB spaces via XYZ, with optional white adaptation. Operates on \strong{linear} RGB.
 }
 \examples{
-if (run_documentation()) {
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 # Read photo, convert to ACEScg with CAT (scene)
 	photo = ray_read_image(sunset_image, normalize = FALSE)
 	photo_aces = render_convert_colorspace(
@@ -79,5 +79,5 @@ if (run_documentation()) {
 	)
   #Note the color differences, which arise from the mismatched colorspace on the right.
 	 plot_image_grid(list(comp1, comp2), dim = c(1, 2))
-}
+\dontshow{\}) # examplesIf}
 }

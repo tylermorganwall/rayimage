@@ -33,26 +33,20 @@ render_reorient(
 Reorients an image or matrix. Transformations are applied in this order: x, y, and transpose.
 }
 \examples{
-if(run_documentation()){
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 #Original orientation
 plot_image(dragon)
-}
-if(run_documentation()){
 #Flip the dragon image horizontally
 dragon |>
  render_reorient(flipx = TRUE) |>
  plot_image()
-}
-if(run_documentation()){
 #Flip the dragon image vertically
 dragon |>
  render_reorient(flipy = TRUE) |>
  plot_image()
-}
-if(run_documentation()){
 #Transpose the dragon image
 dragon |>
  render_reorient(transpose = TRUE) |>
  plot_image()
-}
+\dontshow{\}) # examplesIf}
 }

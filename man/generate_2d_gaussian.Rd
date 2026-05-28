@@ -29,7 +29,7 @@ Generates a 2D gaussian distribution, with an optional
 argument to take the gaussian to a user-defined power.
 }
 \examples{
-if(run_documentation()){
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 image(generate_2d_gaussian(1,1,31), asp=1)
-}
+\dontshow{\}) # examplesIf}
 }

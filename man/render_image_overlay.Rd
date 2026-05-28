@@ -55,11 +55,9 @@ Takes an RGB array/filename and adds an image overlay. Can optionally resize and
 position the overlay at a specific pixel location.
 }
 \examples{
-if(run_documentation()){
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 #Plot the dragon
 plot_image(dragon)
-}
-if(run_documentation()){
 #Add an overlay of a red semi-transparent circle:
 circlemat = generate_2d_disk(min(dim(dragon)[1:2]))
 circlemat = circlemat/max(circlemat)
@@ -73,8 +71,6 @@ dragon_clipped = dragon
 dragon_clipped[dragon_clipped > 1] = 1
 render_image_overlay(dragon_clipped, image_overlay = rgba_array,
                  alpha=0.5, preview = TRUE)
-}
-if (run_documentation()) {
 	# Read photo, convert to ACEScg with CAT (scene)
 	photo = ray_read_image(sunset_image, normalize = FALSE)
 	photo_aces = render_convert_colorspace(
@@ -118,5 +114,5 @@ if (run_documentation()) {
                title_color = "white", title_color = "#c300ff", title_bar_alpha=1)
 
 	plot_image_grid(list(comp1, comp2), dim = c(1, 2))
-}
+\dontshow{\}) # examplesIf}
 }

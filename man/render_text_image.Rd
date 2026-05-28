@@ -72,37 +72,27 @@ Otherwise, writes the image to the specified file or displays it if \code{previe
 Generates an image which tightly fits text.
 }
 \examples{
-if (run_documentation()) {
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
   #Generate an image of some text
   render_text_image("Some text", preview = TRUE)
-}
-if (run_documentation()) {
   #Change the font size
   render_text_image("Some text", size = 100, preview = TRUE)
-}
-if (run_documentation()) {
   #Change the font color
   render_text_image("Some text", size = 100, color="red",preview = TRUE)
-}
-if (run_documentation()) {
   #Change the background color and transparency
   render_text_image("Some text", size = 50, color="purple",
                       background_color="purple", background_alpha = 0.5,
                       preview = TRUE)
-}
-if (run_documentation()) {
   # Plot an emoji with the agg device.
   render_text_image("\U0001F600\U0001F680", size = 50, color = "purple", use_ragg = TRUE,
                     background_alpha = 0,
                     preview = TRUE)
-}
 
-if (run_documentation()) {
   # Plot an emoji with the agg device and adjust the height and width (which
   # is on by default) to be a tight fit.
   render_text_image("\U0001F600\U0001F680", size = 50, color = "purple", use_ragg = TRUE,
                     background_alpha = 0, check_text_width = TRUE,
                     check_text_height = TRUE,
                     preview = TRUE)
-}
+\dontshow{\}) # examplesIf}
 }

@@ -41,45 +41,31 @@
 #' @import grDevices grid
 #' @export
 #'
-#' @examples
-#'if(run_documentation()){
+#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #'#Plot the dragon
 #'render_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20)
-#'}
-#'if(run_documentation()){
 #'#That's hard to see--let's add a title bar:
 #'render_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20,
 #'          title_bar_color="white")
-#'}
-#'if(run_documentation()){
 #'#Change the width of the bar:
 #'render_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20,
 #'          title_bar_color="white", title_offset = c(8,8))
-#'}
-#'if(run_documentation()){
 #'#The width of the bar will also automatically adjust for newlines:
 #'render_title(dragon, preview = TRUE, title_text = "Dragon\n(Blue)", title_size=20,
 #'          title_bar_color="white")
-#'}
-#'if(run_documentation()){
 #'#Change the color and title color:
 #'render_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20,
 #'          title_bar_color="red", title_color = "white")
-#'}
-#'if(run_documentation()){
 #'#Change the transparency:
 #'render_title(dragon, preview = TRUE, title_text = "Dragon",
 #'             title_size=20, title_bar_alpha = 0.8,
 #'             title_bar_color="red", title_color = "white")
-#'}
-#'if(run_documentation()){
 #' #Read directly from a file
 #' temp_image = tempfile(fileext = ".png")
 #' ray_write_image(dragon, temp_image)
 #' render_title(temp_image, preview = TRUE, title_text = "Dragon",
 #'              title_size=20, title_bar_alpha = 0.8,
 #'              title_bar_color="red", title_color = "white")
-#'}
 render_title = function(
   image,
   title_text = "",
@@ -445,11 +431,9 @@ render_title = function(
 #' @export
 #' @import grDevices grid
 #'
-#' @examples
+#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #' #Deprecated add_title function. Will display a warning.
-#' if(run_documentation()) {
 #' render_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20)
-#' }
 add_title = function(...) {
   message("add_title() deprecated--use render_title() instead.")
   render_title(...)

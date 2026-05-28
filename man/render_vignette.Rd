@@ -39,29 +39,19 @@ A \code{rayimg} RGBA array.
 Takes an RGB array/filename and adds a camera vignette effect.
 }
 \examples{
-if(run_documentation()){
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 #Plot the dragon
 plot_image(dragon)
-}
-if(run_documentation()){
 #Add a vignette effect:
 render_vignette(dragon, preview = TRUE, vignette = 1, radius=1.1)
-}
-if(run_documentation()){
 #Lighten the vignette effect:
 render_vignette(dragon, preview = TRUE, vignette = 0.5)
-}
-if(run_documentation()){
 #Change the radius:
 render_vignette(dragon, preview = TRUE, vignette = 1, radius=1.5)
 render_vignette(dragon, preview = TRUE, vignette = 0.1, radius=0.8)
-}
-if(run_documentation()){
 #Change the color:
 render_vignette(dragon, preview = TRUE, vignette = 1, color="white")
-}
-if(run_documentation()){
 #Increase the width of the blur by 50\%:
 render_vignette(dragon, preview = TRUE, vignette = c(1,1.5))
-}
+\dontshow{\}) # examplesIf}
 }

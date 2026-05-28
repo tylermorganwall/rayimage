@@ -41,11 +41,6 @@ reference:
     desc: "Use the render_* versions instead."
     contents:
       - starts_with("add")
-  - title: "pkgdown utils"
-    desc: "Internal but must be exported to meet CRAN guidelines"
-    contents:
-      - starts_with("run")
-
 figures:
   fig.asp: 1
 

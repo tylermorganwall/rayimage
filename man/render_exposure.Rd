@@ -48,12 +48,10 @@ A \code{rayimg} RGBA array.
 Apply exposure compensation and ISO gain
 }
 \examples{
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 # LDR/sRGB (auto): decodes to linear, applies EV, records camera metadata
-if (run_documentation()) {
   render_exposure(dragon, exposure = +1, preview = TRUE)
-}
 # Force linear/HDR behavior
-if (run_documentation()) {
   render_exposure(dragon * 2, exposure = -1, preview = TRUE)
-}
+\dontshow{\}) # examplesIf}
 }

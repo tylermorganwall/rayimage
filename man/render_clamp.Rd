@@ -34,13 +34,11 @@ A \code{rayimg} RGBA array.
 Clamps an image to a user-specified range, ignoring the alpha channel.
 }
 \examples{
-if(run_documentation()){
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 #The image of the unchanged image
 range(dragon)
-}
-if(run_documentation()){
 #Clamp the maximum and minimum values to one and zero
 render_clamp(dragon) |>
  range()
-}
+\dontshow{\}) # examplesIf}
 }

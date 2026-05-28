@@ -18,72 +18,60 @@
 #'@return A `rayimg` RGBA array.
 #'@import grDevices
 #'@export
-#'@examples
-#'if(run_documentation()){
+#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #'#Plot the dragon
 #'plot_image(dragon)
-#'}
-#'if(run_documentation()){
 #'#Add a vignette effect:
 #'render_vignette(dragon, preview = TRUE, vignette = 1, radius=1.1)
-#'}
-#'if(run_documentation()){
 #'#Lighten the vignette effect:
 #'render_vignette(dragon, preview = TRUE, vignette = 0.5)
-#'}
-#'if(run_documentation()){
 #'#Change the radius:
 #'render_vignette(dragon, preview = TRUE, vignette = 1, radius=1.5)
 #'render_vignette(dragon, preview = TRUE, vignette = 0.1, radius=0.8)
-#'}
-#'if(run_documentation()){
 #'#Change the color:
 #'render_vignette(dragon, preview = TRUE, vignette = 1, color="white")
-#'}
-#'if(run_documentation()){
 #'#Increase the width of the blur by 50%:
 #'render_vignette(dragon, preview = TRUE, vignette = c(1,1.5))
-#'}
 render_vignette = function(
-	image,
-	vignette = 0.5,
-	color = "#000000",
-	radius = 1.1,
-	filename = NULL,
-	preview = FALSE
+  image,
+  vignette = 0.5,
+  color = "#000000",
+  radius = 1.1,
+  filename = NULL,
+  preview = FALSE
 ) {
-	image = ray_read_image(image, reset_camera_settings = TRUE)
-	dimensions = dim(image)
+  image = ray_read_image(image, reset_camera_settings = TRUE)
+  dimensions = dim(image)
 
-	if (!("magick" %in% rownames(utils::installed.packages()))) {
-		stop("`magick` package required for adding overlay")
-	}
-	if (length(vignette) > 1) {
-		if (vignette[2] < 0) {
-			stop("vignette[2] must be greater than 0")
-		}
-		radiusval = min(c(dimensions[1], dimensions[2])) / 2 * vignette[2]
-		vignette = vignette[1]
-	} else {
-		radiusval = min(c(dimensions[1], dimensions[2])) / 2
-	}
-	if (is.numeric(vignette)) {
-		if (vignette[1] > 1 || vignette[1] < 0) {
-			stop("vignette value (", vignette[1], ") must be between 0 and 1.")
-		}
-	} else {
-		vignette = 0.4
-	}
-	image_vignette = make_vignette_overlay(
-		width = dimensions[1],
-		height = dimensions[2],
-		intensity = vignette,
-		radius = radiusval,
-		radius_multiplier = radius,
-		color = color
-	)
-	temp = render_image_overlay(image, image_vignette)
-	handle_image_output(temp, filename = filename, preview = preview)
+  if (!("magick" %in% rownames(utils::installed.packages()))) {
+    stop("`magick` package required for adding overlay")
+  }
+  if (length(vignette) > 1) {
+    if (vignette[2] < 0) {
+      stop("vignette[2] must be greater than 0")
+    }
+    radiusval = min(c(dimensions[1], dimensions[2])) / 2 * vignette[2]
+    vignette = vignette[1]
+  } else {
+    radiusval = min(c(dimensions[1], dimensions[2])) / 2
+  }
+  if (is.numeric(vignette)) {
+    if (vignette[1] > 1 || vignette[1] < 0) {
+      stop("vignette value (", vignette[1], ") must be between 0 and 1.")
+    }
+  } else {
+    vignette = 0.4
+  }
+  image_vignette = make_vignette_overlay(
+    width = dimensions[1],
+    height = dimensions[2],
+    intensity = vignette,
+    radius = radiusval,
+    radius_multiplier = radius,
+    color = color
+  )
+  temp = render_image_overlay(image, image_vignette)
+  handle_image_output(temp, filename = filename, preview = preview)
 }
 
 #'@title Add Vignette Effect (Deprecated)
@@ -95,16 +83,12 @@ render_vignette = function(
 #'@return A `rayimg` RGBA array.
 #'@import grDevices
 #'@export
-#'@examples
-#'if(run_documentation()){
+#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #'#Plot the dragon
 #'plot_image(dragon)
-#'}
-#'if(run_documentation()){
 #'#Add a vignette effect:
 #'add_vignette(dragon, preview = TRUE, vignette = 0.5)
-#'}
 add_vignette = function(...) {
-	message("add_vignette() deprecated--use render_vignette() instead.")
-	render_vignette(...)
+  message("add_vignette() deprecated--use render_vignette() instead.")
+  render_vignette(...)
 }

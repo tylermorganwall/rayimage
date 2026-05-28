@@ -10,10 +10,8 @@
 #'if wanting to plot the distribution with [plot_image()].
 #'@import stats
 #'@export
-#'@examples
-#'if(run_documentation()){
+#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #'image(generate_2d_exponential(1,31,3), asp=1)
-#'}
 generate_2d_exponential = function(
   falloff = 1,
   dim = c(11, 11),

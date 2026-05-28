@@ -21,10 +21,8 @@
 #'@param rescale_unity Default `FALSE`. If `TRUE`, this will rescale the max value to one. Useful
 #'if wanting to plot the distribution with [plot_image()].
 #'@export
-#'@examples
-#'if(run_documentation()){
+#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #'image(generate_2d_disk(101), asp=1)
-#'}
 generate_2d_disk = function(
   dim = c(11, 11),
   radius = 1,

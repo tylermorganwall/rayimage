@@ -23,25 +23,16 @@
 #'@param progress Default `TRUE`. Whether to display a progress bar.
 #'@return A `rayimg` RGBA array.
 #'@export
-#'@examples
-#'if(run_documentation()){
+#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #'#Perform a convolution with the default gaussian kernel
 #'plot_image(dragon)
-#'}
-#'if(run_documentation()){
 #'#Perform a convolution with the default gaussian kernel
 #'render_convolution(dragon, preview = TRUE)
-#'}
-#'if(run_documentation()){
 #'#Increase the width of the kernel
 #'render_convolution(dragon, kernel = 2, kernel_dim=21,kernel_extent=6, preview = TRUE)
-#'}
-#'if(run_documentation()){
 #'#Perform edge detection using an edge detection kernel
 #'edge = matrix(c(-1,-1,-1,-1,8,-1,-1,-1,-1),3,3)
 #'render_convolution(render_bw(dragon), kernel = edge, preview = TRUE, absolute=FALSE)
-#'}
-#'if(run_documentation()){
 #'#Perform edge detection with Sobel matrices
 #'sobel1 = matrix(c(1,2,1,0,0,0,-1,-2,-1),3,3)
 #'sobel2 = matrix(c(1,2,1,0,0,0,-1,-2,-1),3,3,byrow=TRUE)
@@ -51,31 +42,22 @@
 #'plot_image(sob1)
 #'plot_image(sob2)
 #'plot_image(sob_all)
-#'}
 #'
-#'if(run_documentation()){
 #'#Only perform the convolution on bright pixels (bloom)
 #'render_convolution(dragon, kernel = 5, kernel_dim=24, kernel_extent=24,
 #'                   min_value=1, preview = TRUE)
-#'}
-#'if(run_documentation()){
 #'#Use a built-in kernel:
 #'render_convolution(dragon, kernel = generate_2d_exponential(falloff=2, dim=31, width=21),
 #'                   preview = TRUE)
-#'}
-#'if(run_documentation()){
 #'#We can also apply this function to matrices:
 #'volcano |> image()
 #'volcano |>
 #'  render_convolution(kernel=generate_2d_gaussian(sd=1,dim=31)) |>
 #'  image()
-#'}
-#'if(run_documentation()){
 #'#Use a custom kernel (in this case, an X shape):
 #'custom = diag(10) + (diag(10)[,10:1])
 #'plot_image(custom)
 #'render_convolution(dragon, kernel = custom, preview = TRUE)
-#'}
 render_convolution = function(
   image,
   kernel = "gaussian",

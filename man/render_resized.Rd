@@ -35,32 +35,26 @@ A \code{rayimg} RGBA array.
 Resizes an image or a matrix, using bilinear interpolation.
 }
 \examples{
-if(run_documentation()){
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 #Plot the image with a title
 dragon |>
  render_title("Dragon", title_offset=c(10,10), title_bar_color="black",
            title_size=20, title_color = "white") |>
  plot_image()
-}
-if(run_documentation()){
 #Half of the resolution
 render_resized(dragon, mag = 1/2) |>
  render_title("Dragon (half res)", title_offset=c(5,5), title_bar_color="black",
            title_size=10, title_color = "white") |>
  plot_image()
-}
-if(run_documentation()){
 #Double the resolution
 render_resized(dragon, mag = 2) |>
  render_title("Dragon (2x res)", title_offset=c(20,20), title_bar_color="black",
            title_size=40, title_color = "white") |>
  plot_image()
-}
-if(run_documentation()){
 #Specify the exact resulting dimensions
 render_resized(dragon, dim = c(160,320)) |>
  render_title("Dragon (custom size)", title_offset=c(10,10), title_bar_color="black",
            title_size=20, title_color = "white") |>
  plot_image()
-}
+\dontshow{\}) # examplesIf}
 }

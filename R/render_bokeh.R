@@ -23,146 +23,128 @@
 #'@param ... Additional arguments to pass to [plot_image()] if `preview = TRUE`.
 #'@return A `rayimg` RGBA array.
 #'@export
-#'@examples
-#'if(run_documentation()){
+#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #'#Plot the dragon
 #'plot_image(dragon)
-#'}
-#'if(run_documentation()){
 #'#Plot the depth map
 #' plot_image(dragondepth/1500)
-#'}
-#'if(run_documentation()){
 #'#Preview the focal plane:
 #'render_bokeh(dragon, dragondepth, focus=950, preview_focus = TRUE)
-#'}
-#'if(run_documentation()){
 #'#Change the focal length:
 #'render_bokeh(dragon, dragondepth, focus=950, focallength=300)
-#'}
-#'if(run_documentation()){
 #'#Add chromatic aberration:
 #'render_bokeh(dragon, dragondepth, focus=950, focallength=300, aberration = 0.5)
-#'}
-#'if(run_documentation()){
 #'#Change the focal distance:
 #'render_bokeh(dragon, dragondepth, focus=600, focallength=300)
 #'render_bokeh(dragon, dragondepth, focus=1300, focallength=300)
-#'}
-#'if(run_documentation()){
 #'#Change the bokeh shape to a hexagon:
 #'render_bokeh(dragon, dragondepth, bokehshape = "hex",
 #'             focallength=300, focus=600)
-#'}
-#'if(run_documentation()){
 #'#Change the bokeh intensity:
 #'render_bokeh(dragon, dragondepth,
 #'             focallength=400, focus=900, bokehintensity = 1)
 #'render_bokeh(dragon, dragondepth,
 #'             focallength=400, focus=900, bokehintensity = 3)
-#'}
-#'if(run_documentation()){
 #'#Rotate the hexagonal shape:
 #'render_bokeh(dragon, dragondepth, bokehshape = "hex", rotation=15, bokehintensity=3,
 #'             focallength=400, focus=800)
-#'}
 render_bokeh = function(
-	image,
-	depthmap,
-	focus = 0.5,
-	focallength = 100,
-	fstop = 4,
-	filename = NULL,
-	preview = TRUE,
-	preview_focus = FALSE,
-	bokehshape = "circle",
-	bokehintensity = 1,
-	bokehlimit = 0.8,
-	rotation = 0,
-	aberration = 0,
-	progress = interactive(),
-	...
+  image,
+  depthmap,
+  focus = 0.5,
+  focallength = 100,
+  fstop = 4,
+  filename = NULL,
+  preview = TRUE,
+  preview_focus = FALSE,
+  bokehshape = "circle",
+  bokehintensity = 1,
+  bokehlimit = 0.8,
+  rotation = 0,
+  aberration = 0,
+  progress = interactive(),
+  ...
 ) {
-	temp_image = ray_read_image(image, reset_camera_settings = TRUE) #Always output RGBA array
-	#Check if file or image before below:
-	imagetype = attr(temp_image, "filetype")
+  temp_image = ray_read_image(image, reset_camera_settings = TRUE) #Always output RGBA array
+  #Check if file or image before below:
+  imagetype = attr(temp_image, "filetype")
 
-	depthmap = ray_read_image(
-		depthmap,
-		convert_to_array = FALSE,
-		reset_camera_settings = TRUE
-	)
-	depthtype = attr(depthmap, "filetype")
+  depthmap = ray_read_image(
+    depthmap,
+    convert_to_array = FALSE,
+    reset_camera_settings = TRUE
+  )
+  depthtype = attr(depthmap, "filetype")
 
-	if (preview_focus) {
-		preview_focus(image, depthmap, focus, imagetype, depthtype)
-		return(invisible())
-	}
-	if (is.matrix(bokehshape)) {
-		custombokeh = bokehshape
-		bokehshape = 2L
-	} else {
-		if (bokehshape == "circle") {
-			bokehshape = 0L
-		} else {
-			bokehshape = 1L
-		}
-		custombokeh = matrix(1, 1, 1)
-	}
-	if (aberration >= 1 || aberration <= -1) {
-		stop("aberration value must be less than 1 and greater than -1")
-	}
+  if (preview_focus) {
+    preview_focus(image, depthmap, focus, imagetype, depthtype)
+    return(invisible())
+  }
+  if (is.matrix(bokehshape)) {
+    custombokeh = bokehshape
+    bokehshape = 2L
+  } else {
+    if (bokehshape == "circle") {
+      bokehshape = 0L
+    } else {
+      bokehshape = 1L
+    }
+    custombokeh = matrix(1, 1, 1)
+  }
+  if (aberration >= 1 || aberration <= -1) {
+    stop("aberration value must be less than 1 and greater than -1")
+  }
 
-	if (length(dim(depthmap)) == 3) {
-		depthmap = depthmap[,, 1]
-	}
+  if (length(dim(depthmap)) == 3) {
+    depthmap = depthmap[,, 1]
+  }
 
-	depthmap[is.na(depthmap)] = max(depthmap, na.rm = TRUE) * 2
+  depthmap[is.na(depthmap)] = max(depthmap, na.rm = TRUE) * 2
 
-	for (i in 1:3) {
-		max_size = min(c(max(dim(depthmap)), 500))
-		if (i == 1) {
-			depthmap2 = calc_bokeh_size(
-				depthmap,
-				focus,
-				focallength,
-				fstop,
-				1 + aberration
-			)
-		} else if (i == 2) {
-			depthmap2 = calc_bokeh_size(depthmap, focus, focallength, fstop, 1)
-		} else {
-			depthmap2 = calc_bokeh_size(
-				depthmap,
-				focus,
-				focallength,
-				fstop,
-				1 - aberration
-			)
-		}
-		if (any(dim(depthmap2)[1:2] != dim(temp_image)[1:2])) {
-			stop(sprintf(
-				"{rayimage}: dimensions of image (%ix%i) and depth map (%ix%i) don't match",
-				dim(temp_image)[1],
-				dim(temp_image)[2],
-				dim(depthmap2)[1],
-				dim(depthmap2)[2]
-			))
-		}
-		depthmap2[depthmap2 > max_size] = max_size
-		temp_image[,, i] = psf(
-			temp_image[,, i],
-			depthmap2,
-			depthmap,
-			focus,
-			bokehshape,
-			custombokeh = custombokeh,
-			bokehintensity,
-			bokehlimit,
-			rotation,
-			progbar = progress,
-			channel = i
-		)
-	}
-	handle_image_output(temp_image, filename = filename, preview = preview)
+  for (i in 1:3) {
+    max_size = min(c(max(dim(depthmap)), 500))
+    if (i == 1) {
+      depthmap2 = calc_bokeh_size(
+        depthmap,
+        focus,
+        focallength,
+        fstop,
+        1 + aberration
+      )
+    } else if (i == 2) {
+      depthmap2 = calc_bokeh_size(depthmap, focus, focallength, fstop, 1)
+    } else {
+      depthmap2 = calc_bokeh_size(
+        depthmap,
+        focus,
+        focallength,
+        fstop,
+        1 - aberration
+      )
+    }
+    if (any(dim(depthmap2)[1:2] != dim(temp_image)[1:2])) {
+      stop(sprintf(
+        "{rayimage}: dimensions of image (%ix%i) and depth map (%ix%i) don't match",
+        dim(temp_image)[1],
+        dim(temp_image)[2],
+        dim(depthmap2)[1],
+        dim(depthmap2)[2]
+      ))
+    }
+    depthmap2[depthmap2 > max_size] = max_size
+    temp_image[,, i] = psf(
+      temp_image[,, i],
+      depthmap2,
+      depthmap,
+      focus,
+      bokehshape,
+      custombokeh = custombokeh,
+      bokehintensity,
+      bokehlimit,
+      rotation,
+      progbar = progress,
+      channel = i
+    )
+  }
+  handle_image_output(temp_image, filename = filename, preview = preview)
 }

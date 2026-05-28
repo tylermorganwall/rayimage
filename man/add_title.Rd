@@ -17,8 +17,8 @@ Otherwise, writes the image to the specified file or displays it if \code{previe
 Add Title Function (deprecated)
 }
 \examples{
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 #Deprecated add_title function. Will display a warning.
-if(run_documentation()) {
 render_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20)
-}
+\dontshow{\}) # examplesIf}
 }

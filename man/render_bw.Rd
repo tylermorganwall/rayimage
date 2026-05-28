@@ -28,11 +28,11 @@ A \code{rayimg} RGBA array.
 Transforms an image to black and white, preserving luminance.
 }
 \examples{
-if(run_documentation()){
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 #Plot the image with a title
 dragon |>
  render_title("Dragon", title_offset=c(10,10), title_bar_color="black",
            title_size=20, title_color = "white") |>
  render_bw(preview = TRUE)
-}
+\dontshow{\}) # examplesIf}
 }

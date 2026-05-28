@@ -40,42 +40,32 @@ Crops an image (or matrix) either by specifying axis-aligned limits
 (\code{width_limits}/\code{height_limits}) or by specifying a centered box size via \code{center}.
 }
 \examples{
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 # Left half of the image
-if(run_documentation()){
 render_crop(dragon,
            width_limits = c(0, 0.50),
            height_limits = c(0, 1)) |>
  plot_image()
-}
 # Right half of the image
-if(run_documentation()){
 render_crop(dragon,
            width_limits = c(0.50, 1),
            height_limits = c(0, 1)) |>
  plot_image()
-}
 # Top middle of the image (25\%–50\% height, 25\%–75\% width)
-if(run_documentation()){
 render_crop(dragon,
            height_limits = c(0.25, 0.50),
            width_limits  = c(0.25, 0.75)) |>
  plot_image()
-}
 # Top middle, explicit pixel coords (for a 200x200 image)
-if(run_documentation()){
 render_crop(dragon,
            height_limits = c(50, 100),
            width_limits  = c(50, 150)) |>
  plot_image()
-}
 # Center-crop: 50\% height and width of the image
-if(run_documentation()){
 render_crop(dragon, center = c(0.5, 0.5)) |>
  plot_image()
-}
 # Center-crop: fixed 50x100 pixels
-if(run_documentation()){
 render_crop(dragon, center = c(50, 100)) |>
  plot_image()
-}
+\dontshow{\}) # examplesIf}
 }

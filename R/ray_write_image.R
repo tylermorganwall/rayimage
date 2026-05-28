@@ -17,31 +17,25 @@
 #'@return A `rayimg` RGBA array.
 #'@import grDevices
 #'@export
-#'@examples
-#'if(run_documentation()){
+#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #'#Write as a png
 #'tmparr = tempfile(fileext=".png")
 #'ray_read_image(dragon) |>
 #'  ray_write_image(tmparr)
 #'ray_read_image(tmparr) |>
 #'  plot_image()
-#'}
-#'if(run_documentation()){
 #'#Write as a JPEG (passing quality arguments via ...)
 #'tmparr = tempfile(fileext=".jpg")
 #'ray_read_image(dragon) |>
 #'  ray_write_image(tmparr, quality = 0.2)
 #'ray_read_image(tmparr) |>
 #'  plot_image()
-#'}
-#'if(run_documentation()){
 #'#Write as a tiff
 #'tmparr = tempfile(fileext=".tiff")
 #'ray_read_image(dragon) |>
 #'  ray_write_image(tmparr)
 #'ray_read_image(tmparr) |>
 #'   plot_image()
-#'}
 ray_write_image = function(
   image,
   filename,

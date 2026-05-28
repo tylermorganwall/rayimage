@@ -32,7 +32,7 @@ Disk generated using the following formula:
 The origin of the coordinate system is the center of the matrix.
 }
 \examples{
-if(run_documentation()){
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 image(generate_2d_disk(101), asp=1)
-}
+\dontshow{\}) # examplesIf}
 }

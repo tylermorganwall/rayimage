@@ -48,7 +48,7 @@ Prebuilt RGB Working/Display Color Spaces
 }
 }
 \examples{
-if (run_documentation()) {
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
   # Tag a raw array as sRGB, then convert to ACEScg:
   arr = array(runif(64*64*4), dim = c(64, 64, 4))
   ri  = ray_read_image(arr, assume_colorspace = CS_SRGB, assume_white = CS_SRGB$white_xyz)
@@ -58,8 +58,7 @@ if (run_documentation()) {
   # Convert an sRGB JPEG to ACEScg on ingest:
   # img = ray_read_image("photo.jpg", normalize = FALSE)
   # img_aces = render_convert_colorspace(img, to_mats = CS_ACESCG)
-}
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \itemize{

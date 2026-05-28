@@ -19,13 +19,11 @@ Matrix of distance values.
 Takes a logical matrix and returns the nearest distance to each TRUE value.
 }
 \examples{
-if(run_documentation()){
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 #Measure distance to
 plot_image(render_boolean_distance(t(volcano) > 150))
 plot_image(render_boolean_distance(t(volcano) < 150))
-}
-if(run_documentation()){
 #If we want to rescale this to zero to one (to visualize like an image), set rescale=TRUE
 plot_image(render_boolean_distance(t(volcano) > 150,rescale=TRUE))
-}
+\dontshow{\}) # examplesIf}
 }

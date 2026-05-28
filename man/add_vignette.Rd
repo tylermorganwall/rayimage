@@ -16,12 +16,10 @@ A \code{rayimg} RGBA array.
 Takes an RGB array/filename and adds a camera vignette effect.
 }
 \examples{
-if(run_documentation()){
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 #Plot the dragon
 plot_image(dragon)
-}
-if(run_documentation()){
 #Add a vignette effect:
 add_vignette(dragon, preview = TRUE, vignette = 0.5)
-}
+\dontshow{\}) # examplesIf}
 }

@@ -64,46 +64,30 @@ Takes an image and a depth map to render the image with depth of field
 or use one of the built-in bokeh types.
 }
 \examples{
-if(run_documentation()){
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 #Plot the dragon
 plot_image(dragon)
-}
-if(run_documentation()){
 #Plot the depth map
 plot_image(dragondepth/1500)
-}
-if(run_documentation()){
 #Preview the focal plane:
 render_bokeh(dragon, dragondepth, focus=950, preview_focus = TRUE)
-}
-if(run_documentation()){
 #Change the focal length:
 render_bokeh(dragon, dragondepth, focus=950, focallength=300)
-}
-if(run_documentation()){
 #Add chromatic aberration:
 render_bokeh(dragon, dragondepth, focus=950, focallength=300, aberration = 0.5)
-}
-if(run_documentation()){
 #Change the focal distance:
 render_bokeh(dragon, dragondepth, focus=600, focallength=300)
 render_bokeh(dragon, dragondepth, focus=1300, focallength=300)
-}
-if(run_documentation()){
 #Change the bokeh shape to a hexagon:
 render_bokeh(dragon, dragondepth, bokehshape = "hex",
             focallength=300, focus=600)
-}
-if(run_documentation()){
 #Change the bokeh intensity:
 render_bokeh(dragon, dragondepth,
             focallength=400, focus=900, bokehintensity = 1)
 render_bokeh(dragon, dragondepth,
             focallength=400, focus=900, bokehintensity = 3)
-}
-if(run_documentation()){
 #Rotate the hexagonal shape:
 render_bokeh(dragon, dragondepth, bokehshape = "hex", rotation=15, bokehintensity=3,
             focallength=400, focus=800)
-}
+\dontshow{\}) # examplesIf}
 }

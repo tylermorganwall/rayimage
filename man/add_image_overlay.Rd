@@ -16,11 +16,9 @@ A \code{rayimg} RGBA array.
 Takes an RGB array/filename and adds an image overlay.
 }
 \examples{
-if(run_documentation()){
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 #Plot the dragon
 plot_image(dragon)
-}
-if(run_documentation()){
 #Add an overlay of a red semi-transparent circle:
 circlemat = generate_2d_disk(min(dim(dragon)[1:2]))
 circlemat = circlemat/max(circlemat)
@@ -34,5 +32,5 @@ dragon_clipped = dragon
 dragon_clipped[dragon_clipped > 1] = 1
 add_image_overlay(dragon_clipped, image_overlay = rgba_array,
                  alpha=0.5, preview = TRUE)
-}
+\dontshow{\}) # examplesIf}
 }

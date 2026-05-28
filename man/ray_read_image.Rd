@@ -68,37 +68,31 @@ Reads an image from a file/array/matrix. From files, supports
 and \code{DNG} images.
 }
 \examples{
-if(run_documentation()){
+\dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 #Write as a png
 tmparr = tempfile(fileext=".png")
 ray_read_image(dragon) |>
  ray_write_image(tmparr)
 ray_read_image(tmparr) |>
  plot_image()
-}
-if(run_documentation()){
 #Write as a JPEG (passing quality arguments via ...)
 tmparr = tempfile(fileext=".jpg")
 ray_read_image(dragon) |>
  ray_write_image(tmparr, quality = 0.2)
 ray_read_image(tmparr) |>
  plot_image()
-}
-if(run_documentation()){
 #Write as a tiff
 tmparr = tempfile(fileext=".tiff")
 ray_read_image(dragon) |>
  ray_write_image(tmparr)
 ray_read_image(tmparr) |>
   plot_image()
-}
 
-if(run_documentation()){
 #Write as an exr
 tmparr = tempfile(fileext=".exr")
 ray_read_image(dragon) |>
  ray_write_image(tmparr)
 ray_read_image(tmparr) |>
   plot_image()
-}
+\dontshow{\}) # examplesIf}
 }
