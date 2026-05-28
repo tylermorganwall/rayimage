@@ -87,6 +87,10 @@
 <li>Fork the repo and make your changes.</li>
 <li>Ensure the package passes an R CMD CHECK with no warnings or errors, preferably with <code>rhub::check_for_cran()</code>. If making changes to the compiled code, please also use <code>rhub::check_on_solaris()</code>, <code>rhub::check_on_macos()</code>, and <code>rhub::check_on_windows()</code> (or upload the source packages to Win-Builder).</li>
 </ol></div>
+<div class="section level2">
+<h2 id="visual-snapshot-tests">Visual Snapshot Tests<a class="anchor" aria-label="anchor" href="#visual-snapshot-tests"></a></h2>
+<p>Visual snapshot tests are local-only. Run them explicitly with <code>Rscript tools/test-snapshots.R</code>.</p>
+</div>
 </div>
 
   </div>
