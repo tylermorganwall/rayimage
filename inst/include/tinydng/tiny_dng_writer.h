@@ -1124,10 +1124,12 @@ static bool WriteTIFFTag(const unsigned short tag, const unsigned short type,
       unsigned char value = *(data);
       memcpy(&(ifd.offset_or_value), &value, sizeof(unsigned char));
     } else if (len == 2) {
-      unsigned short value = *(reinterpret_cast<const unsigned short *>(data));
+      unsigned short value = 0;
+      memcpy(&value, data, sizeof(unsigned short));
       memcpy(&(ifd.offset_or_value), &value, sizeof(unsigned short));
     } else if (len == 4) {
-      unsigned int value = *(reinterpret_cast<const unsigned int *>(data));
+      unsigned int value = 0;
+      memcpy(&value, data, sizeof(unsigned int));
       ifd.offset_or_value = value;
     } else {
       assert(0);
@@ -2439,14 +2441,13 @@ bool DNGImage::WriteIFDToStream(const unsigned int data_base_offset,
           Write1(pad, &ifd_os);
           Write1(pad, &ifd_os);
         } else if (len == 2) {
-          const unsigned short value =
-              *(reinterpret_cast<const unsigned short *>(&ifd.offset_or_value));
+          unsigned short value = 0;
+          memcpy(&value, &ifd.offset_or_value, sizeof(unsigned short));
           Write2(value, &ifd_os, swap_endian_);
           const unsigned short pad = 0;
           Write2(pad, &ifd_os, swap_endian_);
         } else if (len == 4) {
-          const unsigned int value =
-              *(reinterpret_cast<const unsigned int *>(&ifd.offset_or_value));
+          const unsigned int value = ifd.offset_or_value;
           Write4(value, &ifd_os, swap_endian_);
         } else {
           assert(0);

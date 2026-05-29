@@ -98,8 +98,8 @@ NumericMatrix resize_matrix_stb(NumericMatrix image, int width, int height, int 
   float* resized_image = new float[width * height];
   float* original_image = new float[image.ncol() * image.nrow()];
 
-  for(unsigned int i = 0; i < image.nrow(); i++ ) {
-    for(unsigned int j = 0; j < image.ncol(); j++) {
+  for(int i = 0; i < image.nrow(); i++ ) {
+    for(int j = 0; j < image.ncol(); j++) {
       original_image[i + image.nrow() * j] = image(i,j);
     }
   }
@@ -161,8 +161,8 @@ arma::mat generate_disk(float radius, int dim, bool offsetx, bool offsety) {
   if(offsety) {
     y -= radius/dim + radius/dim/8;
   }
-  for(int i = 0; i < testmat.n_rows; i++) {
-    for(int j = 0; j < testmat.n_cols; j++) {
+  for(arma::uword i = 0; i < testmat.n_rows; i++) {
+    for(arma::uword j = 0; j < testmat.n_cols; j++) {
       testmat(i,j) = fabs(evaluate_disk(pow(x[i],2.0) + pow(y[j],2.0)));
     }
   }
