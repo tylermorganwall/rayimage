@@ -23,7 +23,7 @@ Imports:
 Suggests:
     magick,
     testthat (>= 3.0.0),
-    libopenexr,
+    libopenexr (>= 3.4.12-3),
     cli
 LinkingTo: Rcpp, RcppArmadillo, progress
 Roxygen: list(markdown = TRUE)
@@ -32,5 +32,5 @@ URL: https://www.rayimage.dev, https://github.com/tylermorganwall/rayimage
 BugReports: https://github.com/tylermorganwall/rayimage/issues
 Config/testthat/edition: 3
 Config/build/compilation-database: true
-Remotes: tylermorganwall/libopenexr (>= 3.4.12-0)
+Remotes: tylermorganwall/libopenexr (>= 3.4.12-3)
 Config/roxygen2/version: 8.0.0
