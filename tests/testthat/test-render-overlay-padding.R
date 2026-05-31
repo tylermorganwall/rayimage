@@ -292,6 +292,139 @@ test_that("render_alpha_outline builds padded alpha halos", {
   expect_true(all(halo_array[, c(1, 4), 4] == 0))
 })
 
+test_that("render_alpha_outline composites below source images by default", {
+  image = array(0, dim = c(3, 3, 4))
+  image[2, 2, 1] = 1
+  image[2, 2, 4] = 1
+
+  outline_only = render_alpha_outline(
+    image,
+    expand = 1,
+    edge_softness = 0.1,
+    color = c(0, 0, 1),
+    composite = FALSE,
+    preview = FALSE
+  )
+  composited = render_alpha_outline(
+    image,
+    expand = 1,
+    edge_softness = 0.1,
+    color = c(0, 0, 1),
+    preview = FALSE
+  )
+  outline_array = unclass(outline_only)
+  composited_array = unclass(composited)
+
+  expect_equal(outline_array[2, 2, 1:3], c(0, 0, 1))
+  expect_equal(composited_array[2, 2, 1:3], c(1, 0, 0))
+  expect_equal(composited_array[2, 2, 4], 1)
+  expect_equal(composited_array[2, 1, ], outline_array[2, 1, ])
+})
+
+test_that("render_alpha_outline fills single-pixel distance gaps", {
+  mask = matrix(
+    c(
+      FALSE,
+      FALSE,
+      FALSE,
+      FALSE,
+      FALSE,
+      FALSE,
+      TRUE,
+      FALSE,
+      TRUE
+    ),
+    nrow = 3
+  )
+
+  unfilled = render_alpha_outline(
+    mask = mask,
+    expand = 1,
+    edge_softness = 0.1,
+    gap_fill = 0,
+    preview = FALSE
+  )
+  filled = render_alpha_outline(
+    mask = mask,
+    expand = 1,
+    edge_softness = 0.1,
+    gap_fill = 1,
+    preview = FALSE
+  )
+  unfilled_alpha = unclass(unfilled)[,, 4]
+  filled_alpha = unclass(filled)[,, 4]
+
+  expect_equal(unfilled_alpha[2, 2], 0)
+  expect_equal(filled_alpha[2, 2], 0.5)
+  expect_equal(filled_alpha[, 1], unfilled_alpha[, 1])
+})
+
+test_that("render_alpha_outline gap_fill controls bridged gap width", {
+  two_pixel_gap = matrix(c(1, 0, 0, 0.5), nrow = 1)
+  one_pixel_fill = fill_alpha_gaps(two_pixel_gap, max_gap = 1)
+  two_pixel_fill = fill_alpha_gaps(two_pixel_gap, max_gap = 2)
+
+  expect_equal(one_pixel_fill, two_pixel_gap)
+  expect_equal(two_pixel_fill, matrix(c(1, 0.5, 0.5, 0.5), nrow = 1))
+
+  mask = matrix(c(TRUE, FALSE, FALSE, FALSE, FALSE, TRUE), nrow = 1)
+  one_pixel_outline = render_alpha_outline(
+    mask = mask,
+    expand = 1,
+    edge_softness = 0.1,
+    gap_fill = 1,
+    preview = FALSE
+  )
+  two_pixel_outline = render_alpha_outline(
+    mask = mask,
+    expand = 1,
+    edge_softness = 0.1,
+    gap_fill = 2,
+    preview = FALSE
+  )
+
+  expect_equal(
+    unclass(one_pixel_outline)[,, 4],
+    c(1, 0.5, 0, 0, 0.5, 1)
+  )
+  expect_equal(
+    unclass(two_pixel_outline)[,, 4],
+    c(1, 0.5, 0.5, 0.5, 0.5, 1)
+  )
+})
+
+test_that("render_alpha_outline gap_fill only fills border-connected gaps", {
+  interior_gap = matrix(0.5, nrow = 3, ncol = 3)
+  interior_gap[2, 2] = 0
+
+  protected_gap = fill_alpha_gaps(
+    interior_gap,
+    max_gap = 1,
+    alpha_threshold = 0.25
+  )
+  threshold_fill = fill_alpha_gaps(
+    interior_gap,
+    max_gap = 1,
+    alpha_threshold = 0.75
+  )
+
+  expect_equal(protected_gap[2, 2], 0)
+  expect_equal(threshold_fill[2, 2], 0.5)
+
+  mask = matrix(TRUE, nrow = 5, ncol = 5)
+  mask[2:4, 2:4] = FALSE
+  outline = render_alpha_outline(
+    mask = mask,
+    expand = 1,
+    edge_softness = 0.1,
+    gap_fill = 1,
+    gap_fill_alpha_threshold = 0.25,
+    preview = FALSE
+  )
+
+  expect_equal(unclass(outline)[3, 3, 4], 0)
+})
+
 test_that("render_image_overlay default compositing math is unchanged", {
   image = array(0.2, dim = c(2, 2, 3))
   overlay = array(0, dim = c(2, 2, 4))

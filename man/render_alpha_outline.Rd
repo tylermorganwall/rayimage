@@ -10,9 +10,12 @@ render_alpha_outline(
   expand = 0,
   edge_softness = 0.1,
   blur = 0,
+  gap_fill = 2,
+  gap_fill_alpha_threshold = 0.25,
   color = "black",
   alpha = 1,
   pad = 0,
+  composite = TRUE,
   filename = NULL,
   preview = FALSE
 )
@@ -32,6 +35,15 @@ transition, in pixels.}
 \item{blur}{Default \code{0}. Gaussian blur standard deviation applied to the
 final outline alpha.}
 
+\item{gap_fill}{Default \code{2}. Maximum alpha gap width, in pixels, to bridge
+in the expanded outline alpha. This fills border-connected breaks and notches
+caused by discrete distance quantization. Set to \code{0} to disable.}
+
+\item{gap_fill_alpha_threshold}{Default \code{0.25}. Alpha threshold used to
+classify border gaps. Gap filling only modifies pixels below this threshold
+that are connected to the image exterior; enclosed interior holes surrounded
+by pixels at or above this threshold are left unchanged.}
+
 \item{color}{Default \code{"black"}. Outline color.}
 
 \item{alpha}{Default \code{1}. Overall outline alpha multiplier.}
@@ -39,17 +51,22 @@ final outline alpha.}
 \item{pad}{Default \code{0}. Padding in pixels before computing the outline. If
 \code{NULL}, padding is computed from \code{expand}, \code{edge_softness}, and \code{blur}.}
 
+\item{composite}{Default \code{TRUE}. If \code{TRUE} and \code{image} is supplied, composite
+the outline below the original image. Set to \code{FALSE} to return the outline
+alone.}
+
 \item{filename}{Default \code{NULL}. File to save the image to. If \code{NULL} and
-\code{preview = FALSE}, returns the outline image.}
+\code{preview = FALSE}, returns the output image.}
 
 \item{preview}{Default \code{FALSE}. If \code{TRUE}, display the outline image.}
 }
 \value{
-A \code{rayimg} RGBA outline image with a \code{padding} attribute.
+A \code{rayimg} RGBA output image with a \code{padding} attribute.
 }
 \description{
 Creates a colored RGBA outline or halo from an image alpha
-channel or a supplied mask.
+channel or a supplied mask. When \code{image} is supplied, the original image is
+composited over the outline by default.
 }
 \examples{
 \dontshow{if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
