@@ -4,14 +4,19 @@
 \alias{convert_color}
 \title{Convert Color}
 \usage{
-convert_color(color, as_hex = FALSE)
+convert_color(color, as_hex = FALSE, single = FALSE)
 }
 \arguments{
-\item{color}{The color to convert. Can be either a hexadecimal code, or a numeric rgb
-vector listing three intensities between \code{0} and \code{1}.}
+\item{color}{The color to convert. Can be either an R color string, or a
+numeric scalar, RGB vector, RGBA vector, or RGB/RGBA matrix with values
+between \code{0} and \code{1}.}
+
+\item{as_hex}{Default \code{FALSE}. If \code{TRUE}, return hex colors.}
+
+\item{single}{Default \code{FALSE}. If \code{TRUE}, require exactly one color.}
 }
 \value{
-Color vector
+RGB or RGBA color vector, or a color matrix for multiple colors.
 }
 \description{
 Convert Color

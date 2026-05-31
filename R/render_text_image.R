@@ -24,6 +24,13 @@
 #' @param check_text_height Default `FALSE`. Whether to manually adjust the bounding
 #' box of the resulting image to ensure the string bbox is tall enough for the text.
 #' This will ensure a tight vertical bounding box on the text.
+#' @param trim Default `FALSE`. If `TRUE`, post-process the rendered image by
+#' cropping it to the tight bounding box of the text or emoji pixels. The
+#' bounding box is measured from a transparent text mask, so this can also trim
+#' images with opaque backgrounds.
+#' @param trim_padding Default `0`. Padding in pixels to add after trimming. Use
+#' a scalar for equal padding on all sides, or `c(top, right, bottom, left)`.
+#' Nonzero padding implies `trim = TRUE`.
 #' @param filename Default `NULL`. String specifying the file path to save the resulting image.
 #' If `NULL` and `preview = FALSE`, the function returns the processed RGB array.
 #' @param preview Default `FALSE`. Boolean indicating whether to display the image after processing.
@@ -58,6 +65,11 @@
 #'                     background_alpha = 0, check_text_width = TRUE,
 #'                     check_text_height = TRUE,
 #'                     preview = TRUE)
+#'
+#'   # Trim the image to the rendered glyphs and then add transparent padding.
+#'   render_text_image("\U0001F409", size = 80, use_ragg = TRUE,
+#'                     background_alpha = 0, trim = TRUE, trim_padding = 8,
+#'                     preview = TRUE)
 render_text_image = function(
   text,
   lineheight = 1,
@@ -73,8 +85,18 @@ render_text_image = function(
   filename = NULL,
   check_text_width = TRUE,
   check_text_height = TRUE,
+  trim = FALSE,
+  trim_padding = 0,
   preview = FALSE
 ) {
+  if (!is.logical(trim) || length(trim) != 1 || is.na(trim)) {
+    stop("`trim` must be `TRUE` or `FALSE`.")
+  }
+  trim_padding = normalize_render_padding(trim_padding)
+  trim_padding_values = unname(trim_padding)
+  if (any(trim_padding_values > 0)) {
+    trim = TRUE
+  }
   text_metrics = systemfonts::shape_string(
     text,
     size = size,
@@ -114,7 +136,7 @@ render_text_image = function(
   image_width = ncol(temp_image)
   image_height = nrow(temp_image)
 
-  test_edges = function(image_width, image_height) {
+  render_text_alpha_mask = function(image_width, image_height) {
     png_device = linear_png_device(use_ragg = use_ragg)
     png_device(
       temp_filename,
@@ -127,6 +149,13 @@ render_text_image = function(
       bg = NA
     )
     dev_id = grDevices::dev.cur()
+    close_device = function() {
+      devs = grDevices::dev.list()
+      if (!is.null(devs) && dev_id %in% devs) {
+        grDevices::dev.off(which = dev_id)
+      }
+    }
+    on.exit(close_device(), add = TRUE)
 
     #First write with no background
     grid::grid.newpage()
@@ -156,10 +185,15 @@ render_text_image = function(
         fontfamily = font
       )
     )
-    grDevices::dev.off(which = dev_id)
+    close_device()
     temp = png::readPNG(temp_filename)
-    side_edges = temp[c(1, nrow(temp)), , 4]
-    vert_edges = temp[, c(1, ncol(temp)), 4]
+    temp[,, 4]
+  }
+
+  test_edges = function(image_width, image_height) {
+    text_alpha = render_text_alpha_mask(image_width, image_height)
+    side_edges = text_alpha[c(1, nrow(text_alpha)), ]
+    vert_edges = text_alpha[, c(1, ncol(text_alpha))]
     return(c(any(vert_edges > 0), any(side_edges > 0)))
   }
 
@@ -243,6 +277,28 @@ render_text_image = function(
   grDevices::dev.off(which = dev_id)
 
   temp = ray_read_image(temp_filename, reset_camera_settings = TRUE)
+  if (trim) {
+    text_alpha = render_text_alpha_mask(image_width, image_height)
+    text_rows = which(rowSums(text_alpha > 0) > 0)
+    text_cols = which(colSums(text_alpha > 0) > 0)
+    if (length(text_rows) > 0 && length(text_cols) > 0) {
+      temp = temp[
+        min(text_rows):max(text_rows),
+        min(text_cols):max(text_cols),
+        ,
+        drop = FALSE
+      ]
+    }
+  }
+  if (any(trim_padding_values > 0)) {
+    temp = render_padding(
+      temp,
+      pad = trim_padding,
+      color = background_color,
+      alpha = background_alpha,
+      preview = FALSE
+    )
+  }
 
   handle_image_output(temp, filename = filename, preview = preview)
 }

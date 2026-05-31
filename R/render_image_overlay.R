@@ -1,28 +1,23 @@
 #'@title Add Overlay
 #'
-#'@description Takes an RGB array/filename and adds an image overlay. Can optionally resize and
-#'position the overlay at a specific pixel location.
+#'@description Takes an RGB array/filename and composites an image overlay over
+#'the full image. For pixel-positioned sprite, label, glyph, or billboard
+#'overlays, use [render_sprite_overlay()].
 #'
 #'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
 #'@param image_overlay Default `NULL`. 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
-#'This image will be resized to the dimension of the image if it does not match exactly.
+#'This image will be resized to the dimensions of `image` if it does not match
+#'exactly, unless `rescale_original = TRUE`.
 #'@param rescale_original Default `FALSE`. If `TRUE`, function will resize the original image to match
 #'the overlay.
 #'@param convert_overlay_colorspace Default `TRUE`. Whether to convert the overlay's colorspace
 #'to match the underlying image.
 #'@param alpha Default `NA`, using overlay's alpha channel. Otherwise, this sets the alpha transparency
 #'by multiplying the existing alpha channel by this value (between 0 and 1).
-#'@param overlay_coords Default `NULL`. Pixel coordinate `c(x, y)` at which to anchor the overlay.
-#'`x` increases from left to right and `y` from top to bottom, starting at 1.
-#'@param overlay_dims Default `NULL`. Dimensions for the overlay in pixels. If provided, the overlay is
-#'resized with `render_resized()` before compositing.
-#'@param overlay_anchor Default `"nw"`. Which corner of the overlay is placed at `overlay_coords`.
-#'Options: `"nw"`, `"ne"`, `"sw"`, `"se"`. The overlay is cropped to the image bounds if necessary.
 #'@param filename Default `NULL`. File to save the image to. If `NULL` and `preview = FALSE`,
 #'returns an RGB array.
 #'@param preview Default `FALSE`. If `TRUE`, it will display the image in addition
 #'to returning it.
-
 #'@return A `rayimg` RGBA array.
 #'@import grDevices
 #'@export
@@ -42,6 +37,7 @@
 #'dragon_clipped[dragon_clipped > 1] = 1
 #'render_image_overlay(dragon_clipped, image_overlay = rgba_array,
 #'                  alpha=0.5, preview = TRUE)
+#'
 #' 	# Read photo, convert to ACEScg with CAT (scene)
 #' 	photo = ray_read_image(sunset_image, normalize = FALSE)
 #' 	photo_aces = render_convert_colorspace(
@@ -91,14 +87,152 @@ render_image_overlay = function(
   rescale_original = FALSE,
   convert_overlay_colorspace = TRUE,
   alpha = NA,
+  filename = NULL,
+  preview = FALSE
+) {
+  render_image_overlay_impl(
+    image = image,
+    image_overlay = image_overlay,
+    rescale_original = rescale_original,
+    convert_overlay_colorspace = convert_overlay_colorspace,
+    alpha = alpha,
+    filename = filename,
+    preview = preview
+  )
+}
+
+#'@title Add Sprite Overlay
+#'
+#'@description Places an image overlay at a pixel location without resizing it to
+#'the full destination image. This is intended for sprite-like or billboard-like
+#'overlays such as labels, icons, glyphs, and screen-space annotations.
+#'
+#'@param image 3-layer RGB/4-layer RGBA array, `rayimg` class, or filename of an image.
+#'@param image_overlay Default `NULL`. 3-layer RGB/4-layer RGBA array, `rayimg`
+#'class, or filename of the sprite overlay.
+#'@param convert_overlay_colorspace Default `TRUE`. Whether to convert the overlay's colorspace
+#'to match the underlying image.
+#'@param alpha Default `NA`, using overlay's alpha channel. Otherwise, this sets the alpha transparency
+#'by multiplying the existing alpha channel by this value (between 0 and 1).
+#'@param overlay_coords Default `c(1, 1)`. Pixel coordinate `c(x, y)` used to
+#'position the overlay. `x` increases from left to right and `y` from top to
+#'bottom, starting at 1.
+#'@param overlay_dims Default `NULL`. Dimensions for the overlay in pixels. If
+#'provided, the overlay is resized with `render_resized()` before compositing.
+#'@param overlay_anchor Default `"nw"`. Which corner of the overlay is placed at
+#'`overlay_coords` when no numeric justification is supplied. Options: `"nw"`,
+#'`"ne"`, `"sw"`, `"se"`.
+#'@param overlay_just Default `NULL`. Optional numeric `c(hjust, vjust)`
+#'justification used to place the overlay relative to `overlay_coords`. If set,
+#'the overlay's left/top pixel is computed as
+#'`round(x - hjust * overlay_width)` and
+#'`round(y - vjust * overlay_height)`.
+#'@param hjust Default `NULL`. Optional horizontal justification. Overrides the
+#'first value of `overlay_just`.
+#'@param vjust Default `NULL`. Optional vertical justification. Overrides the
+#'second value of `overlay_just`.
+#'@param preserve_channels Default `TRUE`. If `TRUE`, RGB input images return
+#'RGB output and RGBA input images return RGBA output.
+#'@param filename Default `NULL`. File to save the image to. If `NULL` and
+#'`preview = FALSE`, returns an image array.
+#'@param preview Default `FALSE`. If `TRUE`, it will display the image in addition
+#'to returning it.
+#'
+#'@return A `rayimg` array.
+#'@export
+#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
+#'dragon_clipped = dragon
+#'dragon_clipped[dragon_clipped > 1] = 1
+#'
+#'# Render a transparent dragon emoji and center it on a pixel with hjust/vjust:
+#'dragon_emoji = render_text_image(
+#'  "\U0001F409",
+#'  size = 80,
+#'  background_alpha = 0,
+#'  use_ragg = TRUE,
+#'  trim = TRUE,
+#'  trim_padding = 8
+#')
+#'render_sprite_overlay(
+#'  dragon_clipped,
+#'  image_overlay = dragon_emoji,
+#'  overlay_coords = c(ncol(dragon_clipped) / 2, nrow(dragon_clipped) / 2),
+#'  hjust = 0.5,
+#'  vjust = 0.5,
+#'  preview = TRUE
+#')
+#'
+#'# The same justification can be supplied as overlay_just = c(hjust, vjust):
+#'render_sprite_overlay(
+#'  dragon_clipped,
+#'  image_overlay = dragon_emoji,
+#'  overlay_coords = c(ncol(dragon_clipped), nrow(dragon_clipped)),
+#'  overlay_just = c(1, 1),
+#'  preview = TRUE
+#')
+render_sprite_overlay = function(
+  image,
+  image_overlay = NULL,
+  convert_overlay_colorspace = TRUE,
+  alpha = NA,
+  overlay_coords = c(1, 1),
+  overlay_dims = NULL,
+  overlay_anchor = "nw",
+  overlay_just = NULL,
+  hjust = NULL,
+  vjust = NULL,
+  preserve_channels = TRUE,
+  filename = NULL,
+  preview = FALSE
+) {
+  render_image_overlay_impl(
+    image = image,
+    image_overlay = image_overlay,
+    rescale_original = FALSE,
+    convert_overlay_colorspace = convert_overlay_colorspace,
+    alpha = alpha,
+    overlay_coords = overlay_coords,
+    overlay_dims = overlay_dims,
+    overlay_anchor = overlay_anchor,
+    overlay_just = overlay_just,
+    hjust = hjust,
+    vjust = vjust,
+    preserve_channels = preserve_channels,
+    filename = filename,
+    preview = preview
+  )
+}
+
+#' @keywords internal
+render_image_overlay_impl = function(
+  image,
+  image_overlay = NULL,
+  rescale_original = FALSE,
+  convert_overlay_colorspace = TRUE,
+  alpha = NA,
   overlay_coords = NULL,
   overlay_dims = NULL,
   overlay_anchor = "nw",
+  overlay_just = NULL,
+  hjust = NULL,
+  vjust = NULL,
+  preserve_channels = FALSE,
   filename = NULL,
   preview = FALSE
 ) {
   if (is.null(image_overlay)) {
     stop("Need to pass in image to image_overlay argument.")
+  }
+
+  original_channels = {
+    image_dim = dim(image)
+    if (is.null(image_dim)) {
+      NA_integer_
+    } else if (length(image_dim) == 2) {
+      1L
+    } else {
+      image_dim[3]
+    }
   }
 
   # Load as rayimg (RGBA + attrs)
@@ -130,7 +264,11 @@ render_image_overlay = function(
     stopifnot(all(overlay_dims > 0))
     image_overlay = render_resized(image_overlay, dims = overlay_dims)
   }
-  placement_mode = !is.null(overlay_coords) || !is.null(overlay_dims)
+  placement_mode = !is.null(overlay_coords) ||
+    !is.null(overlay_dims) ||
+    !is.null(overlay_just) ||
+    !is.null(hjust) ||
+    !is.null(vjust)
   if (rescale_original) {
     target_dims = if (is.null(overlay_dims)) {
       dim(image_overlay)[1:2]
@@ -179,14 +317,6 @@ render_image_overlay = function(
   Ab = image[,, 4]
 
   # Place overlay on a blank canvas at the requested location, cropping to bounds
-  valid_anchors = c("nw", "ne", "sw", "se")
-  overlay_anchor = tolower(overlay_anchor)
-  if (!(overlay_anchor %in% valid_anchors)) {
-    stop(
-      "`overlay_anchor` must be one of: ",
-      paste(valid_anchors, collapse = ", ")
-    )
-  }
   if (is.null(overlay_coords)) {
     overlay_coords = c(1, 1)
   }
@@ -194,15 +324,57 @@ render_image_overlay = function(
   if (any(!is.finite(overlay_coords))) {
     stop("`overlay_coords` must be finite.")
   }
-  overlay_coords = as.integer(round(overlay_coords[1:2]))
   overlay_size = dim(image_overlay)[1:2]
-  start_row = overlay_coords[2]
-  start_col = overlay_coords[1]
-  if (overlay_anchor %in% c("sw", "se")) {
-    start_row = overlay_coords[2] - overlay_size[1] + 1
-  }
-  if (overlay_anchor %in% c("ne", "se")) {
-    start_col = overlay_coords[1] - overlay_size[2] + 1
+  use_overlay_just = !is.null(overlay_just) ||
+    !is.null(hjust) ||
+    !is.null(vjust)
+  if (use_overlay_just) {
+    if (is.null(overlay_just)) {
+      overlay_just = c(0, 0)
+    }
+    if (!is.numeric(overlay_just) || length(overlay_just) < 2) {
+      stop("`overlay_just` must be a numeric vector of length 2 or greater.")
+    }
+    overlay_just = overlay_just[1:2]
+    if (!is.null(hjust)) {
+      if (!is.numeric(hjust) || length(hjust) != 1 || !is.finite(hjust)) {
+        stop("`hjust` must be a finite numeric scalar.")
+      }
+      overlay_just[1] = hjust
+    }
+    if (!is.null(vjust)) {
+      if (!is.numeric(vjust) || length(vjust) != 1 || !is.finite(vjust)) {
+        stop("`vjust` must be a finite numeric scalar.")
+      }
+      overlay_just[2] = vjust
+    }
+    if (any(!is.finite(overlay_just))) {
+      stop("`overlay_just` must be finite.")
+    }
+    start_col = as.integer(round(
+      overlay_coords[1] - overlay_just[1] * overlay_size[2]
+    ))
+    start_row = as.integer(round(
+      overlay_coords[2] - overlay_just[2] * overlay_size[1]
+    ))
+  } else {
+    valid_anchors = c("nw", "ne", "sw", "se")
+    overlay_anchor = tolower(overlay_anchor)
+    if (!(overlay_anchor %in% valid_anchors)) {
+      stop(
+        "`overlay_anchor` must be one of: ",
+        paste(valid_anchors, collapse = ", ")
+      )
+    }
+    overlay_coords = as.integer(round(overlay_coords[1:2]))
+    start_row = overlay_coords[2]
+    start_col = overlay_coords[1]
+    if (overlay_anchor %in% c("sw", "se")) {
+      start_row = overlay_coords[2] - overlay_size[1] + 1
+    }
+    if (overlay_anchor %in% c("ne", "se")) {
+      start_col = overlay_coords[1] - overlay_size[2] + 1
+    }
   }
   end_row = start_row + overlay_size[1] - 1
   end_col = start_col + overlay_size[2] - 1
@@ -216,7 +388,12 @@ render_image_overlay = function(
     dest_cols = target_cols[cols_in_bounds]
     src_rows = which(rows_in_bounds)
     src_cols = which(cols_in_bounds)
-    overlay_canvas[dest_rows, dest_cols, ] = image_overlay[src_rows, src_cols, ]
+    overlay_canvas[dest_rows, dest_cols, ] = image_overlay[
+      src_rows,
+      src_cols,
+      ,
+      drop = FALSE
+    ]
   }
   image_overlay = overlay_canvas
 
@@ -250,6 +427,9 @@ render_image_overlay = function(
     assume_white = image_whitepoint,
     source_linear = TRUE
   )
+  if (isTRUE(preserve_channels) && identical(original_channels, 3L)) {
+    composite_image = composite_image[,, 1:3, drop = FALSE]
+  }
   handle_image_output(composite_image, filename = filename, preview = preview)
 }
 

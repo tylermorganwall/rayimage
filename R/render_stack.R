@@ -63,28 +63,6 @@ render_stack = function(
     align
   )
 
-  parse_background = function(bg) {
-    if (is.character(bg)) {
-      bg = convert_color(bg)
-    }
-    if (!is.numeric(bg)) {
-      stop("`background` must be numeric or a color string.")
-    }
-    if (length(bg) == 1) {
-      bg = rep(bg, 3)
-    }
-    if (length(bg) == 3) {
-      bg = c(bg, 1)
-    }
-    if (length(bg) != 4) {
-      stop("`background` must be length 1, 3, or 4.")
-    }
-    if (!all(is.finite(bg)) || !all(bg >= 0 & bg <= 1)) {
-      stop("`background` values must be in [0,1].")
-    }
-    bg
-  }
-
   images = lapply(input_list, function(img) {
     ray_read_image(
       img,
@@ -121,7 +99,10 @@ render_stack = function(
     out_width = sum(widths)
   }
 
-  bg = parse_background(background)
+  bg = convert_color(background, single = TRUE)
+  if (length(bg) == 3) {
+    bg = c(bg, 1)
+  }
   stacked = array(0, dim = c(out_height, out_width, 4))
   stacked[,, 1] = bg[1]
   stacked[,, 2] = bg[2]

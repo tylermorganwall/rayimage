@@ -1,1 +1,2 @@
+CXX_STD = CXX17
 PKG_CXXFLAGS = -I../inst/include
