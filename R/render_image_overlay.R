@@ -71,14 +71,14 @@
 #' 		convert_overlay_colorspace = FALSE
 #' 	) |>
 #'    render_title(title_text = "#c300ff: Match",
-#'                 title_color = "white", title_color = "#c300ff", title_bar_alpha=1)
+#'                 title_bar_color = "white", title_color = "#c300ff", title_bar_alpha=1)
 #' 	comp2 = render_image_overlay(
 #' 		photo_aces,
 #' 		logo,
 #' 		convert_overlay_colorspace = FALSE
 #' 	) |>
 #' 	 render_title(title_text = "#c300ff: Incorrect",
-#'                title_color = "white", title_color = "#c300ff", title_bar_alpha=1)
+#'                title_bar_color = "white", title_color = "#c300ff", title_bar_alpha=1)
 #'
 #' 	plot_image_grid(list(comp1, comp2), dim = c(1, 2))
 render_image_overlay = function(
