@@ -118,12 +118,6 @@ render_padding = function(
   handle_image_output(output, filename = filename, preview = preview)
 }
 
-#' @export
-#' @rdname render_padding
-render_pad = function(...) {
-  render_padding(...)
-}
-
 #' @keywords internal
 normalize_render_padding = function(pad) {
   if (!is.numeric(pad) || !(length(pad) %in% c(1, 4))) {

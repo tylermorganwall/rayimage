@@ -2,7 +2,6 @@
 % Please edit documentation in R/render_padding.R
 \name{render_padding}
 \alias{render_padding}
-\alias{render_pad}
 \title{Add Transparent Padding}
 \usage{
 render_padding(
@@ -13,8 +12,6 @@ render_padding(
   filename = NULL,
   preview = FALSE
 )
-
-render_pad(...)
 }
 \arguments{
 \item{image}{3-layer RGB/4-layer RGBA array, \code{rayimg} class, matrix, or
