@@ -70,10 +70,6 @@ reference:
     desc: "rayimg class functions"
     contents:
       - ends_with("rayimg")
-  - title: "Deprecated Functions"
-    desc: "Use the render_* versions instead."
-    contents:
-      - starts_with("add")
 figures:
   fig.asp: 1
 

@@ -432,33 +432,3 @@ render_image_overlay_impl = function(
   }
   handle_image_output(composite_image, filename = filename, preview = preview)
 }
-
-
-#'@title Add Overlay (Deprecated)
-#'
-#'@description Takes an RGB array/filename and adds an image overlay.
-#'
-#'@param ... to pass to [render_image_overlay()].
-
-#'@return A `rayimg` RGBA array.
-#'@export
-#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
-#'#Plot the dragon
-#'plot_image(dragon)
-#'#Add an overlay of a red semi-transparent circle:
-#'circlemat = generate_2d_disk(min(dim(dragon)[1:2]))
-#'circlemat = circlemat/max(circlemat)
-#'
-#'#Create RGBA image, with a transparency of 0.5
-#'rgba_array = array(1, dim=c(nrow(circlemat),ncol(circlemat),4))
-#'rgba_array[,,1] = circlemat
-#'rgba_array[,,2] = 0
-#'rgba_array[,,3] = 0
-#'dragon_clipped = dragon
-#'dragon_clipped[dragon_clipped > 1] = 1
-#'add_image_overlay(dragon_clipped, image_overlay = rgba_array,
-#'                  alpha=0.5, preview = TRUE)
-add_image_overlay = function(...) {
-  message("add_image_overlay() deprecated--use render_image_overlay() instead.")
-  render_image_overlay(...)
-}

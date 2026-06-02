@@ -399,7 +399,7 @@ test_that("render_resized scales images", {
   )
 })
 
-# render_image_overlay / add_image_overlay -------------------------------------
+# render_image_overlay ---------------------------------------------------------
 
 test_that("render_image_overlay composites overlays", {
   overlay_file = tempfile(fileext = ".png")
@@ -587,7 +587,7 @@ test_that("render_text_image renders text into images", {
   )
 })
 
-# render_title / add_title -----------------------------------------------------
+# render_title -----------------------------------------------------------------
 
 test_that("render_title overlays text using grid", {
   title_args = expand.grid(

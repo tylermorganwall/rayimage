@@ -73,22 +73,3 @@ render_vignette = function(
   temp = render_image_overlay(image, image_vignette)
   handle_image_output(temp, filename = filename, preview = preview)
 }
-
-#'@title Add Vignette Effect (Deprecated)
-#'
-#'@description Takes an RGB array/filename and adds a camera vignette effect.
-#'
-#'@param ... Arguments to pass to [render_vignette()].
-
-#'@return A `rayimg` RGBA array.
-#'@import grDevices
-#'@export
-#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
-#'#Plot the dragon
-#'plot_image(dragon)
-#'#Add a vignette effect:
-#'add_vignette(dragon, preview = TRUE, vignette = 0.5)
-add_vignette = function(...) {
-  message("add_vignette() deprecated--use render_vignette() instead.")
-  render_vignette(...)
-}

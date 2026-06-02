@@ -421,20 +421,3 @@ render_title = function(
   }
   handle_image_output(new_image, filename = filename, preview = preview)
 }
-
-#' Add Title Function (deprecated)
-#'
-#' @param ... Arguments to pass to [render_title()].
-#'
-#' @return A 3-layer RGB array of the processed image if `filename = NULL` and `preview = FALSE`.
-#' Otherwise, writes the image to the specified file or displays it if `preview = TRUE`.
-#' @export
-#' @import grDevices grid
-#'
-#'@examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
-#' #Deprecated add_title function. Will display a warning.
-#' render_title(dragon, preview = TRUE, title_text = "Dragon", title_size=20)
-add_title = function(...) {
-  message("add_title() deprecated--use render_title() instead.")
-  render_title(...)
-}
