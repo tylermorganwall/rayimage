@@ -5,11 +5,8 @@
 <url><loc>https://www.rayimage.dev/LICENSE-text.html</loc></url>
 <url><loc>https://www.rayimage.dev/authors.html</loc></url>
 <url><loc>https://www.rayimage.dev/index.html</loc></url>
-<url><loc>https://www.rayimage.dev/reference/add_image_overlay.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/add_multi_padding.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/add_padding.html</loc></url>
-<url><loc>https://www.rayimage.dev/reference/add_title.html</loc></url>
-<url><loc>https://www.rayimage.dev/reference/add_vignette.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/apply_color_matrix.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/array_rgb_to_hex_colmajor.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/calc_bokeh_size.html</loc></url>
