@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.25.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.26.0</span>
       </span>
     </div>
 
@@ -78,7 +78,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">convert_color</span><span class="op">(</span><span class="va">color</span>, as_hex <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">convert_color</span><span class="op">(</span><span class="va">color</span>, as_hex <span class="op">=</span> <span class="cn">FALSE</span>, single <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -86,13 +86,22 @@
 
 
 <dl><dt id="arg-color">color<a class="anchor" aria-label="anchor" href="#arg-color"></a></dt>
-<dd><p>The color to convert. Can be either a hexadecimal code, or a numeric rgb
-vector listing three intensities between <code>0</code> and <code>1</code>.</p></dd>
+<dd><p>The color to convert. Can be either an R color string, or a
+numeric scalar, RGB vector, RGBA vector, or RGB/RGBA matrix with values
+between <code>0</code> and <code>1</code>.</p></dd>
+
+
+<dt id="arg-as-hex">as_hex<a class="anchor" aria-label="anchor" href="#arg-as-hex"></a></dt>
+<dd><p>Default <code>FALSE</code>. If <code>TRUE</code>, return hex colors.</p></dd>
+
+
+<dt id="arg-single">single<a class="anchor" aria-label="anchor" href="#arg-single"></a></dt>
+<dd><p>Default <code>FALSE</code>. If <code>TRUE</code>, require exactly one color.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Color vector</p>
+    <p>RGB or RGBA color vector, or a color matrix for multiple colors.</p>
     </div>
 
     <div id="ref-examples">

@@ -14,12 +14,15 @@
 <url><loc>https://www.rayimage.dev/reference/array_rgb_to_hex_colmajor.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/calc_bokeh_size.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/colorspace_descriptors.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/composite_alpha_outline_image.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/compute_cat_bradford.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/convert_color.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/convert_to_native_raster.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/dragon.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/dragondepth.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/expand_to_fit.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/fill_alpha_gaps.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/find_border_alpha_gaps.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/fliplr.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/flipud.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/generate_2d_disk.html</loc></url>
@@ -35,6 +38,7 @@
 <url><loc>https://www.rayimage.dev/reference/make_colorspace.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/make_rgb_xyz_matrices.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/make_vignette_overlay.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/offset_alpha.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/pad_to_fit.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/plot_asp_native_raster.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/plot_image.html</loc></url>
@@ -46,6 +50,7 @@
 <url><loc>https://www.rayimage.dev/reference/rayimg.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/rayimg_composite_checker.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/rayimg_vertical_ellipsis.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_alpha_outline.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_bokeh.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_boolean_distance.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_bw.html</loc></url>
@@ -58,8 +63,10 @@
 <url><loc>https://www.rayimage.dev/reference/render_exposure.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_gamma_linear.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_image_overlay.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_padding.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_reorient.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_resized.html</loc></url>
+<url><loc>https://www.rayimage.dev/reference/render_sprite_overlay.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_stack.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_text_image.html</loc></url>
 <url><loc>https://www.rayimage.dev/reference/render_title.html</loc></url>

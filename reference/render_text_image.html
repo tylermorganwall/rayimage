@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayimage</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.25.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.26.0</span>
       </span>
     </div>
 
@@ -93,6 +93,8 @@
 <span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  check_text_width <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  check_text_height <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  trim <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  trim_padding <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  preview <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -167,6 +169,19 @@ box of the resulting image to ensure the string bbox is tall enough for the text
 This will ensure a tight vertical bounding box on the text.</p></dd>
 
 
+<dt id="arg-trim">trim<a class="anchor" aria-label="anchor" href="#arg-trim"></a></dt>
+<dd><p>Default <code>FALSE</code>. If <code>TRUE</code>, post-process the rendered image by
+cropping it to the tight bounding box of the text or emoji pixels. The
+bounding box is measured from a transparent text mask, so this can also trim
+images with opaque backgrounds.</p></dd>
+
+
+<dt id="arg-trim-padding">trim_padding<a class="anchor" aria-label="anchor" href="#arg-trim-padding"></a></dt>
+<dd><p>Default <code>0</code>. Padding in pixels to add after trimming. Use
+a scalar for equal padding on all sides, or <code>c(top, right, bottom, left)</code>.
+Nonzero padding implies <code>trim = TRUE</code>.</p></dd>
+
+
 <dt id="arg-preview">preview<a class="anchor" aria-label="anchor" href="#arg-preview"></a></dt>
 <dd><p>Default <code>FALSE</code>. Boolean indicating whether to display the image after processing.
 If <code>TRUE</code>, the image is displayed but not saved or returned.</p></dd>
@@ -207,6 +222,12 @@ Otherwise, writes the image to the specified file or displays it if <code>previe
 <span class="r-in"><span>                    check_text_height <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>                    preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="render_text_image-6.png" alt="" width="700" height="700"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Trim the image to the rendered glyphs and then add transparent padding.</span></span></span>
+<span class="r-in"><span>  <span class="fu">render_text_image</span><span class="op">(</span><span class="st">"\U0001F409"</span>, size <span class="op">=</span> <span class="fl">80</span>, use_ragg <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                    background_alpha <span class="op">=</span> <span class="fl">0</span>, trim <span class="op">=</span> <span class="cn">TRUE</span>, trim_padding <span class="op">=</span> <span class="fl">8</span>,</span></span>
+<span class="r-in"><span>                    preview <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="render_text_image-7.png" alt="" width="700" height="700"></span>
 </code></pre></div>
     </div>
   </div>
