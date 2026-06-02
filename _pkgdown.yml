@@ -17,6 +17,7 @@ reference:
     desc: "Functions for cropping, resizing, rotating, and resampling images."
     contents:
       - render_crop
+      - render_padding
       - render_reorient
       - render_resized
       - interpolate_array
@@ -36,7 +37,9 @@ reference:
   - title: "Image Combining Transformations"
     desc: "Functions for compositing, stacking, and adding image/text overlays."
     contents:
+      - render_alpha_outline
       - render_image_overlay
+      - render_sprite_overlay
       - render_stack
       - render_text_image
       - render_title
