@@ -88,7 +88,7 @@ composited over the outline by default.</p>
 <span>  expand <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  edge_softness <span class="op">=</span> <span class="fl">0.1</span>,</span>
 <span>  blur <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  gap_fill <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  gap_fill <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  gap_fill_alpha_threshold <span class="op">=</span> <span class="fl">0.25</span>,</span>
 <span>  color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -128,7 +128,7 @@ final outline alpha.</p></dd>
 
 
 <dt id="arg-gap-fill">gap_fill<a class="anchor" aria-label="anchor" href="#arg-gap-fill"></a></dt>
-<dd><p>Default <code>2</code>. Maximum alpha gap width, in pixels, to bridge
+<dd><p>Default <code>1</code>. Maximum alpha gap width, in pixels, to bridge
 in the expanded outline alpha. This fills border-connected breaks and notches
 caused by discrete distance quantization. Set to <code>0</code> to disable.</p></dd>
 
@@ -175,10 +175,20 @@ alone.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">txt</span> <span class="op">=</span> <span class="fu"><a href="render_text_image.html">render_text_image</a></span><span class="op">(</span><span class="st">"Outline"</span>, background_alpha <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">render_alpha_outline</span><span class="op">(</span><span class="va">txt</span>, expand <span class="op">=</span> <span class="fl">4</span>, blur <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">txt</span> <span class="op">=</span> <span class="fu"><a href="render_text_image.html">render_text_image</a></span><span class="op">(</span><span class="st">"\U0001F409"</span>,  size <span class="op">=</span> <span class="fl">120</span>, background_alpha <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">render_alpha_outline</span><span class="op">(</span><span class="va">txt</span>, expand <span class="op">=</span> <span class="fl">2</span>, blur <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"purple"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span> <span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="render_alpha_outline-1.png" alt="" width="700" height="700"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Make a rainbow outline </span></span></span>
+<span class="r-in"><span><span class="fu">render_alpha_outline</span><span class="op">(</span><span class="va">txt</span>, expand <span class="op">=</span> <span class="fl">2</span>, blur <span class="op">=</span> <span class="fl">0.1</span>, color <span class="op">=</span> <span class="st">"darkgreen"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span> <span class="fu">render_alpha_outline</span><span class="op">(</span>expand <span class="op">=</span> <span class="fl">2</span>, blur <span class="op">=</span> <span class="fl">0.1</span>, color <span class="op">=</span> <span class="st">"yellow"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span> <span class="fu">render_alpha_outline</span><span class="op">(</span>expand <span class="op">=</span> <span class="fl">2</span>, blur <span class="op">=</span> <span class="fl">0.1</span>, color <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span> <span class="fu">render_alpha_outline</span><span class="op">(</span>expand <span class="op">=</span> <span class="fl">2</span>, blur <span class="op">=</span> <span class="fl">0.1</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span> <span class="fu">render_alpha_outline</span><span class="op">(</span>expand <span class="op">=</span> <span class="fl">2</span>, blur <span class="op">=</span> <span class="fl">0.1</span>, color <span class="op">=</span> <span class="st">"purple"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span> <span class="fu">render_alpha_outline</span><span class="op">(</span>expand <span class="op">=</span> <span class="fl">2</span>, blur <span class="op">=</span> <span class="fl">0.1</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="plot_image.html">plot_image</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="render_alpha_outline-2.png" alt="" width="700" height="700"></span>
 </code></pre></div>
     </div>
   </div>
