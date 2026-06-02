@@ -13,7 +13,7 @@
 #' transition, in pixels.
 #' @param blur Default `0`. Gaussian blur standard deviation applied to the
 #' final outline alpha.
-#' @param gap_fill Default `2`. Maximum alpha gap width, in pixels, to bridge
+#' @param gap_fill Default `1`. Maximum alpha gap width, in pixels, to bridge
 #' in the expanded outline alpha. This fills border-connected breaks and notches
 #' caused by discrete distance quantization. Set to `0` to disable.
 #' @param gap_fill_alpha_threshold Default `0.25`. Alpha threshold used to
@@ -34,8 +34,17 @@
 #' @return A `rayimg` RGBA output image with a `padding` attribute.
 #' @export
 #' @examplesIf interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")
-#'txt = render_text_image("Outline", background_alpha = 0)
-#'render_alpha_outline(txt, expand = 4, blur = 1, color = "white") |>
+#'txt = render_text_image("\U0001F409",  size = 120, background_alpha = 0)
+#'render_alpha_outline(txt, expand = 2, blur = 1, color = "purple") |>
+#'  plot_image()
+#' 
+#' #Make a rainbow outline 
+#'render_alpha_outline(txt, expand = 2, blur = 0.1, color = "darkgreen") |>
+#'  render_alpha_outline(expand = 2, blur = 0.1, color = "yellow") |>
+#'  render_alpha_outline(expand = 2, blur = 0.1, color = "orange") |>
+#'  render_alpha_outline(expand = 2, blur = 0.1, color = "red") |>
+#'  render_alpha_outline(expand = 2, blur = 0.1, color = "purple") |>
+#'  render_alpha_outline(expand = 2, blur = 0.1, color = "blue") |>
 #'  plot_image()
 render_alpha_outline = function(
   image = NULL,
@@ -43,7 +52,7 @@ render_alpha_outline = function(
   expand = 0,
   edge_softness = 0.1,
   blur = 0,
-  gap_fill = 2,
+  gap_fill = 1,
   gap_fill_alpha_threshold = 0.25,
   color = "black",
   alpha = 1,
