@@ -2,7 +2,7 @@
 
 #include <RcppArmadillo.h>
 #include <RProgress.h>
-#include "stb_image_resize.h"
+#include <stbimageheaders/stb_image_resize2.h>
 // [[Rcpp::depends(RcppArmadillo)]]
 using namespace Rcpp;
 
@@ -127,9 +127,16 @@ NumericMatrix resize_matrix_stb(NumericMatrix image, int width, int height, int 
     interp_type = STBIR_FILTER_MITCHELL;
   }
 
-  stbir_resize_float_generic(original_image, image.nrow(), image.ncol(), 0,
-                             resized_image, width, height, 0,
-                             1, 0, 0, STBIR_EDGE_WRAP, interp_type, STBIR_COLORSPACE_LINEAR, NULL);
+  void* resized = stbir_resize(
+    original_image, image.nrow(), image.ncol(), 0,
+    resized_image, width, height, 0,
+    STBIR_1CHANNEL, STBIR_TYPE_FLOAT,
+    STBIR_EDGE_WRAP, interp_type);
+  if (resized == nullptr) {
+    delete[] resized_image;
+    delete[] original_image;
+    stop("stb image resize failed.");
+  }
   NumericMatrix resized_mat(width,height);
   for(int i = 0; i < width; i++ ) {
     for(int j = 0; j < height; j++) {

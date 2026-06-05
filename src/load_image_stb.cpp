@@ -5,10 +5,7 @@
 #include <filesystem>
 
 #define STB_IMAGE_IMPLEMENTATION
-#ifndef STBIMAGEH
-#define STBIMAGEH
-#include "ext/stb_image.h"
-#endif
+#include <stbimageheaders/stb_image.h>
 
 namespace fs = std::filesystem;
 

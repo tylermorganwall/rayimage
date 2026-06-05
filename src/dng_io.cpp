@@ -11,11 +11,11 @@
 #define TINY_DNG_LOADER_IMPLEMENTATION
 #define TINY_DNG_LOADER_NO_STB_IMAGE_INCLUDE
 #define TINY_DNG_LOADER_USE_STB_IMAGE
-#include "ext/stb_image.h"
-#include "tinydng/tiny_dng_loader.h"
+#include <stbimageheaders/stb_image.h>
+#include <tinydng/tiny_dng_loader.h>
 
 #define TINY_DNG_WRITER_IMPLEMENTATION
-#include "tinydng/tiny_dng_writer.h"
+#include <tinydng/tiny_dng_writer.h>
 
 namespace {
 
