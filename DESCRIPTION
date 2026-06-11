@@ -29,9 +29,6 @@ LinkingTo:
     progress,
     tinydng,
     stbimageheaders
-Remotes:
-    tylermorganwall/tinydng,
-    tylermorganwall/stbimageheaders
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 URL: https://www.rayimage.dev, https://github.com/tylermorganwall/rayimage
