@@ -54,40 +54,40 @@
 #' plot_image(render_title(updated_source, "Corrected OG Image",
 #'            title_color = "white", title_size = 12))
 render_color_correction = function(
-	image,
-	matrix = diag(3),
-	filename = NULL,
-	preview = FALSE
+  image,
+  matrix = diag(3),
+  filename = NULL,
+  preview = FALSE
 ) {
-	stopifnot(is.matrix(matrix), all(dim(matrix) == c(3, 3)), is.numeric(matrix))
-	src = ray_read_image(
-		image,
-		convert_to_array = TRUE,
-		normalize = FALSE,
-		reset_camera_settings = TRUE
-	)
-	imagetype = attr(src, "filetype")
-	img_source_linear = attr(src, "source_linear")
-	colorspace = attr(src, "colorspace")
-	white_current = attr(src, "white_current")
+  stopifnot(is.matrix(matrix), all(dim(matrix) == c(3, 3)), is.numeric(matrix))
+  src = ray_read_image(
+    image,
+    convert_to_array = TRUE,
+    normalize = FALSE,
+    reset_camera_settings = TRUE
+  )
+  imagetype = attr(src, "filetype")
+  img_source_linear = attr(src, "source_linear")
+  colorspace = attr(src, "colorspace")
+  white_current = attr(src, "white_current")
 
-	if (!isTRUE(attr(src, "source_linear"))) {
-		warning(
-			"render_color_correction(): input is not linear; convert with render_gamma_linear(..., TRUE) first."
-		)
-	}
-	d = dim(src)
-	if (length(d) != 3L) {
-		return(src)
-	}
-	out = apply_color_matrix(src, matrix)
-	out[,, 1:3][out[,, 1:3] < 0] = 0
-	out = ray_read_image(
-		out,
-		filetype = imagetype,
-		source_linear = img_source_linear,
-		assume_colorspace = colorspace,
-		assume_white = white_current
-	)
-	handle_image_output(out, filename = filename, preview = preview)
+  if (!isTRUE(attr(src, "source_linear"))) {
+    warning(
+      "render_color_correction(): input is not linear; convert with render_gamma_linear(..., TRUE) first."
+    )
+  }
+  d = dim(src)
+  if (length(d) != 3L) {
+    return(src)
+  }
+  out = apply_color_matrix(src, matrix)
+  out[,, 1:3][out[,, 1:3] < 0] = 0
+  out = ray_read_image(
+    out,
+    filetype = imagetype,
+    source_linear = img_source_linear,
+    assume_colorspace = colorspace,
+    assume_white = white_current
+  )
+  handle_image_output(out, filename = filename, preview = preview)
 }

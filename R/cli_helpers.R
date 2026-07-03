@@ -5,14 +5,19 @@
 #' @keywords internal
 rayimg_vertical_ellipsis = function(use_cli = TRUE) {
   have_cli = use_cli && requireNamespace("cli", quietly = TRUE)
-  unicode_ok = if (have_cli) isTRUE(cli::is_utf8_output()) else
+  unicode_ok = if (have_cli) {
+    isTRUE(cli::is_utf8_output())
+  } else {
     isTRUE(l10n_info()[["UTF-8"]])
+  }
   if (unicode_ok) "\u22EE" else "..."
 }
 
 #' @keywords internal
 rayimg_truecolor_supported = function() {
-  if (!requireNamespace("cli", quietly = TRUE)) return(FALSE)
+  if (!requireNamespace("cli", quietly = TRUE)) {
+    return(FALSE)
+  }
   dyn = isTRUE(cli::is_dynamic_tty())
   utf8 = isTRUE(cli::is_utf8_output())
   ncol = cli::num_ansi_colors()
@@ -31,7 +36,9 @@ rayimg_composite_checker = function(
   d = dim(rgb)
   H = d[1]
   W = d[2]
-  if (is.null(alpha)) return(rgb)
+  if (is.null(alpha)) {
+    return(rgb)
+  }
   pat = outer(seq_len(H), seq_len(W), function(i, j) (i + j) %% 2L == 0L)
   bg = array(dark, dim = c(H, W, 3))
   bg[pat] = light
@@ -44,7 +51,9 @@ rayimg_composite_checker = function(
 
 # Truecolor detection
 rayimg_truecolor_supported = function() {
-  if (!requireNamespace("cli", quietly = TRUE)) return(FALSE)
+  if (!requireNamespace("cli", quietly = TRUE)) {
+    return(FALSE)
+  }
   dyn = isTRUE(cli::is_dynamic_tty())
   utf8 = isTRUE(cli::is_utf8_output())
   # Require an explicit hint for 24-bit (COLORTERM), or a TERM that advertises it (rare)

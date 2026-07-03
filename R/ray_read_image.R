@@ -169,8 +169,11 @@ ray_read_image = function(
       source_linear = decoded$source_linear,
       colorspace = cs,
       white_current = wc,
-      exposure = if (reset_camera_settings) 0 else
-        attr(img, "exposure", exact = TRUE),
+      exposure = if (reset_camera_settings) {
+        0
+      } else {
+        attr(img, "exposure", exact = TRUE)
+      },
       iso = if (reset_camera_settings) 100 else attr(img, "iso", exact = TRUE)
     )
     if (normalize) {
@@ -203,8 +206,11 @@ ray_read_image = function(
       source_linear = attr(image, "source_linear"),
       colorspace = cs_assigned,
       white_current = wc_assigned,
-      exposure = if (reset_camera_settings) 0 else
-        attr(image, "exposure", exact = TRUE),
+      exposure = if (reset_camera_settings) {
+        0
+      } else {
+        attr(image, "exposure", exact = TRUE)
+      },
       iso = if (reset_camera_settings) 100 else attr(image, "iso", exact = TRUE)
     )
     return(ri) # no normalization on rayimg here
@@ -311,25 +317,48 @@ ray_read_image = function(
   } else if (imagetype == "exr") {
     if (length(find.package("libopenexr", quiet = TRUE)) > 0) {
       tmp = libopenexr::read_exr(image, ...)
+      metadata = tmp$metadata
+      exr_colorspace = colorspace_from_exr_metadata(metadata)
+      exr_white_current = white_current_from_exr_metadata(metadata)
+      colorspace = if (!is.null(assume_colorspace)) {
+        assume_colorspace
+      } else if (!is.null(exr_colorspace)) {
+        exr_colorspace
+      } else {
+        CS_ACESCG
+      }
+      white_current = if (!is.null(assume_white)) {
+        get_wp(assume_white)
+      } else if (!is.null(exr_white_current)) {
+        exr_white_current
+      } else {
+        colorspace$white_xyz
+      }
       image = array(1, dim = c(tmp$height, tmp$width, 4))
       image[,, 1] = tmp$r
       image[,, 2] = tmp$g
       image[,, 3] = tmp$b
-      return(rayimg(
+      ri = rayimg(
         process_image_preview(image),
         filetype = imagetype,
         source_linear = TRUE,
-        colorspace = if (!is.null(assume_colorspace)) {
-          assume_colorspace
-        } else {
-          CS_ACESCG
-        },
-        white_current = if (!is.null(assume_white)) {
-          get_wp(assume_white)
-        } else {
-          CS_ACESCG$white_xyz
-        }
-      ))
+        colorspace = colorspace,
+        white_current = white_current
+      )
+      if (is.list(metadata) && length(metadata) > 0L) {
+        attr(ri, "exr") = metadata
+      }
+      if (normalize) {
+        ri = render_convert_colorspace(
+          ri,
+          from_mats = NA,
+          to_mats = normalize_to,
+          adapt_white = normalize_adapt_white,
+          from_white = NA,
+          to_white = normalize_to$white_xyz
+        )
+      }
+      return(ri)
     } else {
       stop("The 'libopenexr' package is required for EXR support.")
     }

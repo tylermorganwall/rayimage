@@ -2,8 +2,9 @@ test_that("render_text_image trims glyph bounds and adds padding", {
   old_device = getOption("device")
   on.exit(options(device = old_device), add = TRUE)
   options(
-    device = function(...)
+    device = function(...) {
       grDevices::pdf(file = tempfile(fileext = ".pdf"), ...)
+    }
   )
 
   args = list(

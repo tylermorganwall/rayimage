@@ -17,175 +17,181 @@
 #' @return An object of class `c("rayimg", <original class>)` with attributes.
 #' @keywords internal
 rayimg = function(
-	x = NULL,
-	filetype = NULL,
-	source_linear = FALSE,
-	colorspace = CS_ACESCG,
-	white_current = colorspace$white_xyz,
-	exposure = attr(x, "exposure", exact = TRUE),
-	iso = attr(x, "iso", exact = TRUE)
+  x = NULL,
+  filetype = NULL,
+  source_linear = FALSE,
+  colorspace = CS_ACESCG,
+  white_current = colorspace$white_xyz,
+  exposure = attr(x, "exposure", exact = TRUE),
+  iso = attr(x, "iso", exact = TRUE)
 ) {
-	if (is.null(x)) {
-		stop("rayimg(): 'x' cannot be NULL.")
-	}
-	stopifnot(is.array(x))
+  if (is.null(x)) {
+    stop("rayimg(): 'x' cannot be NULL.")
+  }
+  stopifnot(is.array(x))
 
-	x_new = rayimg_validate_dimensions(x)
+  x_new = rayimg_validate_dimensions(x)
 
-	# channels attribute
-	if (is.null(attr(x, "channels"))) {
-		attr(x_new, "channels") = rayimg_detect_channels(x_new)
-	} else {
-		attr(x_new, "channels") = attr(x, "channels")
-	}
+  # channels attribute
+  if (is.null(attr(x, "channels"))) {
+    attr(x_new, "channels") = rayimg_detect_channels(x_new)
+  } else {
+    attr(x_new, "channels") = attr(x, "channels")
+  }
 
-	# required attrs
-	attr(x_new, "filetype") = filetype
-	attr(x_new, "source_linear") = source_linear
-	attr(x_new, "exposure") = rayimg_exposure_value(exposure)
-	attr(x_new, "iso") = rayimg_iso_value(iso)
+  # required attrs
+  attr(x_new, "filetype") = filetype
+  attr(x_new, "source_linear") = source_linear
+  attr(x_new, "exposure") = rayimg_exposure_value(exposure)
+  attr(x_new, "iso") = rayimg_iso_value(iso)
 
-	# new attrs for color mgmt
-	stopifnot(
-		is.list(colorspace),
-		all(c("rgb_to_xyz", "xyz_to_rgb", "white_xyz") %in% names(colorspace))
-	)
-	attr(x_new, "colorspace") = colorspace
-	attr(x_new, "white_current") = white_current
-	if (!is.null(attr(x, "dng", exact = TRUE))) {
-		attr(x_new, "dng") = attr(x, "dng", exact = TRUE)
-	}
-	class(x_new) = c("rayimg", setdiff(class(x), "rayimg"))
-	x_new
+  # new attrs for color mgmt
+  stopifnot(
+    is.list(colorspace),
+    all(c("rgb_to_xyz", "xyz_to_rgb", "white_xyz") %in% names(colorspace))
+  )
+  attr(x_new, "colorspace") = colorspace
+  attr(x_new, "white_current") = white_current
+  if (!is.null(attr(x, "dng", exact = TRUE))) {
+    attr(x_new, "dng") = attr(x, "dng", exact = TRUE)
+  }
+  if (!is.null(attr(x, "exr", exact = TRUE))) {
+    attr(x_new, "exr") = attr(x, "exr", exact = TRUE)
+  }
+  class(x_new) = c("rayimg", setdiff(class(x), "rayimg"))
+  x_new
 }
 
 rayimg_exposure_value = function(exposure) {
-	if (is.null(exposure) || length(exposure) == 0L) {
-		return(0)
-	}
-	if (
-		!is.numeric(exposure) ||
-			length(exposure) != 1L ||
-			is.na(exposure) ||
-			!is.finite(exposure)
-	) {
-		stop("rayimg(): 'exposure' must be a finite numeric value.")
-	}
-	as.numeric(exposure)
+  if (is.null(exposure) || length(exposure) == 0L) {
+    return(0)
+  }
+  if (
+    !is.numeric(exposure) ||
+      length(exposure) != 1L ||
+      is.na(exposure) ||
+      !is.finite(exposure)
+  ) {
+    stop("rayimg(): 'exposure' must be a finite numeric value.")
+  }
+  as.numeric(exposure)
 }
 
 rayimg_iso_value = function(iso) {
-	if (is.null(iso) || length(iso) == 0L) {
-		return(100)
-	}
-	if (
-		!is.numeric(iso) ||
-			length(iso) != 1L ||
-			is.na(iso) ||
-			!is.finite(iso) ||
-			iso <= 0
-	) {
-		stop("rayimg(): 'iso' must be a positive finite numeric value.")
-	}
-	as.numeric(iso)
+  if (is.null(iso) || length(iso) == 0L) {
+    return(100)
+  }
+  if (
+    !is.numeric(iso) ||
+      length(iso) != 1L ||
+      is.na(iso) ||
+      !is.finite(iso) ||
+      iso <= 0
+  ) {
+    stop("rayimg(): 'iso' must be a positive finite numeric value.")
+  }
+  as.numeric(iso)
 }
 
 rayimg_channels_from_count = function(n) {
-	switch(
-		as.character(n),
-		"1" = c("Greyscale"),
-		"2" = c("Greyscale", "Alpha"),
-		"3" = c("Red", "Green", "Blue"),
-		"4" = c("Red", "Green", "Blue", "Alpha"),
-		stop("This should never be hit.")
-	)
+  switch(
+    as.character(n),
+    "1" = c("Greyscale"),
+    "2" = c("Greyscale", "Alpha"),
+    "3" = c("Red", "Green", "Blue"),
+    "4" = c("Red", "Green", "Blue", "Alpha"),
+    stop("This should never be hit.")
+  )
 }
 
 rayimg_detect_channels = function(x) {
-	d = dim(x)
-	if (length(d) < 3L) {
-		return("Greyscale")
-	}
-	rayimg_channels_from_count(d[3])
+  d = dim(x)
+  if (length(d) < 3L) {
+    return("Greyscale")
+  }
+  rayimg_channels_from_count(d[3])
 }
 
 #Always return a multidimensional (d[3] = 2,3,4) array, or a matrix.
 rayimg_validate_dimensions = function(x) {
-	d = dim(x)
-	stopifnot(!is.null(d), length(d) %in% c(2, 3), d[1] > 0, d[2] > 0)
-	if (length(d) == 3) {
-		if (d[3] == 1) {
-			x = x[,, 1] # drop extra
-		} else {
-			stopifnot(d[3] %in% c(2, 3, 4))
-		}
-	}
-	x
+  d = dim(x)
+  stopifnot(!is.null(d), length(d) %in% c(2, 3), d[1] > 0, d[2] > 0)
+  if (length(d) == 3) {
+    if (d[3] == 1) {
+      x = x[,, 1] # drop extra
+    } else {
+      stopifnot(d[3] %in% c(2, 3, 4))
+    }
+  }
+  x
 }
 
 #' @export
 `[.rayimg` = function(x, ..., drop = TRUE) {
-	ch = rayimg_detect_channels(x)
-	caller_env = parent.frame()
-	mc = match.call(expand.dots = FALSE)
-	dots_expr = as.list(mc$`...`)
-	nd = length(dim(x))
+  ch = rayimg_detect_channels(x)
+  caller_env = parent.frame()
+  mc = match.call(expand.dots = FALSE)
+  dots_expr = as.list(mc$`...`)
+  nd = length(dim(x))
 
-	if (length(dots_expr) < nd) {
-		dots_expr = c(dots_expr, rep(list(quote(expr = )), nd - length(dots_expr)))
-	}
-	idx = lapply(dots_expr, function(z) {
-		if (identical(z, quote(expr = ))) TRUE else eval(z, envir = caller_env)
-	})
+  if (length(dots_expr) < nd) {
+    dots_expr = c(dots_expr, rep(list(quote(expr = )), nd - length(dots_expr)))
+  }
+  idx = lapply(dots_expr, function(z) {
+    if (identical(z, quote(expr = ))) TRUE else eval(z, envir = caller_env)
+  })
 
-	if (nd >= 3L) {
-		if (!isTRUE(idx[[3L]]) && length(idx[[3L]]) > 4L) {
-			stop("A rayimg can only have four or fewer channels selected at once.")
-		}
-		if (!isTRUE(idx[[3L]]) && any(idx[[3L]] > 4L)) {
-			stop("rayimg: channel index > 4.")
-		}
-	}
+  if (nd >= 3L) {
+    if (!isTRUE(idx[[3L]]) && length(idx[[3L]]) > 4L) {
+      stop("A rayimg can only have four or fewer channels selected at once.")
+    }
+    if (!isTRUE(idx[[3L]]) && any(idx[[3L]] > 4L)) {
+      stop("rayimg: channel index > 4.")
+    }
+  }
 
-	y = NextMethod("[", drop = FALSE)
+  y = NextMethod("[", drop = FALSE)
 
-	if (drop) {
-		d = dim(y)
-		dn = dimnames(y)
-		drop_idx = which(d == 1L & seq_along(d) >= 3L)
-		if (length(drop_idx)) {
-			keep = setdiff(seq_along(d), drop_idx)
-			y = array(y, dim = d[keep], dimnames = dn[keep])
-		}
-	}
+  if (drop) {
+    d = dim(y)
+    dn = dimnames(y)
+    drop_idx = which(d == 1L & seq_along(d) >= 3L)
+    if (length(drop_idx)) {
+      keep = setdiff(seq_along(d), drop_idx)
+      y = array(y, dim = d[keep], dimnames = dn[keep])
+    }
+  }
 
-	# carry attrs
-	attr(y, "filetype") = attr(x, "filetype")
-	attr(y, "source_linear") = attr(x, "source_linear")
-	attr(y, "exposure") = attr(x, "exposure")
-	attr(y, "iso") = attr(x, "iso")
-	attr(y, "colorspace") = attr(x, "colorspace")
-	attr(y, "white_current") = attr(x, "white_current")
-	if (!is.null(attr(x, "dng", exact = TRUE))) {
-		attr(y, "dng") = attr(x, "dng", exact = TRUE)
-	}
+  # carry attrs
+  attr(y, "filetype") = attr(x, "filetype")
+  attr(y, "source_linear") = attr(x, "source_linear")
+  attr(y, "exposure") = attr(x, "exposure")
+  attr(y, "iso") = attr(x, "iso")
+  attr(y, "colorspace") = attr(x, "colorspace")
+  attr(y, "white_current") = attr(x, "white_current")
+  if (!is.null(attr(x, "dng", exact = TRUE))) {
+    attr(y, "dng") = attr(x, "dng", exact = TRUE)
+  }
+  if (!is.null(attr(x, "exr", exact = TRUE))) {
+    attr(y, "exr") = attr(x, "exr", exact = TRUE)
+  }
 
-	if (!is.null(ch)) {
-		if (nd >= 3L) {
-			ch_idx = idx[[3L]]
-			if (isTRUE(ch_idx)) {
-				ch_idx = seq_along(ch)
-			}
-			attr(y, "channels") = ch[ch_idx]
-		} else {
-			attr(y, "channels") = ch[seq_len(min(1L, length(ch)))]
-		}
-	} else {
-		attr(y, "channels") = rayimg_detect_channels(y)
-	}
+  if (!is.null(ch)) {
+    if (nd >= 3L) {
+      ch_idx = idx[[3L]]
+      if (isTRUE(ch_idx)) {
+        ch_idx = seq_along(ch)
+      }
+      attr(y, "channels") = ch[ch_idx]
+    } else {
+      attr(y, "channels") = ch[seq_len(min(1L, length(ch)))]
+    }
+  } else {
+    attr(y, "channels") = rayimg_detect_channels(y)
+  }
 
-	if (!is.null(dim(y))) {
-		class(y) = unique(c("rayimg", setdiff(class(y), "rayimg")))
-	}
-	y
+  if (!is.null(dim(y))) {
+    class(y) = unique(c("rayimg", setdiff(class(y), "rayimg")))
+  }
+  y
 }

@@ -35,8 +35,14 @@ rotate_image_array = function(img, angle) {
   cx_new = (new_width + 1) / 2
   cy_new = (new_height + 1) / 2
 
-  x_indices = matrix(rep(seq_len(new_width), each = new_height), nrow = new_height)
-  y_indices = matrix(rep(seq_len(new_height), times = new_width), nrow = new_height)
+  x_indices = matrix(
+    rep(seq_len(new_width), each = new_height),
+    nrow = new_height
+  )
+  y_indices = matrix(
+    rep(seq_len(new_height), times = new_width),
+    nrow = new_height
+  )
 
   x_rel = x_indices - cx_new
   y_rel = cy_new - y_indices
@@ -52,7 +58,11 @@ rotate_image_array = function(img, angle) {
   for (ch in seq_len(channels)) {
     channel = img[,, ch, drop = TRUE]
     rotated_channel = bilinear_sample_matrix(channel, x_vec, y_vec)
-    rotated[,, ch] = matrix(rotated_channel, nrow = new_height, ncol = new_width)
+    rotated[,, ch] = matrix(
+      rotated_channel,
+      nrow = new_height,
+      ncol = new_width
+    )
   }
   return(rotated)
 }
@@ -84,7 +94,9 @@ bilinear_sample_matrix = function(mat, x, y, fill = 0) {
   v01 = mat[idx01]
   v11 = mat[idx11]
 
-  interp = v00 * (1 - dx) * (1 - dy) +
+  interp = v00 *
+    (1 - dx) *
+    (1 - dy) +
     v10 * dx * (1 - dy) +
     v01 * (1 - dx) * dy +
     v11 * dx * dy

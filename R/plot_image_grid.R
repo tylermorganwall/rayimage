@@ -31,9 +31,12 @@ plot_image_grid = function(
   draw_grid = FALSE,
   gp = grid::gpar()
 ) {
-  if (length(dim) != 2) stop("length of `dim` argument must equal 2")
-  if (!inherits(input_list, "list"))
+  if (length(dim) != 2) {
+    stop("length of `dim` argument must equal 2")
+  }
+  if (!inherits(input_list, "list")) {
     stop("`input_list` must be a list of image arrays")
+  }
 
   if (length(asp) == 1) {
     asp = rep(asp, length(input_list))

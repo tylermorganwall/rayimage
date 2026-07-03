@@ -127,6 +127,9 @@ ray_write_image = function(
         call. = FALSE
       )
     }
+    dots = list(...)
+    user_metadata = dots$metadata
+    dots$metadata = NULL
     rgba = array(1, dim = c(dim(image)[1:2], 4))
     if (is_matrix) {
       rgba[,, 1:3] = image
@@ -147,14 +150,23 @@ ray_write_image = function(
         call. = FALSE
       )
     }
-    libopenexr::write_exr(
-      filename,
+    write_args = list(
+      path = filename,
       r = rgba[,, 1],
       g = rgba[,, 2],
       b = rgba[,, 3],
-      a = rgba[,, 4],
-      ...
+      a = rgba[,, 4]
     )
+    metadata = exr_metadata_from_rayimg(image, user_metadata)
+    if (libopenexr_supports_metadata()) {
+      write_args$metadata = metadata
+    } else if (!is.null(metadata)) {
+      warning(
+        "Installed libopenexr does not support EXR metadata; writing pixel data only.",
+        call. = FALSE
+      )
+    }
+    do.call(libopenexr::write_exr, c(write_args, dots))
   } else {
     tiff::writeTIFF(image, where = filename, ...)
   }

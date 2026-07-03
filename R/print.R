@@ -18,7 +18,9 @@ print.rayimg = function(
   ...
 ) {
   ft = attr(x, "filetype")
-  if (is.null(ft)) ft = "unknown"
+  if (is.null(ft)) {
+    ft = "unknown"
+  }
   d = dim(x)
   image_type = attr(x, "filetype")
   exposure_attr = rayimg_exposure_value(attr(x, "exposure", exact = TRUE))
@@ -44,7 +46,9 @@ print.rayimg = function(
   col_blue = function(z) if (can_color) cli::col_blue(z) else z
 
   print_camera_settings = function() {
-    if (isTRUE(all.equal(exposure_attr, 0)) && isTRUE(all.equal(iso_attr, 100))) {
+    if (
+      isTRUE(all.equal(exposure_attr, 0)) && isTRUE(all.equal(iso_attr, 100))
+    ) {
       return(invisible(NULL))
     }
     cat(
@@ -125,9 +129,13 @@ print.rayimg = function(
   white_attr = attr(x, "white_current")
 
   describe_colorspace = function(cs) {
-    if (!is.list(cs)) return("unknown")
+    if (!is.list(cs)) {
+      return("unknown")
+    }
     nm = cs$name
-    if (is.null(nm) || length(nm) != 1L) nm = "unknown"
+    if (is.null(nm) || length(nm) != 1L) {
+      nm = "unknown"
+    }
     desc = as.character(nm)
     wn = cs$white_name
     if (!is.null(wn) && length(wn) == 1L) {
@@ -143,7 +151,10 @@ print.rayimg = function(
     ) {
       paste0(
         "[",
-        paste(formatC(as.numeric(white_vec), format = "f", digits = 5), collapse = ", "),
+        paste(
+          formatC(as.numeric(white_vec), format = "f", digits = 5),
+          collapse = ", "
+        ),
         "]"
       )
     } else {
@@ -196,7 +207,9 @@ print.rayimg = function(
 
   # Colorizers for numeric cells
   col_fun = function(lbl) {
-    if (!can_color) return(identity)
+    if (!can_color) {
+      return(identity)
+    }
     switch(
       lbl,
       "Red" = col_red,
@@ -207,7 +220,9 @@ print.rayimg = function(
     )
   }
   hdr_col_fun = function(lbl) {
-    if (!can_color) return(function(z) z)
+    if (!can_color) {
+      return(function(z) z)
+    }
     switch(
       lbl,
       "Red" = col_red,
@@ -352,7 +367,9 @@ print.rayimg = function(
   }
 
   for (i in seq_along(chan_labels)) {
-    if (has_alpha && suppress_alpha && i == alpha_idx) next
+    if (has_alpha && suppress_alpha && i == alpha_idx) {
+      next
+    }
     lbl = chan_labels[i]
     cat(hdr_col_fun(lbl)(style_bold(paste0("[", lbl, "]"))), "\n", sep = "")
     pair = build_preview_pair(

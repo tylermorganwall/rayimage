@@ -39,80 +39,80 @@
 #' # Warmer
 #' render_white_balance(sunset_image, preview=TRUE, target_white = "D50", bake = TRUE)
 render_white_balance = function(
-	image,
-	reference_white = NA,
-	target_white = "D60",
-	bake = FALSE,
-	filename = NULL,
-	preview = FALSE
+  image,
+  reference_white = NA,
+  target_white = "D60",
+  bake = FALSE,
+  filename = NULL,
+  preview = FALSE
 ) {
-	src = ray_read_image(image, normalize = FALSE)
-	cs = attr(src, "colorspace")
+  src = ray_read_image(image, normalize = FALSE)
+  cs = attr(src, "colorspace")
 
-	if (
-		is.atomic(reference_white) &&
-			length(reference_white) == 1L &&
-			is.na(reference_white)
-	) {
-		reference_white = attr(src, "white_current")
-	}
+  if (
+    is.atomic(reference_white) &&
+      length(reference_white) == 1L &&
+      is.na(reference_white)
+  ) {
+    reference_white = attr(src, "white_current")
+  }
 
-	# If whites are identical, do nothing
-	if (
-		isTRUE(all.equal(
-			get_whitepoint_xyz(reference_white)$value,
-			get_whitepoint_xyz(target_white)$value
-		))
-	) {
-		return(handle_image_output(src, filename = filename, preview = preview))
-	}
+  # If whites are identical, do nothing
+  if (
+    isTRUE(all.equal(
+      get_whitepoint_xyz(reference_white)$value,
+      get_whitepoint_xyz(target_white)$value
+    ))
+  ) {
+    return(handle_image_output(src, filename = filename, preview = preview))
+  }
 
-	if (!bake) {
-		# CAT + update tag (appearance-preserving)
-		return(render_convert_colorspace(
-			src,
-			from_mats = cs,
-			to_mats = cs,
-			adapt_white = TRUE,
-			from_white = reference_white,
-			to_white = target_white,
-			filename = filename,
-			preview = preview
-		))
-	}
+  if (!bake) {
+    # CAT + update tag (appearance-preserving)
+    return(render_convert_colorspace(
+      src,
+      from_mats = cs,
+      to_mats = cs,
+      adapt_white = TRUE,
+      from_white = reference_white,
+      to_white = target_white,
+      filename = filename,
+      preview = preview
+    ))
+  }
 
-	# bake = TRUE, CAT but keep the original tag ----
-	src_wp = get_whitepoint_xyz(reference_white)
-	dst_wp = get_whitepoint_xyz(target_white)
+  # bake = TRUE, CAT but keep the original tag ----
+  src_wp = get_whitepoint_xyz(reference_white)
+  dst_wp = get_whitepoint_xyz(target_white)
 
-	# Work in linear RGB
-	if (!isTRUE(attr(src, "source_linear"))) {
-		warning(
-			"render_white_balance(bake = TRUE): input not linear; convert with render_gamma_linear(..., TRUE) first."
-		)
-	}
+  # Work in linear RGB
+  if (!isTRUE(attr(src, "source_linear"))) {
+    warning(
+      "render_white_balance(bake = TRUE): input not linear; convert with render_gamma_linear(..., TRUE) first."
+    )
+  }
 
-	# RGB(working) -> XYZ
-	xyz = apply_color_matrix(src, cs$rgb_to_xyz)
-	# CAT in XYZ
-	CAT = compute_cat_bradford(src_wp$value, dst_wp$value)
-	xyz = apply_color_matrix(xyz, CAT)
-	# XYZ -> RGB(working)
-	out = apply_color_matrix(xyz, cs$xyz_to_rgb)
-	# preserve alpha
-	d = dim(src)
-	if (length(d) == 3L && d[3] == 4L) {
-		out[,, 4] = src[,, 4]
-	}
+  # RGB(working) -> XYZ
+  xyz = apply_color_matrix(src, cs$rgb_to_xyz)
+  # CAT in XYZ
+  CAT = compute_cat_bradford(src_wp$value, dst_wp$value)
+  xyz = apply_color_matrix(xyz, CAT)
+  # XYZ -> RGB(working)
+  out = apply_color_matrix(xyz, cs$xyz_to_rgb)
+  # preserve alpha
+  d = dim(src)
+  if (length(d) == 3L && d[3] == 4L) {
+    out[,, 4] = src[,, 4]
+  }
 
-	out = rayimg(
-		out,
-		filetype = attr(src, "filetype"),
-		source_linear = attr(src, "source_linear"),
-		colorspace = cs, # primaries unchanged
-		white_current = src_wp$value, # Keep the original tag to bake in the new color
-		exposure = attr(src, "exposure", exact = TRUE),
-		iso = attr(src, "iso", exact = TRUE)
-	)
-	handle_image_output(out, filename = filename, preview = preview)
+  out = rayimg(
+    out,
+    filetype = attr(src, "filetype"),
+    source_linear = attr(src, "source_linear"),
+    colorspace = cs, # primaries unchanged
+    white_current = src_wp$value, # Keep the original tag to bake in the new color
+    exposure = attr(src, "exposure", exact = TRUE),
+    iso = attr(src, "iso", exact = TRUE)
+  )
+  handle_image_output(out, filename = filename, preview = preview)
 }
