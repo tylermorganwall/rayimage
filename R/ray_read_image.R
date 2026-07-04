@@ -346,7 +346,10 @@ ray_read_image = function(
         white_current = white_current
       )
       if (is.list(metadata) && length(metadata) > 0L) {
-        attr(ri, "exr") = metadata
+        preserved_metadata = preserved_exr_metadata(metadata)
+        if (!is.null(preserved_metadata)) {
+          attr(ri, "exr") = preserved_metadata
+        }
       }
       if (normalize) {
         ri = render_convert_colorspace(

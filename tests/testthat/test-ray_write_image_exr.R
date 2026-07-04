@@ -132,8 +132,42 @@ test_that("ray_read_image uses EXR color metadata when present", {
     tolerance = 1e-5
   )
   expect_equal(attr(img, "exr")$whiteLuminance, 203)
+  expect_null(attr(img, "exr")$chromaticities)
+  expect_null(attr(img, "exr")$adoptedNeutral)
   expect_identical(attr(ray_read_image(img), "exr"), attr(img, "exr"))
   expect_identical(attr(img[,, 1:3], "exr"), attr(img, "exr"))
+})
+
+test_that("ray_read_image does not duplicate promoted EXR color metadata", {
+  skip_on_cran()
+  skip_unless_libopenexr_metadata()
+
+  r = matrix(0.1, nrow = 2, ncol = 2)
+  g = matrix(0.5, nrow = 2, ncol = 2)
+  b = matrix(0.8, nrow = 2, ncol = 2)
+  metadata = list(
+    chromaticities = list(
+      red = CS_SRGB$primaries$r,
+      green = CS_SRGB$primaries$g,
+      blue = CS_SRGB$primaries$b,
+      white = rayimage:::xyz_to_xy(CS_SRGB$white_xyz)
+    ),
+    adoptedNeutral = rayimage:::xyz_to_xy(CS_SRGB$white_xyz)
+  )
+
+  tmp = tempfile(fileext = ".exr")
+  on.exit(unlink(tmp), add = TRUE)
+  libopenexr::write_exr(tmp, r, g, b, metadata = metadata)
+
+  img = ray_read_image(tmp)
+
+  expect_equal(
+    attr(img, "colorspace")$primaries,
+    CS_SRGB$primaries,
+    tolerance = 1e-7
+  )
+  expect_equal(attr(img, "white_current"), CS_SRGB$white_xyz, tolerance = 1e-5)
+  expect_null(attr(img, "exr", exact = TRUE))
 })
 
 test_that("ray_read_image falls back for EXR files without color metadata", {

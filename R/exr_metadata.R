@@ -149,6 +149,24 @@ white_current_from_exr_metadata = function(metadata) {
   )
 }
 
+#' Preserve EXR metadata not promoted to rayimg attributes
+#' @param metadata EXR metadata list.
+#' @return EXR metadata list, or `NULL` when no metadata remains.
+#' @keywords internal
+preserved_exr_metadata = function(metadata) {
+  if (!is.list(metadata) || length(metadata) == 0L) {
+    return(NULL)
+  }
+
+  promoted = c("chromaticities", "adoptedNeutral")
+  out = metadata
+  out[promoted] = NULL
+  if (length(out) == 0L) {
+    return(NULL)
+  }
+  out
+}
+
 #' Build EXR metadata from a rayimg
 #' @param image A `rayimg`.
 #' @param metadata Default `NULL`. User-supplied EXR metadata.

@@ -74,7 +74,7 @@ txt = render_text_image("\U0001F409",  size = 120, background_alpha = 0)
 render_alpha_outline(txt, expand = 2, blur = 1, color = "purple") |>
  plot_image()
 
-#Make a rainbow outline 
+#Make a rainbow outline
 render_alpha_outline(txt, expand = 2, blur = 0.1, color = "darkgreen") |>
  render_alpha_outline(expand = 2, blur = 0.1, color = "yellow") |>
  render_alpha_outline(expand = 2, blur = 0.1, color = "orange") |>
