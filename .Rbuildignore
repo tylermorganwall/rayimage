@@ -26,3 +26,5 @@
 ^tests/testthat/test-render_functions\.R$
 ^tools/test-snapshots\.R$
 ^\.vscode$
+^air\.toml$
+^Rplots\.pdf$
