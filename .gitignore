@@ -11,3 +11,4 @@ compile_commands.json
 .cache
 README_cache/*
 /.quarto/
+.vscode/launch.json

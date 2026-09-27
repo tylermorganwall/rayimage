@@ -112,7 +112,10 @@ render_tonemap = function(
   } else if (method == "hbd") {
     for (k in 1:3) {
       x = pmax(rgb[,, k] - 0.004, 0)
-      rgb[,, k] = (x * (6.2 * x + 0.5)) / (x * (6.2 * x + 1.7) + 0.06)
+      encoded = (x * (6.2 * x + 0.5)) / (x * (6.2 * x + 1.7) + 0.06)
+      # HBD includes display encoding. Return linear pixels, like the other
+      # operators, so plotting and writing apply the display transfer once.
+      rgb[,, k] = to_linear(encoded)
     }
   } else {
     # Nothing
