@@ -367,3 +367,20 @@ plot_image_grid(
 ```
 
 ![](man/figures/unnamed-chunk-3-1.png)<!-- -->
+
+
+## Development source builds
+
+The [Build R source package workflow](https://github.com/tylermorganwall/rayimage/actions/workflows/source-build.yaml)
+builds and verifies an R source tarball for each branch. Branch and pull-request
+builds provide a downloadable Actions artifact, retained for 30 days.
+
+After this workflow is merged, successful `master` builds also publish a durable
+[latest successful source download](https://github.com/tylermorganwall/rayimage/releases/tag/source-master).
+Use the linked `.tar.gz` release asset, not GitHub's automatically generated
+Source code archives. The filename identifies the package version, branch, full
+commit SHA, run ID, and build attempt. Download verification must pass before
+the latest-successful link changes; older assets remain available.
+
+These are development source packages, not CRAN releases or compiled binaries.
+They still require the package's R dependencies and native build tools to install.
